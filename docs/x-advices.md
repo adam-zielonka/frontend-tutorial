@@ -24,3 +24,5 @@ But if not, you should treat row as container of information.
 
 
 ## 4. Experience over Interface (UX > UI)
+
+## 5. There are no stupid questions, only stupid answers
