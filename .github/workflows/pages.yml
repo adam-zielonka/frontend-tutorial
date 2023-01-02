@@ -38,17 +38,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build
-        run: pnpm build --base=/shippingboard-lite/
-      - name: Install dependencies for docusaurus
-        run: cd docusaurus; pnpm install
-      - name: Build docusaurus
-        run: cd docusaurus; pnpm build
-      - name: Move docusaurus
-        run: mv docusaurus/build dist/tutorial
+        run: pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./dist
+          path: ./build
 
   deploy:
     environment:

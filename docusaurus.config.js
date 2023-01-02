@@ -8,13 +8,13 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const config = {
   title: "Frontend tutorial",
   url: "https://adam-zielonka.github.io/",
-  baseUrl: "/shippingboard-lite/tutorial",
+  baseUrl: "/frontend-tutorial",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/logo.png",
 
   organizationName: "adam-zielonka",
-  projectName: "shippingboard-lite",
+  projectName: "frontend-tutorial",
 
   i18n: {
     defaultLocale: "en",
@@ -27,10 +27,10 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          path: "../docs",
+          path: "./docs",
           routeBasePath: "/",
           editUrl:
-            "https://github.com/adam-zielonka/shippingboard-lite/blob/main/docs/",
+            "https://github.com/adam-zielonka/frontend-tutorial/blob/main/docs/",
         },
         pages: false,
         theme: {
