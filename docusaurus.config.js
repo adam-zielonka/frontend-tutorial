@@ -30,7 +30,7 @@ const config = {
           path: "./docs",
           routeBasePath: "/",
           editUrl:
-            "https://github.com/adam-zielonka/frontend-tutorial/blob/main/docs/",
+            "https://github.com/adam-zielonka/frontend-tutorial/blob/main/",
         },
         pages: false,
         theme: {
