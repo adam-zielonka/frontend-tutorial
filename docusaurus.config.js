@@ -51,7 +51,7 @@ const config = {
         },
         items: [
           {
-            href: "https://github.com/adam-zielonka/shippingboard-lite",
+            href: "https://github.com/adam-zielonka/frontend-tutorial",
             label: "GitHub",
             position: "right",
           },
