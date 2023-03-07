@@ -2,7 +2,7 @@
 
 You should know some things about tools that are used during this training, but you should also be aware that this Tool Set can be valid in 2023, and probably will be working in future, there are some big possibilities that new tools arrive and change how we work. You should keep eye on [State of JavaScript](https://stateofjs.com/en-us/), to see which tools are on a top.
 
-## Node.js - Engine for tools
+## [Node.js](https://nodejs.org/en/) - Engine for tools
 
 Let's start with node.js. From the project [website](https://nodejs.org/en/):
 
@@ -18,10 +18,10 @@ There is solution: Node version management tool. I used [nodenv](https://github.
 
 Of course if you starting from scratch and you want generate some project, you can setup global version of node using `nodenv global 18.12.1` or [`pnpm env use --global 18.12.1`](https://pnpm.io/cli/env) that will be used in that cases.
 
-## PNPM - Package manager
+## [PNPM](https://pnpm.io/) - Package manager
 
 TODO
 
-## Vite.js - Frontend Tool
+## [Vite.js](https://vitejs.dev/) - Frontend Tool
 
 TODO
