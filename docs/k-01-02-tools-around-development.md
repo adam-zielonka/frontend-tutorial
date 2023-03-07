@@ -26,23 +26,9 @@ This our target, to make our development environment similar to. Nowadays I didn
 
 ## Terminal
 
-What I need form terminal is support for [Nerd Fonts](https://www.nerdfonts.com).
-
-TODO: Screen with prompt colors
+It's up to you there is a lot of tool in this area, you can find what you need, but what I use is [zsh](https://www.zsh.org/) with [oh-my-zsh](https://ohmyz.sh/) as a shell, with [starship](https://starship.rs/) as a prompt, and of course [Nerd Fonts](https://www.nerdfonts.com) need to be installed.
 
 And that's all, if I have open project in VS Code, i mostly used builtin terminal.
-
-## Shell - ZSH
-
-TODO: 
-
-## Prompt - Starship
-
-TODO:
-
-## Package manager - homebrew
-
-TODO:
 
 ## Version control - Git
 
