@@ -30,9 +30,9 @@ It's up to you there is a lot of tool in this area, you can find what you need, 
 
 And that's all, if I have open project in VS Code, i mostly used builtin terminal.
 
-## Version control - Git
+## Version control - [Git](https://git-scm.com/)
 
-TODO:
+If you don't know about this kind of tools it's time to catch up. So you probably want have possibility: to create snapshots of your work, to time travel to older version in your project, to backup your project to server. For these things you can use `git`, and you can read more in [Getting Started - What is Git?](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)
 
 ## Code editor - VS Code
 
