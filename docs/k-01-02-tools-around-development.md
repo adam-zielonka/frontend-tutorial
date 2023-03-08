@@ -36,5 +36,4 @@ If you don't know about this kind of tools it's time to catch up. You probably w
 
 ## [VS Code](https://code.visualstudio.com/) - Code editor
 
-TODO
-
+It's just working and have a lot of possibility of customization and expansion with large amount of extensions. It is very popular, so a lot of problems with this editor you can find solved on [Stack Overflow](https://stackoverflow.com/questions/tagged/visual-studio-code).
