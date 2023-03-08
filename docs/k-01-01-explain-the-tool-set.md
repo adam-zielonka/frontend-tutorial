@@ -24,6 +24,6 @@ The big advantage of JS development is [`npm`](https://www.npmjs.com/) registry,
 
 For newest project I use [`pnpm`](https://pnpm.io/), because solve problems of `node_modules` (you can read more in [pnpm motivation](https://pnpm.io/motivation)), but also add some features that help during development, like: [managing Node.js versions](https://pnpm.io/npmrc#use-node-version), [patching dependencies](https://pnpm.io/cli/patch).
 
-## [Vite.js](https://vitejs.dev/) - Frontend Tool
+## [Vite](https://vitejs.dev/) - Frontend Tool
 
-TODO
+And the last kind of tools that you need to know is frontend tool such as [Vite](https://vitejs.dev/). This tool allow you to serve your code during development, and bundle js, css and other assets together for production. You can learn more from video [Vite in 100 Seconds](https://www.youtube.com/watch?v=KCrXgy8qtjM)
