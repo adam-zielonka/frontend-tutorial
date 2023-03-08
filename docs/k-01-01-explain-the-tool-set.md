@@ -20,7 +20,9 @@ Of course if you starting from scratch and you want generate some project, you c
 
 ## [PNPM](https://pnpm.io/) - Package manager
 
-TODO
+The big advantage of JS development is [`npm`](https://www.npmjs.com/) registry, that contain very large amount of code packages, that you can easily use in your project. That's what package managers are for. The default one is [`npm`](https://www.npmjs.com/package/npm), it's stable and working, but have some problems with `node_modules` like for each project can exist the same set of libraries (and some of this problem are under development). But second amazing thing around JS world are alternatives like: [`yarn`](https://yarnpkg.com/) and [`pnpm`](https://pnpm.io/).
+
+For newest project I use [`pnpm`](https://pnpm.io/), because solve problems of `node_modules` (you can read more in [pnpm motivation](https://pnpm.io/motivation)), but also add some features that help during development, like: [managing Node.js versions](https://pnpm.io/npmrc#use-node-version), [patching dependencies](https://pnpm.io/cli/patch).
 
 ## [Vite.js](https://vitejs.dev/) - Frontend Tool
 
