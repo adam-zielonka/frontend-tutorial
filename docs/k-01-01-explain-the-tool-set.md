@@ -27,3 +27,15 @@ For newest project I use [`pnpm`](https://pnpm.io/), because solve problems of `
 ## [Vite](https://vitejs.dev/) - Frontend Tool
 
 And the last kind of tools that you need to know is frontend tool such as [Vite](https://vitejs.dev/). This tool allow you to serve your code during development, and bundle js, css and other assets together for production. You can learn more from video [Vite in 100 Seconds](https://www.youtube.com/watch?v=KCrXgy8qtjM)
+
+## [TypeScript](https://www.typescriptlang.org/) - Language
+
+TODO
+
+## [React](https://reactjs.org/) - for building user interfaces
+
+TODO
+
+## [MobX](https://mobx.js.org/) - for state management
+
+TODO
