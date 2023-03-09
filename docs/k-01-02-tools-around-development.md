@@ -10,6 +10,12 @@ Let's start with system form Microsoft. Linux and MacOS are UNIX-like systems an
 
 Also Microsoft create [Windows Terminal](https://github.com/microsoft/terminal) (now included in newest releases of Windows 11, if you don't have you can install form [GitHub](https://github.com/microsoft/terminal/releases), also in Windows 10).
 
+:::note
+
+If you wanna stay on Windows, you should remember to enable in `Settings` => `Privacy & security` => `For developers` => `Developer mode`. Some tools can relay on that like `pnpm` with symlinks, that are disable in normal mode for not admin terminal.
+
+:::
+
 ### MacOS
 
 MacOS is a UNIX-like system so there will be only one change to solve on minor problem. When you try to change name file `name.tsx` to `Name.tsx` this change will be ignored and not committed. So your code will be work only in MacOS, but for example on CI (that base on Linux), your code will be crash.
