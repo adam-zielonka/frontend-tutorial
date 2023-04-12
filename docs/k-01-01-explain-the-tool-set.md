@@ -37,7 +37,16 @@ And the last kind of tools that you need to know is frontend tool such as [Vite]
 
 ## [TypeScript](https://www.typescriptlang.org/) - Language
 
-TODO
+> `TypeScript` is `JavaScript` with syntax for types.
+
+When I started working at my team we the first fronted projects was done in `JavaScript` and at first we didn't see problems that show up in next years, that `TypeScript` show you this errors during development. 
+
+- Fancy code - Strange coding that isn't self explaining. Using `TS` you can describe all fancy code that you can write in `JS`, but when is difficult to type something, the red flag in your mind should appear and code should be rewritten.
+- What I have in that place - something you need display new information, and we don't know if that info already is in that place and debugging is needed to add small info.
+- Typos - There were some missing info because the field in an class have different name.
+- Auto complete in `JS` more like guessing - in `TS` is real.
+
+But all this features have a cost: you need to learn how to type, for beginning development in `TS` will be much slower (in my case I typed to much).
 
 ## [React](https://reactjs.org/) - for building user interfaces
 
