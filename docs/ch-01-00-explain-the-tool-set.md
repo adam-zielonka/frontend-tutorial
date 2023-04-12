@@ -48,10 +48,10 @@ When I started working at my team we the first fronted projects was done in `Jav
 
 But all this features have a cost: you need to learn how to type, for beginning development in `TS` will be much slower (in my case I typed to much).
 
-## [React](https://reactjs.org/) - for building user interfaces
+## [React](https://react.dev/) - for building user interfaces
 
-TODO
+> The library for web and native user interfaces
 
 ## [MobX](https://mobx.js.org/) - for state management
 
-TODO
+> Simple, scalable state management.
