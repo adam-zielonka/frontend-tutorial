@@ -1,4 +1,4 @@
-# 2. Create base for your app
+# 3. Create base for your app
 
 Let's start build React app using Vite and pnpm.
 

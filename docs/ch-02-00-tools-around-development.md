@@ -1,4 +1,4 @@
-# 1.2. Tools around development
+# 2. Tools around development
 
 ## Operation System
 

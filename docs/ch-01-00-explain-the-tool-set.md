@@ -1,4 +1,4 @@
-# 1.1. Explain the Tool Set
+# 1. Explain the Tool Set
 
 You should know some things about tools that are used during this training, but you should also be aware that this Tool Set can be valid in 2023, and probably will be working in future, there are some big possibilities that new tools arrive and change how we work. You should keep eye on [State of JavaScript](https://stateofjs.com/en-us/), to see which tools are on a top.
 

@@ -1,4 +1,4 @@
-# 3. Mobx in React
+# 4. Mobx in React
 
 React for me it is functions that can render user interface and Mobx is classes that contains state of application. In this chapter I try to show you how easy and power full is that connection.
 
