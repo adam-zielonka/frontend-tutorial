@@ -1,8 +1,16 @@
 # 4. Mobx in React
 
+import BrowserWindow from '@site/src/BrowserWindow';
+
 React for me it is functions that can render user interface and Mobx is classes that contains state of application. In this chapter I try to show you how easy and power full is that connection.
 
 During this chapter the app that I create will be counters, with some buttons that will be change counter value.
+
+:::note
+
+If you know Polish, you can watch the video on which this chapter is based: [React + Mobx](https://www.youtube.com/watch?v=EnlM_rsGfEQ)
+
+:::
 
 ## Setup the environment
 
@@ -54,7 +62,21 @@ function App() {
 }
 ```
 
-TODO: Show img result and url to styles
+And we should have:
+
+<BrowserWindow>
+
+![counter](./img/img-02-01-counter-start.png)
+
+</BrowserWindow>
+
+Of course we can add more style to this app from this: [style.css](https://github.com/adam-zielonka/mobx-example/blob/main/src/index.css) to file `src/main.css`. Result should be similar to this:
+
+<BrowserWindow>
+
+![counter_with_css](./img/img-02-02-counter-with-css.png)
+
+</BrowserWindow>
 
 ## Create store + First spell
 
