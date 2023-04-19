@@ -251,6 +251,8 @@ function App() {
 
 ## Action for deleting
 
+If we can add more counters, we also should have option to remove them.
+
 ```ts title="Store.ts"
 export class Store {
   //...
