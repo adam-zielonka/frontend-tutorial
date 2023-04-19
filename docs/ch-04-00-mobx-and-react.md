@@ -1,6 +1,6 @@
 # 4. Mobx in React
 
-import BrowserWindow from '@site/src/BrowserWindow';
+import BrowserWindow from '@site/src/components/BrowserWindow';
 
 React for me it is functions that can render user interface and Mobx is classes that contains state of application. In this chapter I try to show you how easy and power full is that connection.
 
