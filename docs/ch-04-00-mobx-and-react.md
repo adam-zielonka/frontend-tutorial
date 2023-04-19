@@ -134,7 +134,7 @@ So, if we have every thing we can just import this store and use in component:
 import { store } from './Store'
 
 const Counter = () => {
-  const [value, add, reset] = store;
+  const { value, add, reset } = store;
 
   return <div className="counter">
     <span>
@@ -153,7 +153,7 @@ But doesn't work, because we need to tell Mobx that this component using our sto
 
 ```tsx
 const Counter = observer(() => {
-  const [value, add, reset] = store;
+  const { value, add, reset } = store;
 
   return <div className="counter">
     ...
@@ -187,7 +187,7 @@ Now, we need to adjust components.
 
 ```tsx
 const Counter = observer(({ counter }:{ counter: CounterStore }) => {
-  const [value, add, reset] = counter;
+  const { value, add, reset } = counter;
 
   return <div className="counter">
     ...
@@ -238,7 +238,7 @@ We can disable or hide button if we full of counters.
 
 ```tsx
 function App() {
-  const { counters, addCounter } = store
+  const { counters, addCounter, canAddMoreCounters } = store
 
   return <div className="app">
     {counters.map((counter, i) => <Counter key={i} counter={counter} />)}
@@ -249,20 +249,169 @@ function App() {
 
 ## Action for deleting
 
+```ts title="Store.ts"
+export class Store {
+  //...
+  // highlight-start
+  removeCounter = (counter: CounterStore): void => {
+    this.counters = this.counters.filter(c => c !== counter)
+  }
+  // highlight-end
+  //..
+}
+```
+
+```tsx
+const Counter = observer(({ counter }:{ counter: CounterStore }) => {
+  const { value, add, reset } = counter;
+  // highlight-next-line
+  const { removeCounter } = store
+
+  return <div className="counter">
+    <span>
+      <span>{value}</span>
+      // highlight-next-line
+      <button onClick={() => removeCounter(counter)}>X</button>
+    </span>
+    ...
+  </div>;
+});
+```
+
 ## Sum of all counters
+
+```ts title="Store.ts"
+export class Store {
+  //...
+  // highlight-start
+  get sum(): number {
+    return this.counters.reduce((p, c) => p + c.value, 0)
+  }
+  // highlight-end
+  //..
+}
+```
+
+```tsx
+function App() {
+  const { counters, addCounter, canAddMoreCounters, sum } = store
+
+  return <div className="app">
+    // highlight-next-line
+    <span className="all">{sum}</span>
+    {counters.map((counter, i) => <Counter key={i} counter={counter} />)}
+    {canAddMoreCounters && <button onClick={(addCounter}>+</button>}
+  </div>;
+}
+```
+
+```diff
+-    <span className="all">{sum}</span>
++    <div className='all counter'><span><span>{sum}</span></span></div>
+```
 
 ## Value to input
 
+```tsx
+const Counter = observer(({ counter }:{ counter: CounterStore }) => {
+  const { value, add, reset } = counter;
+  const { removeCounter } = store
+
+  return <div className="counter">
+    <span>
+      // highlight-next-line
+      <input value={value} onChange={(e) => add(e.target.value)}/>
+      <button onClick={() => removeCounter(counter)}>X</button>
+    </span>
+    ...
+  </div>;
+});
+```
+
 ## Console in browser
+
+```ts title="Store.ts"
+declare global { interface Window { store: Store; }}
+window.store = store
+```
 
 ## Reaction (Bonus)
 
-TODO: Replace param in url
+Store state in url params
+
+```ts title="Store.ts"
+import { makeAutoObservable, reaction } from 'mobx'
+
+export class CounterStore {
+  // highlight-start
+  constructor(public value = 0) {
+    makeAutoObservable(this)
+    this.value = value
+  }
+  // highlight-end
+  //...
+}
+
+export class Store {
+  //...
+  // highlight-start
+  get toString(): string {
+    return this.counters.map(c => c.value).join(';')
+  }
+
+  fromString(value: string): void {
+    this.counters = value.split(';').map(v => !isNaN(+v) ? new CounterStore(+v) : new CounterStore())
+  }
+  // highlight-end
+  //...
+}
+
+export const store = new Store()
+// highlight-start
+const urlParams = new URLSearchParams(window.location.search)
+store.fromString(urlParams.get('value') || '')
+
+reaction(() => store.toString, (value) => {
+  const urlParams = new URLSearchParams(window.location.search)
+  urlParams.set('value', value)
+  window.history.replaceState({}, '', `?${urlParams.toString()}`)
+})
+// highlight-end
+
+declare global { interface Window { store: Store; }}
+window.store = store
+```
 
 ## Autorun (Bonus)
 
-TODO: Save state in local storage
+Store state in localstorage
+
+```ts title="Store.ts"
+//...
+
+export const store = new Store()
+const urlParams = new URLSearchParams(window.location.search)
+// highlight-next-line
+store.fromString(urlParams.get('value') || localStorage.getItem('store') || '')
+
+reaction(() => store.toString, (value) => {
+  const urlParams = new URLSearchParams(window.location.search)
+  urlParams.set('value', value)
+  window.history.replaceState({}, '', `?${urlParams.toString()}`)
+})
+
+// highlight-start
+autorun(() => {
+  localStorage.setItem('store', store.toString)
+})
+// highlight-end
+
+//..
+```
 
 ## Summary and Ending
 
+Resources:
 
+- [Source code](https://github.com/adam-zielonka/mobx-example)
+- [Demo](https://mobx-example.adamzielonka.pro/)

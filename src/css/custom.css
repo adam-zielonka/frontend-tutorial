@@ -17,3 +17,13 @@
   --ifm-color-primary-lighter: #f8f2ff;
   --ifm-color-primary-lightest: #ffffff;
 }
+
+:root {
+  --docusaurus-highlighted-code-line-bg: rgb(227, 231, 233);
+}
+
+/* If you have a different syntax highlighting theme for dark mode. */
+[data-theme='dark'] {
+  /* Color which works with dark mode syntax highlighting theme */
+  --docusaurus-highlighted-code-line-bg: rgb(71, 74, 92);
+}
