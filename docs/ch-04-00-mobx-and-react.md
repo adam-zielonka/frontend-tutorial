@@ -282,6 +282,12 @@ const Counter = observer(({ counter }:{ counter: CounterStore }) => {
 });
 ```
 
+:::info
+
+You can start from here using this project: [after-action-for-delete](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/action-for-delete) or you can clone from this [mobx-example](https://github.com/adam-zielonka/mobx-example/tree/action-for-delete) and set branch to `action-for-delete`
+
+:::
+
 ## Sum of all counters
 
 ```ts title="Store.ts"
