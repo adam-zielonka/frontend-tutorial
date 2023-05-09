@@ -47,3 +47,37 @@ To start working on this project you have two option: development using local or
     ```
 
 ## Crating new view
+
+Firstly we need to prepare area for our new view, but we also need it to define view also in store and action for changing. Because view is only information that is relevant on frontend there is store created for this purpose: `UI.ts`.
+
+To distinguish on witch of view we are, we need to add field to class UI called `view` and also getters and action for it:
+
+```ts showLineNumbers title='src/store/UI.ts'
+// highlight-next-line
+type View = "dashboard" | "loadings";
+//...
+export class UI {
+  // highlight-next-line
+  view: View = "dashboard";
+  //...
+
+  get isDashboardOpen(): boolean {
+    return this.view === "dashboard";
+  }
+
+  get isLoadingsOpen(): boolean {
+    return this.view === "loadings";
+  }
+
+  openDashboard = () => {
+    this.view = "dashboard";
+  };
+
+  openLoadings = () => {
+    this.view = "loadings";
+  };
+}
+//...
+```
+
+
