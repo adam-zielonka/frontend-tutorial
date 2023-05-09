@@ -157,3 +157,150 @@ export class UI {
   //..
 }
 ```
+
+## Create RampBox
+
+```tsx showLineNumbers title='src/components/RampBox.tsx'
+import { Card, Elevation } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+
+export const RampBox = observer(() => {
+
+  return <Card className="Ramp" elevation={Elevation.ONE}>
+    <header>Title</header>
+    <main>
+      Value
+    </main>
+  </Card>;
+});
+```
+
+And we need to use this box in `Content` component:
+
+```tsx showLineNumbers title='src/components/Content.tsx'
+  return <div className="Content">
+    <RampBox/>
+  </div>;
+```
+
+Of course we need to add styles:
+
+```tsx
+import "./Ramp.scss";
+```
+
+And we can use now Ramps that we have in store:
+
+```tsx showLineNumbers title='src/components/RampBox.tsx'
+import { Card, Elevation } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+// highlight-next-line
+import { Ramp } from "../store/Ramp";
+
+// highlight-next-line
+export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
+
+  return <Card className="Ramp" elevation={Elevation.ONE}>
+    // highlight-next-line
+    <header>{ramp.description}</header>
+    <main>
+      Value
+    </main>
+  </Card>;
+});
+```
+
+And now we need to pass ramps from store:
+
+```tsx showLineNumbers title='src/components/Content.tsx'
+export const Content = observer(() => {
+  // highlight-next-line
+  const { ui, ramps } = store;
+
+  if (ui.isLoadingsOpen) {
+    return <LoadingsTable/>;
+  }
+
+  return <div className="Content">
+    // highlight-next-line
+    {ramps.map(ramp => <RampBox key={ramp.id} ramp={ramp} />)}
+  </div>;
+});
+```
+
+## Create LoadingBox
+
+```tsx showLineNumbers title='src/components/LoadingBox.tsx'
+import { Card, Elevation, ProgressBar } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { Loading } from "../store/Loading";
+
+export const LoadingBox = observer(({ loading }: { loading: Loading }) => {
+  const { customer } = loading;
+
+  return <Card className="Loading" elevation={Elevation.TWO} interactive>
+    <header>
+      <div>{loading.id}</div>
+    </header>
+    <main>
+      <div className="details">
+        {loading.start.date} 
+        <div>
+          <span>{loading.start.time}</span>-{loading.end.time}
+        </div>
+      </div>
+      <div className="customer">
+        {customer && <>
+          <div className="name">{customer.name}</div>
+          <div className="city">{customer.country}, {customer.city}</div>
+          <div className="id">{customer.id.replace(/^0*/,"")}</div>
+        </>}
+      </div>
+    </main>
+    <footer>
+      <div>
+        <b>{loading.picked}</b> of <b>{loading.pallets}</b>
+      </div>
+      <ProgressBar animate={false} value={loading.loadedRatio} intent={loading.isLoaded ? "success" : "primary"}/>
+    </footer>
+  </Card>;
+});
+```
+
+And try to display one in RampBox:
+
+```tsx showLineNumbers title='src/components/RampBox.tsx'
+    <main>
+      // highlight-next-line
+      <LoadingBox loading={store.loadings[0]}/>
+    </main>
+```
+
+Now we can add getter for Ramp store for retrieving lodgings assigned to particular Ramp:
+
+```tsx showLineNumbers title='src/store/Ramp.tsx'
+export class Ramp {
+  //...
+
+  get loadings(): Loading[] {
+    return store.loadings.filter(l => l.ramp === this);
+  }
+}
+```
+
+And we can use this in RampBox:
+
+```tsx showLineNumbers title='src/components/RampBox.tsx'
+    <main>
+      // highlight-next-line
+      {ramp.loadings.map(l => <LoadingBox key={l.id} loading={l}/>)}
+    </main>
+```
+
+In the end we can handle on click event to open loading details:
+
+```tsx showLineNumbers title='src/components/LoadingBox.tsx'
+  return <Card className="Loading" elevation={Elevation.TWO} interactive onClick={() => store.ui.openLoadingDialog(loading)}>
+```
+
+
