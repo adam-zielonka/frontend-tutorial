@@ -128,3 +128,32 @@ export const Content = observer(() => {
   // highlight-end
 }
 ```
+
+## Add view to url params
+
+```tsx showLineNumbers title='src/store/UI.ts'
+export class UI {
+  view: View = "dashboard";
+  selectedLoading?: Loading;
+
+  constructor() {
+  init = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+
+    // highlight-start
+    const view = urlSearchParams.get("view");
+    if (view === "loadings") {
+      this.view = "loadings";
+    }
+    // highlight-end
+    
+    //...
+
+    // highlight-next-line
+    reaction(() => this.view, view => addQueryParam("view", view, "dashboard"));
+    reaction(() => this.selectedLoading, loading => addQueryParam("loading", loading?.id ?? "", ""));
+  };
+
+  //..
+}
+```
