@@ -46,7 +46,7 @@ To start working on this project you have two option: development using local or
     npm dev
     ```
 
-## Crating new view
+## Store info about view
 
 Firstly we need to prepare area for our new view, but we also need it to define view also in store and action for changing. Because view is only information that is relevant on frontend there is store created for this purpose: `UI.ts`.
 
@@ -80,4 +80,51 @@ export class UI {
 }
 ```
 
+## Creating buttons for view changing
 
+
+```tsx showLineNumbers title='src/components/Header.tsx'
+export const Header = observer(() => {
+  const { ui } = store;
+    
+  return <Navbar>
+    <Navbar.Group align={Alignment.LEFT}>
+      <Navbar.Heading>ShippingBoard Lite</Navbar.Heading>
+      // highlight-start
+      <Navbar.Divider />
+      <ButtonGroup>
+        <Button outlined icon="dashboard" text="Dashboard" intent="primary"
+          onClick={ui.openDashboard} active={ui.isDashboardOpen}/>
+        <Button outlined icon="th" text="Loadings" intent="primary"
+          onClick={ui.openLoadings} active={ui.isLoadingsOpen} />
+      </ButtonGroup>
+      // highlight-end
+    </Navbar.Group>
+    <Navbar.Group align={Alignment.RIGHT}>
+      <ButtonGroup minimal>
+        <Button icon="add" text="Add loading" intent="primary"
+          onClick={() => ui.openLoadingDialog(Loading.create())}/>
+      </ButtonGroup>
+    </Navbar.Group>
+  </Navbar>;
+});
+
+```
+
+## Switching between views
+
+```tsx showLineNumbers title='src/components/Content.tsx'
+export const Content = observer(() => {
+  const { ui } = store;
+
+  // highlight-start
+  if (ui.isLoadingsOpen) {
+    return <LoadingsTable/>;
+  }
+
+  return <div className="Content">
+    Ramps
+  </div>;
+  // highlight-end
+}
+```
