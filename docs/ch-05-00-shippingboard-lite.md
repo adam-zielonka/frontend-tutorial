@@ -303,4 +303,68 @@ In the end we can handle on click event to open loading details:
   return <Card className="Loading" elevation={Elevation.TWO} interactive onClick={() => store.ui.openLoadingDialog(loading)}>
 ```
 
+## Add status to RampBox
 
+```ts showLineNumbers title='src/store/Ramp.tsx'
+export type Status = "empty" | "loaded" | "progress" | "not-started" | ""
+
+export class Ramp {
+  //...
+
+  get isEmpty(): boolean {
+    return !this.loadings.length;
+  }
+
+  get isLoaded(): boolean {
+    return !this.loadings.some(l => !l.isLoaded);
+  }
+
+  get isInProgress(): boolean {
+    return this.loadings.some(l => l.isInProgress);
+  }
+
+  get isSomeNotStarted(): boolean {
+    return this.loadings.some(l => !l.isStarted);
+  }
+
+  get status(): Status {
+    if (this.isEmpty) return "empty";
+    if (this.isLoaded) return "loaded";
+    if (this.isSomeNotStarted) return "not-started";
+    if (this.isInProgress) return "progress";
+
+    return "";
+  }
+}
+```
+
+And add style to RampBox component:
+
+```tsx showLineNumbers title='src/components/RampBox.tsx'
+    <main className={ramp.status}>
+```
+
+## Add ramp status and quantity to content details
+
+```ts showLineNumbers title='src/store/Ramp.tsx'
+export type Status = "empty" | "loaded" | "progress" | "not-started" | ""
+
+export class Ramp {
+  //...
+
+  get quantity(): number {
+    return this.loadings.length;
+  }
+}
+```
+
+```tsx showLineNumbers title='src/components/Details.tsx'
+          {ramps.map((r) => <Button key={r.id} className="ramp-button" outlined 
+            active={r === loading.ramp} onClick={() => loading.setRamp(r)} 
+            // highlight-next-line
+            intent={r.isEmpty ? Intent.NONE : r === loading.ramp ? Intent.PRIMARY : Intent.DANGER}>
+            {r.description}
+            // highlight-next-line
+            <sup>{r.quantity > 0 && r.quantity}</sup>
+          </Button>)}
+```
