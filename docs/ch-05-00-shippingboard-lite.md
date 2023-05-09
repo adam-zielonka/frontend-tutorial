@@ -53,12 +53,13 @@ Firstly we need to prepare area for our new view, but we also need it to define 
 To distinguish on witch of view we are, we need to add field to class UI called `view` and also getters and action for it:
 
 ```ts showLineNumbers title='src/store/UI.ts'
-// highlight-next-line
 type View = "dashboard" | "loadings";
+
 //...
+
 export class UI {
-  // highlight-next-line
   view: View = "dashboard";
+
   //...
 
   get isDashboardOpen(): boolean {
@@ -77,7 +78,6 @@ export class UI {
     this.view = "loadings";
   };
 }
-//...
 ```
 
 
