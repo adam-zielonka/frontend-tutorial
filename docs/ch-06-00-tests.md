@@ -2,7 +2,6 @@
 
 Let's start with `mobx-example` project.
 
-
 ## Preparing workspace
 
 To start working on this project you have two option: development using local or online editor:
