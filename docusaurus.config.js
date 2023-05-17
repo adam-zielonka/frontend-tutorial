@@ -64,14 +64,14 @@ const config = {
           },
         ],
       },
-      announcementBar: {
-        id: "workinprogress",
-        content: "This tutorial is work in progress. Please be patient. Some mistakes may occur." +
-          " Final result can be different than presented here.",
-        backgroundColor: "#4a1790",
-        textColor: "#d5b1ff",
-        isCloseable: false,
-      },
+      // announcementBar: {
+      //   id: "workinprogress",
+      //   content: "This tutorial is work in progress. Please be patient. Some mistakes may occur." +
+      //     " Final result can be different than presented here.",
+      //   backgroundColor: "#4a1790",
+      //   textColor: "#d5b1ff",
+      //   isCloseable: false,
+      // },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
