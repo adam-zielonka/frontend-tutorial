@@ -8,12 +8,6 @@ React for me it is functions that can render user interface and Mobx is classes 
 
 During this chapter the app that I create will be counters, with some buttons that will be change counter value.
 
-:::note
-
-If you know Polish, you can watch the video on which this chapter is based: [React + Mobx](https://www.youtube.com/watch?v=EnlM_rsGfEQ)
-
-:::
-
 ## Setup the environment
 
 If you prepared in last chapter empty project react project, you need to add two libraries to your project `mobx` and `mobx-react-lite`:
