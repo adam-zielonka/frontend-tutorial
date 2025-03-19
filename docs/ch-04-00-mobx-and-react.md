@@ -8,6 +8,19 @@ React for me it is functions that can render user interface and Mobx is classes 
 
 During this chapter the app that I create will be counters, with some buttons that will be change counter value.
 
+:::info
+
+If you starting from this point you have two options:
+
+1. Use web editor: [vite.new/react-ts](https://vite.new/react-ts)
+2. Or generate project using this command:
+
+```
+pnpm create vite my-react-app --template react-swc-ts
+```
+
+:::
+
 ## Setup the environment
 
 If you prepared in last chapter empty project react project, you need to add two libraries to your project `mobx` and `mobx-react-lite`:
