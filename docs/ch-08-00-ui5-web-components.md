@@ -90,3 +90,10 @@ export default App
   count is {count}
 </Button>
 ```
+
+## More exercises
+
+- add one of the charts: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/charts-bulletchart--docs
+- add progress bar: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/data-display-progressindicator--docs
+- add wizard: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/layouts-floorplans-wizard--docs
+- add dialog: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/modals-popovers-dialog--docs
