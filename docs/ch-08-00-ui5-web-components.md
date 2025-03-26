@@ -46,3 +46,47 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 ```
+
+## UI5 Button
+
+### Replace `<button>` with UI5 `<Button>`
+
+```tsx showLineNumbers title="src/App.tsx"
+// highlight-next-line
+import { Button } from '@ui5/webcomponents-react'
+
+//...
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      {/*...*/}
+        // highlight-start 
+        <Button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </Button>
+        // highlight-end
+      {/*...*/}
+    </>
+  )
+}
+
+export default App
+
+```
+
+### Customize: add icon and design
+
+```tsx showLineNumbers
+<Button 
+  // highlight-next-line
+  icon="add"
+  // highlight-next-line
+  design="Emphasized"
+  onClick={() => setCount((count) => count + 1)}
+>
+  count is {count}
+</Button>
+```
