@@ -221,6 +221,13 @@ And we need to remember that `App` now have some state that can be change why we
 export default observer(App);
 ```
 
+
+:::info
+
+You can start from here using this project: [global-store](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/global-store) or you can clone from this [mobx-example](https://github.com/adam-zielonka/mobx-example/tree/global-store) and set branch to `global-store`
+
+:::
+
 ## Limit number of counters
 
 Sometimes we need to sey to users stop, you can not do this. You can only have 4 counters. So we can add geter that will be return true or false if user can add more counters.
