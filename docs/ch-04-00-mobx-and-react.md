@@ -438,4 +438,4 @@ autorun(() => {
 Resources:
 
 - [Source code](https://github.com/adam-zielonka/mobx-example)
-- [Demo](https://mobx-example.adamzielonka.pro/)
+- [Demo](https://adam-zielonka.github.io/mobx-example/)
