@@ -12,4 +12,4 @@ There are a lot of things to talk about but in this tutorial, we show you only w
 
 ## Development
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) for the current runtime, builds and checks.
+See [DEVELOPMENT.md](https://github.com/adam-zielonka/frontend-tutorial/blob/main/DEVELOPMENT.md) for the current runtime, builds and checks.
