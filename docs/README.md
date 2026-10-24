@@ -9,3 +9,7 @@ We are developers at ZF Company in the IT department. Our job is to create and f
 There is not one frontend technology that solves all problems, and we also don't have only one way to build app. App that is used on computers, tablets, scanner devices. Across the project we use [Angular](https://angular.io/), [React](https://react.dev/) and [UI5](https://openui5.org/).
 
 There are a lot of things to talk about but in this tutorial, we show you only way that we use [React](https://react.dev/) with [Mobx](https://mobx.js.org/README.html) to build our application.
+
+## Development
+
+See [DEVELOPMENT.md](https://github.com/adam-zielonka/frontend-tutorial/blob/main/DEVELOPMENT.md) for the current runtime, builds and checks.
