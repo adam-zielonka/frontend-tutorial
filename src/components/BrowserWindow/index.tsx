@@ -24,7 +24,7 @@ export default function BrowserWindow({
   url = 'http://localhost:5173',
   style,
   bodyStyle,
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <div className={styles.browserWindow} style={{...style, minHeight}}>
       <div className={styles.browserWindowHeader}>
@@ -53,7 +53,7 @@ export default function BrowserWindow({
 }
 
 // Quick and dirty component, to improve later if needed
-export function IframeWindow({url}: {url: string}): JSX.Element {
+export function IframeWindow({url}: {url: string}): React.JSX.Element {
   return (
     <div style={{padding: 10}}>
       <BrowserWindow
