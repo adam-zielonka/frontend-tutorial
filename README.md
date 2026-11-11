@@ -1,6 +1,6 @@
-# Configure a development workspace — solution
+# React state and events — start
 
-Practice typed configuration, then use the real tools locally.
+Connect events, state updates, and accessible feedback.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Enable formatOnSave and strict in the practice configuration.
-- Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit.
-- Confirm all four checks are ready; follow the local steps in a real terminal and editor.
+- Wire Remove pallet to a functional state update that never goes below zero.
+- Disable Remove pallet when the count is zero.
+- Wire Reset to restore zero; check add, remove, and reset in the preview.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-02-00-tools-around-development) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-development-tools-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-development-tools-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-03-00-create-base-for-your-app) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-react-basics-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-react-basics-solution-v1)
 
 ## All checkpoints
 
