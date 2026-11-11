@@ -5,11 +5,16 @@ sidebar_position: 7
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 **Setup from step 6:** the supplied UI gains a Remove button for each counter and an empty-list message. Each button calls a new `removeCounter(id)` stub in the parent store. All existing counter actions and computed getters are unchanged.
 
 Filter by identity, preserving the other `CounterStore` instances. Removing an item should free a slot and subtract its value from the total automatically; no extra action should repair those derived values. Stable keys make the remaining components follow their own models rather than their former array positions.
 
 Test removing the second of four differently valued counters, adding a replacement, and finally removing every counter. Removing an ID that is not present should be harmless.
+
+</details>
 
 <LessonExercise id="04-07-counter-removal" />
 

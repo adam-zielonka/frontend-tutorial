@@ -12,9 +12,10 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "test": "node --test scripts/course.test.mjs",
+    "test": "node scripts/assemble-course.mjs --check && node --test scripts/course.test.mjs",
     "course:check": "node scripts/check-course.mjs",
-    "course:release": "node scripts/release-course.mjs"
+    "course:release": "node scripts/release-course.mjs",
+    "course:assemble": "node scripts/assemble-course.mjs"
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "2.20.0",

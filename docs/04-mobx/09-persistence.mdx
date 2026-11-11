@@ -5,6 +5,9 @@ sidebar_position: 9
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 **Setup from step 8:** URL serialization and validated hydration are already complete. The supplied app effect now calls the new `connectPersistence` stub, which still restores and synchronizes the URL. Add storage restoration and an `autorun` without changing the counter UI.
 
 A valid URL wins, including `?value=` for an empty list. If the URL is absent or invalid, read `mobx-counter-values-v1` from `localStorage`. Parse a JSON array into `unknown`; accept at most four finite numbers and reject strings, objects, malformed JSON and oversized data. Reuse validated hydration only after checking that shape. Missing or unusable data leaves the initial counter in place.
@@ -12,6 +15,8 @@ A valid URL wins, including `?value=` for an empty list. If the URL is absent or
 Restore **before** starting either writer. Save only numeric values, rather than model instances or IDs. An `autorun` tracks those values and also writes immediately. Catch read and write failures, and return cleanup for both the storage autorun and URL reaction.
 
 To check storage restoration in an exported app, edit counters, remove the `value` parameter from the address, and reload. A normal reload keeps the URL, so it tests URL restoration instead. Also test `[]`, invalid JSON, `["3"]`, `[1e309]`, and blocked storage. The embedded preview may isolate or restrict storage; its app data is separate from the lesson editor's saved source draft.
+
+</details>
 
 <LessonExercise id="04-09-persistence" />
 

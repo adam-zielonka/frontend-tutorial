@@ -27,3 +27,11 @@
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgb(71, 74, 92);
 }
+
+/* A lesson is a workspace: reserve the article width for code and preview. */
+.container:has([data-lesson-workspace]) {max-width: none;}
+.container:has([data-lesson-workspace]) .col:has(> div > article) {max-width: 100% !important; flex-basis: 100%;}
+.container:has([data-lesson-workspace]) .col:has(> .theme-doc-toc-desktop) {display: none;}
+.container:has([data-lesson-workspace]) .theme-doc-markdown > header h1 {font-size: 2rem; line-height: 1.2; margin-bottom: .75rem;}
+.container:has([data-lesson-workspace]) .theme-doc-markdown > details {margin-bottom: .75rem;}
+.container:has([data-lesson-workspace]) .theme-doc-toc-mobile {display: none;}

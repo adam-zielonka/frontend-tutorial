@@ -6,9 +6,14 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 The selector already stores a typed filter, but its value does not yet affect the rows. Derive `visible` from the records and the selected status during render.
 
 The table and live count both read `visible`, so one expression keeps them consistent. All is a special choice that accepts every status. A filter should not delete or mutate the original records; switching back to All restores the complete view.
+
+</details>
 
 <LessonExercise id="05-02-status-filter" />
 

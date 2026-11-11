@@ -15,8 +15,8 @@ are reviewed separately.
 
 ## Interactive course
 
-The website and downloadable projects share `course/lessons.json`. Each chapter mounts
-`LessonExercise` with a stable ID. The editor loads on demand, keeps drafts per lesson
+Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and downloadable projects share the generated `course/lessons.json`. Each step mounts
+`LessonExercise` with a stable ID. The editor and preview open automatically, keep drafts per step
 in localStorage, and shows solutions without overwriting drafts. Sandpack runs in a
 CodeSandbox iframe and needs network access. Its TypeScript preview transpiles code;
 Vite's local `build` also type-checks. Lesson 6 uses Vitest in a real terminal; the
@@ -25,25 +25,25 @@ embedded preview provides a separate, explicitly labelled browser check.
 ```sh
 pnpm test          # manifest, exports, draft recovery and downloaded-file imports
 pnpm typecheck
-pnpm course:check  # install, type-check and build all 16 projects; run solution tests
+pnpm course:check  # install, type-check and build all step projects; run solution tests
 pnpm build
 ```
 
 Fixtures and teaching-project dependencies are separate from the documentation site.
-Per-lesson pnpm lockfiles are tracked in `course/locks`. After deliberately changing
+Dependency profiles share pnpm lockfiles in `course/locks/v2`. After deliberately changing
 project dependencies, run `node scripts/check-course.mjs --update-locks`, then review
 and commit the updated lockfiles. Students may also use npm; pnpm with the supplied
 lockfile provides the reproducible install.
 
 ### Publishing course checkpoints
 
-`pnpm course:release` creates the independent branch `course-examples-v1` and 16 annotated
-tags named `lesson-<id>-start-v1` and `lesson-<id>-solution-v1`. It uses Git objects and
+`pnpm course:release` creates the independent branch `course-examples-v2` and two annotated
+tags per step named `lesson-<id>-start-v2` and `lesson-<id>-solution-v2`. It uses Git objects and
 an isolated index, without switching the website checkout. Each tag contains a complete
-Vite app at its root. The branch history follows all eight start/solution pairs; its tip
+Vite app at its root. The branch history follows all ordered step start/solution pairs; its tip
 is the final solution, and its README links every checkpoint.
 
-Run the validation commands first. Push the explicit branch and the 16 generated tag
+Run the validation commands first. Push the explicit branch and the generated step tag
 refs before publishing the website, so student links resolve. Do not use `git push --tags`
 (it could publish unrelated local tags). The release command refuses to overwrite any
 existing checkpoint. For later editions, update the version in `scripts/course-project.mjs`

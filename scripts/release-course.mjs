@@ -3,7 +3,7 @@ import {execFileSync} from 'node:child_process';
 import {mkdtempSync, readFileSync, rmSync} from 'node:fs';
 import path from 'node:path';
 import {tmpdir} from 'node:os';
-import {lessons, validateLessons, projectFiles, tagFor, branch} from './course-project.mjs';
+import {lessons, validateLessons, projectFiles, tagFor, branch, lockfileFor} from './course-project.mjs';
 validateLessons();
 const git = (args, options = {}) => execFileSync('git', args, {encoding: 'utf8', ...options}).trim();
 const exists = ref => {try {git(['show-ref', '--verify', '--quiet', ref]); return true;} catch {return false;}};
@@ -16,7 +16,7 @@ const updates = [];
 try {
   for (const lesson of lessons) for (const variant of ['start', 'solution']) {
     const files = projectFiles(lesson, variant);
-    files['pnpm-lock.yaml'] = readFileSync(new URL(`../course/locks/${lesson.id}.yaml`, import.meta.url), 'utf8');
+    files['pnpm-lock.yaml'] = readFileSync(lockfileFor(lesson), 'utf8');
     files['LICENSE'] = readFileSync(new URL('../LICENSE', import.meta.url), 'utf8');
     git(['read-tree', '--empty'], {env});
     const index = Object.entries(files).map(([name, content]) => `100644 ${git(['hash-object', '-w', '--stdin'], {input: content})}\t${name}\n`).join('');
@@ -33,5 +33,5 @@ try {
   }
   updates.push(`create refs/heads/${branch} ${parent}`);
   git(['update-ref', '--stdin'], {input: `start\n${updates.join('\n')}\nprepare\ncommit\n`});
-  console.log(`Created ${branch} and 16 annotated tags locally. Push these exact refs after validation.`);
+  console.log(`Created ${branch} and ${lessons.length * 2} annotated tags locally. Push these exact refs after validation.`);
 } finally {rmSync(directory, {recursive: true, force: true});}

@@ -6,11 +6,16 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 Reset needs a changed value to be a meaningful test: a broken no-op reset would pass if the store began and stayed at zero. Assert the nonzero value before calling `reset()` and zero afterwards.
 
 A separate independence test should create two stores, change one, and inspect both. Together with a fresh store in every test, this guards against accidental shared state.
 
 Run `pnpm exec vitest run` in a real terminal: five tests should pass with none pending. `pnpm exec vitest` enables watch mode. Coverage can be added separately with `@vitest/coverage-v8@3.2.6` to match this chapter's pinned Vitest version; code execution coverage does not prove that assertions cover all meaningful behavior. These tests verify the store, not keyboard operation or rendered DOM updates.
+
+</details>
 
 <LessonExercise id="06-03-reset-and-independence" />
 

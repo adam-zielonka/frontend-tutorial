@@ -10,26 +10,28 @@ There is not one frontend technology that solves all problems, and we also don't
 
 There are a lot of things to talk about but in this tutorial, we show you only way that we use [React](https://react.dev/) with [Mobx](https://mobx.js.org/README.html) to build our application.
 
-## Learn by doing
+## Learn one step at a time
 
-Every chapter has an exercise you can edit and run on this page. Start with the
-objective and tasks, open the editor, and use its preview to try your changes.
-Hints are available before you reveal the reference solution. Your exercise is
-saved in this browser; the solution has a separate, read-only view. Downloads let
-you carry your work into a local project.
+Choose a chapter from the sidebar, then open its first step. Each step is a
+separate lesson page with its own explanation, task, code editor, and live
+preview. Both panes open automatically. The editor selects the file you need
+for that step; supporting files can be inspected separately.
 
-You can also open the starter or solution in StackBlitz, or expand the local setup
-instructions and clone its Git tag. All checkpoints live in this repository on the
-[`course-examples-v1` branch](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v1),
-with a separate `start` and `solution` tag for each lesson. The tags contain complete
-Vite projects, rather than the documentation website.
+Follow the steps in order to build the project gradually. For example, MobX
+starts with a counter component, then adds state, a store, `observer`, a
+collection, computed values, and persistence. Each page has its own prepared
+starting point and reference solution. Your drafts are saved separately per
+step; moving forward opens the next prepared checkpoint.
 
-Start with basic TypeScript and development tools, build a React counter, introduce
-MobX stores, apply them to a shipping board, add tests and data fetching, then use
-UI5 components. No account is needed for reading or coding on this page. The embedded
-editor requires internet access; Git and Node.js 24 are needed only for local work.
-The first two exercises practice code and configuration; actual terminal commands
-are run on your own machine or in StackBlitz.
+Every step also has cloning instructions and a StackBlitz link under
+“Run this step locally or in an online editor”. Version 2 checkpoints live on
+[`course-examples-v2`](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v2),
+with `lesson-<chapter>-<step>-<name>-start-v2` and matching `solution-v2` tags.
+The earlier chapter-wide v1 checkpoints remain available in Git.
+
+No account is required to read or use the embedded editor. Its preview needs
+internet access. Install Node.js 24 and Git only if you want to run a project
+locally. Download your edited files before moving to another device.
 
 ## Development
 

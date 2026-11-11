@@ -9,10 +9,10 @@ import {readDraft, writeDraft, draftKey} from '../src/components/LessonExercise/
 const lesson = () => structuredClone(lessons[0]);
 const storage = () => {const map = new Map(); return {getItem: k => map.get(k) ?? null, setItem: (k,v) => map.set(k,v)};};
 
-test('each chapter has exactly its exercise, and exports complete runnable projects', () => {
+test('each step has its own exercise page, and exports complete runnable projects', () => {
   validateLessons();
   for (const l of lessons) {
-    const doc = readFileSync(new URL(`../docs/${l.doc}.md`, import.meta.url), 'utf8');
+    const doc = readFileSync(new URL(`../docs/${l.doc}.mdx`, import.meta.url), 'utf8');
     assert.ok(doc.includes(`<LessonExercise id="${l.id}" />`));
     for (const variant of ['start', 'solution']) {
       const files = projectFiles(l, variant);
@@ -59,4 +59,16 @@ test('export rejects unsafe file names', () => {
   const items = structuredClone(lessons);
   items[0].files['/../escape.ts'] = 'bad';
   assert.throws(() => validateLessons(items), /Unsafe file/);
+});
+
+test('every step has focused editable files and a unique URL', () => {
+  const docs = new Set();
+  for (const l of lessons) {
+    assert.ok(!docs.has(l.doc)); docs.add(l.doc);
+    assert.ok(l.focusFiles.includes(l.activeFile));
+    for (const [file, code] of Object.entries(l.solution)) {
+      if (code !== l.files[file]) assert.ok(l.focusFiles.includes(file), `${l.id}: ${file} should be editable`);
+    }
+  }
+  assert.ok(lessons.filter(l => l.chapter === '04').length >= 8, 'MobX should progress through individual concepts');
 });

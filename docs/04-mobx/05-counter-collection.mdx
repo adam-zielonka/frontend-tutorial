@@ -5,11 +5,16 @@ sidebar_position: 5
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 **Setup from step 4:** `CounterStore` now accepts a stable ID and an initial value. A new observable `Store` starts with one counter, and `App` owns that store instead of a single counter. The existing `Counter` receives its model through a prop. The supplied parent `observer` tracks list changes; each child still observes its own value.
 
 Implement adding and rendering multiple models. Use a stable ID for `key`, so later deletion will not transfer a component's identity to another counter. A temporary 20-counter safety guard keeps repeated clicks bounded; the next lesson replaces it with the original chapter's four-counter capacity.
 
 Create three counters and give them different values. Their buttons should operate independently.
+
+</details>
 
 <LessonExercise id="04-05-counter-collection" />
 

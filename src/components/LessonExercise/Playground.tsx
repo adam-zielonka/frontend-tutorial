@@ -49,24 +49,48 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
   </div>;
 }
 
+function ProjectFiles({lesson}: {lesson: Lesson}) {
+  const {sandpack} = useSandpack();
+  const [expanded, setExpanded] = useState(false);
+  return <label className={styles.projectToggle}><input type="checkbox" checked={expanded} onChange={event => {
+    const show = event.target.checked;
+    const active = sandpack.activeFile;
+    for (const path of Object.keys(lesson.files)) {
+      if (!lesson.focusFiles.includes(path)) {
+        if (show) sandpack.openFile(path); else sandpack.closeFile(path);
+      }
+    }
+    sandpack.setActiveFile(show || lesson.focusFiles.includes(active) ? active : lesson.activeFile);
+    setExpanded(show);
+  }}/> Show supporting project files (read-only)</label>;
+}
+
 function Editor({lesson, solution, reset}: {lesson: Lesson; solution: boolean; reset: () => void}) {
   const {colorMode} = useColorMode();
   const [initial] = useState(() => {
     if (solution) return lesson.solution;
     try {return readDraft(window.localStorage, lesson) ?? lesson.files;} catch {return lesson.files;}
   });
+  // Sandpack resets its file state when these prop identities change. Keep them
+  // stable so toggling the theme or inspecting support files never loses edits.
+  const [files] = useState(() => ({
+    ...Object.fromEntries(Object.entries(initial).map(([path, code]) => [path, {code, readOnly: solution || !lesson.focusFiles.includes(path)}])),
+    '/index.tsx': {code: `import React from 'react';\nimport {createRoot} from 'react-dom/client';\nimport App from './App';\ncreateRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);`, hidden: true},
+  }));
+  const [customSetup] = useState(() => ({dependencies: {...lesson.dependencies, react: '18.3.1', 'react-dom': '18.3.1'}}));
   return <SandpackProvider template="react-ts" theme={colorMode === 'dark' ? 'dark' : 'light'}
-    files={{...initial, '/index.tsx': {code: `import React from 'react';\nimport {createRoot} from 'react-dom/client';\nimport App from './App';\ncreateRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);`, hidden: true}}}
-    customSetup={{dependencies: {...lesson.dependencies, react: '18.3.1', 'react-dom': '18.3.1'}}}
-    options={{activeFile: lesson.activeFile, visibleFiles: Object.keys(initial), recompileMode: 'delayed', recompileDelay: 800, experimental_enableServiceWorker: true}}>
-    <DraftTools lesson={lesson} solution={solution} reset={reset}/>
+    files={files} customSetup={customSetup}
+    options={{activeFile: lesson.activeFile, visibleFiles: lesson.focusFiles, autorun: true, initMode: 'immediate', recompileMode: 'delayed', recompileDelay: 800, experimental_enableServiceWorker: true}}>
+    <ProjectFiles lesson={lesson}/>
+    <div className={styles.paneLabels}><span>Code</span><span>Live preview</span></div>
     <SandpackLayout>
-      <SandpackCodeEditor showTabs showLineNumbers showInlineErrors wrapContent readOnly={solution} style={{height: 480}} />
-      <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton style={{height: 480}} />
+      <SandpackCodeEditor showTabs showLineNumbers showInlineErrors wrapContent readOnly={solution} style={{height: 520}} />
+      <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton style={{height: 520}} />
     </SandpackLayout>
+    <DraftTools lesson={lesson} solution={solution} reset={reset}/>
     <details className={styles.console}><summary>Console and runtime errors</summary><SandpackConsole /></details>
     <p className={styles.note}>The preview compiles TypeScript but does not type-check it. Run <code>npm run build</code> locally for type checks.
-      If the preview cannot connect, use StackBlitz or clone the project above.</p>
+      If the preview cannot connect, use StackBlitz or clone the project from the links below.</p>
   </SandpackProvider>;
 }
 

@@ -6,11 +6,16 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 The count and progress describe the same shipment, so store only `loaded` and derive `(loaded / 10) * 100`. Passing the raw count would show only 10% at full capacity.
 
 For this pinned UI5 v2 release, use `ProgressIndicator` with `value`, `displayValue`, and `accessibleName`. Clamp the updater as well as disabling Load at ten. The state rule protects the value, while the disabled action communicates capacity.
 
 Check 0%, 50%, and 100%, then reset. The progress, pallet label, and button availability should all follow that single state update. Confirm Reset remains usable when Load is disabled.
+
+</details>
 
 <LessonExercise id="08-03-progress-and-capacity" />
 

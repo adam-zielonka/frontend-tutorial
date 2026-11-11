@@ -6,11 +6,16 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+<details>
+<summary>About this step</summary>
+
 This chapter deliberately uses a small single-value `CounterStore` rather than chapter 4's collection. Its `change(delta)` adds to the current value and clamps it between 0 and 10; `reset()` returns it to zero. The implementation is already complete so you can focus on testing behavior.
 
 Replace two pending cases with assertions using `describe`, `it`, and `expect(...).toBe(...)`. Use a fresh store per test. Assert the intermediate value after adding as well as the result after subtracting.
 
 **The live preview is a manual harness, not Vitest. Editing the test file does not update a test result on this page.** Export the edited project, install dependencies, and run `pnpm exec vitest run` in a real local or StackBlitz terminal. These store tests run in Node without a DOM emulator. Expect two passing and three pending cases. Temporarily assert an incorrect value to confirm a real failing result, then restore the correct assertion.
+
+</details>
 
 <LessonExercise id="06-01-first-test" />
 
