@@ -1,0 +1,21 @@
+---
+title: "Show progress and enforce capacity"
+slug: /08-ui5/03-progress-and-capacity
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The count and progress describe the same shipment, so store only `loaded` and derive `(loaded / 10) * 100`. Passing the raw count would show only 10% at full capacity.
+
+For this pinned UI5 v2 release, use `ProgressIndicator` with `value`, `displayValue`, and `accessibleName`. Clamp the updater as well as disabling Load at ten. The state rule protects the value, while the disabled action communicates capacity.
+
+Check 0%, 50%, and 100%, then reset. The progress, pallet label, and button availability should all follow that single state update. Confirm Reset remains usable when Load is disabled.
+
+<LessonExercise id="08-03-progress-and-capacity" />
+
+## Sources
+
+[UI5 React documentation](https://ui5.github.io/webcomponents-react/), [UI5 React v2.15.0 ProgressIndicator source](https://github.com/SAP/ui5-webcomponents-react/blob/v2.15.0/packages/main/src/webComponents/ProgressIndicator/index.tsx), [React avoiding redundant state](https://react.dev/learn/choosing-the-state-structure#avoid-redundant-state).
+
+[Previous: Wire actions and register icons](./02-events-and-icons.mdx)

@@ -1,27 +1,20 @@
-# 1. Explain the Tool Set
+---
+sidebar_position: 10
+---
 
-```mdx-code-block
-import LessonExercise from '@site/src/components/LessonExercise';
-```
+# 1. Explain the tool set
 
-<LessonExercise id="01-tool-set" />
+Node.js runs development tools on your computer; TypeScript checks the model; React renders it; Vite serves and builds the exported app. The browser runs transformed JavaScript. The lesson projects use React 18.3.1 and their own pinned dependencies; the documentation website has a separate toolchain.
 
-## Goals
+Use Node 24 when working locally and check it with `node --version`. In the browser you can begin immediately: each small step opens the needed file beside a live preview.
 
-Identify the tools used in this course and explain where each runs.
+## Lessons
 
-## The tools
+1. [Describe a shipment with types](./01-tool-set/01-shipment-shape.mdx) — Add a required priority to the shipment model and display it.
+2. [Derive the manifest summary](./01-tool-set/02-derived-summary.mdx) — Calculate summary values from the typed records.
 
-- **Node.js** runs development tools on your computer; it is not required in the visitor's browser. Use Node 24 for this course and check it with `node --version`.
-- **npm** installs packages and runs scripts. It comes with Node; check `npm --version`. pnpm is an optional alternative, but use one package manager consistently in a project.
-- **Vite** serves the application during development and builds production assets.
-- **TypeScript** adds static types to JavaScript; the browser runs the transformed JavaScript.
-- **React** describes the interface as components. **MobX** manages shared observable state.
-
-## Practical steps
-
-Install Node 24, open a terminal, and check both versions. In the next chapters you will create a separate Vite sandbox with React 18.3.1. It has its own dependencies and lockfile: the tutorial website itself uses Docusaurus and may use different versions of React and other packages. Do not change the website's dependencies to follow sandbox instructions.
+Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
 
 ## Official references
 
-[Node.js downloads](https://nodejs.org/en/download), [npm documentation](https://docs.npmjs.com/), [Vite guide](https://vite.dev/guide/), [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/intro.html), [React learning](https://react.dev/learn), [MobX introduction](https://mobx.js.org/README.html).
+[Node.js](https://nodejs.org/en/download), [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/intro.html), [React learning](https://react.dev/learn), [Vite guide](https://vite.dev/guide/).

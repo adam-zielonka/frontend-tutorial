@@ -1,0 +1,19 @@
+---
+title: "Configure editor and type checks"
+slug: /02-development-tools/01-editor-and-types
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The open file is a typed practice model. Setting `formatOnSave` and `strict` changes the checklist in the preview, but does not change your editor or the running sandbox's compiler settings.
+
+After the practice, open the exported project in VS Code. Enable `editor.formatOnSave` in your editor settings and choose a formatter if none is configured. Inspect `compilerOptions.strict` in the actual `tsconfig.json`; the export already enables it. Formatting improves consistency, while strict checking helps catch type mistakes. These are separate tools.
+
+<LessonExercise id="02-01-editor-and-types" />
+
+## Sources
+
+[VS Code settings](https://code.visualstudio.com/docs/configure/settings), [VS Code formatting](https://code.visualstudio.com/docs/editing/codebasics#_formatting), [TypeScript strict](https://www.typescriptlang.org/tsconfig/strict.html).
+
+[Next: Use scripts and a Git checkpoint](./02-scripts-and-git.mdx)

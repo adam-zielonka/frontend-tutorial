@@ -1,0 +1,21 @@
+---
+title: "Fetch the local ramp fixture"
+slug: /07-fetch/01-request
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The effect and loading/success/error UI are supplied so you can focus on the request. Initially `loadRamps` returns an empty array. Replace that placeholder with an awaited `fetch` and an awaited JSON parse.
+
+The fixture stays at `/public/ramps.json` in the virtual project. Local Vite serves it as `/ramps.json`, while Sandpack's static-file service worker can require `/public/ramps.json`; the supplied `loadLocalRamps` adapter tries the compatible local paths. Keep it intact. No remote API or credentials are used.
+
+For this first step, a `Ramp[]` assertion is a temporary assumption, **not runtime validation**. The next lesson replaces it with validation and an explicit HTTP status check. Retry is also deliberately disabled until the final step.
+
+<LessonExercise id="07-01-request" />
+
+## Sources
+
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [Vite public directory](https://vite.dev/guide/assets.html#the-public-directory).
+
+[Next: Reject HTTP and invalid data](./02-http-and-data-errors.mdx)

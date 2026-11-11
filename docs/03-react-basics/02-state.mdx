@@ -1,0 +1,19 @@
+---
+title: "Remember the pallet count"
+slug: /03-react-basics/02-state
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The previous component can display a value but cannot remember changes. `useState(0)` supplies both a value that persists between renders and a setter that requests another render.
+
+Attach an event handler to Add pallet. The updater `current => current + 1` calculates the next count from the previous one, including when updates are queued. Calling the component again then renders the new value in the existing output.
+
+<LessonExercise id="03-02-state" />
+
+## Sources
+
+[React state](https://react.dev/learn/state-a-components-memory), [useState updater functions](https://react.dev/reference/react/useState#updating-state-based-on-the-previous-state).
+
+[Previous: Render the counter component](./01-component.mdx) · [Next: Bound subtraction and reset](./03-bounded-events.mdx)

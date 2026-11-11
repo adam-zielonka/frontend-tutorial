@@ -1,0 +1,21 @@
+---
+title: "Cancel obsolete requests"
+slug: /07-fetch/03-abort-cleanup
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Changing the URL starts another effect. The previous request may finish later, so its result must not replace the newest selection. The supplied `active` flag already guards state updates; now also cancel obsolete work.
+
+Create one `AbortController` per effect setup, pass its signal to the adapter, then mark the effect inactive **before** aborting in cleanup. This order keeps intentional cancellation out of the error UI. The adapter already avoids its fallback when the signal is aborted.
+
+Rapidly toggle the fixture option and confirm the final selection determines the displayed state. A tiny local file can resolve too quickly to reveal a race, so use Network throttling in browser developer tools if needed. React Strict Mode also runs an extra setup/cleanup cycle during development, which this cleanup must tolerate.
+
+<LessonExercise id="07-03-abort-cleanup" />
+
+## Sources
+
+[AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), [React effect cleanup](https://react.dev/reference/react/useEffect#fetching-data-with-effects).
+
+[Previous: Reject HTTP and invalid data](./02-http-and-data-errors.mdx) · [Next: Retry the same request](./04-retry.mdx)

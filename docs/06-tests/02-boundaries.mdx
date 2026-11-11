@@ -1,0 +1,21 @@
+---
+title: "Test both clamping boundaries"
+slug: /06-tests/02-boundaries
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The ordinary arithmetic tests do not prove the limits. A store that only handles small changes could still exceed capacity after a large delta.
+
+In one new test, jump above 10, try another positive change, jump below zero, then try another negative change. Assert after **each** operation. These cases distinguish clamping from wrapping, ignoring an overshoot, or allowing a value outside the range.
+
+The preview remains the same manual harness. Run `pnpm exec vitest run` against your edited export to execute the tests; the expected result is three passing and two pending cases.
+
+<LessonExercise id="06-02-boundaries" />
+
+## Sources
+
+[Vitest assertions](https://v3.vitest.dev/api/expect.html), [Vitest test API](https://v3.vitest.dev/api/).
+
+[Previous: Write the first store tests](./01-first-test.mdx) · [Next: Test reset and independent stores](./03-reset-and-independence.mdx)

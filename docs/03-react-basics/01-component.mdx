@@ -1,0 +1,19 @@
+---
+title: "Render the counter component"
+slug: /03-react-basics/01-component
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A React component is a function that returns JSX. JSX resembles HTML, but values such as `count` appear inside braces. This first counter is deliberately static: focus on the structure before adding events.
+
+Keep one `main` root, add a labelled section, and use `output` for the displayed quantity. `aria-live="polite"` will help announce later updates. The preview already has an entry point supplied by the exercise, so edit only `App.tsx`. In an exported Vite project this file lives under `src/`.
+
+<LessonExercise id="03-01-component" />
+
+## Sources
+
+[React your first component](https://react.dev/learn/your-first-component), [writing markup with JSX](https://react.dev/learn/writing-markup-with-jsx).
+
+[Next: Remember the pallet count](./02-state.mdx)

@@ -1,0 +1,19 @@
+---
+title: "Explain empty ramps and ramp status"
+slug: /05-shippingboard/04-empty-and-status
+sidebar_position: 4
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+An empty list needs an explanation. R3 is genuinely available, while R2 can look empty merely because its loading does not match the selected filter. Render different messages for those cases.
+
+Derive ramp status from **all** assignments, so selecting Done cannot make a busy ramp appear complete or available. Check for zero assignments before `every`, then check completion, active loading, and waiting in that order. With the supplied fixture the statuses are Waiting, Loading, and Available. To exercise Complete, temporarily mark both R1 records done in `data.ts`, then restore the fixture.
+
+<LessonExercise id="05-04-empty-and-status" />
+
+## Sources
+
+[React conditional rendering](https://react.dev/learn/conditional-rendering), [React avoiding redundant state](https://react.dev/learn/choosing-the-state-structure#avoid-redundant-state).
+
+[Previous: Group loadings by ramp](./03-ramp-groups.mdx)

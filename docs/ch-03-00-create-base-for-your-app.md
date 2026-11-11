@@ -1,55 +1,21 @@
-# 3. Create a base for your app
+---
+sidebar_position: 30
+---
 
-```mdx-code-block
-import LessonExercise from '@site/src/components/LessonExercise';
-```
+# 3. React basics
 
-<LessonExercise id="03-react-basics" />
+Build the counter in three small steps: static JSX, remembered state, and bounded actions. Each lesson begins with the previous solution and opens `App.tsx` beside the preview.
 
-## Goals
+The exercise supplies the entry point. In a local export, `index.html` contains the root element, `src/main.tsx` mounts `App`, and `src/App.tsx` contains the component. Run `pnpm install`, `pnpm dev`, and `pnpm build` in the exported project to install, serve, and type-check/build it. This sandbox uses React 18.3.1 separately from the documentation website.
 
-Create a TypeScript React app, understand its entry points, and update a component with state.
+## Lessons
 
-## Create the sandbox
+1. [Render the counter component](./03-react-basics/01-component.mdx) — Build a small semantic component before adding behavior.
+2. [Remember the pallet count](./03-react-basics/02-state.mdx) — Use local React state to update the rendered count.
+3. [Bound subtraction and reset](./03-react-basics/03-bounded-events.mdx) — Keep a nonnegative counter through every available action.
 
-With Node 24, run these commands outside the tutorial website checkout. The current Vite `react-ts` template uses `@vitejs/plugin-react`. Pin React for this course; this does not change the website's dependencies.
-
-```bash
-npm create vite@latest my-react-app -- --template react-ts
-cd my-react-app
-npm install
-npm install react@18.3.1 react-dom@18.3.1
-npm install -D @types/react@^18 @types/react-dom@^18
-npm run dev
-```
-
-Open the local address printed by Vite. Save edits to see updates. Use `npm run build` to check TypeScript and create a production build, and `npm run preview` to preview that build locally.
-
-## Understand the files
-
-`index.html` contains the root element. `src/main.tsx` imports styles and mounts `App` using `createRoot`. `src/App.tsx` contains a component; `.tsx` permits JSX and TypeScript. `vite.config.ts` configures Vite and the React plugin. `public` holds assets served as-is. Do not add a proxy until you have a real API target; Vite's `server.proxy` is for development and does not configure your production server.
-
-## Build a counter
-
-Replace `src/App.tsx` with:
-
-```tsx
-import { useState } from 'react';
-
-export default function App() {
-  const [count, setCount] = useState(0);
-  return (
-    <main>
-      <h1>Counter</h1>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(previous => previous + 1)}>Add one</button>
-    </main>
-  );
-}
-```
-
-The event handler requests a new render. The updater receives the previous value, which is useful when updates are queued. Try adding a subtract button and a reset button. For objects and arrays in React state, create updated copies rather than mutating the existing value.
+Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
 
 ## Official references
 
-[Vite getting started](https://vite.dev/guide/), [Vite proxy](https://vite.dev/config/server-options#server-proxy), [React state](https://react.dev/reference/react/useState), [updating objects](https://react.dev/learn/updating-objects-in-state).
+[React components](https://react.dev/learn/your-first-component), [React state](https://react.dev/reference/react/useState), [Vite guide](https://vite.dev/guide/).

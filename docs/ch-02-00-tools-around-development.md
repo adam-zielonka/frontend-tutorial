@@ -1,23 +1,20 @@
+---
+sidebar_position: 20
+---
+
 # 2. Tools around development
 
-```mdx-code-block
-import LessonExercise from '@site/src/components/LessonExercise';
-```
+Prepare an editor, a terminal, Git, and browser developer tools. The first practice changes a typed checklist model; it cannot change your real editor settings or run terminal commands. Each lesson identifies the matching local workflow.
 
-<LessonExercise id="02-development-tools" />
+Keep your project and tools in the same operating-system environment. Check `node --version` and `git --version`; use Node 24 for exported projects. Use one package manager consistently.
 
-## Goals
+## Lessons
 
-Prepare a terminal, Git, and an editor; use browser developer tools to inspect an application.
+1. [Configure editor and type checks](./02-development-tools/01-editor-and-types.mdx) — Distinguish a typed practice model from real editor and compiler settings.
+2. [Use scripts and a Git checkpoint](./02-development-tools/02-scripts-and-git.mdx) — Finish the script model, then practice a real local tool workflow.
 
-## Practical steps
-
-1. Install Node 24 and Git on Windows, macOS, or Linux. On Windows, a regular terminal or Windows Subsystem for Linux works; keep your project and tools in the same environment.
-2. Open a terminal and run `node --version`, `npm --version`, and `git --version`. Install an editor such as VS Code and open your project folder.
-3. Use `pwd` (or `cd` in Windows Command Prompt) to check your location. Use `cd` to move between folders. Stop a running development server with Ctrl+C.
-4. Open browser developer tools. The Console shows errors; Elements lets you inspect HTML and CSS; Network shows requests and responses. Reload the page with Network open to see requests from startup.
-5. Use `git status` to inspect changes. Commit your own sandbox work when a working step is complete; avoid committing dependencies or secrets.
+Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
 
 ## Official references
 
-[Git documentation](https://git-scm.com/doc), [VS Code setup](https://code.visualstudio.com/docs/setup/setup-overview), [Chrome DevTools](https://developer.chrome.com/docs/devtools/overview), [Node.js downloads](https://nodejs.org/en/download).
+[Git documentation](https://git-scm.com/doc), [VS Code setup](https://code.visualstudio.com/docs/setup/setup-overview), [TypeScript configuration](https://www.typescriptlang.org/tsconfig/), [Chrome DevTools](https://developer.chrome.com/docs/devtools/overview).
