@@ -1,6 +1,6 @@
 {
   "id": "08-ui5",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Convert the loaded pallet count into a 0–100 progress percentage (one pallet means 10%).",

@@ -1,4 +1,4 @@
-# UI5 shipment progress — start
+# UI5 shipment progress — solution
 
 Compose ThemeProvider, Button, registered icons, and ProgressIndicator.
 
