@@ -1,4 +1,4 @@
-# Use scripts and a Git checkpoint — start
+# Use scripts and a Git checkpoint — solution
 
 Finish the script model, then practice a real local tool workflow.
 
