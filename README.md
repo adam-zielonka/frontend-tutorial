@@ -1,4 +1,4 @@
-# Create an observable counter store — start
+# Create an observable counter store — solution
 
 Move counter behavior into a class with observable state and bound actions.
 

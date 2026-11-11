@@ -4,14 +4,15 @@ export class CounterStore {
   value = 0;
 
   constructor() {
-    // TODO: infer observable fields and bound actions with makeAutoObservable.
+    makeAutoObservable(this, {}, { autoBind: true });
   }
 
   add(delta: number) {
-    // TODO: accumulate delta only if delta and the resulting value are finite.
+    const next = this.value + delta;
+    if (Number.isFinite(delta) && Number.isFinite(next)) this.value = next;
   }
 
   reset() {
-    // TODO: restore value to zero.
+    this.value = 0;
   }
 }

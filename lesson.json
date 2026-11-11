@@ -1,6 +1,6 @@
 {
   "id": "04-03-observable-store",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "In the constructor call makeAutoObservable(this, {}, { autoBind: true }).",
