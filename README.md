@@ -1,6 +1,6 @@
-# Subscribe React with observer — solution
+# Manage multiple counters — start
 
-Render observable values without a duplicate local-state snapshot.
+Compose observable counter instances in an observable parent collection.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Wrap Counter in observer from mobx-react-lite, keeping its counter prop.
-- Read counter.value during the observed render and leave actions on the store.
-- Check +100 then -1 displays 99, and Reset works without calling a React setter.
+- Implement Store.addCounter: stop at safetyLimit, then push new CounterStore(this.nextId++).
+- Replace the single Counter with a map over store.counters and use counter.id as its React key.
+- Add several counters, change each independently, and confirm resetting one does not change the others.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/04-react-observer) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-04-react-observer-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-04-react-observer-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/05-counter-collection) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-05-counter-collection-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-05-counter-collection-solution-v2)
 
 ## All checkpoints
 

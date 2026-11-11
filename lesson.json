@@ -1,10 +1,10 @@
 {
-  "id": "04-04-react-observer",
-  "variant": "solution",
+  "id": "04-05-counter-collection",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Wrap Counter in observer from mobx-react-lite, keeping its counter prop.",
-    "Read counter.value during the observed render and leave actions on the store.",
-    "Check +100 then -1 displays 99, and Reset works without calling a React setter."
+    "Implement Store.addCounter: stop at safetyLimit, then push new CounterStore(this.nextId++).",
+    "Replace the single Counter with a map over store.counters and use counter.id as its React key.",
+    "Add several counters, change each independently, and confirm resetting one does not change the others."
   ]
 }
