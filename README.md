@@ -1,6 +1,6 @@
-# A typed shipment manifest — solution
+# Configure a development workspace — start
 
-Connect the tool set to a small typed UI.
+Practice typed configuration, then use the real tools locally.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Add a required priority union (standard | express) to Shipment; make S-101 express and the others standard.
-- Calculate total pallets and the number of ready shipments from the array.
-- Render each shipment’s priority next to its status.
+- Enable formatOnSave and strict in the practice configuration.
+- Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit.
+- Confirm all four checks are ready; follow the local steps in a real terminal and editor.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-01-00-explain-the-tool-set) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-tool-set-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-tool-set-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-02-00-tools-around-development) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-development-tools-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-development-tools-solution-v1)
 
 ## All checkpoints
 

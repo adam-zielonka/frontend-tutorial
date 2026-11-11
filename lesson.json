@@ -1,10 +1,10 @@
 {
-  "id": "01-tool-set",
-  "variant": "solution",
+  "id": "02-development-tools",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "Add a required priority union (standard | express) to Shipment; make S-101 express and the others standard.",
-    "Calculate total pallets and the number of ready shipments from the array.",
-    "Render each shipment’s priority next to its status."
+    "Enable formatOnSave and strict in the practice configuration.",
+    "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit.",
+    "Confirm all four checks are ready; follow the local steps in a real terminal and editor."
   ]
 }
