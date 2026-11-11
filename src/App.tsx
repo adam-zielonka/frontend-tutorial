@@ -10,8 +10,8 @@ export default function App() {
   return <main>
     <h1>ShippingBoard Lite</h1>
     <nav className="controls" aria-label="Board view">
-      <button aria-pressed={view === 'loadings'} onClick={() => {}}>Loadings</button>
-      <button aria-pressed={view === 'ramps'} onClick={() => {}}>Ramps</button>
+      <button aria-pressed={view === 'loadings'} onClick={() => setView('loadings')}>Loadings</button>
+      <button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}>Ramps</button>
     </nav>
     <label>Status <select value={filter} onChange={event => setFilter(event.target.value as Filter)}>
       <option value="all">All</option><option value="waiting">Waiting</option>

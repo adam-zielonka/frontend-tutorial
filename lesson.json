@@ -1,6 +1,6 @@
 {
   "id": "05-01-view-switching",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Wire the Loadings and Ramps buttons to setView with the matching View value.",
