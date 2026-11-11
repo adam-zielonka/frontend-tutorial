@@ -1,6 +1,6 @@
-# Test reset and independent stores — solution
+# Fetch the local ramp fixture — start
 
-Prove reset changes a nonzero value and instances do not share state.
+Make a request and render its JSON response through the existing effect.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Replace the reset todo: change a new store by 7, assert 7, reset, then assert 0.
-- Replace the independence todo: create two stores, change only the first by 3, and assert first.value is 3 while second.value is 0.
-- Run Vitest in a terminal; expect all five tests passing with no pending cases.
+- In loadRamps call fetch(url, { signal }), await the response, and return its parsed JSON as Ramp[].
+- Keep loadLocalRamps and /public/ramps.json unchanged; the adapter supports the preview and local Vite paths.
+- Confirm the preview moves from an empty result to the three named ramps.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/03-reset-and-independence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-03-reset-and-independence-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-03-reset-and-independence-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/01-request) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-01-request-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-01-request-solution-v2)
 
 ## All checkpoints
 

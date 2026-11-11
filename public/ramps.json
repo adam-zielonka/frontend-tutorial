@@ -1,0 +1,14 @@
+[
+  {
+    "id": "R1",
+    "name": "North ramp"
+  },
+  {
+    "id": "R2",
+    "name": "South ramp"
+  },
+  {
+    "id": "R3",
+    "name": "Express ramp"
+  }
+]

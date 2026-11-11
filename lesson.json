@@ -1,10 +1,10 @@
 {
-  "id": "06-03-reset-and-independence",
-  "variant": "solution",
+  "id": "07-01-request",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Replace the reset todo: change a new store by 7, assert 7, reset, then assert 0.",
-    "Replace the independence todo: create two stores, change only the first by 3, and assert first.value is 3 while second.value is 0.",
-    "Run Vitest in a terminal; expect all five tests passing with no pending cases."
+    "In loadRamps call fetch(url, { signal }), await the response, and return its parsed JSON as Ramp[].",
+    "Keep loadLocalRamps and /public/ramps.json unchanged; the adapter supports the preview and local Vite paths.",
+    "Confirm the preview moves from an empty result to the three named ramps."
   ]
 }
