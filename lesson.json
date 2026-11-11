@@ -1,10 +1,10 @@
 {
-  "id": "06-01-first-test",
-  "variant": "solution",
+  "id": "06-02-boundaries",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Replace the first two it.todo calls with executable tests using a new CounterStore in each test.",
-    "Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.",
-    "Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
+    "Replace the clamping it.todo with a fresh-store test that changes by +100, +1, -100, then -1.",
+    "Assert values 10, 10, 0, and 0 after the respective operations.",
+    "Run the actual Vitest suite in a terminal; expect three passing tests and two pending."
   ]
 }
