@@ -1,10 +1,10 @@
 {
-  "id": "01-01-shipment-shape",
-  "variant": "solution",
+  "id": "01-02-derived-summary",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Add priority to Shipment as the union standard | express.",
-    "Give S-101 express priority and the other shipments standard priority.",
-    "Render the priority beside each shipment status; confirm all three rows remain visible."
+    "Calculate totalPallets with reduce and readyCount with filter from shipments.",
+    "Add a Summary section above the list showing the shipment count, pallet total, and ready count.",
+    "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows."
   ]
 }
