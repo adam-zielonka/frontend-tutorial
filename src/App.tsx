@@ -1,42 +1,30 @@
 import { useState } from 'react';
-import { ramps, loadings, type View, type Filter } from './data';
+import { observer } from 'mobx-react-lite';
+import { CounterStore } from './Store';
 import './styles.css';
 
-export default function App() {
-  const [view, setView] = useState<View>('loadings');
-  const [filter, setFilter] = useState<Filter>('all');
-  const visible = loadings.filter(item => filter === 'all' || item.status === filter);
+const App = observer(function App() {
+  const [store] = useState(() => new CounterStore());
   return <main>
-    <h1>ShippingBoard Lite</h1>
-    <nav className="controls" aria-label="Board view">
-      <button aria-pressed={view === 'loadings'} onClick={() => setView('loadings')}>Loadings</button>
-      <button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}>Ramps</button>
-    </nav>
-    <label>Status <select value={filter} onChange={event => setFilter(event.target.value as Filter)}>
-      <option value="all">All</option><option value="waiting">Waiting</option>
-      <option value="loading">Loading</option><option value="done">Done</option>
-    </select></label>
-    <p aria-live="polite">{visible.length} matching loadings</p>
-    {view === 'loadings' ? <section>
-      <h2>Loadings</h2>
-      {visible.length === 0 ? <p>No matching loadings.</p> : <table>
-        <caption>Loading assignments</caption>
-        <thead><tr><th scope="col">Shipment</th><th scope="col">Ramp</th><th scope="col">Status</th></tr></thead>
-        <tbody>{visible.map(item => <tr key={item.id}>
-          <td>{item.id} · {item.customer}</td><td>{item.rampId}</td><td>{item.status}</td>
-        </tr>)}</tbody>
-      </table>}
-    </section> : <section>
-      <h2>Ramp overview</h2>
-      {ramps.map(ramp => {
-        const assigned = visible.filter(item => item.rampId === ramp.id);
-        return <article key={ramp.id}>
-          <h3>{ramp.name} ({ramp.id})</h3>
-          {assigned.length === 0 ? <p>No matching loadings at this ramp.</p> : <ul>
-            {assigned.map(item => <li key={item.id}>{item.id} · {item.customer} · {item.status}</li>)}
-          </ul>}
-        </article>;
-      })}
-    </section>}
+    <h1>Test a CounterStore</h1>
+    <p>This manual harness exercises the real store. It does not execute Vitest.</p>
+    <section aria-label="Manual counter harness">
+      <p>Current value: <output aria-live="polite">{store.value}</output> (allowed: 0–10)</p>
+      <div className="controls">
+        <button onClick={() => store.change(4)}>+4</button>
+        <button onClick={() => store.change(-2)}>−2</button>
+        <button onClick={() => store.change(100)}>+100</button>
+        <button onClick={() => store.change(-100)}>−100</button>
+        <button onClick={store.reset}>Reset</button>
+      </div>
+      <p>Try Reset → +4 → −2 (expect 2), +100 (expect 10), −100 (expect 0).</p>
+    </section>
+    <h2>Write repeatable checks</h2>
+    <p>Edit /Store.test.ts. Export to Vite or open the export in StackBlitz, install dependencies,
+      then run <code>pnpm exec vitest run</code> in its real terminal.</p>
+    <p>The starter has two passing but incomplete checks and three pending tests. Complete the subtraction check and replace pending tests with assertions.</p>
+    <p>These store-only tests use Vitest’s default Node environment; no browser emulator is needed.</p>
   </main>;
-}
+});
+
+export default App;

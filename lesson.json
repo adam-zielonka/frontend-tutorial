@@ -1,10 +1,11 @@
 {
-  "id": "05-shippingboard",
-  "variant": "solution",
+  "id": "06-tests",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "Filter loadings by the selected status; All must restore all three rows.",
-    "In Ramps view, group the filtered loadings by rampId and show each ramp’s name.",
-    "Keep empty ramps visible with a no-matching-loadings message; preserve the filter when switching views."
+    "Complete the addition/subtraction test: after the existing +4 assertion, apply -2 and assert 2.",
+    "Test upper and lower clamping, including another change at each boundary.",
+    "Test reset after a nonzero value and prove that separate store instances do not share state.",
+    "Run pnpm exec vitest run in the exported project; all five tests must pass with none pending."
   ]
 }

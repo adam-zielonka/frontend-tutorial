@@ -1,6 +1,6 @@
-# Two views of the shipping board — solution
+# Write CounterStore tests — start
 
-Derive a filtered table and ramp overview from the same local data.
+Turn manual observations into isolated, repeatable Vitest assertions.
 
 ## Run
 
@@ -15,15 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Filter loadings by the selected status; All must restore all three rows.
-- In Ramps view, group the filtered loadings by rampId and show each ramp’s name.
-- Keep empty ramps visible with a no-matching-loadings message; preserve the filter when switching views.
+- Complete the addition/subtraction test: after the existing +4 assertion, apply -2 and assert 2.
+- Test upper and lower clamping, including another change at each boundary.
+- Test reset after a nonzero value and prove that separate store instances do not share state.
+- Run pnpm exec vitest run in the exported project; all five tests must pass with none pending.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-05-00-shippingboard-lite) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-shippingboard-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-shippingboard-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-06-00-tests) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-tests-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-tests-solution-v1)
 
 ## All checkpoints
 
