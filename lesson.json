@@ -1,6 +1,6 @@
 {
   "id": "08-03-progress-and-capacity",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Import ProgressIndicator and derive progress as (loaded / 10) * 100.",
