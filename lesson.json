@@ -1,10 +1,11 @@
 {
-  "id": "05-03-ramp-groups",
-  "variant": "solution",
+  "id": "05-04-empty-and-status",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Replace the ramp placeholder with an article for each ramp.",
-    "Inside each article derive assigned from visible by matching item.rampId to ramp.id, then render its rows.",
-    "Use stable IDs for keys; confirm All gives R1 two assignments, R2 one, and R3 none."
+    "Derive allAssigned from the unfiltered loadings for each ramp.",
+    "Show Available when there are no assignments, Complete when every assignment is done, Loading when any is loading, otherwise Waiting.",
+    "For zero visible rows, show No loadings assigned. for an empty ramp and No matching loadings at this ramp. for a filtered-out assignment.",
+    "Choose Done: R1 must remain Waiting, R2 Loading, and R3 Available even though only L-103 matches the filter."
   ]
 }

@@ -1,6 +1,6 @@
-# Group loadings by ramp — solution
+# Explain empty ramps and ramp status — start
 
-Render each ramp with its matching visible assignments.
+Distinguish an available ramp from a filter with no matches.
 
 ## Run
 
@@ -15,15 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Replace the ramp placeholder with an article for each ramp.
-- Inside each article derive assigned from visible by matching item.rampId to ramp.id, then render its rows.
-- Use stable IDs for keys; confirm All gives R1 two assignments, R2 one, and R3 none.
+- Derive allAssigned from the unfiltered loadings for each ramp.
+- Show Available when there are no assignments, Complete when every assignment is done, Loading when any is loading, otherwise Waiting.
+- For zero visible rows, show No loadings assigned. for an empty ramp and No matching loadings at this ramp. for a filtered-out assignment.
+- Choose Done: R1 must remain Waiting, R2 Loading, and R3 Available even though only L-103 matches the filter.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/03-ramp-groups) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-03-ramp-groups-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-03-ramp-groups-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/04-empty-and-status) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-04-empty-and-status-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-04-empty-and-status-solution-v2)
 
 ## All checkpoints
 
