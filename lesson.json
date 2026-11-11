@@ -1,10 +1,10 @@
 {
-  "id": "03-01-component",
-  "variant": "solution",
+  "id": "03-02-state",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Replace the placeholder paragraph with a short instruction about counting pallets.",
-    "Add a section labelled Pallet counter and render count inside an output element.",
-    "Give the output aria-live=\"polite\"; confirm the preview shows Pallets: 0."
+    "Import useState and replace the fixed count with useState(0).",
+    "Add an Add pallet button whose click handler increments with a functional state updater.",
+    "Click three times and confirm the displayed count becomes 3 without reloading."
   ]
 }
