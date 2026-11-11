@@ -1,6 +1,6 @@
-# Retry the same request — solution
+# Add a UI5 provider and button — start
 
-Start a fresh request without changing the URL or reloading the page.
+Compose a UI5 React component inside its provider.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Add a request counter with useState(0).
-- Enable Retry request and increment that counter with a functional update on each click.
-- Include request in the effect dependencies alongside url; retry success and failure, then restore the working fixture.
+- Import ThemeProvider and Button from their @ui5/webcomponents-react component paths.
+- Wrap the existing main element in ThemeProvider.
+- Replace the native button with Button, keeping its Load pallet text; confirm it renders and accepts keyboard focus.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/04-retry) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-retry-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-retry-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/08-ui5/01-provider-and-button) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-01-provider-and-button-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-01-provider-and-button-solution-v2)
 
 ## All checkpoints
 
