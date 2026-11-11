@@ -1,6 +1,6 @@
 {
   "id": "02-01-editor-and-types",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Enable formatOnSave and strict with boolean true values in /project.ts.",
