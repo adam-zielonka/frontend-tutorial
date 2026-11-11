@@ -1,11 +1,11 @@
 {
-  "id": "04-08-url-state",
-  "variant": "solution",
+  "id": "04-09-persistence",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Implement serializedValues as a semicolon-separated value list and hydrate as an all-or-nothing validated replacement.",
-    "Reject more than four counters, payloads longer than 512 characters, blank tokens, NaN and Infinity. Treat an entirely empty string as an empty collection.",
-    "Implement restoreUrl and syncUrl. Use the value query parameter, preserve other parameters and the hash, catch browser failures, and return the reaction disposer.",
-    "Load 5;-2, change a value, and inspect the share query. Invalid input such as 1;;2 or Infinity must preserve the current collection. In the exported app, reload a URL containing ?value=5%3B-2."
+    "Complete connectPersistence: a valid URL has priority, otherwise restore a validated JSON number array from STORAGE_KEY.",
+    "Catch storage access and JSON errors. Reject non-arrays, more than four items, oversized JSON, non-number values and non-finite numbers.",
+    "After restoration, use autorun to save only a plain array of counter values; catch quota or blocked-storage errors.",
+    "Return cleanup that stops both effects. Verify empty arrays, malformed JSON, URL priority and restoration after removing the value query parameter."
   ]
 }
