@@ -1,6 +1,6 @@
-# Cancel obsolete requests — solution
+# Retry the same request — start
 
-Pair every effect request with cancellation and stale-result protection.
+Start a fresh request without changing the URL or reloading the page.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.
-- In cleanup set active to false before calling controller.abort().
-- Keep both success and error handlers guarded by active; rapidly toggle the missing-fixture option and check the final selection wins.
+- Add a request counter with useState(0).
+- Enable Retry request and increment that counter with a functional update on each click.
+- Include request in the effect dependencies alongside url; retry success and failure, then restore the working fixture.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/03-abort-cleanup) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-abort-cleanup-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-abort-cleanup-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/04-retry) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-retry-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-retry-solution-v2)
 
 ## All checkpoints
 
