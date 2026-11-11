@@ -1,6 +1,6 @@
-# Test both clamping boundaries — solution
+# Test reset and independent stores — start
 
-Verify overshoots and repeated attempts at the limits.
+Prove reset changes a nonzero value and instances do not share state.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Replace the clamping it.todo with a fresh-store test that changes by +100, +1, -100, then -1.
-- Assert values 10, 10, 0, and 0 after the respective operations.
-- Run the actual Vitest suite in a terminal; expect three passing tests and two pending.
+- Replace the reset todo: change a new store by 7, assert 7, reset, then assert 0.
+- Replace the independence todo: create two stores, change only the first by 3, and assert first.value is 3 while second.value is 0.
+- Run Vitest in a terminal; expect all five tests passing with no pending cases.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/02-boundaries) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-02-boundaries-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-02-boundaries-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/03-reset-and-independence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-03-reset-and-independence-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-03-reset-and-independence-solution-v2)
 
 ## All checkpoints
 
