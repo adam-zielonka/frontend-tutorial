@@ -1,6 +1,6 @@
-# React state and events — solution
+# A bounded MobX collection — start
 
-Connect events, state updates, and accessible feedback.
+Use observable data, computed values, and actions with observer.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Wire Remove pallet to a functional state update that never goes below zero.
-- Disable Remove pallet when the count is zero.
-- Wire Reset to restore zero; check add, remove, and reset in the preview.
+- Implement total as a computed getter that sums all counter values.
+- Clamp every change to the inclusive range -10 through 10, even for ±100.
+- Limit the collection to three counters. Remove one and confirm a new counter can be added.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-03-00-create-base-for-your-app) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-react-basics-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-react-basics-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-04-00-mobx-and-react) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-mobx-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-mobx-solution-v1)
 
 ## All checkpoints
 

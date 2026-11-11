@@ -1,10 +1,10 @@
 {
-  "id": "03-react-basics",
-  "variant": "solution",
+  "id": "04-mobx",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "Wire Remove pallet to a functional state update that never goes below zero.",
-    "Disable Remove pallet when the count is zero.",
-    "Wire Reset to restore zero; check add, remove, and reset in the preview."
+    "Implement total as a computed getter that sums all counter values.",
+    "Clamp every change to the inclusive range -10 through 10, even for ±100.",
+    "Limit the collection to three counters. Remove one and confirm a new counter can be added."
   ]
 }
