@@ -1,6 +1,6 @@
 {
   "id": "03-02-state",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Import useState and replace the fixed count with useState(0).",
