@@ -12,18 +12,16 @@ export class CounterStore {
   }
 
   get total() {
-    // TODO: derive the sum from the observable collection.
-    return 0;
+    return this.counters.reduce((sum, counter) => sum + counter.value, 0);
   }
 
   change(id: number, delta: number) {
     const counter = this.counters.find(item => item.id === id);
-    // TODO: clamp the result between min and max.
-    if (counter) counter.value += delta;
+    if (counter) counter.value = Math.min(this.max, Math.max(this.min, counter.value + delta));
   }
 
   addCounter() {
-    // TODO: stop adding when counters.length reaches limit.
+    if (this.counters.length >= this.limit) return;
     this.counters.push({ id: this.nextId++, value: 0 });
   }
 

@@ -1,6 +1,6 @@
 {
   "id": "04-mobx",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Implement total as a computed getter that sums all counter values.",

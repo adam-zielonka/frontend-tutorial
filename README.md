@@ -1,4 +1,4 @@
-# A bounded MobX collection — start
+# A bounded MobX collection — solution
 
 Use observable data, computed values, and actions with observer.
 
