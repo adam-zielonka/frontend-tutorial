@@ -1,6 +1,6 @@
 {
   "id": "08-01-provider-and-button",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Import ThemeProvider and Button from their @ui5/webcomponents-react component paths.",
