@@ -1,6 +1,6 @@
-# Fetch with cleanup and retry — solution
+# UI5 shipment progress — start
 
-Load a local fixture safely, report failures, and retry without reloading the page.
+Compose ThemeProvider, Button, registered icons, and ProgressIndicator.
 
 ## Run
 
@@ -15,16 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- In loadRamps, check response.ok before parsing JSON and throw an error containing the HTTP status.
-- Create an AbortController per effect, pass its signal to loadLocalRamps, and abort during cleanup; keep the active guard to ignore stale completions.
-- Wire Retry request to a request counter in the effect dependencies so the same URL is fetched again.
-- Check the success, loading, and error states; toggle the missing fixture, retry it, then restore the working fixture.
+- Convert the loaded pallet count into a 0–100 progress percentage (one pallet means 10%).
+- Clamp Load pallet to ten and disable it at capacity.
+- Wire Reset shipment to zero; verify the progress and action state reset together.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-07-00-fetch) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-fetch-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-fetch-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-08-00-ui5-web-components) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-ui5-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-ui5-solution-v1)
 
 ## All checkpoints
 

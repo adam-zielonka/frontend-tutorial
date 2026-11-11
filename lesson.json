@@ -1,11 +1,10 @@
 {
-  "id": "07-fetch",
-  "variant": "solution",
+  "id": "08-ui5",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "In loadRamps, check response.ok before parsing JSON and throw an error containing the HTTP status.",
-    "Create an AbortController per effect, pass its signal to loadLocalRamps, and abort during cleanup; keep the active guard to ignore stale completions.",
-    "Wire Retry request to a request counter in the effect dependencies so the same URL is fetched again.",
-    "Check the success, loading, and error states; toggle the missing fixture, retry it, then restore the working fixture."
+    "Convert the loaded pallet count into a 0–100 progress percentage (one pallet means 10%).",
+    "Clamp Load pallet to ten and disable it at capacity.",
+    "Wire Reset shipment to zero; verify the progress and action state reset together."
   ]
 }

@@ -1,49 +1,28 @@
-import { useEffect, useState } from 'react';
-import { loadLocalRamps, type Ramp } from './api';
+import { useState } from 'react';
+import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';
+import { Button } from '@ui5/webcomponents-react/Button';
+import { ProgressIndicator } from '@ui5/webcomponents-react/ProgressIndicator';
+import '@ui5/webcomponents-icons/dist/add.js';
+import '@ui5/webcomponents-icons/dist/refresh.js';
 import './styles.css';
 
-type Status = 'loading' | 'success' | 'error';
-
 export default function App() {
-  const [ramps, setRamps] = useState<Ramp[]>([]);
-  const [status, setStatus] = useState<Status>('loading');
-  const [error, setError] = useState('');
-  const [broken, setBroken] = useState(false);
-  const [request, setRequest] = useState(0);
-  const url = broken ? '/missing-ramps.json' : '/ramps.json';
-
-  useEffect(() => {
-    let active = true;
-    setStatus('loading');
-    setError('');
-    const controller = new AbortController();
-    loadLocalRamps(url, controller.signal).then(data => {
-      if (active) { setRamps(data); setStatus('success'); }
-    }).catch((reason: unknown) => {
-      if (active) {
-        setError(reason instanceof Error ? reason.message : 'Request failed');
-        setStatus('error');
-      }
-    });
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, [url, request]);
-
-  return <main>
-    <h1>Fetch local ramp data</h1>
-    <p>Fetch the bundled /public/ramps.json fixture from this preview. No remote API is used.</p>
-    <div className="controls">
-      <label><input type="checkbox" checked={broken} onChange={event => setBroken(event.target.checked)} />Use a missing fixture (error practice)</label>
-      <button onClick={() => setRequest(current => current + 1)}>Retry request</button>
-    </div>
-    <section aria-label="Ramp results" aria-busy={status === 'loading'}>
-      {status === 'loading' && <p role="status">Loading ramps…</p>}
-      {status === 'error' && <p role="alert">Could not load ramps: {error}</p>}
-      {status === 'success' && (ramps.length === 0 ? <p>No ramps found.</p> : <ul>
-        {ramps.map(ramp => <li key={ramp.id}>{ramp.id} · {ramp.name}</li>)}
-      </ul>)}
+  const [loaded, setLoaded] = useState(0);
+  // TODO: calculate progress from loaded (0–10) as a percentage (0–100).
+  const progress = loaded;
+  return <ThemeProvider><main>
+    <h1>UI5 loading progress</h1>
+    <p>Load a ten-pallet shipment using UI5 components.</p>
+    <section aria-label="Shipment loading">
+      <p aria-live="polite">{loaded} / 10 pallets loaded</p>
+      <ProgressIndicator value={progress} displayValue={`${progress}% loaded`} accessibleName="Shipment loading progress" />
+      <div className="controls">
+        {/* TODO: clamp to ten and disable the action at capacity. */}
+        <Button icon="add" onClick={() => setLoaded(current => current + 1)}>Load pallet</Button>
+        {/* TODO: reset to zero. */}
+        <Button icon="refresh" onClick={() => {}}>Reset shipment</Button>
+      </div>
     </section>
-  </main>;
+    <p>ThemeProvider supplies the UI5 React context. Individual icon modules register the names used on the buttons.</p>
+  </main></ThemeProvider>;
 }
