@@ -1,10 +1,11 @@
 {
-  "id": "07-01-request",
-  "variant": "solution",
+  "id": "07-02-http-and-data-errors",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "In loadRamps call fetch(url, { signal }), await the response, and return its parsed JSON as Ramp[].",
-    "Keep loadLocalRamps and /public/ramps.json unchanged; the adapter supports the preview and local Vite paths.",
-    "Confirm the preview moves from an empty result to the three named ramps."
+    "Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.",
+    "Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].",
+    "Toggle the missing fixture to inspect the error UI, then restore the working URL.",
+    "Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards."
   ]
 }
