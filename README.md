@@ -1,6 +1,6 @@
-# Build the counter layout — solution
+# Make the counter interactive — start
 
-Render a reusable counter before introducing changing state.
+Use local React state to connect the five counter controls.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Add a controls div containing five native buttons: -100, -1, Reset, +1, +100.
-- Keep the displayed value at zero and render Counter inside App.
-- Check that all five controls are visible and keyboard focus reaches them. They intentionally do nothing yet.
+- Import useState and initialize value to zero inside Counter; render value instead of the literal zero.
+- Wire ±1 and ±100 using functional updates so repeated clicks accumulate.
+- Make Reset set the value to zero. Try +100, -1, Reset, then -100.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/01-counter-layout) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-01-counter-layout-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-01-counter-layout-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/02-local-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-02-local-state-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-02-local-state-solution-v2)
 
 ## All checkpoints
 

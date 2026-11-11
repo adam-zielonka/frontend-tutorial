@@ -1,6 +1,7 @@
 import './styles.css';
 
 function Counter() {
+  // TODO: useState(0), render value, and connect each button to its setter.
   return <section className="counter" aria-label="Counter">
     <h2>Counter</h2>
     <output aria-live="polite">0</output>
