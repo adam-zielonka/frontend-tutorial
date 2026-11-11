@@ -1,4 +1,4 @@
-# Bound subtraction and reset — start
+# Bound subtraction and reset — solution
 
 Keep a nonnegative counter through every available action.
 
