@@ -1,4 +1,4 @@
-# A typed shipment manifest — start
+# A typed shipment manifest — solution
 
 Connect the tool set to a small typed UI.
 

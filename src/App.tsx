@@ -2,9 +2,8 @@ import { shipments } from './shipments';
 import './styles.css';
 
 export default function App() {
-  // TODO: derive both numbers from shipments, without hard-coding totals.
-  const totalPallets = 0;
-  const readyCount = 0;
+  const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);
+  const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;
   return <main>
     <h1>Typed shipment manifest</h1>
     <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>
@@ -13,7 +12,7 @@ export default function App() {
     </section>
     <ul>{shipments.map(shipment => <li key={shipment.id}>
       <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})
-      {/* TODO: display the typed priority here. */}
+      <span> · {shipment.priority}</span>
     </li>)}</ul>
   </main>;
 }

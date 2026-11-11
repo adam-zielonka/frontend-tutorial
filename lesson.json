@@ -1,6 +1,6 @@
 {
   "id": "01-tool-set",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Add a required priority union (standard | express) to Shipment; make S-101 express and the others standard.",
