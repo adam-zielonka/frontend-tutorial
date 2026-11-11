@@ -1,6 +1,6 @@
 {
   "id": "01-02-derived-summary",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Calculate totalPallets with reduce and readyCount with filter from shipments.",
