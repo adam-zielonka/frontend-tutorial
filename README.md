@@ -1,4 +1,4 @@
-# Persist counters in localStorage — start
+# Persist counters in localStorage — solution
 
 Restore validated browser data and dispose both URL and storage synchronization.
 

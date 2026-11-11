@@ -84,13 +84,32 @@ export const STORAGE_KEY = 'mobx-counter-values-v1';
 
 export function connectPersistence(store: Store): () => void {
   const restoredFromUrl = restoreUrl(store);
-  // TODO: when URL restoration fails, read and validate a JSON array from storage.
-  // Keep the initial state on a missing, malformed or inaccessible storage value.
-  void restoredFromUrl;
+  if (!restoredFromUrl) {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw !== null && raw.length <= 1024) {
+        const values: unknown = JSON.parse(raw);
+        if (Array.isArray(values) && values.length <= store.limit &&
+            values.every(value => typeof value === 'number' && Number.isFinite(value))) {
+          store.hydrate(values.join(';'));
+        }
+      }
+    } catch {
+      // Invalid JSON or blocked browser storage must not prevent using the app.
+    }
+  }
+  // Restore before either effect writes. A valid URL (including value=) wins.
   const stopUrl = syncUrl(store);
-  // TODO: start an autorun that saves a plain number array, catching write failures.
+  const stopStorage = autorun(() => {
+    const snapshot = JSON.stringify(store.counters.map(counter => counter.value));
+    try {
+      window.localStorage.setItem(STORAGE_KEY, snapshot);
+    } catch {
+      // Storage may be blocked or full; counters continue to work in memory.
+    }
+  });
   return () => {
     stopUrl();
-    // TODO: also dispose the storage autorun.
+    stopStorage();
   };
 }

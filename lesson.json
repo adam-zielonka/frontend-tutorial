@@ -1,6 +1,6 @@
 {
   "id": "04-09-persistence",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Complete connectPersistence: a valid URL has priority, otherwise restore a validated JSON number array from STORAGE_KEY.",
