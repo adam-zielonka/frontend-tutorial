@@ -38,6 +38,6 @@ export class Store {
   }
 
   removeCounter(id: number) {
-    // TODO: replace counters with a list that excludes this ID.
+    this.counters = this.counters.filter(counter => counter.id !== id);
   }
 }
