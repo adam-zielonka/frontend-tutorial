@@ -1,4 +1,4 @@
-# Build the counter layout — start
+# Build the counter layout — solution
 
 Render a reusable counter before introducing changing state.
 

@@ -1,6 +1,6 @@
 {
   "id": "04-01-counter-layout",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Add a controls div containing five native buttons: -100, -1, Reset, +1, +100.",

@@ -4,7 +4,13 @@ function Counter() {
   return <section className="counter" aria-label="Counter">
     <h2>Counter</h2>
     <output aria-live="polite">0</output>
-    {/* TODO: add a controls container with -100, -1, Reset, +1, +100 buttons. */}
+    <div className="controls">
+      <button type="button">-100</button>
+      <button type="button">-1</button>
+      <button type="button">Reset</button>
+      <button type="button">+1</button>
+      <button type="button">+100</button>
+    </div>
   </section>;
 }
 
