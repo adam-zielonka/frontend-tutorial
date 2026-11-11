@@ -1,6 +1,6 @@
 {
   "id": "03-01-component",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Replace the placeholder paragraph with a short instruction about counting pallets.",
