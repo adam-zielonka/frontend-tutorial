@@ -1,6 +1,6 @@
 {
   "id": "07-03-abort-cleanup",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.",
