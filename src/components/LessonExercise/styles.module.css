@@ -25,9 +25,11 @@
 .exercise :global(.sp-layout) {border-color: var(--ifm-color-emphasis-300);}
 .nextSteps {display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 1.2rem 0 .7rem;}
 .nextSteps a {max-width: 49%; white-space: normal;}
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .exercise :global(.sp-layout) {flex-direction: column;}
-  .exercise :global(.sp-stack) {width: 100%; min-width: 0;}
+  /* Sandpack uses flex-basis: 0 for horizontal panes. In a column with an
+     automatic height that collapses both panes, even with an explicit height. */
+  .exercise :global(.sp-layout > .sp-stack) {flex: 0 0 auto; width: 100%; min-width: 0;}
   .links a {max-width: 100%; white-space: normal;}
   .paneLabels {display: none;}
   .taskArea {padding: .7rem;}
