@@ -1,6 +1,6 @@
-# A bounded MobX collection — solution
+# Two views of the shipping board — start
 
-Use observable data, computed values, and actions with observer.
+Derive a filtered table and ramp overview from the same local data.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Implement total as a computed getter that sums all counter values.
-- Clamp every change to the inclusive range -10 through 10, even for ±100.
-- Limit the collection to three counters. Remove one and confirm a new counter can be added.
+- Filter loadings by the selected status; All must restore all three rows.
+- In Ramps view, group the filtered loadings by rampId and show each ramp’s name.
+- Keep empty ramps visible with a no-matching-loadings message; preserve the filter when switching views.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-04-00-mobx-and-react) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-mobx-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-mobx-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-05-00-shippingboard-lite) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-shippingboard-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-shippingboard-solution-v1)
 
 ## All checkpoints
 

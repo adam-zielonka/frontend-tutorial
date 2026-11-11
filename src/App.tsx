@@ -1,28 +1,36 @@
 import { useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { CounterStore } from './Store';
+import { ramps, loadings, type View, type Filter } from './data';
 import './styles.css';
 
-const App = observer(function App() {
-  const [store] = useState(() => new CounterStore());
+export default function App() {
+  const [view, setView] = useState<View>('loadings');
+  const [filter, setFilter] = useState<Filter>('all');
+  // TODO: apply the selected status, keeping all rows when filter is 'all'.
+  const visible = loadings;
   return <main>
-    <h1>Observable counter collection</h1>
-    <p>Up to {store.limit} counters; each stays between {store.min} and {store.max}.</p>
-    <p aria-live="polite">Total: <output>{store.total}</output></p>
-    <button onClick={store.addCounter}>Add counter</button>
-    {store.counters.length === 0 && <p>No counters. Add one to start.</p>}
-    {store.counters.map(counter => <section key={counter.id} aria-label={`Counter ${counter.id}`}>
-      <h2>Counter {counter.id}</h2>
-      <output aria-live="polite">{counter.value}</output>
-      <div className="controls">
-        <button onClick={() => store.change(counter.id, -100)}>−100</button>
-        <button onClick={() => store.change(counter.id, -1)}>−1</button>
-        <button onClick={() => store.change(counter.id, 1)}>+1</button>
-        <button onClick={() => store.change(counter.id, 100)}>+100</button>
-        <button onClick={() => store.removeCounter(counter.id)}>Remove counter {counter.id}</button>
-      </div>
-    </section>)}
+    <h1>ShippingBoard Lite</h1>
+    <nav className="controls" aria-label="Board view">
+      <button aria-pressed={view === 'loadings'} onClick={() => setView('loadings')}>Loadings</button>
+      <button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}>Ramps</button>
+    </nav>
+    <label>Status <select value={filter} onChange={event => setFilter(event.target.value as Filter)}>
+      <option value="all">All</option><option value="waiting">Waiting</option>
+      <option value="loading">Loading</option><option value="done">Done</option>
+    </select></label>
+    <p aria-live="polite">{visible.length} matching loadings</p>
+    {view === 'loadings' ? <section>
+      <h2>Loadings</h2>
+      {visible.length === 0 ? <p>No matching loadings.</p> : <table>
+        <caption>Loading assignments</caption>
+        <thead><tr><th scope="col">Shipment</th><th scope="col">Ramp</th><th scope="col">Status</th></tr></thead>
+        <tbody>{visible.map(item => <tr key={item.id}>
+          <td>{item.id} · {item.customer}</td><td>{item.rampId}</td><td>{item.status}</td>
+        </tr>)}</tbody>
+      </table>}
+    </section> : <section>
+      <h2>Ramp overview</h2>
+      {/* TODO: show each ramp with its matching visible loadings and an empty message. */}
+      <ul>{ramps.map(ramp => <li key={ramp.id}>{ramp.name} ({ramp.id}) — assignments to implement</li>)}</ul>
+    </section>}
   </main>;
-});
-
-export default App;
+}

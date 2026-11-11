@@ -1,10 +1,10 @@
 {
-  "id": "04-mobx",
-  "variant": "solution",
+  "id": "05-shippingboard",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "Implement total as a computed getter that sums all counter values.",
-    "Clamp every change to the inclusive range -10 through 10, even for ±100.",
-    "Limit the collection to three counters. Remove one and confirm a new counter can be added."
+    "Filter loadings by the selected status; All must restore all three rows.",
+    "In Ramps view, group the filtered loadings by rampId and show each ramp’s name.",
+    "Keep empty ramps visible with a no-matching-loadings message; preserve the filter when switching views."
   ]
 }

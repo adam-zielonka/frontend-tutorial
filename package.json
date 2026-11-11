@@ -1,5 +1,5 @@
 {
-  "name": "frontend-04-mobx",
+  "name": "frontend-05-shippingboard",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -17,9 +17,7 @@
   },
   "dependencies": {
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "mobx": "6.13.7",
-    "mobx-react-lite": "4.1.0"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "vite": "8.3.7",
