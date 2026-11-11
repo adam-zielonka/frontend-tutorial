@@ -1,4 +1,4 @@
-# Describe a shipment with types — start
+# Describe a shipment with types — solution
 
 Add a required priority to the shipment model and display it.
 

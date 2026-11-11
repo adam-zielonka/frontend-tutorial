@@ -1,6 +1,6 @@
 {
   "id": "01-01-shipment-shape",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Add priority to Shipment as the union standard | express.",
