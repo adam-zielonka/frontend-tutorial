@@ -10,11 +10,35 @@ describe('CounterStore', () => {
     const store = new CounterStore();
     store.change(4);
     expect(store.value).toBe(4);
-    // TODO: subtract 2 and assert the resulting value.
+    store.change(-2);
+    expect(store.value).toBe(2);
   });
 
-  // TODO: replace each todo with an executable test and specific value assertions.
-  it.todo('clamps large positive and negative changes to 10 and 0');
-  it.todo('resets a changed counter to zero');
-  it.todo('keeps two store instances independent');
+  it('clamps large positive and negative changes to 10 and 0', () => {
+    const store = new CounterStore();
+    store.change(100);
+    expect(store.value).toBe(10);
+    store.change(1);
+    expect(store.value).toBe(10);
+    store.change(-100);
+    expect(store.value).toBe(0);
+    store.change(-1);
+    expect(store.value).toBe(0);
+  });
+
+  it('resets a changed counter to zero', () => {
+    const store = new CounterStore();
+    store.change(7);
+    expect(store.value).toBe(7);
+    store.reset();
+    expect(store.value).toBe(0);
+  });
+
+  it('keeps two store instances independent', () => {
+    const first = new CounterStore();
+    const second = new CounterStore();
+    first.change(3);
+    expect(first.value).toBe(3);
+    expect(second.value).toBe(0);
+  });
 });

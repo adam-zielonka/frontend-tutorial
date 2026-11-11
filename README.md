@@ -1,4 +1,4 @@
-# Write CounterStore tests — start
+# Write CounterStore tests — solution
 
 Turn manual observations into isolated, repeatable Vitest assertions.
 

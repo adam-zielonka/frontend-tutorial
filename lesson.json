@@ -1,6 +1,6 @@
 {
   "id": "06-tests",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Complete the addition/subtraction test: after the existing +4 assertion, apply -2 and assert 2.",
