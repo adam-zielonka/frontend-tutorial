@@ -1,10 +1,10 @@
 {
-  "id": "04-02-local-state",
-  "variant": "solution",
+  "id": "04-03-observable-store",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Import useState and initialize value to zero inside Counter; render value instead of the literal zero.",
-    "Wire ±1 and ±100 using functional updates so repeated clicks accumulate.",
-    "Make Reset set the value to zero. Try +100, -1, Reset, then -100."
+    "In the constructor call makeAutoObservable(this, {}, { autoBind: true }).",
+    "Implement add as an accumulating action. Ignore non-finite deltas and results instead of storing NaN or Infinity.",
+    "Implement reset and verify the same five controls. Read why the supporting App still copies the store value into local state."
   ]
 }
