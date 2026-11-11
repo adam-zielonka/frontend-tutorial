@@ -1,6 +1,6 @@
 {
   "id": "06-02-boundaries",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Replace the clamping it.todo with a fresh-store test that changes by +100, +1, -100, then -1.",

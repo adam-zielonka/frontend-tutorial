@@ -1,4 +1,4 @@
-# Test both clamping boundaries — start
+# Test both clamping boundaries — solution
 
 Verify overshoots and repeated attempts at the limits.
 
