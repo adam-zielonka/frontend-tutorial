@@ -1,30 +1,46 @@
-import { useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { CounterStore } from './Store';
+import { useEffect, useState } from 'react';
+import { loadLocalRamps, type Ramp } from './api';
 import './styles.css';
 
-const App = observer(function App() {
-  const [store] = useState(() => new CounterStore());
-  return <main>
-    <h1>Test a CounterStore</h1>
-    <p>This manual harness exercises the real store. It does not execute Vitest.</p>
-    <section aria-label="Manual counter harness">
-      <p>Current value: <output aria-live="polite">{store.value}</output> (allowed: 0–10)</p>
-      <div className="controls">
-        <button onClick={() => store.change(4)}>+4</button>
-        <button onClick={() => store.change(-2)}>−2</button>
-        <button onClick={() => store.change(100)}>+100</button>
-        <button onClick={() => store.change(-100)}>−100</button>
-        <button onClick={store.reset}>Reset</button>
-      </div>
-      <p>Try Reset → +4 → −2 (expect 2), +100 (expect 10), −100 (expect 0).</p>
-    </section>
-    <h2>Write repeatable checks</h2>
-    <p>Edit /Store.test.ts. Export to Vite or open the export in StackBlitz, install dependencies,
-      then run <code>pnpm exec vitest run</code> in its real terminal.</p>
-    <p>The starter has two passing but incomplete checks and three pending tests. Complete the subtraction check and replace pending tests with assertions.</p>
-    <p>These store-only tests use Vitest’s default Node environment; no browser emulator is needed.</p>
-  </main>;
-});
+type Status = 'loading' | 'success' | 'error';
 
-export default App;
+export default function App() {
+  const [ramps, setRamps] = useState<Ramp[]>([]);
+  const [status, setStatus] = useState<Status>('loading');
+  const [error, setError] = useState('');
+  const [broken, setBroken] = useState(false);
+  const url = broken ? '/missing-ramps.json' : '/ramps.json';
+
+  useEffect(() => {
+    let active = true;
+    setStatus('loading');
+    setError('');
+    // TODO: pass an AbortController signal and abort it in cleanup.
+    loadLocalRamps(url).then(data => {
+      if (active) { setRamps(data); setStatus('success'); }
+    }).catch((reason: unknown) => {
+      if (active) {
+        setError(reason instanceof Error ? reason.message : 'Request failed');
+        setStatus('error');
+      }
+    });
+    return () => { active = false; };
+  }, [url]);
+
+  return <main>
+    <h1>Fetch local ramp data</h1>
+    <p>Fetch the bundled /public/ramps.json fixture from this preview. No remote API is used.</p>
+    <div className="controls">
+      <label><input type="checkbox" checked={broken} onChange={event => setBroken(event.target.checked)} />Use a missing fixture (error practice)</label>
+      {/* TODO: retry the same URL by changing a request counter used by the effect. */}
+      <button disabled>Retry request</button>
+    </div>
+    <section aria-label="Ramp results" aria-busy={status === 'loading'}>
+      {status === 'loading' && <p role="status">Loading ramps…</p>}
+      {status === 'error' && <p role="alert">Could not load ramps: {error}</p>}
+      {status === 'success' && (ramps.length === 0 ? <p>No ramps found.</p> : <ul>
+        {ramps.map(ramp => <li key={ramp.id}>{ramp.id} · {ramp.name}</li>)}
+      </ul>)}
+    </section>
+  </main>;
+}

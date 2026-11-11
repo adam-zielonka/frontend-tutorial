@@ -1,6 +1,6 @@
-# Write CounterStore tests — solution
+# Fetch with cleanup and retry — start
 
-Turn manual observations into isolated, repeatable Vitest assertions.
+Load a local fixture safely, report failures, and retry without reloading the page.
 
 ## Run
 
@@ -15,16 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Complete the addition/subtraction test: after the existing +4 assertion, apply -2 and assert 2.
-- Test upper and lower clamping, including another change at each boundary.
-- Test reset after a nonzero value and prove that separate store instances do not share state.
-- Run pnpm exec vitest run in the exported project; all five tests must pass with none pending.
+- In loadRamps, check response.ok before parsing JSON and throw an error containing the HTTP status.
+- Create an AbortController per effect, pass its signal to loadLocalRamps, and abort during cleanup; keep the active guard to ignore stale completions.
+- Wire Retry request to a request counter in the effect dependencies so the same URL is fetched again.
+- Check the success, loading, and error states; toggle the missing fixture, retry it, then restore the working fixture.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-06-00-tests) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-tests-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-tests-solution-v1)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/ch-07-00-fetch) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-fetch-start-v1) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-fetch-solution-v1)
 
 ## All checkpoints
 

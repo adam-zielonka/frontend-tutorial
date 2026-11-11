@@ -1,11 +1,11 @@
 {
-  "id": "06-tests",
-  "variant": "solution",
+  "id": "07-fetch",
+  "variant": "start",
   "release": "v1",
   "tasks": [
-    "Complete the addition/subtraction test: after the existing +4 assertion, apply -2 and assert 2.",
-    "Test upper and lower clamping, including another change at each boundary.",
-    "Test reset after a nonzero value and prove that separate store instances do not share state.",
-    "Run pnpm exec vitest run in the exported project; all five tests must pass with none pending."
+    "In loadRamps, check response.ok before parsing JSON and throw an error containing the HTTP status.",
+    "Create an AbortController per effect, pass its signal to loadLocalRamps, and abort during cleanup; keep the active guard to ignore stale completions.",
+    "Wire Retry request to a request counter in the effect dependencies so the same URL is fetched again.",
+    "Check the success, loading, and error states; toggle the missing fixture, retry it, then restore the working fixture."
   ]
 }
