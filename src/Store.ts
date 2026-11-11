@@ -38,13 +38,19 @@ export class Store {
   }
 
   get serializedValues(): string {
-    // TODO: serialize just the counter values using semicolons.
-    return '';
+    return this.counters.map(counter => counter.value).join(';');
   }
 
   hydrate(raw: string): boolean {
-    // TODO: validate the entire payload before replacing counters. Empty means [].
-    return false;
+    // Reject oversized payloads, empty tokens, non-finite values and excess counters.
+    if (raw.length > 512) return false;
+    const parts = raw === '' ? [] : raw.split(';');
+    if (parts.length > this.limit || parts.some(part => part.trim() === '')) return false;
+    const values = parts.map(Number);
+    if (!values.every(Number.isFinite)) return false;
+    // Only replace state after every value passes. IDs belong to this session.
+    this.counters = values.map(value => new CounterStore(this.nextId++, value));
+    return true;
   }
 
   removeCounter(id: number) {
@@ -54,11 +60,22 @@ export class Store {
 
 // Browser effects are owned by App's effect, never started at module import time.
 export function restoreUrl(store: Store): boolean {
-  // TODO: read the value query parameter; hydrate when present. Catch URL failures.
-  return false;
+  try {
+    const raw = new URL(window.location.href).searchParams.get('value');
+    return raw !== null && store.hydrate(raw);
+  } catch {
+    return false;
+  }
 }
 
 export function syncUrl(store: Store): () => void {
-  // TODO: return a reaction disposer; preserve unrelated query parameters and hash.
-  return () => {};
+  return reaction(() => store.serializedValues, value => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('value', value);
+      window.history.replaceState(window.history.state, '', url);
+    } catch {
+      // A restricted preview must still allow counters to work.
+    }
+  }, { fireImmediately: true });
 }
