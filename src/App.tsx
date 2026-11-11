@@ -1,27 +1,19 @@
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { CounterStore } from './Store';
 import './styles.css';
 
 function Counter({ counter }: { counter: CounterStore }) {
-  // Temporary bridge: read the store after each action; observer replaces this next.
-  const [value, setValue] = useState(counter.value);
-  function add(delta: number) {
-    counter.add(delta);
-    setValue(counter.value);
-  }
-  function reset() {
-    counter.reset();
-    setValue(counter.value);
-  }
+  // TODO: wrap this component in observer so reading counter.value subscribes.
   return <section className="counter" aria-label="Counter">
     <h2>Counter</h2>
-    <output aria-live="polite">{value}</output>
+    <output aria-live="polite">{counter.value}</output>
     <div className="controls">
-      <button type="button" onClick={() => add(-100)}>-100</button>
-      <button type="button" onClick={() => add(-1)}>-1</button>
-      <button type="button" onClick={reset}>Reset</button>
-      <button type="button" onClick={() => add(1)}>+1</button>
-      <button type="button" onClick={() => add(100)}>+100</button>
+      <button type="button" onClick={() => counter.add(-100)}>-100</button>
+      <button type="button" onClick={() => counter.add(-1)}>-1</button>
+      <button type="button" onClick={counter.reset}>Reset</button>
+      <button type="button" onClick={() => counter.add(1)}>+1</button>
+      <button type="button" onClick={() => counter.add(100)}>+100</button>
     </div>
   </section>;
 }
