@@ -1,6 +1,6 @@
 {
   "id": "05-shippingboard",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Filter loadings by the selected status; All must restore all three rows.",

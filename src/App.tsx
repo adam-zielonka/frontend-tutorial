@@ -5,8 +5,7 @@ import './styles.css';
 export default function App() {
   const [view, setView] = useState<View>('loadings');
   const [filter, setFilter] = useState<Filter>('all');
-  // TODO: apply the selected status, keeping all rows when filter is 'all'.
-  const visible = loadings;
+  const visible = loadings.filter(item => filter === 'all' || item.status === filter);
   return <main>
     <h1>ShippingBoard Lite</h1>
     <nav className="controls" aria-label="Board view">
@@ -29,8 +28,15 @@ export default function App() {
       </table>}
     </section> : <section>
       <h2>Ramp overview</h2>
-      {/* TODO: show each ramp with its matching visible loadings and an empty message. */}
-      <ul>{ramps.map(ramp => <li key={ramp.id}>{ramp.name} ({ramp.id}) — assignments to implement</li>)}</ul>
+      {ramps.map(ramp => {
+        const assigned = visible.filter(item => item.rampId === ramp.id);
+        return <article key={ramp.id}>
+          <h3>{ramp.name} ({ramp.id})</h3>
+          {assigned.length === 0 ? <p>No matching loadings at this ramp.</p> : <ul>
+            {assigned.map(item => <li key={item.id}>{item.id} · {item.customer} · {item.status}</li>)}
+          </ul>}
+        </article>;
+      })}
     </section>}
   </main>;
 }

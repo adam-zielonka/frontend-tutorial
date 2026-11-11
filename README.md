@@ -1,4 +1,4 @@
-# Two views of the shipping board — start
+# Two views of the shipping board — solution
 
 Derive a filtered table and ramp overview from the same local data.
 
