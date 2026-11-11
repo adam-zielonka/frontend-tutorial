@@ -1,10 +1,10 @@
 {
-  "id": "03-03-bounded-events",
-  "variant": "solution",
+  "id": "04-01-counter-layout",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Add Remove pallet with a functional updater clamped to zero.",
-    "Disable Remove pallet at zero and add Reset that sets count to zero.",
-    "Check Add three times → Remove → Reset; repeat Remove at zero and verify the count stays zero."
+    "Add a controls div containing five native buttons: -100, -1, Reset, +1, +100.",
+    "Keep the displayed value at zero and render Counter inside App.",
+    "Check that all five controls are visible and keyboard focus reaches them. They intentionally do nothing yet."
   ]
 }
