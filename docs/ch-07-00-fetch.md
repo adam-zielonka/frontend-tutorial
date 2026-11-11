@@ -1,106 +1,71 @@
 # 7. Fetch
 
-## Preparing workspace
-
-To start working on this project you have two option: development using local or online editor:
-
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/create-fetch)
-2. Local development
-    - Clone repo from [**shippingboard-lite**](https://github.com/adam-zielonka/shippingboard-lite/tree/create-fetch) and set branch to `create-fetch`. You can use this command: 
-    ```shell
-    git clone --branch create-fetch https://github.com/adam-zielonka/shippingboard-lite.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code shippingboard-lite
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
-
-## Setup Base URL
-
-So in normal case the api exist in the same domain that web app is available so the base url can be `/api/`, but in our case we get data from github, so what we need to add to `api.ts` file is that line:
-
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-const BASE_URL = "https://raw.githubusercontent.com/adam-zielonka/shippingboard-lite/main/src/api/";
+```mdx-code-block
+import LessonExercise from '@site/src/components/LessonExercise';
 ```
 
-## Setup types
+<LessonExercise id="07-fetch" />
 
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-type CustomerResponse = {
-  kunnr: string
-  name1: string
-  ort01: string
-  land1: string
-}
+## Goals
 
-type RampResponse = {
-  ramp_id: string
-  description: string
-}
-```
+Fetch JSON, handle network and HTTP failures, and update MobX state safely after `await`.
 
-## Fetch using await
+## Read a response
 
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getCustomers(): Promise<Customer[]> {
-    const response = await fetch(BASE_URL + "CUSTOMERS.json");
+In the sandbox, create `src/api.ts`. This example uses a public demonstration endpoint and validates the fields it needs:
 
-    if (!response.ok) {
-      return [];
-    }
+```ts
+export type Todo = { id: number; title: string; completed: boolean };
 
-    if (!response.body) {
-      return [];
-    }
-
-    const json = await response.json() as CustomerResponse[];
-
-    return json.map(c => new Customer(c.kunnr, c.name1, c.ort01, c.land1));
+export async function getTodo(signal?: AbortSignal): Promise<Todo> {
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos/1', { signal });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data: unknown = await response.json();
+  if (typeof data !== 'object' || data === null ||
+      !('id' in data) || typeof data.id !== 'number' ||
+      !('title' in data) || typeof data.title !== 'string' ||
+      !('completed' in data) || typeof data.completed !== 'boolean') {
+    throw new Error('Invalid todo response');
   }
+  return { id: data.id, title: data.title, completed: data.completed };
+}
 ```
 
-## Fetch using then
+`fetch` rejects for network errors, but an HTTP 404 still resolves, so check `response.ok`. A TypeScript assertion alone does not validate external JSON. The endpoint must permit cross-origin requests when called directly from a browser.
 
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getRamps(): Promise<Ramp[]> {
-    return await fetch(BASE_URL + "RAMPS.json")
-      .then(response => {
-        if (!response.ok) {
-          return [];
-        }
-    
-        if (!response.body) {
-          return [];
-        }
+## Update a MobX store
 
-        return response.json() as Promise<RampResponse[]>;
-      }).then(json => {
-        return json.map(r => new Ramp(r.ramp_id, r.description));
+Create `src/TodoStore.ts`:
+
+```ts
+import { makeAutoObservable, runInAction } from 'mobx';
+import { getTodo } from './api';
+import type { Todo } from './api';
+
+export class TodoStore {
+  todo: Todo | null = null;
+  loading = false;
+  error: string | null = null;
+  constructor() { makeAutoObservable(this); }
+
+  async load() {
+    this.loading = true;
+    this.error = null;
+    try {
+      const todo = await getTodo();
+      runInAction(() => { this.todo = todo; this.loading = false; });
+    } catch (error) {
+      runInAction(() => {
+        this.error = error instanceof Error ? error.message : 'Request failed';
+        this.loading = false;
       });
+    }
   }
-```
-
-## Fixing store
-
-```ts title="src/store/Store.ts" showLineNumbers
-export class Store {
-  //...
-  init = async () => {
-    this.customers = await api.getCustomers();
-    this.ramps = await api.getRamps();
-    this.loadings = api.getLoadings();
-    store.ui.init();
-  };
 }
 ```
+
+Call `load` from a button in an `observer` component and render loading, error, and todo states. The example assumes one request at a time; disable the button while loading. For lifecycle-driven requests, use an `AbortController` and cleanup, and consider stale responses. A Vite development proxy can forward a path to a real API target, but production routing and authentication must be configured separately. Never put secrets in client code.
+
+## Official references
+
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), [MobX async actions](https://mobx.js.org/actions.html), [Vite proxy](https://vite.dev/config/server-options#server-proxy).

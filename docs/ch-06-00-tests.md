@@ -1,133 +1,60 @@
 # 6. Tests
 
-Let's start with `mobx-example` project.
-
-## Preparing workspace
-
-To start working on this project you have two option: development using local or online editor:
-
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/create-tests)
-2. Local development
-    - Clone repo from [**mobx-example**](https://github.com/adam-zielonka/mobx-example/tree/create-tests) and set branch to `create-tests`. You can use this command: 
-    ```shell
-    git clone --branch create-tests https://github.com/adam-zielonka/mobx-example.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code mobx-example
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
-
-
-## Install tools for testing
-
-```shell
-pnpm add vitest happy-dom
+```mdx-code-block
+import LessonExercise from '@site/src/components/LessonExercise';
 ```
 
-- [vitest](https://vitest.dev/) - tools that allow write and run out test
-- [happy-dom](https://github.com/capricorn86/happy-dom) - emulates browser environment by providing Browser API
+<LessonExercise id="06-tests" />
 
-## Configure
+## Goals
 
-We can add config to `vite.config.ts` or create dedicate file for test environment config. In this case we use shared config:
+Write repeatable tests for store behavior and understand what coverage measures.
 
-```ts title="vite.config.ts"
-// highlight-next-line
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
+## Install and configure
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    sourcemap: true,
-  },
-  // highlight-start
-  test: {
-    environment: "happy-dom",
-  }
-  // highlight-end
-});
+Continue with the sandbox and `CounterStore` from chapter 4:
+
+```bash
+npm install -D vitest @vitest/coverage-v8
 ```
 
+Add scripts to the existing `scripts` object in `package.json`:
 
-## Write tests
+```json
+"test": "vitest",
+"test:run": "vitest run",
+"test:coverage": "vitest run --coverage"
+```
 
-```ts title="src/Store.test.ts"
-import { describe, test, expect } from "vitest";
-import { CounterStore } from "./Store";
+Keep the existing scripts and valid JSON commas. Vitest uses Vite configuration; these store tests run in Node and need no simulated DOM.
 
-describe("CounterStore", () => {
-  test("new counter", () => {
+## Test behavior
+
+Create `src/Store.test.ts`:
+
+```ts
+import { describe, expect, it } from 'vitest';
+import { CounterStore } from './Store';
+
+describe('CounterStore', () => {
+  it('adds positive and negative amounts', () => {
     const counter = new CounterStore();
-    expect(counter.value).toBe(1);
+    counter.add(3);
+    counter.add(-1);
+    expect(counter.value).toBe(2);
+  });
+
+  it('resets the value', () => {
+    const counter = new CounterStore();
+    counter.add(5);
+    counter.reset();
+    expect(counter.value).toBe(0);
   });
 });
 ```
 
-## Run test
+Run `npm run test:run`, then `npm run test:coverage`. `npm test` runs watch mode; stop it with Ctrl+C. The V8 coverage package should match the installed Vitest version. Coverage shows which code ran, not whether every behavior is correct. Add tests for board empty input and toggling; UI tests require an appropriate DOM environment and user-oriented assertions.
 
+## Official references
 
-```
-pnpm vitest
-```
-
-or if you using npm you need to add to `package.json`
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test": "vitest"
-  },
-  //...
-}
-
-```
-
-```
-npm run test
-```
-
-## Exercises
-
-Please test this scenario for `CounterStore`:
-
-- test adding valid/invalid input 
-- test reset
-
-And also for `Store`:
-
-- test creation of Store
-- test adding/deleting counters (check limitation)
-
-## Coverage
-
-```shell
-pnpm add @vitest/coverage-c8
-```
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test-coverage": "pnpm vitest run --coverage",
-  },
-  //...
-}
-```
-
-## End-to-end testing
-
-If we wanna test in the way user use application we can use [playwright](https://playwright.dev/)
+[Vitest getting started](https://vitest.dev/guide/), [Vitest coverage](https://vitest.dev/guide/coverage.html), [Testing Library guiding principles](https://testing-library.com/docs/guiding-principles/).

@@ -1,99 +1,60 @@
 # 8. UI5 Web Components for React
 
-To not invent everything from scratch, we can use prepared components by different entities. In this chapter we focus on components prepared by SAP. SAP prepared web components that can be used directly in html, but also there is library for React, that wrap this web components to React components.
-
-Url to docs: https://sap.github.io/ui5-webcomponents-react/
-
-## Preparing workspace
-
-### Generate new empty project
-
-1. Use web editor: [vite.new/react-ts](https://vite.new/react-ts)
-2. Or generate project using this command:
-
-```bash
-pnpm create vite app-with-ui5-wc --template react-swc-ts
-cd app-with-ui5-wc
-pnpm install
-pnpm run dev
+```mdx-code-block
+import LessonExercise from '@site/src/components/LessonExercise';
 ```
 
-### Install UI5 deps
+<LessonExercise id="08-ui5" />
+
+## Goals
+
+Use a UI5 React component, supply its theme provider, and register an icon.
+
+## Install
+
+Continue with the separate React 18 sandbox. Install UI5 Web Components for React v2 and its matching core and icon packages:
 
 ```bash
-pnpm install @ui5/webcomponents @ui5/webcomponents-react @ui5/webcomponents-fiori
+npm install @ui5/webcomponents-react@^2 @ui5/webcomponents@^2 @ui5/webcomponents-icons@^2
 ```
 
-### Apply Theme Provider
+Wrap the app in `src/main.tsx`:
 
-In file `src/main.tsx` we need to wrap `App` component with `ThemeProvider`
-
-```tsx showLineNumbers title="src/main.tsx"
-// highlight-next-line
+```tsx
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from '@ui5/webcomponents-react';
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import App from './App';
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    // highlight-start
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-    // highlight-end
-  </StrictMode>,
-)
+  <StrictMode><ThemeProvider><App /></ThemeProvider></StrictMode>,
+);
 ```
 
-## UI5 Button
+## Add a button
 
-### Replace `<button>` with UI5 `<Button>`
+Replace `src/App.tsx`:
 
-```tsx showLineNumbers title="src/App.tsx"
-// highlight-next-line
-import { Button } from '@ui5/webcomponents-react'
+```tsx
+import { useState } from 'react';
+import { Button } from '@ui5/webcomponents-react';
+import '@ui5/webcomponents-icons/dist/add.js';
 
-//...
-
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
+  const [count, setCount] = useState(0);
   return (
-    <>
-      {/*...*/}
-        // highlight-start 
-        <Button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        // highlight-end
-      {/*...*/}
-    </>
-  )
+    <main>
+      <h1>UI5 counter</h1>
+      <p>Count: {count}</p>
+      <Button icon="add" onClick={() => setCount(value => value + 1)}>Add</Button>
+    </main>
+  );
 }
-
-export default App
-
 ```
 
-### Customize: add icon and design
+Run `npm run dev` and click the button. Importing the individual icon registers its name; naming it in the prop alone does not load it. Add a reset button and check keyboard operation. Consult the component documentation for properties and accessible labels. The UI5 version here belongs to the sandbox, independently of the documentation site's dependencies.
 
-```tsx showLineNumbers
-<Button 
-  // highlight-next-line
-  icon="add"
-  // highlight-next-line
-  design="Emphasized"
-  onClick={() => setCount((count) => count + 1)}
->
-  count is {count}
-</Button>
-```
+## Official references
 
-## More exercises
-
-- add one of the charts: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/charts-bulletchart--docs
-- add progress bar: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/data-display-progressindicator--docs
-- add wizard: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/layouts-floorplans-wizard--docs
-- add dialog: https://sap.github.io/ui5-webcomponents-react/v2/?path=/docs/modals-popovers-dialog--docs
+[UI5 Web Components for React](https://ui5.github.io/webcomponents-react/), [UI5 first steps](https://ui5.github.io/webcomponents/docs/getting-started/first-steps/), [using icons](https://ui5.github.io/webcomponents/docs/advanced/using-icons/).

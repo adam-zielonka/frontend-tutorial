@@ -1,206 +1,55 @@
-# 3. Create base for your app
+# 3. Create a base for your app
 
-Let's start build React app using Vite and pnpm.
-
-## Create
-
-Firstly, open your terminal and create app using template ([vitejs guide](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)).
-
-```shell
-pnpm create vite my-react-app --template react-swc-ts
+```mdx-code-block
+import LessonExercise from '@site/src/components/LessonExercise';
 ```
 
-Next, install deps:
+<LessonExercise id="03-react-basics" />
 
-```shell
+## Goals
+
+Create a TypeScript React app, understand its entry points, and update a component with state.
+
+## Create the sandbox
+
+With Node 24, run these commands outside the tutorial website checkout. The current Vite `react-ts` template uses `@vitejs/plugin-react`. Pin React for this course; this does not change the website's dependencies.
+
+```bash
+npm create vite@latest my-react-app -- --template react-ts
 cd my-react-app
-pnpm install
+npm install
+npm install react@18.3.1 react-dom@18.3.1
+npm install -D @types/react@^18 @types/react-dom@^18
+npm run dev
 ```
 
-And start developing app
+Open the local address printed by Vite. Save edits to see updates. Use `npm run build` to check TypeScript and create a production build, and `npm run preview` to preview that build locally.
 
-```shell
-pnpm run dev
-```
+## Understand the files
 
-## Understand
+`index.html` contains the root element. `src/main.tsx` imports styles and mounts `App` using `createRoot`. `src/App.tsx` contains a component; `.tsx` permits JSX and TypeScript. `vite.config.ts` configures Vite and the React plugin. `public` holds assets served as-is. Do not add a proxy until you have a real API target; Vite's `server.proxy` is for development and does not configure your production server.
 
-### Project structure
+## Build a counter
 
-What we have in project:
+Replace `src/App.tsx` with:
 
-```shell
-my-react-app
-├── public "Place for global assets like favicon, fonts"
-│   └── vite.svg
-├── src "Place for your code"
-│   ├── App.css
-│   ├── App.tsx "4. First component that we render"
-│   ├── assets
-│   │   └── react.svg
-│   ├── index.css
-│   ├── main.tsx "3. Main tsx file with Creation of react app in root div"
-│   └── vite-env.d.ts
-├── index.html "2. Main html file with root div and main script attached"
-├── package.json
-├── pnpm-lock.yaml
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts "1. Conf for frontend tool"
-```
+```tsx
+import { useState } from 'react';
 
-Of course the structure of folders can be different like this:
-
-```shell
-└── src
-    ├── components
-    ├── hooks
-    ├── store
-    ├── styles
-    ├── tests
-    ├── types
-    └── utils
-```
-
-It always depends what you will use in your project.
-
-### `vite.config.ts`
-
-This the file that we define how frontend tool should work, by default only react plugin is enable:
-
-```ts showLineNumbers
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
-```
-
-but we can adjust in this file much more:
-
-```ts showLineNumbers
-import { defineConfig, PluginOption } from "vite";
-import react from "@vitejs/plugin-react";
-
-const plugins: PluginOption[] = [react()];
-
-export default defineConfig(({ command }) => {
-  if (command === "build") {
-    return {
-      plugins,
-      build: {
-        // Generate source map for production build is grate for debugging, 
-        // but also expose all code for everyone
-        sourcemap: true, 
-      },
-    };
-  }
-
-  // We can define different behavior depends of envs
-  if (process.env.VITE_FAKE_API) {
-    return  {
-      plugins,
-    };
-  }
-
-  return {
-    plugins,
-    // And we can connect app with real server
-    server: {
-      proxy: {
-        [`/my_service`]: {
-          target: `http//example.com/`,
-          secure: false,
-          auth: "test:test",
-        },
-        "/sap/bc/apc": {
-          target: `ws://example.com/`,
-          ws: true,
-          secure: false,
-        },
-      },
-    },
-  };
-});
-```
-
-### `index.html`
-
-
-```html showLineNumbers
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <!-- Place that react app will be rendered -->
-    <div id="root"></div> 
-    <!-- Script that is responsible to render react app -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
-
-```
-
-
-### `main.tsx`
-
-```tsx showLineNumbers
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css' // importing global styles
-
-// Render react in root div tag
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-```
-
-### `App.tsx`
-
-```tsx showLineNumbers
-import { useState } from 'react'
-import reactLogo from './assets/react.svg' // Way how you can import assets
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0) // Hook for keeping state of app
-
+export default function App() {
+  const [count, setCount] = useState(0);
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <main>
+      <h1>Counter</h1>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(previous => previous + 1)}>Add one</button>
+    </main>
+  );
 }
-
-export default App
 ```
+
+The event handler requests a new render. The updater receives the previous value, which is useful when updates are queued. Try adding a subtract button and a reset button. For objects and arrays in React state, create updated copies rather than mutating the existing value.
+
+## Official references
+
+[Vite getting started](https://vite.dev/guide/), [Vite proxy](https://vite.dev/config/server-options#server-proxy), [React state](https://react.dev/reference/react/useState), [updating objects](https://react.dev/learn/updating-objects-in-state).
