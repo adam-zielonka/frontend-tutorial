@@ -1,4 +1,4 @@
-# Fetch with cleanup and retry — start
+# Fetch with cleanup and retry — solution
 
 Load a local fixture safely, report failures, and retry without reloading the page.
 

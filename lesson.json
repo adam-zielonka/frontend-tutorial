@@ -1,6 +1,6 @@
 {
   "id": "07-fetch",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "In loadRamps, check response.ok before parsing JSON and throw an error containing the HTTP status.",

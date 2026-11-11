@@ -2,7 +2,7 @@ export interface Ramp { id: string; name: string }
 
 export async function loadRamps(url: string, signal?: AbortSignal): Promise<Ramp[]> {
   const response = await fetch(url, { signal });
-  // TODO: reject non-OK responses with a useful HTTP status message before parsing.
+  if (!response.ok) throw new Error(`HTTP ${response.status}: could not load ramps`);
   const data: unknown = await response.json();
   if (!Array.isArray(data) || !data.every(item =>
     typeof item === 'object' && item !== null &&
