@@ -1,11 +1,10 @@
 {
-  "id": "05-04-empty-and-status",
-  "variant": "solution",
+  "id": "06-01-first-test",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Derive allAssigned from the unfiltered loadings for each ramp.",
-    "Show Available when there are no assignments, Complete when every assignment is done, Loading when any is loading, otherwise Waiting.",
-    "For zero visible rows, show No loadings assigned. for an empty ramp and No matching loadings at this ramp. for a filtered-out assignment.",
-    "Choose Done: R1 must remain Waiting, R2 Loading, and R3 Available even though only L-103 matches the filter."
+    "Replace the first two it.todo calls with executable tests using a new CounterStore in each test.",
+    "Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.",
+    "Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
   ]
 }

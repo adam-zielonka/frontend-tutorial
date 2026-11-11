@@ -1,6 +1,6 @@
-# Explain empty ramps and ramp status — solution
+# Write the first store tests — start
 
-Distinguish an available ramp from a filter with no matches.
+Turn behavior into assertions executed by Vitest in a terminal.
 
 ## Run
 
@@ -15,16 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Derive allAssigned from the unfiltered loadings for each ramp.
-- Show Available when there are no assignments, Complete when every assignment is done, Loading when any is loading, otherwise Waiting.
-- For zero visible rows, show No loadings assigned. for an empty ramp and No matching loadings at this ramp. for a filtered-out assignment.
-- Choose Done: R1 must remain Waiting, R2 Loading, and R3 Available even though only L-103 matches the filter.
+- Replace the first two it.todo calls with executable tests using a new CounterStore in each test.
+- Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.
+- Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/04-empty-and-status) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-04-empty-and-status-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-04-empty-and-status-solution-v2)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/01-first-test) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-01-first-test-start-v2) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-01-first-test-solution-v2)
 
 ## All checkpoints
 
