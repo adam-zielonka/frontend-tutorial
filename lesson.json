@@ -1,6 +1,6 @@
 {
   "id": "03-react-basics",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Wire Remove pallet to a functional state update that never goes below zero.",

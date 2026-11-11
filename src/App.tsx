@@ -10,10 +10,8 @@ export default function App() {
       <p>Pallets: <output aria-live="polite">{count}</output></p>
       <div className="controls">
         <button onClick={() => setCount(current => current + 1)}>Add pallet</button>
-        {/* TODO: subtract using a functional update; disable this button at zero. */}
-        <button onClick={() => {}}>Remove pallet</button>
-        {/* TODO: reset state to zero. */}
-        <button onClick={() => {}}>Reset</button>
+        <button disabled={count === 0} onClick={() => setCount(current => Math.max(0, current - 1))}>Remove pallet</button>
+        <button onClick={() => setCount(0)}>Reset</button>
       </div>
     </section>
   </main>;

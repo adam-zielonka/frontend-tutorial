@@ -1,4 +1,4 @@
-# React state and events — start
+# React state and events — solution
 
 Connect events, state updates, and accessible feedback.
 
