@@ -1,11 +1,10 @@
 {
-  "id": "07-02-http-and-data-errors",
-  "variant": "solution",
+  "id": "07-03-abort-cleanup",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.",
-    "Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].",
-    "Toggle the missing fixture to inspect the error UI, then restore the working URL.",
-    "Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards."
+    "Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.",
+    "In cleanup set active to false before calling controller.abort().",
+    "Keep both success and error handlers guarded by active; rapidly toggle the missing-fixture option and check the final selection wins."
   ]
 }
