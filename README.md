@@ -1,4 +1,4 @@
-# Explain empty ramps and ramp status — start
+# Explain empty ramps and ramp status — solution
 
 Distinguish an available ramp from a filter with no matches.
 

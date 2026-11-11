@@ -30,9 +30,16 @@ export default function App() {
       <h2>Ramp overview</h2>
       {ramps.map(ramp => {
         const assigned = visible.filter(item => item.rampId === ramp.id);
+        const allAssigned = loadings.filter(item => item.rampId === ramp.id);
+        const rampStatus = allAssigned.length === 0 ? 'Available'
+          : allAssigned.every(item => item.status === 'done') ? 'Complete'
+          : allAssigned.some(item => item.status === 'loading') ? 'Loading' : 'Waiting';
         return <article key={ramp.id}>
           <h3>{ramp.name} ({ramp.id})</h3>
-          <ul>{assigned.map(item => <li key={item.id}>{item.id} · {item.customer} · {item.status}</li>)}</ul>
+          <p>Ramp status: {rampStatus}</p>
+          {assigned.length === 0 ? <p>{allAssigned.length === 0 ? 'No loadings assigned.' : 'No matching loadings at this ramp.'}</p> : <ul>
+            {assigned.map(item => <li key={item.id}>{item.id} · {item.customer} · {item.status}</li>)}
+          </ul>}
         </article>;
       })}
     </section>}

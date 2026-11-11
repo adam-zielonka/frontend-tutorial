@@ -1,6 +1,6 @@
 {
   "id": "05-04-empty-and-status",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Derive allAssigned from the unfiltered loadings for each ramp.",
