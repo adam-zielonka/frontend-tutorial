@@ -28,8 +28,13 @@ export default function App() {
       </table>}
     </section> : <section>
       <h2>Ramp overview</h2>
-      {/* TODO: show each ramp with its matching visible loadings and an empty message. */}
-      <ul>{ramps.map(ramp => <li key={ramp.id}>{ramp.name} ({ramp.id}) — assignments to implement</li>)}</ul>
+      {ramps.map(ramp => {
+        const assigned = visible.filter(item => item.rampId === ramp.id);
+        return <article key={ramp.id}>
+          <h3>{ramp.name} ({ramp.id})</h3>
+          <ul>{assigned.map(item => <li key={item.id}>{item.id} · {item.customer} · {item.status}</li>)}</ul>
+        </article>;
+      })}
     </section>}
   </main>;
 }

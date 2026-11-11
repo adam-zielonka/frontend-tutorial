@@ -1,6 +1,6 @@
 {
   "id": "05-03-ramp-groups",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Replace the ramp placeholder with an article for each ramp.",
