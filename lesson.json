@@ -1,10 +1,10 @@
 {
-  "id": "04-05-counter-collection",
-  "variant": "solution",
+  "id": "04-06-computed-capacity",
+  "variant": "start",
   "release": "v2",
   "tasks": [
-    "Implement Store.addCounter: stop at safetyLimit, then push new CounterStore(this.nextId++).",
-    "Replace the single Counter with a map over store.counters and use counter.id as its React key.",
-    "Add several counters, change each independently, and confirm resetting one does not change the others."
+    "Derive canAddMoreCounters from counters.length and limit, then use it inside addCounter.",
+    "Derive sum with reduce over all counter values; do not store a separately maintained total.",
+    "Add up to four counters. Confirm Add counter becomes disabled and changing or resetting any counter updates the total."
   ]
 }
