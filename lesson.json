@@ -1,6 +1,6 @@
 {
   "id": "02-development-tools",
-  "variant": "start",
+  "variant": "solution",
   "release": "v1",
   "tasks": [
     "Enable formatOnSave and strict in the practice configuration.",

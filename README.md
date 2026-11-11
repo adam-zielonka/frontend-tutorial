@@ -1,4 +1,4 @@
-# Configure a development workspace — start
+# Configure a development workspace — solution
 
 Practice typed configuration, then use the real tools locally.
 
