@@ -1,6 +1,6 @@
 {
   "id": "04-05-counter-collection",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Implement Store.addCounter: stop at safetyLimit, then push new CounterStore(this.nextId++).",
