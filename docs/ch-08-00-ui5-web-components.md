@@ -15,17 +15,17 @@ Use a UI5 React component, supply its theme provider, and register an icon.
 Continue with the separate React 18 sandbox. Install UI5 Web Components for React v2 and its matching core and icon packages:
 
 ```bash
-npm install @ui5/webcomponents-react@^2 @ui5/webcomponents@^2 @ui5/webcomponents-icons@^2
+npm install @ui5/webcomponents-react@2.15.0 @ui5/webcomponents@2.15.0 @ui5/webcomponents-base@2.15.0 @ui5/webcomponents-fiori@2.15.0 @ui5/webcomponents-icons@2.15.0
 ```
 
-Wrap the app in `src/main.tsx`:
+When building from scratch, wrap the app in `src/main.tsx` (use your own stylesheet name). The exercise already places this provider inside `App.tsx`, so do not wrap it twice:
 
 ```tsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from '@ui5/webcomponents-react';
 import App from './App';
-import './index.css';
+import './styles.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><ThemeProvider><App /></ThemeProvider></StrictMode>,
@@ -58,3 +58,16 @@ Run `npm run dev` and click the button. Importing the individual icon registers 
 ## Official references
 
 [UI5 Web Components for React](https://ui5.github.io/webcomponents-react/), [UI5 first steps](https://ui5.github.io/webcomponents/docs/getting-started/first-steps/), [using icons](https://ui5.github.io/webcomponents/docs/advanced/using-icons/).
+
+## Complete the progress exercise
+
+`ProgressIndicator` in this pinned UI5 v2 release uses `value` for a percentage
+from 0 to 100. Convert the pallet count with `(loaded / 10) * 100`; passing the
+raw count would show only 10% when the shipment is full. Keep the limit in the
+state updater as well as in the button's `disabled` prop. Reset both the count
+and the derived display by resetting the single source of truth.
+
+Use Tab to focus the buttons and Enter or Space to activate them. At capacity,
+loading should be unavailable while Reset remains accessible. Both icons need
+their registration imports; an icon should supplement the button's text rather
+than replace its accessible name.

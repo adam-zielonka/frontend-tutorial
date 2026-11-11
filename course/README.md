@@ -31,9 +31,9 @@ entrypoint, HTML, TypeScript and Vite configuration, and React + React DOM
 **18.3.1**. Do not merge the website's React 19 dependencies into these lessons.
 There is deliberately no lesson `index.tsx`, `main.tsx`, or `package.json`.
 
-For Vite export, strip the initial slash when writing each file, retain its
-remaining directory structure, and import `./App` from the generated root
-entrypoint. Use the automatic JSX transform (`jsx: "react-jsx"` for TypeScript
+The production exporter in `scripts/course-project.mjs` puts source files under
+`src/` and public fixtures under `public/`, preserving relative imports. The
+standalone validator below uses the equivalent root-source layout. Use the automatic JSX transform (`jsx: "react-jsx"` for TypeScript
 and a React Vite plugin or `esbuild: { jsx: 'automatic' }` for Vite). The
 exporter's package manifest must include the lesson dependencies, including
 Vitest in lesson 06. Never import `*.test.ts` into the App or entrypoint.

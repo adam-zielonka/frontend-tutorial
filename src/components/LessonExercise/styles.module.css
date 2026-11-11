@@ -1,0 +1,19 @@
+.exercise {margin: 2rem 0 3rem; padding: clamp(1rem, 3vw, 1.75rem); border: 1px solid var(--ifm-color-emphasis-300); border-top: 4px solid var(--ifm-color-primary); border-radius: 12px; background: var(--ifm-background-surface-color); box-shadow: 0 8px 28px rgb(0 0 0 / 5%);}
+.heading h2 {margin: .4rem 0 .75rem; font-size: 1.65rem;}
+.eyebrow {font-size: .75rem; letter-spacing: .12em; font-weight: 700; color: var(--ifm-color-primary);}
+.toolbar, .links, .draftTools {display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin: 1rem 0;}
+.note, .launch p, .draftTools span {font-size: .85rem; color: var(--ifm-color-emphasis-700);}
+.launch {padding: 1.75rem 1rem; text-align: center; background: var(--ifm-color-emphasis-100); border-radius: 8px;}
+.launch p {margin: 1rem auto 0; max-width: 34rem;}
+.hints, .local, .console {margin: 1rem 0;}
+.exercise summary {cursor: pointer; font-weight: 600; padding: .5rem 0;}
+.exercise summary:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 3px;}
+.hints ul {margin-top: .75rem;}
+.exercise :global(.sp-wrapper) {min-width: 0;}
+.exercise :global(.sp-layout) {border-color: var(--ifm-color-emphasis-300);}
+@media (max-width: 700px) {
+  .exercise {padding: 1rem .75rem;}
+  .exercise :global(.sp-layout) {flex-direction: column;}
+  .exercise :global(.sp-stack) {width: 100%; min-width: 0;}
+  .links a {max-width: 100%; white-space: normal;}
+}

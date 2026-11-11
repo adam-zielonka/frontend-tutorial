@@ -69,3 +69,22 @@ Call `load` from a button in an `observer` component and render loading, error, 
 ## Official references
 
 [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), [MobX async actions](https://mobx.js.org/actions.html), [Vite proxy](https://vite.dev/config/server-options#server-proxy).
+
+## Practice without a remote API
+
+The interactive exercise uses a bundled ramps JSON fixture so your first fetch
+exercise does not depend on a third-party API. Read the file, render the loaded
+ramps, and distinguish loading, success, and error states. In local Vite projects,
+files in `public` are served as static assets. The on-page sandbox serves its own
+copy of the fixture.
+
+Add retry by starting a fresh request, not by hiding the previous error. In an
+effect, create an `AbortController` for each request and abort it in cleanup.
+Ignore an aborted request's result so it cannot replace a newer request's state.
+React Strict Mode deliberately exercises setup and cleanup in development; the
+request code should remain correct when the effect is started again.
+
+To test the failure path locally, temporarily request a missing file and confirm
+that the HTTP status becomes an error message. Restore the path, retry, and check
+that the successful response replaces the error. Do not treat an HTTP failure as
+an empty successful list: users need to distinguish “no ramps” from “not loaded”.

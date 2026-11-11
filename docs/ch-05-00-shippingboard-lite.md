@@ -8,7 +8,7 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 ## Goals
 
-Apply components, observable state, lists, and derived values to a small shipping board.
+Apply components, state, lists, and derived values to a small shipping board. The interactive exercise uses React state for view/filter selection and fixed loading records. The additional walkthrough below demonstrates how a growing board can move into a MobX model.
 
 ## Model the board
 
@@ -85,3 +85,29 @@ Run `npm run dev`, add a destination, and mark it complete. Refreshing clears th
 ## Official references
 
 [React rendering lists](https://react.dev/learn/rendering-lists), [MobX computed values](https://mobx.js.org/computeds.html), [React forms and inputs](https://react.dev/reference/react-dom/components/input).
+
+## From a list to a ramp dashboard
+
+The interactive exercise adds ramps and a dashboard/table view. Treat a ramp's
+loadings as a filtered view of the same data, not a copy that can become stale.
+Match by a stable `rampId`, use stable loading IDs as React keys, and display an
+explicit empty state for ramps with no loadings.
+
+When you derive progress, guard against zero pallets before dividing. A completed
+loading has loaded at least its planned quantity. For ramp status, check whether
+the ramp is empty before using `every`: `[].every(...)` returns `true`, which does
+not mean an empty ramp has completed a shipment.
+
+Keep view selection separate from business data. Switching from a table to a
+dashboard should change presentation while preserving assignments and progress.
+Check the result by moving a loading between ramps and switching views: the loading
+should appear exactly once and both views should agree.
+
+For an additional challenge, serialize the selected view with `URLSearchParams`.
+Allow only known view names when restoring it. Updating the URL with
+`history.replaceState` does not implement Back/Forward handling automatically;
+a full navigation feature also needs a `popstate` listener or a router.
+
+The [original ShippingBoard Lite project](https://github.com/adam-zielonka/shippingboard-lite)
+contains a larger business UI. These exercises isolate its ramp/view concepts so
+students can run them without that project's backend or older UI dependencies.
