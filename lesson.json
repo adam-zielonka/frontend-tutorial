@@ -1,6 +1,6 @@
 {
   "id": "04-02-local-state",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Import useState and initialize value to zero inside Counter; render value instead of the literal zero.",

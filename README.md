@@ -1,4 +1,4 @@
-# Make the counter interactive — start
+# Make the counter interactive — solution
 
 Use local React state to connect the five counter controls.
 

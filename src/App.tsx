@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import './styles.css';
 
 function Counter() {
-  // TODO: useState(0), render value, and connect each button to its setter.
+  const [value, setValue] = useState(0);
   return <section className="counter" aria-label="Counter">
     <h2>Counter</h2>
-    <output aria-live="polite">0</output>
+    <output aria-live="polite">{value}</output>
     <div className="controls">
-      <button type="button">-100</button>
-      <button type="button">-1</button>
-      <button type="button">Reset</button>
-      <button type="button">+1</button>
-      <button type="button">+100</button>
+      <button type="button" onClick={() => setValue(current => current - 100)}>-100</button>
+      <button type="button" onClick={() => setValue(current => current - 1)}>-1</button>
+      <button type="button" onClick={() => setValue(0)}>Reset</button>
+      <button type="button" onClick={() => setValue(current => current + 1)}>+1</button>
+      <button type="button" onClick={() => setValue(current => current + 100)}>+100</button>
     </div>
   </section>;
 }
