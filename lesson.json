@@ -1,6 +1,6 @@
 {
   "id": "04-06-computed-capacity",
-  "variant": "start",
+  "variant": "solution",
   "release": "v2",
   "tasks": [
     "Derive canAddMoreCounters from counters.length and limit, then use it inside addCounter.",
