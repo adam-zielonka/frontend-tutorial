@@ -1,0 +1,20 @@
+---
+title: "4.4. Subscribe React with observer"
+sidebar_position: 4
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+**Setup from step 3:** the temporary React value snapshot and its bridge handlers are removed. `Counter` now reads the completed store directly and calls its bound actions. Its initial zero still renders, but clicks do not refresh the display: the missing subscription is this exercise.
+
+Wrap `Counter` with `observer`. MobX records observable reads made during that component's render and schedules updates when those values change. Keep `counter.value` inside that render; making a class observable alone does not subscribe React. `App` only owns a stable store reference at this stage.
+
+After completing the wrapper, all five controls should update immediately without any extra `setValue` call.
+
+<LessonExercise id="04-04-react-observer" />
+
+## Official references
+
+[React integration](https://mobx.js.org/react-integration.html) · [Observable state](https://mobx.js.org/observable-state.html)
+
+[Previous: Create an observable counter store](./03-observable-store.mdx) · [Next: Manage multiple counters](./05-counter-collection.mdx)

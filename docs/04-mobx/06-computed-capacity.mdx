@@ -1,0 +1,20 @@
+---
+title: "4.6. Derive capacity and the total"
+sidebar_position: 6
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+**Setup from step 5:** the temporary safety limit becomes the original chapter's `limit = 4`. The supporting UI now displays capacity and a total, and reads two getter stubs. The starter still guards the numeric limit inside `addCounter`, so it cannot grow without bound while you complete the computed values.
+
+Implement `canAddMoreCounters` and `sum`, then reuse the capacity getter in the action. Both values are derived from existing state. A separate `isFull` field or manually updated total would duplicate facts and could drift out of sync.
+
+Add four counters, give them different values, and reset one. The total must reflect each change, and the disabled Add button must match the store's own guard.
+
+<LessonExercise id="04-06-computed-capacity" />
+
+## Official references
+
+[Computed values](https://mobx.js.org/computeds.html) · [Actions and binding](https://mobx.js.org/actions.html)
+
+[Previous: Manage multiple counters](./05-counter-collection.mdx) · [Next: Remove a counter safely](./07-counter-removal.mdx)

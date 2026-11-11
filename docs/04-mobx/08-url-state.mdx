@@ -1,0 +1,22 @@
+---
+title: "4.8. Restore and serialize URL state"
+sidebar_position: 8
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+**Setup from step 7:** the app gains a small import field, a share-query display, and an effect that calls `restoreUrl` and returns `syncUrl`'s disposer. New store/helper stubs are supplied in `/Store.ts`. The import field lets you exercise hydration even when the preview's own address bar is unavailable.
+
+Serialize values using the original chapter's `value` query parameter and semicolon format. Hydration must validate the whole payload before replacing state: accept at most four finite numbers, reject blank tokens and oversized input, and define the completely empty string as zero counters. A malformed payload must leave existing values untouched.
+
+The reaction tracks the serialized values and writes with `replaceState`, preserving other parameters and the hash. Read the URL before starting that reaction. Start it in the provided React effect and return its disposer, so unmounts and development Strict Mode do not accumulate subscriptions.
+
+Try `5;-2`, `1;;2`, `Infinity`, five values, and an empty string. In an exported project, reload `?value=5%3B-2&mode=demo#counters` and confirm unrelated URL parts survive edits.
+
+<LessonExercise id="04-08-url-state" />
+
+## Official references
+
+[Reactions and disposal](https://mobx.js.org/reactions.html) · [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) · [History.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState) · [Effect cleanup](https://react.dev/reference/react/useEffect)
+
+[Previous: Remove a counter safely](./07-counter-removal.mdx) · [Next: Persist counters in localStorage](./09-persistence.mdx)

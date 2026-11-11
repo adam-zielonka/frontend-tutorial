@@ -1,0 +1,20 @@
+---
+title: "4.3. Create an observable counter store"
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Move the previous counter's value and operations into `CounterStore`. `makeAutoObservable` infers observable fields and actions; `autoBind` keeps methods attached to their instance when passed as callbacks. `add` must accumulate its argument, rather than replace the value.
+
+**Setup from step 2:** `/Store.ts` is new. `App` creates one store with a lazy `useState` initializer and passes it to `Counter`. For this step only, the supporting component copies `counter.value` into React state after each action. This explicit bridge keeps the preview interactive while you focus on the store. It is removed in step 4, where React will subscribe through `observer`.
+
+Validate numbers before assignment: a bad delta or arithmetic overflow must leave the previous value intact.
+
+<LessonExercise id="04-03-observable-store" />
+
+## Official references
+
+[Observable state](https://mobx.js.org/observable-state.html) · [Actions and binding](https://mobx.js.org/actions.html)
+
+[Previous: Make the counter interactive](./02-local-state.mdx) · [Next: Subscribe React with observer](./04-react-observer.mdx)

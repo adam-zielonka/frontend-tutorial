@@ -1,0 +1,18 @@
+---
+title: "4.2. Make the counter interactive"
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+This starter is the previous layout solution with a task comment added. No new model or dependency is needed: use React's `useState` to give each `Counter` its own value. Functional setter updates use the latest value when clicks are batched.
+
+Make all five controls work. The sequence **+100 → -1** should display **99**; Reset should display zero. This local version establishes behavior that the MobX store will preserve in the next step.
+
+<LessonExercise id="04-02-local-state" />
+
+## Official references
+
+[useState](https://react.dev/reference/react/useState) · [Responding to events](https://react.dev/learn/responding-to-events)
+
+[Previous: Build the counter layout](./01-counter-layout.mdx) · [Next: Create an observable counter store](./03-observable-store.mdx)
