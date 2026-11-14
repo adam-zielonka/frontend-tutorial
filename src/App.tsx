@@ -38,11 +38,19 @@ export default function App() {
           </div>}
       </section> : <section>
         <h2 className="visually-hidden">Ramp overview</h2>
-        {/* TODO: show each ramp with its matching visible loadings and an empty message. */}
-        <ul className="Content">{ramps.map(ramp => <li className="Ramp" key={ramp.id}>
-          <header><h3>{ramp.name} ({ramp.id})</h3></header>
-          <p className="ramp-loadings">Assignments to implement</p>
-        </li>)}</ul>
+        <div className="Content">{ramps.map(ramp => {
+          const assigned = visible.filter(item => item.rampId === ramp.id);
+          return <article className="Ramp" key={ramp.id}>
+            <header><h3>{ramp.name} ({ramp.id})</h3></header>
+            <div className="ramp-loadings">
+              <ul>{assigned.map(item => <li className="Loading" key={item.id}>
+                <header>{item.id}</header>
+                <div className="customer"><span className="name">{item.customer}</span></div>
+                <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
+              </li>)}</ul>
+            </div>
+          </article>;
+        })}</div>
       </section>}
     </main>
   </div>;
