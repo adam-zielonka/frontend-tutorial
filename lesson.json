@@ -1,6 +1,6 @@
 {
   "id": "03-03-bounded-events",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Add Remove pallet with a functional updater clamped to zero.",
