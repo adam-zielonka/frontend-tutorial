@@ -1,6 +1,6 @@
 {
   "id": "04-08-url-state",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Implement serializedValues as a semicolon-separated value list and hydrate as an all-or-nothing validated replacement.",
