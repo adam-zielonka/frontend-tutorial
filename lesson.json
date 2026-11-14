@@ -1,10 +1,10 @@
 {
-  "id": "07-04-retry",
-  "variant": "solution",
+  "id": "08-01-provider-and-button",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Add a request counter with useState(0).",
-    "Enable Retry request and increment that counter with a functional update on each click.",
-    "Include request in the effect dependencies alongside url; retry success and failure, then restore the working fixture."
+    "Import ThemeProvider and Button from their @ui5/webcomponents-react component paths.",
+    "Wrap the existing main element in ThemeProvider.",
+    "Replace the native button with Button, keeping its Load pallet text; confirm it renders and accepts keyboard focus."
   ]
 }
