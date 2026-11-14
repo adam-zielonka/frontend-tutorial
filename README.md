@@ -1,6 +1,6 @@
-# Add a UI5 provider and button — solution
+# Wire actions and register icons — start
 
-Compose a UI5 React component inside its provider.
+Update React state from UI5 buttons with registered icons.
 
 ## Run
 
@@ -15,15 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Import ThemeProvider and Button from their @ui5/webcomponents-react component paths.
-- Wrap the existing main element in ThemeProvider.
-- Replace the native button with Button, keeping its Load pallet text; confirm it renders and accepts keyboard focus.
+- Add loaded state initialized to 0 and render it in the pallet count with aria-live="polite".
+- Wire Load pallet to increment and add Reset shipment to set loaded to 0.
+- Import add.js and refresh.js from @ui5/webcomponents-icons/dist, then give the buttons matching icon names.
+- Use Tab and Enter or Space to load a few pallets and reset; keep visible button text.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/08-ui5/01-provider-and-button) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-01-provider-and-button-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-01-provider-and-button-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/08-ui5/02-events-and-icons) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-02-events-and-icons-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-02-events-and-icons-solution-v3)
 
 ## All checkpoints
 
