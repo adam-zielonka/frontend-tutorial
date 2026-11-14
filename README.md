@@ -1,6 +1,6 @@
-# Remove a counter safely — solution
+# Restore and serialize URL state — start
 
-Remove by stable identity while derived state updates automatically.
+Hydrate validated values and synchronize them with the URL using a disposed reaction.
 
 ## Run
 
@@ -15,15 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Implement removeCounter with filter, excluding the supplied ID and retaining the other instances.
-- Fill all four slots, assign different values, and remove a middle counter. Check the remaining IDs and values.
-- Verify capacity and total update, add a new counter, then remove all counters and recover using Add counter.
+- Implement serializedValues as a semicolon-separated value list and hydrate as an all-or-nothing validated replacement.
+- Reject more than four counters, payloads longer than 512 characters, blank tokens, NaN and Infinity. Treat an entirely empty string as an empty collection.
+- Implement restoreUrl and syncUrl. Use the value query parameter, preserve other parameters and the hash, catch browser failures, and return the reaction disposer.
+- Load 5;-2, change a value, and inspect the share query. Invalid input such as 1;;2 or Infinity must preserve the current collection. In the exported app, reload a URL containing ?value=5%3B-2.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/07-counter-removal) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/08-url-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-solution-v3)
 
 ## All checkpoints
 
