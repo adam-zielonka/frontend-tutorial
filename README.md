@@ -1,6 +1,6 @@
-# Describe a shipment with types — solution
+# Derive the manifest summary — start
 
-Add a required priority to the shipment model and display it.
+Calculate summary values from the typed records.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Add priority to Shipment as the union standard | express.
-- Give S-101 express priority and the other shipments standard priority.
-- Render the priority beside each shipment status; confirm all three rows remain visible.
+- Calculate totalPallets with reduce and readyCount with filter from shipments.
+- Add a Summary section above the list showing the shipment count, pallet total, and ready count.
+- Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/01-tool-set/01-shipment-shape) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-01-shipment-shape-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-01-shipment-shape-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/01-tool-set/02-derived-summary) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-02-derived-summary-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-02-derived-summary-solution-v3)
 
 ## All checkpoints
 
