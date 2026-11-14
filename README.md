@@ -1,6 +1,6 @@
-# Manage multiple counters — solution
+# Derive capacity and the total — start
 
-Compose observable counter instances in an observable parent collection.
+Use computed getters for the four-counter limit and sum.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Implement Store.addCounter: stop at safetyLimit, then push new CounterStore(this.nextId++).
-- Replace the single Counter with a map over store.counters and use counter.id as its React key.
-- Add several counters, change each independently, and confirm resetting one does not change the others.
+- Derive canAddMoreCounters from counters.length and limit, then use it inside addCounter.
+- Derive sum with reduce over all counter values; do not store a separately maintained total.
+- Add up to four counters. Confirm Add counter becomes disabled and changing or resetting any counter updates the total.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/05-counter-collection) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-05-counter-collection-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-05-counter-collection-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/06-computed-capacity) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-06-computed-capacity-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-06-computed-capacity-solution-v3)
 
 ## All checkpoints
 
