@@ -1,6 +1,6 @@
-# Render the counter component — solution
+# Remember the pallet count — start
 
-Build a small semantic component before adding behavior.
+Use local React state to update the rendered count.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Replace the placeholder paragraph with a short instruction about counting pallets.
-- Add a section labelled Pallet counter and render count inside an output element.
-- Give the output aria-live="polite"; confirm the preview shows Pallets: 0.
+- Import useState and replace the fixed count with useState(0).
+- Add an Add pallet button whose click handler increments with a functional state updater.
+- Click three times and confirm the displayed count becomes 3 without reloading.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/03-react-basics/01-component) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-01-component-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-01-component-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/03-react-basics/02-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-02-state-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-02-state-solution-v3)
 
 ## All checkpoints
 
