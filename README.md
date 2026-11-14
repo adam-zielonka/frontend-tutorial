@@ -1,6 +1,6 @@
-# Filter loading status — solution
+# Group loadings by ramp — start
 
-Derive visible rows from a controlled status selector.
+Render each ramp with its matching visible assignments.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Derive visible by filtering loadings against filter; all must keep every record.
-- Confirm Waiting, Loading, and Done each show one matching row.
-- Return to All and verify the count and table return to three rows.
+- Replace the ramp placeholder with an article for each ramp.
+- Inside each article derive assigned from visible by matching item.rampId to ramp.id, then render its rows.
+- Use stable IDs for keys; confirm All gives R1 two assignments, R2 one, and R3 none.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/02-status-filter) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-02-status-filter-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-02-status-filter-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/03-ramp-groups) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-03-ramp-groups-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-03-ramp-groups-solution-v3)
 
 ## All checkpoints
 

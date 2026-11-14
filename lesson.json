@@ -1,10 +1,10 @@
 {
-  "id": "05-02-status-filter",
-  "variant": "solution",
+  "id": "05-03-ramp-groups",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Derive visible by filtering loadings against filter; all must keep every record.",
-    "Confirm Waiting, Loading, and Done each show one matching row.",
-    "Return to All and verify the count and table return to three rows."
+    "Replace the ramp placeholder with an article for each ramp.",
+    "Inside each article derive assigned from visible by matching item.rampId to ramp.id, then render its rows.",
+    "Use stable IDs for keys; confirm All gives R1 two assignments, R2 one, and R3 none."
   ]
 }
