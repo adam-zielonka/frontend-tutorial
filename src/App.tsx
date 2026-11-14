@@ -21,8 +21,7 @@ const App = observer(function App() {
   const [store] = useState(() => new Store());
   return <main className="app">
     <h1>MobX counters</h1>
-    {/* TODO: map store.counters into Counter elements using counter.id as key. */}
-    <Counter counter={store.counters[0]} />
+    {store.counters.map(counter => <Counter key={counter.id} counter={counter} />)}
     <button type="button" aria-label="Add counter" onClick={store.addCounter}>+</button>
   </main>;
 });

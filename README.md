@@ -1,4 +1,4 @@
-# Manage multiple counters — start
+# Manage multiple counters — solution
 
 Compose observable counter instances in an observable parent collection.
 
