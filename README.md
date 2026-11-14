@@ -1,6 +1,6 @@
-# Switch between board views — solution
+# Filter loading status — start
 
-Connect view selection to two presentations of the same data.
+Derive visible rows from a controlled status selector.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Wire the Loadings and Ramps buttons to setView with the matching View value.
-- Confirm aria-pressed follows the selected view and the section changes.
-- Switch back to Loadings and verify the three fixed records are preserved.
+- Derive visible by filtering loadings against filter; all must keep every record.
+- Confirm Waiting, Loading, and Done each show one matching row.
+- Return to All and verify the count and table return to three rows.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/01-view-switching) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/02-status-filter) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-02-status-filter-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-02-status-filter-solution-v3)
 
 ## All checkpoints
 
