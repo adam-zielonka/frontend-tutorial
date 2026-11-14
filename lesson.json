@@ -1,11 +1,10 @@
 {
-  "id": "02-02-scripts-and-git",
-  "variant": "solution",
+  "id": "03-01-component",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.",
-    "Confirm all four checklist items are ready; these values are still only practice data.",
-    "Export the project, install dependencies, run pnpm exec tsc --noEmit and pnpm dev in a real terminal, then stop the server with Ctrl+C.",
-    "In your own new project folder, run git init and git status; inspect the diff, stage your source files, and commit a working checkpoint."
+    "Replace the placeholder paragraph with a short instruction about counting pallets.",
+    "Add a section labelled Pallet counter and render count inside an output element.",
+    "Give the output aria-live=\"polite\"; confirm the preview shows Pallets: 0."
   ]
 }

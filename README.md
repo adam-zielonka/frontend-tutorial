@@ -1,6 +1,6 @@
-# Use scripts and a Git checkpoint — solution
+# Render the counter component — start
 
-Finish the script model, then practice a real local tool workflow.
+Build a small semantic component before adding behavior.
 
 ## Run
 
@@ -15,16 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.
-- Confirm all four checklist items are ready; these values are still only practice data.
-- Export the project, install dependencies, run pnpm exec tsc --noEmit and pnpm dev in a real terminal, then stop the server with Ctrl+C.
-- In your own new project folder, run git init and git status; inspect the diff, stage your source files, and commit a working checkpoint.
+- Replace the placeholder paragraph with a short instruction about counting pallets.
+- Add a section labelled Pallet counter and render count inside an output element.
+- Give the output aria-live="polite"; confirm the preview shows Pallets: 0.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/02-development-tools/02-scripts-and-git) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-02-scripts-and-git-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-02-scripts-and-git-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/03-react-basics/01-component) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-01-component-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-01-component-solution-v3)
 
 ## All checkpoints
 
