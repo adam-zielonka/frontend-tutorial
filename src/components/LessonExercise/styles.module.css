@@ -1,0 +1,38 @@
+.exercise {margin: 1rem 0 2rem; min-width: 0;}
+.heading p {margin: .5rem 0;}
+.eyebrow {font-size: .75rem; letter-spacing: .09em; font-weight: 700; color: var(--ifm-color-primary); text-transform: uppercase;}
+.steps {display: flex; gap: .5rem; overflow-x: auto; padding: .5rem 0 .8rem; margin-bottom: .5rem;}
+.steps a {flex: 0 0 auto; padding: .4rem .7rem; font-size: .8rem; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 6px; color: var(--ifm-font-color-base); text-decoration: none;}
+.steps a[aria-current] {background: var(--ifm-color-primary); color: var(--ifm-color-primary-contrast-foreground); border-color: var(--ifm-color-primary);}
+.steps span {font-weight: 700; margin-right: .3rem;}
+.taskArea {padding: .85rem 1.1rem; border-left: 3px solid var(--ifm-color-primary); background: var(--ifm-color-emphasis-100); border-radius: 0 6px 6px 0;}
+.taskArea ol {margin: .35rem 0 0;}
+.toolbar, .links, .draftTools, .modeSwitch {display: flex; align-items: center; flex-wrap: wrap; gap: .6rem;}
+.toolbar {margin: 1rem 0 .6rem; justify-content: space-between;}
+.links, .draftTools {margin: .7rem 0;}
+.note, .draftTools span {font-size: .8rem; color: var(--ifm-color-emphasis-700);}
+.projectToggle {display: flex; gap: .5rem; align-items: center; font-size: .8rem; padding: .35rem 0 .7rem;}
+.paneLabels, .loading {display: grid; grid-template-columns: 1fr 1fr; gap: 1px;}
+.paneLabels span {padding: .5rem .9rem; background: var(--ifm-color-emphasis-100); font-size: .8rem; font-weight: 600;}
+.loading {min-height: 520px; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 8px;}
+.loading div {padding: 1rem; background: var(--ifm-color-emphasis-100);}
+.local, .console {margin: .7rem 0;}
+.hints {margin-top: .4rem;}
+.exercise summary {cursor: pointer; font-weight: 600; padding: .3rem 0; font-size: .9rem;}
+.exercise summary:focus-visible, .steps a:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 3px;}
+.hints ul {margin: .5rem 0;}
+.exercise :global(.sp-wrapper) {min-width: 0;}
+.exercise :global(.sp-layout) {border-color: var(--ifm-color-emphasis-300);}
+.nextSteps {display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 1.2rem 0 .7rem;}
+.nextSteps a {max-width: 49%; white-space: normal;}
+@media (max-width: 768px) {
+  .exercise :global(.sp-layout) {flex-direction: column;}
+  /* Sandpack uses flex-basis: 0 for horizontal panes. In a column with an
+     automatic height that collapses both panes, even with an explicit height. */
+  .exercise :global(.sp-layout > .sp-stack) {flex: 0 0 auto; width: 100%; min-width: 0;}
+  .links a {max-width: 100%; white-space: normal;}
+  .paneLabels {display: none;}
+  .taskArea {padding: .7rem;}
+  .nextSteps {align-items: stretch; flex-direction: column;}
+  .nextSteps a {max-width: 100%;}
+}

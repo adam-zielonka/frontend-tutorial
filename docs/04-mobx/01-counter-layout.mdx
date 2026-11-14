@@ -1,0 +1,23 @@
+---
+title: "4.1. Build the counter layout"
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+<details>
+<summary>About this step</summary>
+
+Start with the same counter layout as the original chapter: a displayed value and five controls. A small `Counter` function keeps this markup reusable. The starter already renders zero; complete its controls in `/App.tsx`. Styling is supplied in `/styles.css`, preserving the original yellow counter, green display, and blue buttons from [mobx-example](https://github.com/adam-zielonka/mobx-example/blob/02e70f73629d15da431d858da7132eeab5b91dbb/src/index.css). The button labelled `0` resets the value; widths adapt to the embedded preview.
+
+There is no changing state yet, so the finished buttons are intentionally inert. Confirm the structure before adding behavior. This first step starts a new app; it does not contain the collection or persistence code from later lessons.
+
+</details>
+
+<LessonExercise id="04-01-counter-layout" />
+
+## Official references
+
+[Writing components](https://react.dev/learn/your-first-component) · [Responding to events](https://react.dev/learn/responding-to-events)
+
+[Chapter overview](../ch-04-00-mobx-and-react.md) · [Next: Make the counter interactive](./02-local-state.mdx)

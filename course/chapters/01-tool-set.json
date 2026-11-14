@@ -1,0 +1,67 @@
+[
+  {
+    "id": "01-01-shipment-shape",
+    "title": "Describe a shipment with types",
+    "doc": "01-tool-set/01-shipment-shape",
+    "objective": "Add a required priority to the shipment model and display it.",
+    "tasks": [
+      "Add priority to Shipment as the union standard | express.",
+      "Give S-101 express priority and the other shipments standard priority.",
+      "Render the priority beside each shipment status; confirm all three rows remain visible."
+    ],
+    "hints": [
+      "Start in /shipments.ts. A required field means every array entry needs a value.",
+      "Use shipment.priority inside JSX braces in /App.tsx."
+    ],
+    "activeFile": "/shipments.ts",
+    "files": {
+      "/App.tsx": "import { shipments } from './shipments';\nimport './styles.css';\n\nexport default function App() {\n  return <main>\n    <h1>Typed shipment manifest</h1>\n    <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>\n    <ul>{shipments.map(shipment => <li key={shipment.id}>\n      <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})\n      {/* TODO: display the typed priority here. */}\n    </li>)}</ul>\n  </main>;\n}\n",
+      "/shipments.ts": "export interface Shipment {\n  id: string;\n  customer: string;\n  pallets: number;\n  status: 'ready' | 'loading';\n  // TODO: add priority: 'standard' | 'express'.\n}\n\nexport const shipments: Shipment[] = [\n  { id: 'S-101', customer: 'North Market', pallets: 8, status: 'ready' },\n  { id: 'S-102', customer: 'Harbour Foods', pallets: 5, status: 'loading' },\n  { id: 'S-103', customer: 'City Shop', pallets: 3, status: 'ready' },\n];\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { shipments } from './shipments';\nimport './styles.css';\n\nexport default function App() {\n  return <main>\n    <h1>Typed shipment manifest</h1>\n    <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>\n    <ul>{shipments.map(shipment => <li key={shipment.id}>\n      <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})\n      <span> · {shipment.priority}</span>\n    </li>)}</ul>\n  </main>;\n}\n",
+      "/shipments.ts": "export interface Shipment {\n  id: string;\n  customer: string;\n  pallets: number;\n  status: 'ready' | 'loading';\n  priority: 'standard' | 'express';\n}\n\nexport const shipments: Shipment[] = [\n  { id: 'S-101', customer: 'North Market', pallets: 8, status: 'ready', priority: 'express' },\n  { id: 'S-102', customer: 'Harbour Foods', pallets: 5, status: 'loading', priority: 'standard' },\n  { id: 'S-103', customer: 'City Shop', pallets: 3, status: 'ready', priority: 'standard' },\n];\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {},
+    "chapter": "01",
+    "chapterTitle": "Explain the tool set",
+    "focusFiles": [
+      "/shipments.ts",
+      "/App.tsx"
+    ]
+  },
+  {
+    "id": "01-02-derived-summary",
+    "title": "Derive the manifest summary",
+    "doc": "01-tool-set/02-derived-summary",
+    "objective": "Calculate summary values from the typed records.",
+    "tasks": [
+      "Calculate totalPallets with reduce and readyCount with filter from shipments.",
+      "Add a Summary section above the list showing the shipment count, pallet total, and ready count.",
+      "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows."
+    ],
+    "hints": [
+      "Use 0 as the initial reduce accumulator.",
+      "Derive counts during render rather than storing a second copy of the data."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import { shipments } from './shipments';\nimport './styles.css';\n\nexport default function App() {\n  return <main>\n    <h1>Typed shipment manifest</h1>\n    <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>\n    <ul>{shipments.map(shipment => <li key={shipment.id}>\n      <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})\n      <span> · {shipment.priority}</span>\n    </li>)}</ul>\n  </main>;\n}\n",
+      "/shipments.ts": "export interface Shipment {\n  id: string;\n  customer: string;\n  pallets: number;\n  status: 'ready' | 'loading';\n  priority: 'standard' | 'express';\n}\n\nexport const shipments: Shipment[] = [\n  { id: 'S-101', customer: 'North Market', pallets: 8, status: 'ready', priority: 'express' },\n  { id: 'S-102', customer: 'Harbour Foods', pallets: 5, status: 'loading', priority: 'standard' },\n  { id: 'S-103', customer: 'City Shop', pallets: 3, status: 'ready', priority: 'standard' },\n];\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { shipments } from './shipments';\nimport './styles.css';\n\nexport default function App() {\n  const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);\n  const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;\n  return <main>\n    <h1>Typed shipment manifest</h1>\n    <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>\n    <section aria-label=\"Summary\">\n      <p>{shipments.length} shipments · {totalPallets} pallets · {readyCount} ready</p>\n    </section>\n    <ul>{shipments.map(shipment => <li key={shipment.id}>\n      <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})\n      <span> · {shipment.priority}</span>\n    </li>)}</ul>\n  </main>;\n}\n",
+      "/shipments.ts": "export interface Shipment {\n  id: string;\n  customer: string;\n  pallets: number;\n  status: 'ready' | 'loading';\n  priority: 'standard' | 'express';\n}\n\nexport const shipments: Shipment[] = [\n  { id: 'S-101', customer: 'North Market', pallets: 8, status: 'ready', priority: 'express' },\n  { id: 'S-102', customer: 'Harbour Foods', pallets: 5, status: 'loading', priority: 'standard' },\n  { id: 'S-103', customer: 'City Shop', pallets: 3, status: 'ready', priority: 'standard' },\n];\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {},
+    "chapter": "01",
+    "chapterTitle": "Explain the tool set",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  }
+]

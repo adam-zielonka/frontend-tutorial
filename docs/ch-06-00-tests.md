@@ -1,133 +1,21 @@
+---
+sidebar_position: 60
+---
+
 # 6. Tests
 
-Let's start with `mobx-example` project.
+Write repeatable assertions for a complete single-value `CounterStore`. `change(delta)` adds a positive or negative amount and clamps between 0 and 10; `reset()` sets the value to zero. This smaller test fixture is separate from chapter 4's multi-counter collection.
 
-## Preparing workspace
+The live preview is an explicitly labelled **manual harness** for the real store. It does not execute `Store.test.ts` or report Vitest results. To run your test edits, export the edited project, install dependencies, and run `pnpm exec vitest run` in a real local or StackBlitz terminal. Vitest 3.2.6 is included; its default Node environment is enough for these store-only tests.
 
-To start working on this project you have two option: development using local or online editor:
+## Lessons
 
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/create-tests)
-2. Local development
-    - Clone repo from [**mobx-example**](https://github.com/adam-zielonka/mobx-example/tree/create-tests) and set branch to `create-tests`. You can use this command: 
-    ```shell
-    git clone --branch create-tests https://github.com/adam-zielonka/mobx-example.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code mobx-example
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
+1. [Write the first store tests](./06-tests/01-first-test.mdx) — Turn behavior into assertions executed by Vitest in a terminal.
+2. [Test both clamping boundaries](./06-tests/02-boundaries.mdx) — Verify overshoots and repeated attempts at the limits.
+3. [Test reset and independent stores](./06-tests/03-reset-and-independence.mdx) — Prove reset changes a nonzero value and instances do not share state.
 
+Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
 
-## Install tools for testing
+## Official references
 
-```shell
-pnpm add vitest happy-dom
-```
-
-- [vitest](https://vitest.dev/) - tools that allow write and run out test
-- [happy-dom](https://github.com/capricorn86/happy-dom) - emulates browser environment by providing Browser API
-
-## Configure
-
-We can add config to `vite.config.ts` or create dedicate file for test environment config. In this case we use shared config:
-
-```ts title="vite.config.ts"
-// highlight-next-line
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    sourcemap: true,
-  },
-  // highlight-start
-  test: {
-    environment: "happy-dom",
-  }
-  // highlight-end
-});
-```
-
-
-## Write tests
-
-```ts title="src/Store.test.ts"
-import { describe, test, expect } from "vitest";
-import { CounterStore } from "./Store";
-
-describe("CounterStore", () => {
-  test("new counter", () => {
-    const counter = new CounterStore();
-    expect(counter.value).toBe(1);
-  });
-});
-```
-
-## Run test
-
-
-```
-pnpm vitest
-```
-
-or if you using npm you need to add to `package.json`
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test": "vitest"
-  },
-  //...
-}
-
-```
-
-```
-npm run test
-```
-
-## Exercises
-
-Please test this scenario for `CounterStore`:
-
-- test adding valid/invalid input 
-- test reset
-
-And also for `Store`:
-
-- test creation of Store
-- test adding/deleting counters (check limitation)
-
-## Coverage
-
-```shell
-pnpm add @vitest/coverage-c8
-```
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test-coverage": "pnpm vitest run --coverage",
-  },
-  //...
-}
-```
-
-## End-to-end testing
-
-If we wanna test in the way user use application we can use [playwright](https://playwright.dev/)
+[Vitest v3 guide](https://v3.vitest.dev/guide/), [assertions](https://v3.vitest.dev/api/expect.html), [coverage](https://v3.vitest.dev/guide/coverage.html), [Testing Library principles](https://testing-library.com/docs/guiding-principles/).

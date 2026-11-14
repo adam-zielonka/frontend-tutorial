@@ -1,0 +1,26 @@
+---
+title: "Retry the same request"
+slug: /07-fetch/04-retry
+sidebar_position: 4
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+<details>
+<summary>About this step</summary>
+
+A retry must start a new request rather than just dismissing the old error. Store a request counter, increment it on Retry request, and include it in the effect dependency array alongside the URL.
+
+The same effect now handles first load, URL changes, and retries: it clears the old error, shows loading, and finishes with data or an error. Cleanup cancels the preceding request. Repeating the missing path should fail again; restore the working fixture and retry to return to the three ramps.
+
+The fixture is intentionally fast. Use browser Network tools if you want to inspect repeated requests and the brief loading state. This remains local fixture practice; production API routing, authentication, and cross-origin policy need their own configuration.
+
+</details>
+
+<LessonExercise id="07-04-retry" />
+
+## Sources
+
+[React effect dependencies](https://react.dev/reference/react/useEffect#specifying-reactive-dependencies), [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+[Previous: Cancel obsolete requests](./03-abort-cleanup.mdx)

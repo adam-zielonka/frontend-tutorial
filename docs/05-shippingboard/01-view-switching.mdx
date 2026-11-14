@@ -1,0 +1,26 @@
+---
+title: "Switch between board views"
+slug: /05-shippingboard/01-view-switching
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+<details>
+<summary>About this step</summary>
+
+The board starts with the same three loading records and three ramps used throughout this chapter. React state holds the selected view; the records remain fixed support data in `data.ts`.
+
+The supplied CSS preserves the original ShippingBoard Lite navbar, table and ramp-card appearance throughout all four steps. Styling is already provided in both starter and solution; focus on the view and data logic.
+
+The two sections are already selected by a conditional expression. Wire the navigation handlers so one selects `loadings` and the other `ramps`. `aria-pressed` exposes the active choice. The ramp view is a scaffold that later lessons will fill in; it does not yet show assignments.
+
+</details>
+
+<LessonExercise id="05-01-view-switching" />
+
+## Sources
+
+[React conditional rendering](https://react.dev/learn/conditional-rendering), [React state](https://react.dev/reference/react/useState).
+
+[Next: Filter loading status](./02-status-filter.mdx)

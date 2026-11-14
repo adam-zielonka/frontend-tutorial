@@ -1,0 +1,26 @@
+---
+title: "Describe a shipment with types"
+slug: /01-tool-set/01-shipment-shape
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+<details>
+<summary>About this step</summary>
+
+Node runs development tools; TypeScript checks the model before JavaScript runs; React turns the model into a page. Vite serves the exported app. The preview already contains three shipment records so you can focus on one change.
+
+An interface describes each record. A string union restricts a field to a small set of allowed values. Add the required priority field, update all records, then render it. A type error while only some records have been updated is useful feedback; finish the model before checking the preview.
+
+The sandbox uses its own pinned dependencies, separate from this documentation website. No package installation is needed for this step.
+
+</details>
+
+<LessonExercise id="01-01-shipment-shape" />
+
+## Sources
+
+[TypeScript object types](https://www.typescriptlang.org/docs/handbook/2/objects.html), [union types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types), [React JavaScript in JSX](https://react.dev/learn/javascript-in-jsx-with-curly-braces).
+
+[Next: Derive the manifest summary](./02-derived-summary.mdx)

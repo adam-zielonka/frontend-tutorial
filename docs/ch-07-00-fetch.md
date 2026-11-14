@@ -1,106 +1,22 @@
+---
+sidebar_position: 70
+---
+
 # 7. Fetch
 
-## Preparing workspace
+Load a bundled JSON fixture in four small steps. The effect and UI scaffold are provided; you add the request, validate responses, clean up obsolete work, then enable retry.
 
-To start working on this project you have two option: development using local or online editor:
+Keep `/public/ramps.json` and the supplied `loadLocalRamps` adapter. Vite exposes the fixture at `/ramps.json`; the embedded sandbox can use `/public/ramps.json`. These lessons use local data rather than depending on a remote demonstration API. The adapter's path fallback and the final user-triggered retry serve different purposes.
 
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/create-fetch)
-2. Local development
-    - Clone repo from [**shippingboard-lite**](https://github.com/adam-zielonka/shippingboard-lite/tree/create-fetch) and set branch to `create-fetch`. You can use this command: 
-    ```shell
-    git clone --branch create-fetch https://github.com/adam-zielonka/shippingboard-lite.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code shippingboard-lite
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
+## Lessons
 
-## Setup Base URL
+1. [Fetch the local ramp fixture](./07-fetch/01-request.mdx) — Make a request and render its JSON response through the existing effect.
+2. [Reject HTTP and invalid data](./07-fetch/02-http-and-data-errors.mdx) — Validate the response before treating it as ramp data.
+3. [Cancel obsolete requests](./07-fetch/03-abort-cleanup.mdx) — Pair every effect request with cancellation and stale-result protection.
+4. [Retry the same request](./07-fetch/04-retry.mdx) — Start a fresh request without changing the URL or reloading the page.
 
-So in normal case the api exist in the same domain that web app is available so the base url can be `/api/`, but in our case we get data from github, so what we need to add to `api.ts` file is that line:
+Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
 
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-const BASE_URL = "https://raw.githubusercontent.com/adam-zielonka/shippingboard-lite/main/src/api/";
-```
+## Official references
 
-## Setup types
-
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-type CustomerResponse = {
-  kunnr: string
-  name1: string
-  ort01: string
-  land1: string
-}
-
-type RampResponse = {
-  ramp_id: string
-  description: string
-}
-```
-
-## Fetch using await
-
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getCustomers(): Promise<Customer[]> {
-    const response = await fetch(BASE_URL + "CUSTOMERS.json");
-
-    if (!response.ok) {
-      return [];
-    }
-
-    if (!response.body) {
-      return [];
-    }
-
-    const json = await response.json() as CustomerResponse[];
-
-    return json.map(c => new Customer(c.kunnr, c.name1, c.ort01, c.land1));
-  }
-```
-
-## Fetch using then
-
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getRamps(): Promise<Ramp[]> {
-    return await fetch(BASE_URL + "RAMPS.json")
-      .then(response => {
-        if (!response.ok) {
-          return [];
-        }
-    
-        if (!response.body) {
-          return [];
-        }
-
-        return response.json() as Promise<RampResponse[]>;
-      }).then(json => {
-        return json.map(r => new Ramp(r.ramp_id, r.description));
-      });
-  }
-```
-
-## Fixing store
-
-```ts title="src/store/Store.ts" showLineNumbers
-export class Store {
-  //...
-  init = async () => {
-    this.customers = await api.getCustomers();
-    this.ramps = await api.getRamps();
-    this.loadings = api.getLoadings();
-    store.ui.init();
-  };
-}
-```
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), [React effects](https://react.dev/reference/react/useEffect), [Vite static assets](https://vite.dev/guide/assets.html#the-public-directory).

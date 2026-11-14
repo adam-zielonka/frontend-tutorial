@@ -1,441 +1,52 @@
-# 4. Mobx in React
+# 4. MobX in React
 
-```mdx-code-block
-import BrowserWindow from '@site/src/components/BrowserWindow';
-```
+React components describe the interface; MobX models hold application state and the operations that change it. This chapter connects those two ideas by building the counter app from the [original mobx-example project](https://github.com/adam-zielonka/mobx-example). Begin with one static counter and the original five controls: −100, −1, Reset, +1 and +100. Then move its state into a model, subscribe React, and grow the app into a collection.
 
-React for me it is functions that can render user interface and Mobx is classes that contains state of application. In this chapter I try to show you how easy and power full is that connection.
+## Follow the lesson path
 
-During this chapter the app that I create will be counters, with some buttons that will be change counter value.
+Each step has its own page, focused starter files, editor, running preview and reference solution. Open the first lesson to begin. Each later starter builds on the preceding solution, with the setup changes explained on that page; your saved editor draft belongs to that individual lesson.
 
-:::info
+1. [Build the counter layout](./04-mobx/01-counter-layout.mdx) — component markup and controls.
+2. [Make the counter interactive](./04-mobx/02-local-state.mdx) — local React state and event handlers.
+3. [Create an observable counter store](./04-mobx/03-observable-store.mdx) — `makeAutoObservable`, accumulating actions and binding.
+4. [Subscribe React with observer](./04-mobx/04-react-observer.mdx) — replace the temporary state bridge with a render subscription.
+5. [Manage multiple counters](./04-mobx/05-counter-collection.mdx) — a parent store, child models and stable IDs.
+6. [Derive capacity and the total](./04-mobx/06-computed-capacity.mdx) — a four-counter limit and computed sum.
+7. [Remove a counter safely](./04-mobx/07-counter-removal.mdx) — preserve remaining models and recover capacity.
+8. [Restore and serialize URL state](./04-mobx/08-url-state.mdx) — validated hydration, `reaction` and cleanup.
+9. [Persist counters in localStorage](./04-mobx/09-persistence.mdx) — URL priority, guarded browser storage and `autorun` disposal.
 
-If you starting from this point you have two options:
+The first two lessons establish the behavior without MobX. The next two separate the original chapter's two central ideas: making a model observable and making a React component observe it. Collection, computed values and removal come next; URL and storage effects are introduced only after the in-memory app works.
 
-1. Use web editor: [vite.new/react-ts](https://vite.new/react-ts)
-2. Or generate project using this command:
+## Environment
 
-```
+The embedded exercises supply React 18.3.1, MobX 6.13.7 and `mobx-react-lite` 4.1.0. Work in each page's focused files; supporting styles and completed code are provided. Every starter renders, including the deliberately unsubscribed counter in step 4.
+
+For your own project, continue from the React/TypeScript project in chapter 3, open [Vite's React TypeScript starter](https://vite.new/react-ts), or generate one in a terminal:
+
+```sh
 pnpm create vite my-react-app --template react-swc-ts
+cd my-react-app
+pnpm install
+pnpm add mobx@6.13.7 mobx-react-lite@4.1.0
 ```
 
-:::
+The app's lesson files use `/App.tsx`, `/Store.ts` and `/styles.css` at the editor root. In a Vite project, put them under `src/` and import `./styles.css` from `App.tsx`.
 
-## Setup the environment
+## What to watch for
 
-If you prepared in last chapter empty project react project, you need to add two libraries to your project `mobx` and `mobx-react-lite`:
+`makeAutoObservable` infers observable fields, actions and computed getters. `observer` subscribes the component that reads those fields during render. A parent that renders the collection and a child that reads a counter value each need the appropriate subscription. Keep models stable for the lifetime of their owner, and use stable keys when deleting items.
 
-```shell
-pnpm install mobx mobx-react-lite
-```
+The original example also explores editing a value through an input and inspecting a model in the browser console. As an extension, add a number input whose action rejects non-finite values; do not confuse replacing its value with adding a delta. Prefer a local debugger breakpoint over assigning a store to `window`: these lessons keep model ownership inside the mounted app.
 
-You should also delete all thing that we don't need in this project like styles.
+Keep persistence outside model constructors. Browser input is untrusted, storage can be unavailable, and subscriptions need disposal. The last two lessons validate complete snapshots before replacement, cap the collection at four counters, and keep effects inside a React effect with cleanup.
 
-Also the `App` component don't need so much elements:
+## Original project and references
 
-```tsx
-function App() {
-  return <div>
-    Counter
-  </div>
-}
-```
+The original project is useful for comparison after completing these steps:
 
-## Create component for counter
-
-Let's start building our counter. Should have place for displaying value and buttons for changing this value (-100,-1,0,+1,+100).
-
-```tsx
-const Counter = () => {
-
-  return <div className="counter">
-    <span>
-      <span>0</span>
-    </span>
-    <button>-100</button>
-    <button>-1</button>
-    <button>0</button>
-    <button>+1</button>
-    <button>+100</button>
-  </div>;
-};
-```
-
-And of course we need to add this component to `App`:
-
-```tsx
-function App() {
-  return <div className="app">
-    <Counter />
-  </div>;
-}
-```
-
-And we should have:
-
-<BrowserWindow>
-
-![counter](./img/img-02-01-counter-start.png)
-
-</BrowserWindow>
-
-Of course we can add more style to this app from this: [style.css](https://github.com/adam-zielonka/mobx-example/blob/main/src/index.css) to file `src/main.css`. Result should be similar to this:
-
-<BrowserWindow>
-
-![counter_with_css](./img/img-02-02-counter-with-css.png)
-
-</BrowserWindow>
-
-## Create store + First spell
-
-We can use `useState` to store value for this component:
-
-```tsx
-const Counter = () => {
-  const [value, setValue] = useState(0);
-
-  return <div className="counter">
-    <span>
-      <span>{value}</span>
-    </span>
-    <button onClick={() => setValue(value - 100)}>-100</button>
-    <button onClick={() => setValue(value - 1)}>-1</button>
-    <button onClick={() => setValue(0)}>0</button>
-    <button onClick={() => setValue(value + 1)}>+1</button>
-    <button onClick={() => setValue(value + 100)}>+100</button>
-  </div>;
-};
-```
-
-But in this case we can not access to this value outside component. We can move this value level up, but access also will be limited.
-
-In this case we can build store outside react context to provide access everywhere.
-
-```ts title="Store.ts"
-export class CounterStore {
-  value = 0
-
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  reset = (): void => {
-    this.value = 0
-  }
-
-  add = (value: string | number): number => {
-    if (!isNaN(+value)) this.value = +value
-    return this.value
-  }
-}
-
-export const store = new CounterStore()
-```
-
-To say Mobx that this class will be store we need to use first spell `makeAutoObservable` in constructor. After construction this object will be not normal object. Fields change to state, methods to actions and getter to computed values.
-
-## Import store to component + Second spell
-
-So, if we have every thing we can just import this store and use in component:
-
-```tsx title="Store.ts"
-import { store } from './Store'
-
-const Counter = () => {
-  const { value, add, reset } = store;
-
-  return <div className="counter">
-    <span>
-      <span>{value}</span>
-    </span>
-    <button onClick={() => add(100)}>-100</button>
-    <button onClick={() => add(-1)}>-1</button>
-    <button onClick={() => reset()}>0</button>
-    <button onClick={() => add(+1)}>+1</button>
-    <button onClick={() => add(+100)}>+100</button>
-  </div>;
-};
-```
-
-But doesn't work, because we need to tell Mobx that this component using our store. We can do that using second spell:
-
-```tsx
-const Counter = observer(() => {
-  const { value, add, reset } = store;
-
-  return <div className="counter">
-    ...
-  </div>;
-});
-```
-
-And this is all magic that you need to know to starting working with mobx. But it isn't everything.
-
-## Global store + Action for adding
-
-We also know the users. One counter is not enough for them. To solve this problem we can create new store that will be contain our `CounterStore`'s.
-
-```ts title="Store.ts"
-export class Store {
-  counters: CounterStore[] = [new CounterStore()]
-
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  addCounter = (): void => {
-    this.counters.push(new CounterStore())
-  }
-}
-
-export const store = new Store()
-```
-
-Now, we need to adjust components.
-
-```tsx
-const Counter = observer(({ counter }:{ counter: CounterStore }) => {
-  const { value, add, reset } = counter;
-
-  return <div className="counter">
-    ...
-  </div>;
-});
-```
-
-```tsx
-function App() {
-  const { counters, addCounter } = store
-
-  return <div className="app">
-    {counters.map((counter, i) => <Counter key={i} counter={counter} />)}
-    <button onClick={addCounter}>+</button>
-  </div>;
-}
-```
-
-And we need to remember that `App` now have some state that can be change why we need to add first spell and we can use this in the export line.
-
-```tsx
-export default observer(App);
-```
-
-
-:::info
-
-You can start from here using this project: [global-store](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/global-store) or you can clone from this [mobx-example](https://github.com/adam-zielonka/mobx-example/tree/global-store) and set branch to `global-store`
-
-:::
-
-## Limit number of counters
-
-Sometimes we need to sey to users stop, you can not do this. You can only have 4 counters. So we can add geter that will be return true or false if user can add more counters.
-
-```ts title="Store.ts"
-export class Store {
-  //...
-  get canAddMoreCounters(): boolean {
-    return this.counters.length < 4
-  }
-  //...
-  addCounter = (): void => {
-    if (!this.canAddMoreCounters) return;
-
-    this.counters.push(new CounterStore());
-  }
-  //..
-}
-```
-
-If this getter change all components will be rerender.
-
-We can disable or hide button if we full of counters.
-
-```tsx
-function App() {
-  const { counters, addCounter, canAddMoreCounters } = store
-
-  return <div className="app">
-    {counters.map((counter, i) => <Counter key={i} counter={counter} />)}
-    {canAddMoreCounters && <button onClick={(addCounter}>+</button>}
-  </div>;
-}
-```
-
-## Action for deleting
-
-If we can add more counters, we also should have option to remove them.
-
-```ts title="Store.ts"
-export class Store {
-  //...
-  // highlight-start
-  removeCounter = (counter: CounterStore): void => {
-    this.counters = this.counters.filter(c => c !== counter)
-  }
-  // highlight-end
-  //..
-}
-```
-
-```tsx
-const Counter = observer(({ counter }:{ counter: CounterStore }) => {
-  const { value, add, reset } = counter;
-  // highlight-next-line
-  const { removeCounter } = store
-
-  return <div className="counter">
-    <span>
-      <span>{value}</span>
-      // highlight-next-line
-      <button onClick={() => removeCounter(counter)}>X</button>
-    </span>
-    ...
-  </div>;
-});
-```
-
-:::info
-
-You can start from here using this project: [after-action-for-delete](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/action-for-delete) or you can clone from this [mobx-example](https://github.com/adam-zielonka/mobx-example/tree/action-for-delete) and set branch to `action-for-delete`
-
-:::
-
-## Sum of all counters
-
-```ts title="Store.ts"
-export class Store {
-  //...
-  // highlight-start
-  get sum(): number {
-    return this.counters.reduce((p, c) => p + c.value, 0)
-  }
-  // highlight-end
-  //..
-}
-```
-
-```tsx
-function App() {
-  const { counters, addCounter, canAddMoreCounters, sum } = store
-
-  return <div className="app">
-    // highlight-next-line
-    <span className="all">{sum}</span>
-    {counters.map((counter, i) => <Counter key={i} counter={counter} />)}
-    {canAddMoreCounters && <button onClick={(addCounter}>+</button>}
-  </div>;
-}
-```
-
-```diff
--    <span className="all">{sum}</span>
-+    <div className='all counter'><span><span>{sum}</span></span></div>
-```
-
-## Value to input
-
-```tsx
-const Counter = observer(({ counter }:{ counter: CounterStore }) => {
-  const { value, add, reset } = counter;
-  const { removeCounter } = store
-
-  return <div className="counter">
-    <span>
-      // highlight-next-line
-      <input value={value} onChange={(e) => add(e.target.value)}/>
-      <button onClick={() => removeCounter(counter)}>X</button>
-    </span>
-    ...
-  </div>;
-});
-```
-
-## Console in browser
-
-```ts title="Store.ts"
-declare global { interface Window { store: Store; }}
-window.store = store
-```
-
-## Reaction (Bonus)
-
-Store state in url params
-
-```ts title="Store.ts"
-import { makeAutoObservable, reaction } from 'mobx'
-
-export class CounterStore {
-  // highlight-start
-  constructor(public value = 0) {
-    makeAutoObservable(this)
-    this.value = value
-  }
-  // highlight-end
-  //...
-}
-
-export class Store {
-  //...
-  // highlight-start
-  get toString(): string {
-    return this.counters.map(c => c.value).join(';')
-  }
-
-  fromString(value: string): void {
-    this.counters = value.split(';').map(v => !isNaN(+v) ? new CounterStore(+v) : new CounterStore())
-  }
-  // highlight-end
-  //...
-}
-
-export const store = new Store()
-// highlight-start
-const urlParams = new URLSearchParams(window.location.search)
-store.fromString(urlParams.get('value') || '')
-
-reaction(() => store.toString, (value) => {
-  const urlParams = new URLSearchParams(window.location.search)
-  urlParams.set('value', value)
-  window.history.replaceState({}, '', `?${urlParams.toString()}`)
-})
-// highlight-end
-
-declare global { interface Window { store: Store; }}
-window.store = store
-```
-
-## Autorun (Bonus)
-
-Store state in localstorage
-
-```ts title="Store.ts"
-//...
-
-export const store = new Store()
-const urlParams = new URLSearchParams(window.location.search)
-// highlight-next-line
-store.fromString(urlParams.get('value') || localStorage.getItem('store') || '')
-
-reaction(() => store.toString, (value) => {
-  const urlParams = new URLSearchParams(window.location.search)
-  urlParams.set('value', value)
-  window.history.replaceState({}, '', `?${urlParams.toString()}`)
-})
-
-// highlight-start
-autorun(() => {
-  localStorage.setItem('store', store.toString)
-})
-// highlight-end
-
-//..
-```
-
-## Summary and Ending
-
-Resources:
-
-- [Source code](https://github.com/adam-zielonka/mobx-example)
-- [Demo](https://adam-zielonka.github.io/mobx-example/)
+- [Source code](https://github.com/adam-zielonka/mobx-example) and [demo](https://adam-zielonka.github.io/mobx-example/).
+- Collection checkpoint: [global-store source](https://github.com/adam-zielonka/mobx-example/tree/global-store) and [StackBlitz](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/global-store).
+- Removal checkpoint: [action-for-delete source](https://github.com/adam-zielonka/mobx-example/tree/action-for-delete) and [StackBlitz](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/action-for-delete).
+- [Original styles](https://github.com/adam-zielonka/mobx-example/blob/main/src/index.css).
+- Official MobX documentation: [observable state](https://mobx.js.org/observable-state.html), [actions](https://mobx.js.org/actions.html), [React integration](https://mobx.js.org/react-integration.html), [computed values](https://mobx.js.org/computeds.html), and [reactions](https://mobx.js.org/reactions.html).

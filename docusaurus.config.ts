@@ -24,6 +24,8 @@ const config: Config = {
       {
         docs: {
           path: "./docs",
+          sidebarPath: require.resolve("./sidebars.ts"),
+          numberPrefixParser: false,
           routeBasePath: "/",
           editUrl:
             "https://github.com/adam-zielonka/frontend-tutorial/blob/main/",
