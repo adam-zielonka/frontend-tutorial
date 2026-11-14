@@ -1,6 +1,6 @@
 {
   "id": "07-01-request",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "In loadRamps call fetch(url, { signal }), await the response, and return its parsed JSON as Ramp[].",
