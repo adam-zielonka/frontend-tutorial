@@ -1,4 +1,4 @@
-# Write the first store tests — start
+# Write the first store tests — solution
 
 Turn behavior into assertions executed by Vitest in a terminal.
 

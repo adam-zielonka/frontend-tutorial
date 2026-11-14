@@ -1,6 +1,6 @@
 {
   "id": "06-01-first-test",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Replace the first two it.todo calls with executable tests using a new CounterStore in each test.",
