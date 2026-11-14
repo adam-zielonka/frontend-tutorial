@@ -1,6 +1,6 @@
-# Remember the pallet count — solution
+# Bound subtraction and reset — start
 
-Use local React state to update the rendered count.
+Keep a nonnegative counter through every available action.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Import useState and replace the fixed count with useState(0).
-- Add an Add pallet button whose click handler increments with a functional state updater.
-- Click three times and confirm the displayed count becomes 3 without reloading.
+- Add Remove pallet with a functional updater clamped to zero.
+- Disable Remove pallet at zero and add Reset that sets count to zero.
+- Check Add three times → Remove → Reset; repeat Remove at zero and verify the count stays zero.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/03-react-basics/02-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-02-state-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-02-state-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/03-react-basics/03-bounded-events) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-03-bounded-events-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-03-03-bounded-events-solution-v3)
 
 ## All checkpoints
 
