@@ -1,6 +1,6 @@
-# Reject HTTP and invalid data — solution
+# Cancel obsolete requests — start
 
-Validate the response before treating it as ramp data.
+Pair every effect request with cancellation and stale-result protection.
 
 ## Run
 
@@ -15,16 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.
-- Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].
-- Toggle the missing fixture to inspect the error UI, then restore the working URL.
-- Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards.
+- Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.
+- In cleanup set active to false before calling controller.abort().
+- Keep both success and error handlers guarded by active; rapidly toggle the missing-fixture option and check the final selection wins.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/02-http-and-data-errors) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-02-http-and-data-errors-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-02-http-and-data-errors-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/03-abort-cleanup) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-abort-cleanup-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-abort-cleanup-solution-v3)
 
 ## All checkpoints
 

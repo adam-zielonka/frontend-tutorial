@@ -1,5 +1,5 @@
 {
-  "name": "frontend-07-02-http-and-data-errors",
+  "name": "frontend-07-03-abort-cleanup",
   "version": "1.0.0",
   "private": true,
   "type": "module",
