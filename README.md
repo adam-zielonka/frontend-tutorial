@@ -1,6 +1,6 @@
-# Write the first store tests — solution
+# Test both clamping boundaries — start
 
-Turn behavior into assertions executed by Vitest in a terminal.
+Verify overshoots and repeated attempts at the limits.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Replace the first two it.todo calls with executable tests using a new CounterStore in each test.
-- Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.
-- Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending.
+- Replace the clamping it.todo with a fresh-store test that changes by +100, +1, -100, then -1.
+- Assert values 10, 10, 0, and 0 after the respective operations.
+- Run the actual Vitest suite in a terminal; expect three passing tests and two pending.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/01-first-test) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-01-first-test-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-01-first-test-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/06-tests/02-boundaries) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-02-boundaries-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-06-02-boundaries-solution-v3)
 
 ## All checkpoints
 
