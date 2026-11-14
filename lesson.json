@@ -1,10 +1,11 @@
 {
-  "id": "02-01-editor-and-types",
-  "variant": "solution",
+  "id": "02-02-scripts-and-git",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Enable formatOnSave and strict with boolean true values in /project.ts.",
-    "Confirm exactly two of the four practice checks are ready.",
-    "In your own editor, enable editor.formatOnSave and inspect compilerOptions.strict in the exported tsconfig.json."
+    "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.",
+    "Confirm all four checklist items are ready; these values are still only practice data.",
+    "Export the project, install dependencies, run pnpm exec tsc --noEmit and pnpm dev in a real terminal, then stop the server with Ctrl+C.",
+    "In your own new project folder, run git init and git status; inspect the diff, stage your source files, and commit a working checkpoint."
   ]
 }
