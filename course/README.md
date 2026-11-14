@@ -36,6 +36,9 @@ fluid widths keep the same design usable inside a narrow preview. The original
 `0`, `+`, and `X` captions retain descriptive accessible names. Styling is supplied
 in both variants of every step, outside the exercise's editable focus files.
 
+ShippingBoard preserves its original navbar, ramp/loading cards, status colors,
+and compact table; see [sources and adaptations](./styles-shippingboard.md).
+
 ## Runtime and verification
 
 The editor and preview start automatically on each lesson page, using Sandpack

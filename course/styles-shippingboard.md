@@ -61,8 +61,8 @@ until the learner implements the business status in step 04.
   differs between each starter and solution; focus files and dependencies stay
   unchanged.
 
-Assembly of `course/lessons.json` and checkpoint release are handled separately
-by the integrating agent.
+Run `pnpm course:assemble` after editing chapter sources. See the
+[development guide](../DEVELOPMENT.md) for checkpoint release instructions.
 
 ## Validation
 
