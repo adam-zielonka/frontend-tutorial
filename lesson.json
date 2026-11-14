@@ -1,6 +1,6 @@
 {
   "id": "02-02-scripts-and-git",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.",

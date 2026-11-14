@@ -13,7 +13,7 @@ export const project: ProjectConfig = {
   formatOnSave: true,
   strict: true,
   scripts: {
-    dev: 'vite', // TODO: expose the dev server with --host 0.0.0.0.
-    typecheck: '', // TODO: add tsc --noEmit.
+    dev: 'vite --host 0.0.0.0',
+    typecheck: 'tsc --noEmit',
   },
 };
