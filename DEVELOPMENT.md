@@ -30,15 +30,19 @@ pnpm build
 ```
 
 Fixtures and teaching-project dependencies are separate from the documentation site.
-Dependency profiles share pnpm lockfiles in `course/locks/v2`. After deliberately changing
+Dependency profiles share pnpm lockfiles in `course/locks/v3`. After deliberately changing
 project dependencies, run `node scripts/check-course.mjs --update-locks`, then review
 and commit the updated lockfiles. Students may also use npm; pnpm with the supplied
 lockfile provides the reproducible install.
 
+The v3 edition restores the original example styling. The v1/v2 branches and tags
+remain unchanged. Browser drafts use a separate v3 key so this edition cannot overwrite
+a student's saved v2 files.
+
 ### Publishing course checkpoints
 
-`pnpm course:release` creates the independent branch `course-examples-v2` and two annotated
-tags per step named `lesson-<id>-start-v2` and `lesson-<id>-solution-v2`. It uses Git objects and
+`pnpm course:release` creates the independent branch `course-examples-v3` and two annotated
+tags per step named `lesson-<id>-start-v3` and `lesson-<id>-solution-v3`. It uses Git objects and
 an isolated index, without switching the website checkout. Each tag contains a complete
 Vite app at its root. The branch history follows all ordered step start/solution pairs; its tip
 is the final solution, and its README links every checkpoint.

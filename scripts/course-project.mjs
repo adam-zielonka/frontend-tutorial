@@ -2,8 +2,8 @@ import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 
-export const release = 'v2';
-export const branch = 'course-examples-v2';
+export const release = 'v3';
+export const branch = 'course-examples-v3';
 export const repo = 'https://github.com/adam-zielonka/frontend-tutorial';
 export const lessons = JSON.parse(readFileSync(new URL('../course/lessons.json', import.meta.url), 'utf8'));
 export const tagFor = (id, variant) => `lesson-${id}-${variant}-${release}`;

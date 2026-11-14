@@ -1,7 +1,7 @@
 import type {Lesson} from '../../lib/course';
 
 type StorageLike = Pick<Storage, 'getItem' | 'setItem'>;
-export const draftKey = (lesson: Lesson) => `frontend-tutorial:v2:${lesson.id}`;
+export const draftKey = (lesson: Lesson) => `frontend-tutorial:v3:${lesson.id}`;
 export function readDraft(storage: StorageLike, lesson: Lesson): Record<string, string> | null {
   try {
     const draft = JSON.parse(storage.getItem(draftKey(lesson)) ?? 'null');

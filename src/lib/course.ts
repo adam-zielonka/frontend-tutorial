@@ -17,7 +17,7 @@ export type Lesson = {
 };
 export const course = lessons as Lesson[];
 export const repository = 'https://github.com/adam-zielonka/frontend-tutorial';
-export const release = 'v2';
+export const release = 'v3';
 export function lessonTag(id: string, solution = false) {
   return `lesson-${id}-${solution ? 'solution' : 'start'}-${release}`;
 }

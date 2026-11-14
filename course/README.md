@@ -27,6 +27,15 @@ Virtual source paths such as `/App.tsx` map to `src/App.tsx` in the exported
 Vite project. `/public/*` remains in the project's `public/` directory. The
 exporter supplies the entry point, configuration, README, and draft importer.
 
+## Example appearance
+
+The MobX steps retain the yellow/orange cards, green display, blue controls, and
+Verdana typography from the original [mobx-example stylesheet](https://github.com/adam-zielonka/mobx-example/blob/02e70f73629d15da431d858da7132eeab5b91dbb/src/index.css).
+Selectors are adapted to semantic `output` elements and the lesson's controls;
+fluid widths keep the same design usable inside a narrow preview. The original
+`0`, `+`, and `X` captions retain descriptive accessible names. Styling is supplied
+in both variants of every step, outside the exercise's editable focus files.
+
 ## Runtime and verification
 
 The editor and preview start automatically on each lesson page, using Sandpack
@@ -49,7 +58,7 @@ pnpm build
 
 `course:check` builds both variants of every step in temporary directories and
 runs test files from solutions. Dependency profiles share lockfiles under
-`locks/v2/`; old v1 lockfiles are retained with the earlier edition. To change
+`locks/v3/`; v1 and v2 lockfiles are retained with their earlier editions. To change
 project dependencies intentionally, run `node scripts/check-course.mjs --update-locks`.
 See [the development guide](../DEVELOPMENT.md) for release instructions.
 
