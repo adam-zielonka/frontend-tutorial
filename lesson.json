@@ -1,6 +1,6 @@
 {
   "id": "04-07-counter-removal",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Implement removeCounter with filter, excluding the supplied ID and retaining the other instances.",
