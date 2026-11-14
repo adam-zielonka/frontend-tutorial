@@ -1,6 +1,6 @@
 {
   "id": "07-02-http-and-data-errors",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.",

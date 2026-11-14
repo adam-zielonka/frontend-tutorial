@@ -1,4 +1,4 @@
-# Reject HTTP and invalid data — start
+# Reject HTTP and invalid data — solution
 
 Validate the response before treating it as ramp data.
 
