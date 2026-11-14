@@ -1,6 +1,6 @@
-# Restore and serialize URL state — solution
+# Persist counters in localStorage — start
 
-Hydrate validated values and synchronize them with the URL using a disposed reaction.
+Restore validated browser data and dispose both URL and storage synchronization.
 
 ## Run
 
@@ -15,16 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Implement serializedValues as a semicolon-separated value list and hydrate as an all-or-nothing validated replacement.
-- Reject more than four counters, payloads longer than 512 characters, blank tokens, NaN and Infinity. Treat an entirely empty string as an empty collection.
-- Implement restoreUrl and syncUrl. Use the value query parameter, preserve other parameters and the hash, catch browser failures, and return the reaction disposer.
-- Load 5;-2, change a value, and inspect the share query. Invalid input such as 1;;2 or Infinity must preserve the current collection. In the exported app, reload a URL containing ?value=5%3B-2.
+- Complete connectPersistence: a valid URL has priority, otherwise restore a validated JSON number array from STORAGE_KEY.
+- Catch storage access and JSON errors. Reject non-arrays, more than four items, oversized JSON, non-number values and non-finite numbers.
+- After restoration, use autorun to save only a plain array of counter values; catch quota or blocked-storage errors.
+- Return cleanup that stops both effects. Verify empty arrays, malformed JSON, URL priority and restoration after removing the value query parameter.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/08-url-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-persistence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-persistence-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-persistence-solution-v3)
 
 ## All checkpoints
 
