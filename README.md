@@ -1,6 +1,6 @@
-# Make the counter interactive — solution
+# Create an observable counter store — start
 
-Use local React state to connect the five counter controls.
+Move counter behavior into a class with observable state and bound actions.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Import useState and initialize value to zero inside Counter; render value instead of the literal zero.
-- Wire ±1 and ±100 using functional updates so repeated clicks accumulate.
-- Make Reset set the value to zero. Try +100, -1, Reset, then -100.
+- In the constructor call makeAutoObservable(this, {}, { autoBind: true }).
+- Implement add as an accumulating action. Ignore non-finite deltas and results instead of storing NaN or Infinity.
+- Implement reset and verify the same five controls. Read why the supporting App still copies the store value into local state.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/02-local-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-02-local-state-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-02-local-state-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/03-observable-store) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-03-observable-store-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-03-observable-store-solution-v3)
 
 ## All checkpoints
 
