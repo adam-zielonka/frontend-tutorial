@@ -1,6 +1,6 @@
-# Derive the manifest summary — solution
+# Configure editor and type checks — start
 
-Calculate summary values from the typed records.
+Distinguish a typed practice model from real editor and compiler settings.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Calculate totalPallets with reduce and readyCount with filter from shipments.
-- Add a Summary section above the list showing the shipment count, pallet total, and ready count.
-- Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows.
+- Enable formatOnSave and strict with boolean true values in /project.ts.
+- Confirm exactly two of the four practice checks are ready.
+- In your own editor, enable editor.formatOnSave and inspect compilerOptions.strict in the exported tsconfig.json.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/01-tool-set/02-derived-summary) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-02-derived-summary-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-01-02-derived-summary-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/02-development-tools/01-editor-and-types) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-01-editor-and-types-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-02-01-editor-and-types-solution-v3)
 
 ## All checkpoints
 

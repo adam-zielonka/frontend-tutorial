@@ -1,10 +1,10 @@
 {
-  "id": "01-02-derived-summary",
-  "variant": "solution",
+  "id": "02-01-editor-and-types",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Calculate totalPallets with reduce and readyCount with filter from shipments.",
-    "Add a Summary section above the list showing the shipment count, pallet total, and ready count.",
-    "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows."
+    "Enable formatOnSave and strict with boolean true values in /project.ts.",
+    "Confirm exactly two of the four practice checks are ready.",
+    "In your own editor, enable editor.formatOnSave and inspect compilerOptions.strict in the exported tsconfig.json."
   ]
 }
