@@ -1,18 +1,16 @@
-import { useState } from 'react';
 import './styles.css';
 
+function Counter() {
+  return <section className="counter" aria-label="Counter">
+    <h2>Counter</h2>
+    <output aria-live="polite">0</output>
+    {/* TODO: add a controls container with -100, -1, 0 (Reset), +1, +100 buttons. */}
+  </section>;
+}
+
 export default function App() {
-  const [count, setCount] = useState(0);
-  return <main>
-    <h1>React pallet counter</h1>
-    <p>Count pallets as they arrive. The count must never be negative.</p>
-    <section aria-label="Pallet counter">
-      <p>Pallets: <output aria-live="polite">{count}</output></p>
-      <div className="controls">
-        <button onClick={() => setCount(current => current + 1)}>Add pallet</button>
-        <button disabled={count === 0} onClick={() => setCount(current => Math.max(0, current - 1))}>Remove pallet</button>
-        <button onClick={() => setCount(0)}>Reset</button>
-      </div>
-    </section>
+  return <main className="app">
+    <h1>MobX counters</h1>
+    <Counter />
   </main>;
 }
