@@ -1,6 +1,6 @@
-# Create an observable counter store — solution
+# Subscribe React with observer — start
 
-Move counter behavior into a class with observable state and bound actions.
+Render observable values without a duplicate local-state snapshot.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- In the constructor call makeAutoObservable(this, {}, { autoBind: true }).
-- Implement add as an accumulating action. Ignore non-finite deltas and results instead of storing NaN or Infinity.
-- Implement reset and verify the same five controls. Read why the supporting App still copies the store value into local state.
+- Wrap Counter in observer from mobx-react-lite, keeping its counter prop.
+- Read counter.value during the observed render and leave actions on the store.
+- Check +100 then -1 displays 99, and Reset works without calling a React setter.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/03-observable-store) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-03-observable-store-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-03-observable-store-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/04-react-observer) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-04-react-observer-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-04-react-observer-solution-v3)
 
 ## All checkpoints
 
