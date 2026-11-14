@@ -1,6 +1,6 @@
-# Wire actions and register icons — solution
+# Show progress and enforce capacity — start
 
-Update React state from UI5 buttons with registered icons.
+Derive a percentage and keep loading bounded at ten pallets.
 
 ## Run
 
@@ -15,16 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Add loaded state initialized to 0 and render it in the pallet count with aria-live="polite".
-- Wire Load pallet to increment and add Reset shipment to set loaded to 0.
-- Import add.js and refresh.js from @ui5/webcomponents-icons/dist, then give the buttons matching icon names.
-- Use Tab and Enter or Space to load a few pallets and reset; keep visible button text.
+- Import ProgressIndicator and derive progress as (loaded / 10) * 100.
+- Render it with value, displayValue, and an accessibleName describing shipment progress.
+- Clamp the Load updater to ten and disable Load pallet at capacity.
+- Confirm five loads show 50%, ten show 100%, another load is unavailable, and Reset restores 0% and the enabled action.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/08-ui5/02-events-and-icons) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-02-events-and-icons-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-02-events-and-icons-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/08-ui5/03-progress-and-capacity) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-03-progress-and-capacity-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-08-03-progress-and-capacity-solution-v3)
 
 ## All checkpoints
 
