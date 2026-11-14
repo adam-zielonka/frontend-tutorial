@@ -1,6 +1,6 @@
-# Fetch the local ramp fixture — solution
+# Reject HTTP and invalid data — start
 
-Make a request and render its JSON response through the existing effect.
+Validate the response before treating it as ramp data.
 
 ## Run
 
@@ -15,15 +15,16 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- In loadRamps call fetch(url, { signal }), await the response, and return its parsed JSON as Ramp[].
-- Keep loadLocalRamps and /public/ramps.json unchanged; the adapter supports the preview and local Vite paths.
-- Confirm the preview moves from an empty result to the three named ramps.
+- Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.
+- Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].
+- Toggle the missing fixture to inspect the error UI, then restore the working URL.
+- Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/01-request) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-01-request-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-01-request-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/02-http-and-data-errors) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-02-http-and-data-errors-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-02-http-and-data-errors-solution-v3)
 
 ## All checkpoints
 
