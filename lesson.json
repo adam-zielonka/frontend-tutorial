@@ -1,6 +1,6 @@
 {
   "id": "08-02-events-and-icons",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Add loaded state initialized to 0 and render it in the pallet count with aria-live=\"polite\".",
