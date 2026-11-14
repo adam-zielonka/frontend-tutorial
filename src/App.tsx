@@ -1,48 +1,50 @@
-import { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { CounterStore, Store, connectPersistence } from './Store';
+import { useState } from 'react';
+import { ramps, loadings, type View, type Filter } from './data';
 import './styles.css';
 
-const Counter = observer(function Counter({ counter, onRemove }: { counter: CounterStore; onRemove: () => void }) {
-  return <section className="counter" aria-label={`Counter ${counter.id}`}>
-    <h2>Counter {counter.id}</h2>
-    <output aria-live="polite">{counter.value}</output>
-    <div className="controls">
-      <button type="button" onClick={() => counter.add(-100)}>-100</button>
-      <button type="button" onClick={() => counter.add(-1)}>-1</button>
-      <button type="button" aria-label="Reset" onClick={counter.reset}>0</button>
-      <button type="button" onClick={() => counter.add(1)}>+1</button>
-      <button type="button" onClick={() => counter.add(100)}>+100</button>
-      <button type="button" className="remove" aria-label={`Remove counter ${counter.id}`} onClick={onRemove}>X</button>
-    </div>
-  </section>;
-});
-
-const App = observer(function App() {
-  const [store] = useState(() => new Store());
-  const [draft, setDraft] = useState('5;-2');
-  const [message, setMessage] = useState('');
-  useEffect(() => connectPersistence(store), [store]);
-  return <main className="app">
-    <h1>MobX counters</h1>
-    <section className="url-values" aria-label="URL values">
-      <label>Values separated by semicolons
-        <input value={draft} onChange={event => setDraft(event.target.value)} />
-      </label>
-      <button type="button" onClick={() => setMessage(store.hydrate(draft)
-        ? 'Values loaded.' : 'Invalid values. Use up to four finite numbers; empty removes all counters.')}>
-        Load values
-      </button>
-      <p role="status">{message}</p>
-      <p>Share query: <code>?value={encodeURIComponent(store.serializedValues)}</code></p>
-    </section>
-    <p>{store.counters.length} / {store.limit} counters</p>
-    <aside className="total" aria-label="Total"><output aria-live="polite">{store.sum}</output></aside>
-    {store.counters.length === 0 && <p>No counters. Add one to start again.</p>}
-    {store.counters.map(counter => <Counter key={counter.id} counter={counter}
-      onRemove={() => store.removeCounter(counter.id)} />)}
-    <button type="button" aria-label="Add counter" disabled={!store.canAddMoreCounters} onClick={store.addCounter}>+</button>
-  </main>;
-});
-
-export default App;
+export default function App() {
+  const [view, setView] = useState<View>('loadings');
+  const [filter, setFilter] = useState<Filter>('all');
+  // TODO: apply the selected status, keeping all rows when filter is 'all'.
+  const visible = loadings;
+  return <div className="App">
+    <header className="Header">
+      <h1>ShippingBoard Lite</h1>
+      <nav className="controls" aria-label="Board view">
+        <button aria-pressed={view === 'loadings'} onClick={() => {}}><span className="view-icon" aria-hidden="true">▦</span>Loadings</button>
+        <button aria-pressed={view === 'ramps'} onClick={() => {}}><span className="view-icon" aria-hidden="true">◉</span>Ramps</button>
+      </nav>
+    </header>
+    <main className="Board">
+      <div className="filters">
+        <label>Status <select value={filter} onChange={event => setFilter(event.target.value as Filter)}>
+          <option value="all">All</option><option value="waiting">Waiting</option>
+          <option value="loading">Loading</option><option value="done">Done</option>
+        </select></label>
+        <p aria-live="polite">{visible.length} matching loadings</p>
+      </div>
+      {view === 'loadings' ? <section>
+        <h2 className="visually-hidden">Loadings</h2>
+        {visible.length === 0 ? <p className="empty-message">No matching loadings.</p> :
+          <div className="LoadingsTableScroll" role="region" aria-label="Loading assignments" tabIndex={0}>
+            <table className="LoadingsTable">
+              <caption className="visually-hidden">Loading assignments</caption>
+              <thead><tr><th scope="col">Shipment</th><th scope="col">Ramp</th><th scope="col">Status</th></tr></thead>
+              <tbody>{visible.map(item => <tr className="line" key={item.id}>
+                <td><span className="id">{item.id}</span><span className="customer">{item.customer}</span></td>
+                <td><span className="ramp-tag">{item.rampId}</span></td>
+                <td><span className="LoadingStatus" data-status={item.status}>{item.status}</span></td>
+              </tr>)}</tbody>
+            </table>
+          </div>}
+      </section> : <section>
+        <h2 className="visually-hidden">Ramp overview</h2>
+        {/* TODO: show each ramp with its matching visible loadings and an empty message. */}
+        <ul className="Content">{ramps.map(ramp => <li className="Ramp" key={ramp.id}>
+          <header><h3>{ramp.name} ({ramp.id})</h3></header>
+          <p className="ramp-loadings">Assignments to implement</p>
+        </li>)}</ul>
+      </section>}
+    </main>
+  </div>;
+}

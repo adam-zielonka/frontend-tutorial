@@ -1,6 +1,6 @@
-# Persist counters in localStorage — solution
+# Switch between board views — start
 
-Restore validated browser data and dispose both URL and storage synchronization.
+Connect view selection to two presentations of the same data.
 
 ## Run
 
@@ -15,16 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Complete connectPersistence: a valid URL has priority, otherwise restore a validated JSON number array from STORAGE_KEY.
-- Catch storage access and JSON errors. Reject non-arrays, more than four items, oversized JSON, non-number values and non-finite numbers.
-- After restoration, use autorun to save only a plain array of counter values; catch quota or blocked-storage errors.
-- Return cleanup that stops both effects. Verify empty arrays, malformed JSON, URL priority and restoration after removing the value query parameter.
+- Wire the Loadings and Ramps buttons to setView with the matching View value.
+- Confirm aria-pressed follows the selected view and the section changes.
+- Switch back to Loadings and verify the three fixed records are preserved.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-persistence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-persistence-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-persistence-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/01-view-switching) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-solution-v3)
 
 ## All checkpoints
 

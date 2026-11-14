@@ -1,11 +1,10 @@
 {
-  "id": "04-09-persistence",
-  "variant": "solution",
+  "id": "05-01-view-switching",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Complete connectPersistence: a valid URL has priority, otherwise restore a validated JSON number array from STORAGE_KEY.",
-    "Catch storage access and JSON errors. Reject non-arrays, more than four items, oversized JSON, non-number values and non-finite numbers.",
-    "After restoration, use autorun to save only a plain array of counter values; catch quota or blocked-storage errors.",
-    "Return cleanup that stops both effects. Verify empty arrays, malformed JSON, URL priority and restoration after removing the value query parameter."
+    "Wire the Loadings and Ramps buttons to setView with the matching View value.",
+    "Confirm aria-pressed follows the selected view and the section changes.",
+    "Switch back to Loadings and verify the three fixed records are preserved."
   ]
 }
