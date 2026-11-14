@@ -1,4 +1,4 @@
-# Add a UI5 provider and button — start
+# Add a UI5 provider and button — solution
 
 Compose a UI5 React component inside its provider.
 
