@@ -26,7 +26,19 @@ describe('CounterStore', () => {
     expect(store.value).toBe(0);
   });
 
-  it.todo('resets a changed counter to zero');
+  it('resets a changed counter to zero', () => {
+    const store = new CounterStore();
+    store.change(7);
+    expect(store.value).toBe(7);
+    store.reset();
+    expect(store.value).toBe(0);
+  });
 
-  it.todo('keeps two store instances independent');
+  it('keeps two store instances independent', () => {
+    const first = new CounterStore();
+    const second = new CounterStore();
+    first.change(3);
+    expect(first.value).toBe(3);
+    expect(second.value).toBe(0);
+  });
 });

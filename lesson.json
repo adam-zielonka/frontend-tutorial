@@ -1,6 +1,6 @@
 {
   "id": "06-03-reset-and-independence",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Replace the reset todo: change a new store by 7, assert 7, reset, then assert 0.",
