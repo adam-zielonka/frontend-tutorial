@@ -1,6 +1,6 @@
 {
   "id": "05-02-status-filter",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Derive visible by filtering loadings against filter; all must keep every record.",
