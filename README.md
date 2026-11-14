@@ -1,4 +1,4 @@
-# Subscribe React with observer — start
+# Subscribe React with observer — solution
 
 Render observable values without a duplicate local-state snapshot.
 

@@ -1,6 +1,6 @@
 {
   "id": "04-04-react-observer",
-  "variant": "start",
+  "variant": "solution",
   "release": "v3",
   "tasks": [
     "Wrap Counter in observer from mobx-react-lite, keeping its counter prop.",
