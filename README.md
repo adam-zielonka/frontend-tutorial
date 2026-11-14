@@ -1,6 +1,6 @@
-# Derive capacity and the total — solution
+# Remove a counter safely — start
 
-Use computed getters for the four-counter limit and sum.
+Remove by stable identity while derived state updates automatically.
 
 ## Run
 
@@ -15,15 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Derive canAddMoreCounters from counters.length and limit, then use it inside addCounter.
-- Derive sum with reduce over all counter values; do not store a separately maintained total.
-- Add up to four counters. Confirm Add counter becomes disabled and changing or resetting any counter updates the total.
+- Implement removeCounter with filter, excluding the supplied ID and retaining the other instances.
+- Fill all four slots, assign different values, and remove a middle counter. Check the remaining IDs and values.
+- Verify capacity and total update, add a new counter, then remove all counters and recover using Add counter.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/06-computed-capacity) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-06-computed-capacity-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-06-computed-capacity-solution-v3)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/07-counter-removal) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-start-v3) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-solution-v3)
 
 ## All checkpoints
 
