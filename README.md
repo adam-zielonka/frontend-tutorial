@@ -1,4 +1,4 @@
-# Show progress and enforce capacity — start
+# Show progress and enforce capacity — solution
 
 Derive a percentage and keep loading bounded at ten pallets.
 
