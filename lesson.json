@@ -1,10 +1,10 @@
 {
-  "id": "04-01-counter-layout",
-  "variant": "solution",
+  "id": "04-02-local-state",
+  "variant": "start",
   "release": "v3",
   "tasks": [
-    "Add a controls div containing five native buttons: -100, -1, Reset, +1, +100.",
-    "Keep the displayed value at zero and render Counter inside App.",
-    "Check that all five controls are visible and keyboard focus reaches them. They intentionally do nothing yet."
+    "Import useState and initialize value to zero inside Counter; render value instead of the literal zero.",
+    "Wire ±1 and ±100 using functional updates so repeated clicks accumulate.",
+    "Make Reset set the value to zero. Try +100, -1, Reset, then -100."
   ]
 }
