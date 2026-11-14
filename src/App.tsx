@@ -11,8 +11,8 @@ export default function App() {
     <header className="Header">
       <h1>ShippingBoard Lite</h1>
       <nav className="controls" aria-label="Board view">
-        <button aria-pressed={view === 'loadings'} onClick={() => {}}><span className="view-icon" aria-hidden="true">▦</span>Loadings</button>
-        <button aria-pressed={view === 'ramps'} onClick={() => {}}><span className="view-icon" aria-hidden="true">◉</span>Ramps</button>
+        <button aria-pressed={view === 'loadings'} onClick={() => setView('loadings')}><span className="view-icon" aria-hidden="true">▦</span>Loadings</button>
+        <button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}><span className="view-icon" aria-hidden="true">◉</span>Ramps</button>
       </nav>
     </header>
     <main className="Board">
