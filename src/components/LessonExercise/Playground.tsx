@@ -199,6 +199,7 @@ function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) 
         <summary>Preview help</summary>
         <div className={styles.helpBody}>
           <p>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.</p>
+          <p>After editing a store constructor or method, use Refresh preview if an existing model still has its old behavior. Your source edits are kept.</p>
           <p>If the preview cannot connect, use StackBlitz or clone the project from the lesson’s local setup links.</p>
           <p>Support files are read-only. Downloads contain the lesson’s files as JSON; the local setup instructions explain how to import them.</p>
         </div>

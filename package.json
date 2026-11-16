@@ -20,6 +20,7 @@
   "dependencies": {
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/core": "3.10.2",
+    "@docusaurus/plugin-content-docs": "3.10.2",
     "@docusaurus/preset-classic": "3.10.2",
     "@docusaurus/theme-common": "3.10.2",
     "@easyops-cn/docusaurus-search-local": "^0.55.3",

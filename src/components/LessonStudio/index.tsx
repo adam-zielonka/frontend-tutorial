@@ -1,0 +1,224 @@
+import React, {useCallback, useEffect, useRef, useState, type ReactNode} from 'react';
+import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import {useDoc} from '@docusaurus/plugin-content-docs/client';
+import {useColorMode} from '@docusaurus/theme-common';
+import {course, type Lesson} from '../../lib/course';
+import {CodeWorkspace} from '../LessonExercise';
+import {LessonStudioContext, type StudioPanel} from './context';
+import styles from './styles.module.css';
+
+const overviewPaths = [
+  'ch-01-00-explain-the-tool-set', 'ch-02-00-tools-around-development',
+  'ch-03-00-create-base-for-your-app', 'ch-04-00-mobx-and-react',
+  'ch-05-00-shippingboard-lite', 'ch-06-00-tests',
+  'ch-07-00-fetch', 'ch-08-00-ui5-web-components',
+];
+
+export default function LessonStudio({lesson, children}: {lesson: Lesson; children: ReactNode}) {
+  const {metadata, toc} = useDoc();
+  const {colorMode, setColorMode} = useColorMode();
+  const base = useBaseUrl('/');
+  const [panel, setPanel] = useState<StudioPanel>('lesson');
+  const [narrow, setNarrow] = useState(false);
+  const [solution, setSolution] = useState(false);
+  const [readingWidth, setReadingWidth] = useState(38);
+  const [dragging, setDragging] = useState(false);
+  const [desktopView, setDesktopView] = useState<'split' | 'code' | 'preview'>('split');
+  const body = useRef<HTMLDivElement>(null);
+  const resizePointer = useRef<{element: HTMLDivElement; id: number} | null>(null);
+  const menu = useRef<HTMLDialogElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const tabButtons = useRef<Array<HTMLButtonElement | null>>([]);
+  const chapterSteps = course.filter(item => item.chapter === lesson.chapter);
+  const step = chapterSteps.findIndex(item => item.id === lesson.id) + 1;
+  const endResize = useCallback(() => {
+    const pointer = resizePointer.current;
+    resizePointer.current = null;
+    if (pointer?.element.hasPointerCapture(pointer.id)) pointer.element.releasePointerCapture(pointer.id);
+    setDragging(false);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('blur', endResize);
+    return () => {window.removeEventListener('blur', endResize); endResize();};
+  }, [endResize]);
+  useEffect(() => {if (narrow) endResize();}, [narrow, endResize]);
+
+  useEffect(() => {
+    try {
+      const saved = Number(window.localStorage.getItem('frontend-tutorial:reading-width'));
+      if (saved >= 28 && saved <= 55) setReadingWidth(saved);
+    } catch { /* Layout remains usable when storage is blocked. */ }
+    const query = window.matchMedia('(max-width: 999px)');
+    const update = () => {
+      setNarrow(query.matches);
+      // Rotation must not leave keyboard focus in a pane hidden by mobile CSS.
+      if (query.matches && document.getElementById('lesson-workspace')?.contains(document.activeElement)) {
+        setPanel('code');
+        requestAnimationFrame(() => tabButtons.current[1]?.focus());
+      }
+    };
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+
+  const changeWidth = (value: number) => {
+    const width = Math.max(28, Math.min(55, value));
+    setReadingWidth(width);
+    try {window.localStorage.setItem('frontend-tutorial:reading-width', String(width));} catch { /* Optional preference. */ }
+  };
+  const closeMenu = () => menu.current?.close();
+  const openCode = () => {
+    setPanel('code');
+    setDesktopView('split');
+    if (narrow) tabButtons.current[1]?.focus();
+    else requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-lesson-workspace] .cm-content')?.focus());
+  };
+
+  function jumpToHeading(id: string) {
+    setPanel('lesson');
+    // Defer until a hidden mobile reading pane has become visible.
+    requestAnimationFrame(() => {
+      const heading = document.getElementById(id);
+      heading?.scrollIntoView({block: 'start'});
+      heading?.setAttribute('tabindex', '-1');
+      heading?.focus({preventScroll: true});
+      const url = new URL(window.location.href);
+      url.hash = id;
+      window.history.replaceState(window.history.state, '', url);
+    });
+  }
+
+  return <LessonStudioContext.Provider value={{solution, openCode}}>
+    <div className={styles.studio} data-lesson-studio data-panel={panel}>
+      <header className={styles.header}>
+        <button ref={menuButton} type="button" className={styles.menuButton}
+          aria-haspopup="dialog" onClick={() => menu.current?.showModal()}>
+          <span aria-hidden="true">☰</span> Lessons
+        </button>
+        <div className={styles.location}>
+          <Link to={`${base}${overviewPaths[Number(lesson.chapter) - 1]}`}>{lesson.chapterTitle}</Link>
+          <span className={styles.lessonName}>{lesson.title}</span>
+        </div>
+        <span className={styles.step}>Step {step} / {chapterSteps.length}</span>
+        <nav className={styles.arrows} aria-label="Adjacent lessons">
+          {metadata.previous && <Link to={metadata.previous.permalink} title={metadata.previous.title}
+            aria-label={`Previous: ${metadata.previous.title}`}>←</Link>}
+          {metadata.next && <Link to={metadata.next.permalink} title={metadata.next.title}
+            aria-label={`Next: ${metadata.next.title}`}>→</Link>}
+        </nav>
+      </header>
+
+      <div className={styles.mobileTabs} role="tablist" aria-label="Lesson panels">
+        {(['lesson', 'code', 'preview'] as const).map((name, index) => <button
+          key={name} ref={element => {tabButtons.current[index] = element;}}
+          id={`tab-${name}`} type="button" role="tab" aria-selected={panel === name}
+          aria-controls={name === 'lesson' ? 'lesson-reading' : 'lesson-workspace'}
+          tabIndex={panel === name ? 0 : -1} onClick={() => setPanel(name)}
+          onKeyDown={event => {
+            const target = event.key === 'ArrowRight' ? (index + 1) % 3
+              : event.key === 'ArrowLeft' ? (index + 2) % 3
+                : event.key === 'Home' ? 0 : event.key === 'End' ? 2 : -1;
+            if (target >= 0) {
+              event.preventDefault();
+              setPanel((['lesson', 'code', 'preview'] as const)[target]);
+              tabButtons.current[target]?.focus();
+            }
+          }}>
+          {name === 'lesson' ? 'Lesson' : name === 'code' ? 'Code' : 'Preview'}
+        </button>)}
+      </div>
+
+      <div ref={body} className={styles.body} style={{'--reading-width': `${readingWidth}%`} as React.CSSProperties}>
+        <section id="lesson-reading" className={styles.readingPane}
+          role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : 'Lesson instructions'}
+          aria-labelledby={narrow ? 'tab-lesson' : undefined}>
+          <div className={styles.readingTools}>
+            <span>Read, then try it</span>
+            {toc.length > 0 && <label className={styles.contents}>
+              <select aria-label="Jump to lesson section" value="" onChange={event => jumpToHeading(event.target.value)}>
+                <option value="" disabled>On this page</option>
+                <option value="practice">Practice</option>
+                {toc.filter(heading => heading.level <= 3).map(heading =>
+                  <option key={heading.id} value={heading.id}>{heading.value.replace(/<[^>]+>/g, '')}</option>)}
+              </select>
+            </label>}
+          </div>
+          <div className={styles.reading} tabIndex={0} aria-label="Read the lesson">
+            {children}
+          </div>
+        </section>
+
+        <div className={styles.divider} role="separator" aria-label="Instruction pane width"
+          aria-orientation="vertical" aria-valuemin={28} aria-valuemax={55}
+          aria-valuenow={Math.round(readingWidth)} aria-valuetext={`${Math.round(readingWidth)}% instructions`}
+          aria-controls="lesson-reading" tabIndex={0}
+          onDoubleClick={() => changeWidth(38)}
+          onKeyDown={event => {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+            event.preventDefault();
+            changeWidth(event.key === 'Home' ? 28 : event.key === 'End' ? 55
+              : readingWidth + (event.key === 'ArrowLeft' ? -2 : 2));
+          }}
+          onPointerDown={event => {
+            if (!event.isPrimary || event.button !== 0) return;
+            event.preventDefault();
+            event.currentTarget.focus();
+            event.currentTarget.setPointerCapture(event.pointerId);
+            resizePointer.current = {element: event.currentTarget, id: event.pointerId};
+            setDragging(true);
+          }}
+          onPointerMove={event => {
+            if (!event.currentTarget.hasPointerCapture(event.pointerId) || !body.current) return;
+            const rect = body.current.getBoundingClientRect();
+            changeWidth((event.clientX - rect.left) / rect.width * 100);
+          }}
+          onPointerUp={endResize} onLostPointerCapture={endResize} onPointerCancel={endResize}><span /></div>
+
+        <section id="lesson-workspace" className={styles.workspace}
+          role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : 'Practice workspace'}
+          aria-labelledby={narrow ? `tab-${panel === 'preview' ? 'preview' : 'code'}` : undefined}>
+          <CodeWorkspace lesson={lesson} solution={solution} onSolutionChange={setSolution}
+            view={narrow ? panel === 'preview' ? 'preview' : 'code' : desktopView}
+            viewControls={<div className={styles.viewButtons} role="group" aria-label="Workspace view">
+              {(['split', 'code', 'preview'] as const).map(view => <button type="button" key={view}
+                aria-pressed={desktopView === view} onClick={() => setDesktopView(view)}>
+                {view === 'split' ? 'Code + preview' : view === 'code' ? 'Code' : 'Preview'}
+              </button>)}
+            </div>} />
+        </section>
+        {dragging && <div className={styles.dragShield} />}
+      </div>
+
+      <dialog ref={menu} className={styles.courseMenu} aria-labelledby="course-menu-title"
+        onClose={() => menuButton.current?.focus()}
+        onClick={event => {if (event.target === event.currentTarget) closeMenu();}}>
+        <div className={styles.menuHeader}>
+          <h2 id="course-menu-title">Course lessons</h2>
+          <div className={styles.menuActions}>
+            <button type="button" onClick={() => setColorMode(colorMode === 'dark' ? 'light' : 'dark')}>
+              {colorMode === 'dark' ? 'Light theme' : 'Dark theme'}
+            </button>
+            <button type="button" onClick={closeMenu} aria-label="Close lesson menu">✕</button>
+          </div>
+        </div>
+        <nav aria-label="Course lessons">
+          <Link className={styles.courseHome} to={base} onClick={closeMenu}>Course introduction</Link>
+          {overviewPaths.map((overview, index) => {
+            const steps = course.filter(item => Number(item.chapter) === index + 1);
+            return <details key={overview} open={steps[0].chapter === lesson.chapter}>
+              <summary>{index + 1}. {steps[0].chapterTitle}</summary>
+              <Link className={styles.overviewLink} to={`${base}${overview}`} onClick={closeMenu}>Chapter introduction</Link>
+              <ol>{steps.map(item => <li key={item.id}>
+                <Link to={`${base}${item.doc}`} aria-current={item.id === lesson.id ? 'page' : undefined}
+                  onClick={closeMenu}>{item.title}</Link>
+              </li>)}</ol>
+            </details>;
+          })}
+        </nav>
+      </dialog>
+    </div>
+  </LessonStudioContext.Provider>;
+}

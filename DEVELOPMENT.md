@@ -43,6 +43,27 @@ Explanatory edits do not require republishing immutable code tags. If the exerci
 source changes, use the checkpoint publishing procedure below. Keep the page's
 contents menu available, and put continuation links after the result checks.
 
+### Lesson workspace layout
+
+The 30 exercise routes use `LessonStudio`, a viewport-height React shell inspired
+by the [Svelte tutorial](https://svelte.dev/tutorial/svelte/multiple-select-bindings).
+Docusaurus still owns MDX, routing, search and the chapter introductions. Theme
+wrappers select the studio from existing course metadata; lesson text stays in its
+MDX file, including checks and references after `LessonExercise`.
+
+The studio renders that component's tasks and local-run guidance in the reading
+pane, and mounts one separate `CodeWorkspace`. A shared context synchronizes the
+solution choice. On narrow screens, Lesson/Code/Preview controls change visibility,
+not component identity. Never conditionally unmount Sandpack for a panel change:
+that loses editor selection and resets the running example. Preserve the v3 draft
+key and source maps when changing the shell.
+
+The outer split controls reading width; the inner split controls editor height.
+Both support keyboard resizing. Use `min-height: 0` through the flex ancestors and
+dynamic viewport height; avoid reintroducing fixed 520px panes. Verify desktop,
+375px portrait and short landscape screens, panel toggles, solution/draft recovery,
+navigation, dialogs, and heading links when changing the layout.
+
 ### Editing the exercises
 
 Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and downloadable projects share the generated `course/lessons.json`. Each step mounts

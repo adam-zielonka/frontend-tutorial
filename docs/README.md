@@ -25,11 +25,11 @@ Read each chapter introduction before its numbered steps. It connects the small 
 
 1. **Understand the starting point.** Read what the app already does and the problem this step will solve. A starter may deliberately contain a placeholder or an unconnected button; the lesson explains what to expect before editing.
 2. **Follow the walkthrough.** It names the file to edit, shows the relevant lines, and explains why they work. Apply one change at a time rather than replacing everything with a solution.
-3. **Try it in the editor.** The editor and live preview start automatically below the explanation. Only the files relevant to this step are editable by default; you can inspect the supporting files too.
-4. **Check the result.** Perform the checks beneath the workspace. Predict the outcome first, then compare it with what the preview shows. In the testing chapter, distinguish the manual browser demonstration from Vitest running in a terminal.
-5. **Compare and explain.** If you get stuck, open a hint or choose **Compare with the solution**. The solution is read-only and does not replace your work. Return to **Your code**, fix the difference, and explain what the change does before moving on.
+3. **Try it in the editor.** On a wide screen, the editor and live preview start beside the lesson. On a phone, switch between **Lesson**, **Code**, and **Preview**. Your editor stays open when you switch panels. Only the files relevant to this step are editable by default; you can inspect the supporting files too.
+4. **Check the result.** Perform **Check your work** in the lesson pane. Predict the outcome first, then compare it with the preview. In the testing chapter, distinguish the manual browser demonstration from Vitest running in a terminal.
+5. **Compare and explain.** If you get stuck, open a hint or choose **Solution** in the workspace. The solution is read-only and does not replace your work. Return to **Your code**, fix the difference, and explain what the change does before moving on.
 
-Use the page's contents menu to return to a particular explanation. Previous/next links come after the lesson's checks, so you can finish the current idea before starting another.
+Use **On this page** to jump to an explanation and **Lessons** to open the course outline. On a wide screen, drag the dividers to give the instructions, code, or preview more room; the focused dividers also respond to arrow keys. Each pane scrolls independently. Previous/next links remain after the result checks, with shortcuts in the lesson header.
 
 ## What happens when you open the next step?
 

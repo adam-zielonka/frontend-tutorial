@@ -273,6 +273,17 @@
   display: none;
 }
 
+@media (max-width: 999px) {
+  /* The persistent mobile tab already names the visible pane. */
+  .paneHeading {display: none;}
+}
+
+@media (max-width: 999px) and (max-height: 520px) {
+  .saveStatus {position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);}
+  .tools {padding-block: .2rem;}
+  .footer {padding-block: .15rem;}
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
