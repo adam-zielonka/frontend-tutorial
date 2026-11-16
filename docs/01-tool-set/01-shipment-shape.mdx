@@ -8,9 +8,25 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 Node runs development tools, TypeScript checks the shape of data, and React displays it. Vite serves the exported app. Start with three records in `/shipments.ts`; no installation is needed in the browser. An [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) describes the fields each record must have; a union limits the allowed values.
 
-1. In `/shipments.ts`, replace the TODO inside `Shipment` with `priority: 'standard' | 'express';`. The field is required, so every `Shipment` must supply it.
+## Add information to the model, then display it
+
+We want the operator to distinguish urgent shipments. Adding text only in the interface would leave that information disconnected from the record. Start with the data model, fill in the records, and then read that data in the component.
+
+1. In `/shipments.ts`, replace the TODO inside `Shipment` with this field:
+
+   ```ts
+   priority: 'standard' | 'express';
+   ```
+
+   The colon introduces a type, and `|` means either of the two string values is allowed. The field is required, so every `Shipment` must supply it. The interface describes data; it does not create a priority value by itself.
 2. In the array below, add `priority: 'express'` to S-101 and `priority: 'standard'` to each other object. Commas separate object properties. Until all three are updated, a type checker can report missing fields.
-3. In `/App.tsx`, replace the TODO inside the list item with `<span> · {shipment.priority}</span>`. JSX braces evaluate the property for each mapped record. The preview should show all three rows with their priority.
+3. In `/App.tsx`, replace the TODO inside the list item with:
+
+   ```tsx
+   <span> · {shipment.priority}</span>
+   ```
+
+   The existing `shipments.map(...)` renders one list item per record. Within that item, `shipment` names the current record. JSX braces read its priority instead of displaying the literal words `shipment.priority`. The preview should show all three rows with their priority.
 
 If a value is rejected, check its spelling and quotes against the union; `Standard` is a different string. In a local export these editor files live under `src/`.
 

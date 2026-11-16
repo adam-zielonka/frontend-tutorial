@@ -7,7 +7,7 @@
     "tasks": [
       "Replace the first two it.todo calls with executable tests using a new CounterStore in each test.",
       "Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.",
-      "Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
+      "Download your edited files, clone this step and import the JSON as explained in the chapter introduction. Run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
     ],
     "hints": [
       "Store.change accepts a delta, not the desired final value.",

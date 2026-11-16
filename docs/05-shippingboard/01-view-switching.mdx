@@ -19,6 +19,16 @@ The two sections are already selected by a conditional expression. Wire the navi
 1. In `/App.tsx`, find the two buttons in the navigation. Replace their empty handlers with `onClick={() => setView('loadings')}` and `onClick={() => setView('ramps')}` respectively.
 2. Follow the existing conditional below the filters: `view === 'loadings' ? ... : ...`. React renders the chosen section when state changes; `aria-pressed` reads that same state, so the control and content agree.
 
+For the Ramps button, keep its existing icon, label and active-state attribute and change the handler like this:
+
+```tsx
+<button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}>
+  <span className="view-icon" aria-hidden="true">◉</span>Ramps
+</button>
+```
+
+`setView` changes the state value; it does not directly show or hide a DOM element. React runs the component again and the existing conditional chooses the ramp section. The Loadings button follows the same pattern with `'loadings'`.
+
 Try Ramps, then Loadings: the table returns with three records. If neither button changes the view, check that the handler is a function and that the strings match the `View` type in `/data.ts`.
 
 <LessonExercise id="05-01-view-switching" />

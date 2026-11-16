@@ -61,3 +61,28 @@ export default defineConfig(({ command }) => ({
 ```
 
 This enables source maps for builds; use it only if exposing them is acceptable. Vite's `loadEnv` can read mode-specific environment files in the config when choosing a proxy target or mock backend. Environment variables exposed to browser code are not secrets. See [conditional config](https://vite.dev/config/#conditional-config) and [environment variables](https://vite.dev/guide/env-and-mode).
+
+### Choose a development backend from a local environment file
+
+Continue only in the separate Vite scaffold, with a backend you control. This is not needed for the browser exercises. Create `.env.local` beside `package.json` with `APP_API_TARGET=http://localhost:3000`. Then replace `vite.config.ts` with the configuration below if your scaffold uses `@vitejs/plugin-react-swc` (keep your existing plugin import if it uses `@vitejs/plugin-react` instead):
+
+```ts title="vite.config.ts"
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), 'APP_');
+  return {
+    plugins: [react()],
+    server: {
+      proxy: command === 'serve' && env.APP_API_TARGET
+        ? { '/api': { target: env.APP_API_TARGET, changeOrigin: true } }
+        : undefined,
+    },
+  };
+});
+```
+
+`mode` selects which environment files to read. `loadEnv` makes the `APP_` values available while evaluating the config; `.env` files are not automatically available in `process.env` at that point. The proxy forwards `/api/...` during development, preserving that path. Restart Vite after changing the config or environment file. A successful request also requires your backend to implement that path; the proxy does not invent an API.
+
+Keep local credentials out of source control and do not pass them into browser code. This example uses only a local target address. For a separate WebSocket endpoint, add a matching proxy entry with `ws: true` and its correct target; do not use a production endpoint just to try the setting. [Vite environment loading](https://vite.dev/config/#using-environment-variables-in-config) explains why the helper is necessary.

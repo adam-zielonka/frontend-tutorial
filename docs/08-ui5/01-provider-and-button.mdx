@@ -17,6 +17,21 @@ Start with composition: import `ThemeProvider` and `Button`, wrap the app, and r
 1. At the top of `/App.tsx`, import `ThemeProvider` from `@ui5/webcomponents-react/ThemeProvider` and `Button` from `@ui5/webcomponents-react/Button`.
 2. Wrap the returned `<main>...</main>` in `<ThemeProvider>...</ThemeProvider>` and replace the native button with `<Button>Load pallet</Button>`. The provider supplies UI5 React context; composition keeps the rest of the page intact.
 
+These are named imports from the installed package, not local files:
+
+```tsx
+import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';
+import { Button } from '@ui5/webcomponents-react/Button';
+```
+
+Keep `import './styles.css';`. Put `<ThemeProvider>` immediately before the existing opening `<main>`, and `</ThemeProvider>` immediately after `</main>`. Inside the existing shipment section, the replacement is:
+
+```tsx
+<Button>Load pallet</Button>
+```
+
+The capital `B` matters: it selects the imported React component, while lowercase `<button>` creates a native HTML element. Everything between the provider's tags is its child content. Do not delete the heading, shipment section or pallet label when adding the wrapper.
+
 The button renders and receives keyboard focus but has no action yet. If the import fails, use the pinned lesson project and its installed dependencies; keep only one provider in `App`.
 
 <LessonExercise id="08-01-provider-and-button" />

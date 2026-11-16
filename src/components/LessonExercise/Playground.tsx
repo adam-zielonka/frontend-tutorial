@@ -38,7 +38,7 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
     const link = document.createElement('a');
     link.href = url; link.download = `${lesson.id}-${solution ? 'solution' : 'my-files'}.json`; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus('Downloaded files as JSON. The tagged project README explains how to import them.');
+    setStatus('Downloaded files as JSON. Open Run this step locally below for the import commands.');
   }
   return <div className={styles.draftTools}>
     <button className="button button--secondary button--sm" onClick={download}>Download {solution ? 'solution' : 'my files'}</button>
@@ -89,7 +89,7 @@ function Editor({lesson, solution, reset}: {lesson: Lesson; solution: boolean; r
     </SandpackLayout>
     <DraftTools lesson={lesson} solution={solution} reset={reset}/>
     <details className={styles.console}><summary>Console and runtime errors</summary><SandpackConsole /></details>
-    <p className={styles.note}>The preview compiles TypeScript but does not type-check it. Run <code>npm run build</code> locally for type checks.
+    <p className={styles.note}>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.
       If the preview cannot connect, use StackBlitz or clone the project from the links below.</p>
   </SandpackProvider>;
 }

@@ -29,6 +29,30 @@ To check storage restoration in an exported app, edit counters, remove the `valu
 2. Keep `const stopUrl = syncUrl(store);` after restoration. Then create `const stopStorage = autorun(() => { ... });`: map counters to values, `JSON.stringify` that array, and call `window.localStorage.setItem(STORAGE_KEY, snapshot)` inside `try/catch`.
 3. In the returned cleanup function, call both `stopUrl()` and `stopStorage()`. [Autorun](https://mobx.js.org/reactions.html) runs immediately and tracks the observable values read in its body, so restoring first avoids overwriting saved data. A valid URL, including an empty `value`, takes precedence.
 
+### Write changes, then stop both subscriptions on cleanup
+
+After the restoration block inside `connectPersistence`, replace the writer/cleanup TODOs with this final part of the function:
+
+```ts
+const stopUrl = syncUrl(store);
+const stopStorage = autorun(() => {
+  const snapshot = JSON.stringify(store.counters.map(counter => counter.value));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, snapshot);
+  } catch {
+    // The in-memory counter still works if storage is unavailable or full.
+  }
+});
+return () => {
+  stopUrl();
+  stopStorage();
+};
+```
+
+Unlike `reaction`, `autorun` combines the tracked reads and the side effect in one function. Reading each `counter.value` while making the snapshot tells MobX which changes should trigger another write. JSON stores a string such as `[5,-2]`; it does not store live `CounterStore` objects. Restoration creates new model instances from the validated numbers.
+
+Both subscriptions belong to this mounted app. The returned cleanup calls their disposers, including when React checks effect setup and cleanup again in development. Keep the restoration code above these writers so an initial zero does not overwrite the saved values first.
+
 In an exported app, change a counter, remove the `value` query parameter, then reload: storage should restore it. A normal reload with the parameter tests URL priority instead. Invalid JSON, non-number arrays or blocked storage leave the initial state usable. If restoration fails, inspect the storage key and URL first; the embedded preview may isolate storage ([localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)).
 
 <LessonExercise id="04-09-persistence" />

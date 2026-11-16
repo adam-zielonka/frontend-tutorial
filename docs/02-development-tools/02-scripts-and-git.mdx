@@ -8,9 +8,22 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 The starter carries forward the two enabled checklist values. The strings in `/project.ts` describe commands for practice; they do not run them. A real terminal and the exported project's `package.json` are separate.
 
-1. In `/project.ts`, find `scripts` in `project` and set `dev: 'vite --host 0.0.0.0'` and `typecheck: 'tsc --noEmit'`. The preview compares exact strings and should show 4 / 4 ready. `--host` listens on all addresses; use it only when network access is intended ([Vite server options](https://vite.dev/config/server-options)).
-2. In a terminal in the exported project, run `pnpm install`, then `pnpm exec tsc --noEmit` and `pnpm dev`. Open the printed local address; Ctrl+C stops Vite. To run `pnpm typecheck` instead, add `"typecheck": "tsc --noEmit"` to the actual `scripts` object in `package.json`, with a comma between entries.
-3. In your own new project folder, run `git init`, `git status`, and `git diff`. Stage reviewed source files with `git add <paths>` and commit with `git commit -m "Initial checkpoint"`. Git records staged changes; check `.gitignore` and exclude dependencies and secrets. See [Git's guide](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
+## Give repeated commands a name
+
+Developers run the same commands frequently: start a server, check types, and build a release. A real `package.json` script gives a command a short, shared name. Here we first describe those commands in the practice model, then run them in the actual project.
+
+1. In `/project.ts`, replace the existing `scripts` object inside `project` with:
+
+   ```ts
+   scripts: {
+     dev: 'vite --host 0.0.0.0',
+     typecheck: 'tsc --noEmit',
+   },
+   ```
+
+   `vite` starts the development server; `tsc --noEmit` checks types without producing JavaScript files. The preview compares exact strings and should show 4 / 4 ready. `--host` listens on all addresses; use it only when network access is intended ([Vite server options](https://vite.dev/config/server-options)).
+2. Clone this step using **Run this step locally or in an online editor** below. That section also explains how to import a JSON download of your browser edits. In a terminal in the cloned project, run `pnpm install --frozen-lockfile`, then `pnpm exec tsc --noEmit` and `pnpm dev`. Open the printed local address; Ctrl+C stops Vite. To run `pnpm typecheck` instead, add `"typecheck": "tsc --noEmit"` to the actual `scripts` object in `package.json`, with a comma between entries.
+3. If you cloned a lesson tag, create a branch with `git switch -c my-work`; Git is already initialized. For a separate newly created project, run `git init` instead. Then run `git status` and `git diff` to inspect your work. After changing the cloned lesson's `src/project.ts`, use `git add src/project.ts`, then `git diff --staged` to inspect exactly what will be saved, and `git commit -m "Complete project checklist"`. Git records staged changes; `.gitignore` excludes dependencies from the exported project. A local commit does not upload anything. See [Git's guide](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
 
 If the model remains at 2 / 4, compare spaces and spelling in the strings. If a real command is missing, check the terminal's current folder and installed tools. Browser DevTools Console and Network help inspect errors and requests.
 

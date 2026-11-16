@@ -40,7 +40,7 @@
     "tasks": [
       "Calculate totalPallets with reduce and readyCount with filter from shipments.",
       "Add a Summary section above the list showing the shipment count, pallet total, and ready count.",
-      "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows."
+      "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; temporarily count loading instead of ready in /App.tsx, expect 1, then restore ready."
     ],
     "hints": [
       "Use 0 as the initial reduce accumulator.",
@@ -104,7 +104,7 @@
     "tasks": [
       "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.",
       "Confirm all four checklist items are ready; these values are still only practice data.",
-      "Export the project, install dependencies, run pnpm exec tsc --noEmit and pnpm dev in a real terminal, then stop the server with Ctrl+C.",
+      "Clone this step using the commands below. To keep browser edits, download your files and import the JSON with import-draft.mjs. Install dependencies, run pnpm exec tsc --noEmit and pnpm dev, then stop the server with Ctrl+C.",
       "In your own new project folder, run git init and git status; inspect the diff, stage your source files, and commit a working checkpoint."
     ],
     "hints": [
@@ -672,7 +672,7 @@
     "tasks": [
       "Replace the first two it.todo calls with executable tests using a new CounterStore in each test.",
       "Assert the initial value is 0, then in the second test assert change(4) gives 4 and change(-2) gives 2.",
-      "Export your edited project and run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
+      "Download your edited files, clone this step and import the JSON as explained in the chapter introduction. Run pnpm exec vitest run in a real terminal; expect two passing tests and three pending."
     ],
     "hints": [
       "Store.change accepts a delta, not the desired final value.",
@@ -821,7 +821,7 @@
       "Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.",
       "Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].",
       "Toggle the missing fixture to inspect the error UI, then restore the working URL.",
-      "Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards."
+      "In editable /api.ts, temporarily replace the parsed data with [{ id: 'R1', name: 42 }] to exercise invalid data; expect Invalid ramp data, then restore response.json(). The check below shows the exact line."
     ],
     "hints": [
       "fetch can resolve on 404: a resolved promise is not the same as an OK HTTP status.",

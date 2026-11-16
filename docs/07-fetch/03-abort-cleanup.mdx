@@ -19,6 +19,24 @@ Rapidly toggle the fixture option and confirm the final selection determines the
 1. In `/App.tsx`, inside the effect before `loadLocalRamps`, create `const controller = new AbortController();` and pass `controller.signal` as its second argument.
 2. Replace cleanup with `return () => { active = false; controller.abort(); };`. React calls cleanup before replacing an effect; marking it inactive first prevents intentional cancellation from appearing as an error. The adapter already avoids fallback after abort.
 
+The existing effect contains the success/error handlers. Keep those handlers and their `if (active)` checks. Replace the request line with:
+
+```ts
+const controller = new AbortController();
+loadLocalRamps(url, controller.signal).then(data => {
+```
+
+The second line opens the existing success callback: retain its body, closing braces and `.catch(...)` below it. At the end of the effect, replace the old cleanup with:
+
+```ts
+return () => {
+  active = false;
+  controller.abort();
+};
+```
+
+The controller requests cancellation of the fetch operation. The flag protects React state even if a completion has already been queued. A controller belongs to one effect run: creating it outside the effect could reuse an already-aborted signal on the next request.
+
 Toggle the fixture option rapidly. The final selection should determine the result. If the local request finishes too quickly to observe cancellation, use network throttling; development Strict Mode may also run an extra setup and cleanup.
 
 <LessonExercise id="07-03-abort-cleanup" />

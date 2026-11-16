@@ -5,7 +5,7 @@ sidebar_position: 7
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-**Setup from step 6:** the supplied UI gains a Remove button for each counter and an empty-list message. Each button calls a new `removeCounter(id)` stub in the parent store. All existing counter actions and computed getters are unchanged.
+**Setup from step 6:** the supplied UI gains an `X` button (labelled “Remove counter” for assistive technology) for each counter and an empty-list message. Each button calls a new `removeCounter(id)` stub in the parent store. All existing counter actions and computed getters are unchanged.
 
 Filter by identity, preserving the other `CounterStore` instances. Removing an item should free a slot and subtract its value from the total automatically; no extra action should repair those derived values. Stable keys make the remaining components follow their own models rather than their former array positions.
 

@@ -1,6 +1,6 @@
 # ShippingBoard original-project continuation: coverage and validation
 
-Scope: `docs/ch-05-00-shippingboard-lite.md`, alongside the existing four mini-lessons. The mini pages, chapter JSON, fixtures, locks and registry are unchanged by this work. This audit supersedes the ShippingBoard continuation's "not run against the old checkpoints" qualification in `guided-applied-audit.md`; that qualification still applies to other continuations unless separately verified.
+Scope: `docs/ch-05-00-shippingboard-lite.md`, alongside the existing four mini-lessons. The mini pages, chapter JSON, fixtures, locks and registry are unchanged by this scoped continuation. The original ShippingBoard walkthrough has now been executed against its pinned checkpoint; validation of the other applied chapters is recorded separately in `guided-applied-audit.md`.
 
 ## Source of truth
 

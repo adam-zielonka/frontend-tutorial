@@ -40,7 +40,7 @@
     "tasks": [
       "Calculate totalPallets with reduce and readyCount with filter from shipments.",
       "Add a Summary section above the list showing the shipment count, pallet total, and ready count.",
-      "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; change a record temporarily to check the summary follows."
+      "Confirm the supplied records show 3 shipments, 16 pallets, and 2 ready; temporarily count loading instead of ready in /App.tsx, expect 1, then restore ready."
     ],
     "hints": [
       "Use 0 as the initial reduce accumulator.",

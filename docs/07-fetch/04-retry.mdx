@@ -19,6 +19,20 @@ The fixture is intentionally fast. Use browser Network tools if you want to insp
 1. In `/App.tsx`, alongside the other state declarations add `const [request, setRequest] = useState(0);`. Add `request` to the effect dependencies: `[url, request]`.
 2. Replace the disabled button with `<button onClick={() => setRequest(current => current + 1)}>Retry request</button>`. The counter is a request trigger, not data: changing it reruns the existing effect, whose cleanup cancels the prior request.
 
+Add the trigger beside `broken` at the top of `App`:
+
+```ts
+const [request, setRequest] = useState(0);
+```
+
+At the end of the existing effect, change `}, [url]);` to `}, [url, request]);`. Then replace the disabled Retry button with:
+
+```tsx
+<button onClick={() => setRequest(current => current + 1)}>Retry request</button>
+```
+
+Setting the URL to its existing value would not be a new state change. Incrementing `request` gives React a changed dependency even when the URL stays the same. The effect's existing loading/error handling and cleanup can therefore be reused.
+
 Try the missing fixture and retry; it should still report an error. Restore the fixture and retry for three ramps. If nothing happens, check that the button is no longer disabled and `request` is in the dependency array.
 
 <LessonExercise id="07-04-retry" />

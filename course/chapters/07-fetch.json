@@ -42,7 +42,7 @@
       "Check response.ok before JSON parsing; throw an Error containing response.status for a failed HTTP response.",
       "Parse JSON as unknown and require an array of objects with string id and name fields before returning Ramp[].",
       "Toggle the missing fixture to inspect the error UI, then restore the working URL.",
-      "Temporarily change a fixture name to a number to exercise invalid data; restore the file afterwards."
+      "In editable /api.ts, temporarily replace the parsed data with [{ id: 'R1', name: 42 }] to exercise invalid data; expect Invalid ramp data, then restore response.json(). The check below shows the exact line."
     ],
     "hints": [
       "fetch can resolve on 404: a resolved promise is not the same as an OK HTTP status.",

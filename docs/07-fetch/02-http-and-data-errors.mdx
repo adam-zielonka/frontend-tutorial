@@ -11,7 +11,7 @@ A completed request is not necessarily a successful response. Check `response.ok
 
 Read the parsed value as `unknown`. Require an array, then check every element is a non-null object containing string `id` and `name` fields. Only then return it as `Ramp[]`. The existing catch handler displays these failures instead of treating them as an empty successful result.
 
-The missing-fixture checkbox exercises the error path. A development server can return an HTML fallback with status 200 for an unknown path, so the displayed error may be a JSON parsing error rather than HTTP 404. To exercise the data guard, temporarily give a fixture record a numeric name, then restore it. The supplied path adapter can make a second request for the working fixture; it is compatibility scaffolding, not a retry button.
+The missing-fixture checkbox exercises the error path. A development server can return an HTML fallback with status 200 for an unknown path, so the displayed error may be a JSON parsing error rather than HTTP 404. To exercise the data guard locally, temporarily give a record in `public/ramps.json` a numeric name, then restore it. The embedded fixture is a read-only support file. The supplied path adapter can make a second request for the working fixture; it is compatibility scaffolding, not a retry button.
 
 
 ## Worked walkthrough
@@ -39,7 +39,7 @@ The existing catch displays errors. `fetch` itself does not reject merely becaus
 
 ## Check your work
 
-Try the missing fixture, then restore the working one. Temporarily change a name to a number in `/public/ramps.json` to check the guard, and restore it. Next, cancel obsolete requests.
+Try the missing fixture, then restore the working one. To check validation without changing a read-only file, temporarily replace `const data: unknown = await response.json();` in the editable `/api.ts` with `const data: unknown = [{ id: 'R1', name: 42 }];`. Expect “Invalid ramp data”, then restore the original line so real responses are read again. Next, cancel obsolete requests.
 
 
 ## Sources

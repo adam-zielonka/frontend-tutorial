@@ -16,3 +16,5 @@ Baseline: `30e83a2:docs/ch-04-00-mobx-and-react.md`.
 Corrections: add accumulates rather than replaces; the negative button uses a negative delta; stable IDs replace index keys; invalid input is rejected before state replacement; persistence retains unrelated URL parts, restores before writing and disposes subscriptions. Input replacement and debugging use the local app's ownership rather than assuming the original singleton. The original static screenshots remain in the repository; the walkthrough describes the supplied styled preview and links the original styles.
 
 Verification: compared original sections and v3 chapter starter/solution file maps; checked MobX observable state, React integration, computed and reaction documentation, React state and browser URL/storage documentation. See commit validation for MDX build/check results.
+
+Integration review added the class/instance/action explanation, complete small constructor/action examples, and concrete URL-reaction and storage-writer snippets with ownership/cleanup explanations. Lesson fixtures and v3 tags remain unchanged.

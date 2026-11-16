@@ -30,6 +30,32 @@ Try `5;-2`, `1;;2`, `Infinity`, five values, and an empty string. In an exported
 4. In `restoreUrl`, read `new URL(window.location.href).searchParams.get('value')` inside `try`; return `raw !== null && store.hydrate(raw)`, and return false in `catch`. This distinguishes an absent parameter from the valid empty list.
 5. In `syncUrl`, return a [MobX reaction](https://mobx.js.org/reactions.html) whose data function reads `store.serializedValues`. Its effect creates a `URL` from the current location, sets `url.searchParams.set('value', value)`, and calls `window.history.replaceState(window.history.state, '', url)` inside `try/catch`. Pass `{ fireImmediately: true }` as the third argument. The existing React effect restores first and returns this reaction's disposer. Using the current URL preserves other parameters and the hash ([replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState)).
 
+### Connect the reaction to the browser
+
+Step 5 changes the body of the existing `syncUrl` helper, outside the `Store` class. Keep the `reaction` import at the top and replace that helper with:
+
+```ts
+export function syncUrl(store: Store): () => void {
+  return reaction(
+    () => store.serializedValues,
+    value => {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('value', value);
+        window.history.replaceState(window.history.state, '', url);
+      } catch {
+        // The counter must still work if the preview blocks URL updates.
+      }
+    },
+    { fireImmediately: true },
+  );
+}
+```
+
+The first function says **what to watch**; the second says **what to do when it changes**. Reading the computed string also tracks the counter values it depends on. `replaceState` updates the current history entry instead of creating a Back-button entry for every click. `fireImmediately` writes the restored initial state too.
+
+The supporting `App` already calls `restoreUrl(store)` and then `return syncUrl(store)` inside `useEffect`. Calling `syncUrl` starts the reaction now; the function it returns is the disposer React will call when cleaning up. Do not call that disposer immediately, or the URL would stop following the counters.
+
 Use the import field to try `5;-2`: two cards should appear. `1;;2` and `Infinity` should leave them unchanged; an empty string means no cards. If invalid input clears the list, check that validation finishes before assignment. The preview may restrict address-bar access.
 
 <LessonExercise id="04-08-url-state" />

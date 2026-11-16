@@ -27,7 +27,7 @@ export default function LessonExercise({id}: {id: string}) {
   const steps = course.filter(item => item.chapter === lesson.chapter);
   const index = steps.findIndex(item => item.id === id);
   const tag = lessonTag(id, solution);
-  const command = `git clone --branch ${tag} --depth 1 ${repository}.git ${id}\ncd ${id}\nnpm install\nnpm run dev`;
+  const command = `git clone --branch ${tag} --depth 1 ${repository}.git ${id}\ncd ${id}\npnpm install --frozen-lockfile\npnpm dev`;
 
   return <section className={styles.exercise} data-lesson-workspace aria-label={`${lesson.title}: workspace`}>
     <div className={styles.heading}>
@@ -65,10 +65,11 @@ export default function LessonExercise({id}: {id: string}) {
       The preview uses CodeSandbox and needs internet access. Do not enter private data.</p>
     <details className={styles.local}>
       <summary>Run this step locally or in an online editor</summary>
-      <p>Use Node.js 24 and Git. This tag contains only the project for this step:</p>
+      <p>Use Node.js 24, pnpm 12.14 and Git; <Link to={`${base}ch-01-00-explain-the-tool-set#a-first-local-installation-check`}>chapter 1 explains their installation</Link>.
+        This tag contains only the project for this step:</p>
       <CodeBlock language="bash">{command}</CodeBlock>
       <p>To save your own commits: <code>git switch -c my-work</code>.
-        {lesson.chapter === '06' && <> Run <code>npm test</code> in another terminal for Vitest.</>}</p>
+        {lesson.chapter === '06' && <> Run <code>pnpm exec vitest run</code> in another terminal for Vitest.</>}</p>
       <div className={styles.links}>
         <a className="button button--outline button--primary" target="_blank" rel="noopener noreferrer"
           href={`https://stackblitz.com/github/adam-zielonka/frontend-tutorial/tree/${tag}?file=src/${lesson.activeFile.slice(1)}`}>
@@ -76,7 +77,11 @@ export default function LessonExercise({id}: {id: string}) {
         </a>
         <a target="_blank" rel="noopener noreferrer" href={`${repository}/tree/${tag}`}>Browse tagged source ↗</a>
       </div>
-      <p className={styles.note}>Links open the checkpoint, not browser edits. Download your files below the editor to continue your work locally.</p>
+      <p>To continue your browser edits locally, choose <strong>Download {solution ? 'solution' : 'my files'}</strong> below the editor.
+        This downloads a JSON file, not a standalone project. Stop the local server with Ctrl+C, copy the download into the cloned folder, and run:</p>
+      <CodeBlock language="bash">{`node import-draft.mjs ./${id}-${solution ? 'solution' : 'my-files'}.json\npnpm dev`}</CodeBlock>
+      <p className={styles.note}>The import replaces this project's exercise files. Back up any local edits first.
+        StackBlitz and source links open the checkpoint; they do not transfer your browser edits.</p>
     </details>
   </section>;
 }

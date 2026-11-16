@@ -72,3 +72,19 @@ test('every step has focused editable files and a unique URL', () => {
   }
   assert.ok(lessons.filter(l => l.chapter === '04').length >= 8, 'MobX should progress through individual concepts');
 });
+
+test('every exercise follows a visible worked example and has a result check', () => {
+  for (const l of lessons) {
+    const doc = readFileSync(new URL(`../docs/${l.doc}.mdx`, import.meta.url), 'utf8');
+    const marker = `<LessonExercise id="${l.id}" />`;
+    const [before, after] = doc.split(marker);
+    assert.ok(after, `${l.id}: missing workspace`);
+    // A lesson hidden in a closed details element recreated the assignment-only
+    // experience. Optional hints may still be collapsed; the teaching may not.
+    const visible = before.replace(/<details\b(?![^>]*\bopen\b)[^>]*>[\s\S]*?<\/details>/g, '');
+    assert.match(visible, /^\s*```(?:tsx?|jsx?|json|sh|bash)\b/m,
+      `${l.id}: show a worked code example before the exercise`);
+    assert.match(after, /^## (?:Check|Verify|Observe|Expected|Before|What)/m,
+      `${l.id}: add visible result checks after the exercise`);
+  }
+});

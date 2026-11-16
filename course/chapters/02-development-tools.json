@@ -39,7 +39,7 @@
     "tasks": [
       "Set scripts.dev to vite --host 0.0.0.0 and scripts.typecheck to tsc --noEmit in /project.ts.",
       "Confirm all four checklist items are ready; these values are still only practice data.",
-      "Export the project, install dependencies, run pnpm exec tsc --noEmit and pnpm dev in a real terminal, then stop the server with Ctrl+C.",
+      "Clone this step using the commands below. To keep browser edits, download your files and import the JSON with import-draft.mjs. Install dependencies, run pnpm exec tsc --noEmit and pnpm dev, then stop the server with Ctrl+C.",
       "In your own new project folder, run git init and git status; inspect the diff, stage your source files, and commit a working checkpoint."
     ],
     "hints": [

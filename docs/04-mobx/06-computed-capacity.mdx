@@ -9,7 +9,7 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 Implement `canAddMoreCounters` and `sum`, then reuse the capacity getter in the action. Both values are derived from existing state. A separate `isFull` field or manually updated total would duplicate facts and could drift out of sync.
 
-Add four counters, give them different values, and reset one. The total must reflect each change, and the disabled Add button must match the store's own guard.
+Grow the collection to four counters in total, give them different values, and reset one. The total must reflect each change, and the disabled Add button must match the store's own guard.
 
 
 ## Walk through the change
@@ -23,7 +23,7 @@ Add four counters, give them different values, and reset one. The total must ref
 
 3. At the start of `addCounter`, replace the repeated length comparison with `if (!this.canAddMoreCounters) return;`. The same rule now controls the action and the supplied disabled button.
 
-Getters inferred as [computed values](https://mobx.js.org/computeds.html) derive facts from observable state, so there is no separate total to maintain. Add until there are four cards: Add should disable. Set one to 100 and another to -1; the total should be 99. If it stays zero, check the `reduce` return and that each `counter.value` is read.
+A JavaScript getter is declared with `get` but read like a property: `store.sum`, not `store.sum()`. The existing `get` stubs let the interface use the answer without knowing how it is calculated. Getters inferred as [computed values](https://mobx.js.org/computeds.html) derive facts from observable state, so there is no separate total to maintain. Add until there are four cards: Add should disable. Set one to 100 and another to -1; the total should be 99. If it stays zero, check the `reduce` return and that each `counter.value` is read.
 
 <LessonExercise id="04-06-computed-capacity" />
 
