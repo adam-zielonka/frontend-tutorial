@@ -45,11 +45,14 @@ contents menu available, and put continuation links after the result checks.
 
 ### Lesson workspace layout
 
-The 30 exercise routes use `LessonStudio`, a viewport-height React shell inspired
+All 39 course pages use `LessonStudio`, a viewport-height React shell inspired
 by the [Svelte tutorial](https://svelte.dev/tutorial/svelte/multiple-select-bindings).
-Docusaurus still owns MDX, routing, search and the chapter introductions. Theme
-wrappers select the studio from existing course metadata; lesson text stays in its
-MDX file, including checks and references after `LessonExercise`.
+Docusaurus still owns MDX, routing and search. The home page and eight chapter
+introductions show a topic-specific `CourseIllustration` in the right pane; the
+30 numbered exercises show the editor and live preview there. Introductions do
+not mount Sandpack. Theme wrappers preserve the same navigation and reading pane
+throughout the course. Lesson text stays in its MDX file, including checks and
+references after `LessonExercise`.
 
 The studio renders that component's tasks and local-run guidance in the reading
 pane, and mounts one separate `CodeWorkspace`. A shared context synchronizes the
@@ -62,7 +65,10 @@ The outer split controls reading width; the inner split controls editor height.
 Both support keyboard resizing. Use `min-height: 0` through the flex ancestors and
 dynamic viewport height; avoid reintroducing fixed 520px panes. Verify desktop,
 375px portrait and short landscape screens, panel toggles, solution/draft recovery,
-navigation, dialogs, and heading links when changing the layout.
+navigation, dialogs, and heading links when changing the layout. On introductions,
+mobile tabs are Lesson/Illustration, with no editor-only controls. Dialog surfaces
+must be opaque in both themes: Infima's light `--ifm-background-color` is transparent,
+so use `--studio-surface` for the course menu and its sticky header.
 
 ### Editing the exercises
 

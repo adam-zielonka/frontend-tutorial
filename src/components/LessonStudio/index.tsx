@@ -5,6 +5,7 @@ import {useDoc} from '@docusaurus/plugin-content-docs/client';
 import {useColorMode} from '@docusaurus/theme-common';
 import {course, type Lesson} from '../../lib/course';
 import {CodeWorkspace} from '../LessonExercise';
+import CourseIllustration from '../CourseIllustration';
 import {LessonStudioContext, type StudioPanel} from './context';
 import styles from './styles.module.css';
 
@@ -15,7 +16,9 @@ const overviewPaths = [
   'ch-07-00-fetch', 'ch-08-00-ui5-web-components',
 ];
 
-export default function LessonStudio({lesson, children}: {lesson: Lesson; children: ReactNode}) {
+type IllustrationTopic = React.ComponentProps<typeof CourseIllustration>['topic'];
+
+export default function LessonStudio({lesson, children}: {lesson?: Lesson; children: ReactNode}) {
   const {metadata, toc} = useDoc();
   const {colorMode, setColorMode} = useColorMode();
   const base = useBaseUrl('/');
@@ -30,8 +33,12 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
   const menu = useRef<HTMLDialogElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const tabButtons = useRef<Array<HTMLButtonElement | null>>([]);
-  const chapterSteps = course.filter(item => item.chapter === lesson.chapter);
-  const step = chapterSteps.findIndex(item => item.id === lesson.id) + 1;
+  const chapterIndex = lesson ? Number(lesson.chapter) - 1 : overviewPaths.indexOf(metadata.id);
+  const chapterSteps = course.filter(item => Number(item.chapter) === chapterIndex + 1);
+  const chapterTitle = chapterSteps[0]?.chapterTitle;
+  const step = chapterSteps.findIndex(item => item.id === lesson?.id) + 1;
+  const topic: IllustrationTopic = chapterIndex < 0 ? 'intro' : String(chapterIndex + 1).padStart(2, '0') as IllustrationTopic;
+  const panels: StudioPanel[] = lesson ? ['lesson', 'code', 'preview'] : ['lesson', 'illustration'];
   const endResize = useCallback(() => {
     const pointer = resizePointer.current;
     resizePointer.current = null;
@@ -55,14 +62,14 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
       setNarrow(query.matches);
       // Rotation must not leave keyboard focus in a pane hidden by mobile CSS.
       if (query.matches && document.getElementById('lesson-workspace')?.contains(document.activeElement)) {
-        setPanel('code');
+        setPanel(lesson ? 'code' : 'illustration');
         requestAnimationFrame(() => tabButtons.current[1]?.focus());
       }
     };
     update();
     query.addEventListener('change', update);
     return () => query.removeEventListener('change', update);
-  }, []);
+  }, [lesson]);
 
   const changeWidth = (value: number) => {
     const width = Math.max(28, Math.min(55, value));
@@ -92,17 +99,19 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
   }
 
   return <LessonStudioContext.Provider value={{solution, openCode}}>
-    <div className={styles.studio} data-lesson-studio data-panel={panel}>
+    <div className={styles.studio} data-lesson-studio data-panel={panel} data-page-kind={lesson ? 'exercise' : 'introduction'}>
       <header className={styles.header}>
         <button ref={menuButton} type="button" className={styles.menuButton}
           aria-haspopup="dialog" onClick={() => menu.current?.showModal()}>
           <span aria-hidden="true">☰</span> Lessons
         </button>
         <div className={styles.location}>
-          <Link to={`${base}${overviewPaths[Number(lesson.chapter) - 1]}`}>{lesson.chapterTitle}</Link>
-          <span className={styles.lessonName}>{lesson.title}</span>
+          <Link to={lesson ? `${base}${overviewPaths[chapterIndex]}` : base}>
+            {lesson ? chapterTitle : 'Frontend tutorial'}
+          </Link>
+          <span className={styles.lessonName}>{lesson?.title ?? chapterTitle ?? 'Course introduction'}</span>
         </div>
-        <span className={styles.step}>Step {step} / {chapterSteps.length}</span>
+        <span className={styles.step}>{lesson ? `Step ${step} / ${chapterSteps.length}` : 'Introduction'}</span>
         <nav className={styles.arrows} aria-label="Adjacent lessons">
           {metadata.previous && <Link to={metadata.previous.permalink} title={metadata.previous.title}
             aria-label={`Previous: ${metadata.previous.title}`}>←</Link>}
@@ -112,22 +121,22 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
       </header>
 
       <div className={styles.mobileTabs} role="tablist" aria-label="Lesson panels">
-        {(['lesson', 'code', 'preview'] as const).map((name, index) => <button
+        {panels.map((name, index) => <button
           key={name} ref={element => {tabButtons.current[index] = element;}}
           id={`tab-${name}`} type="button" role="tab" aria-selected={panel === name}
           aria-controls={name === 'lesson' ? 'lesson-reading' : 'lesson-workspace'}
           tabIndex={panel === name ? 0 : -1} onClick={() => setPanel(name)}
           onKeyDown={event => {
-            const target = event.key === 'ArrowRight' ? (index + 1) % 3
-              : event.key === 'ArrowLeft' ? (index + 2) % 3
-                : event.key === 'Home' ? 0 : event.key === 'End' ? 2 : -1;
+            const target = event.key === 'ArrowRight' ? (index + 1) % panels.length
+              : event.key === 'ArrowLeft' ? (index + panels.length - 1) % panels.length
+                : event.key === 'Home' ? 0 : event.key === 'End' ? panels.length - 1 : -1;
             if (target >= 0) {
               event.preventDefault();
-              setPanel((['lesson', 'code', 'preview'] as const)[target]);
+              setPanel(panels[target]);
               tabButtons.current[target]?.focus();
             }
           }}>
-          {name === 'lesson' ? 'Lesson' : name === 'code' ? 'Code' : 'Preview'}
+          {name === 'lesson' ? 'Lesson' : name === 'code' ? 'Code' : name === 'preview' ? 'Preview' : 'Illustration'}
         </button>)}
       </div>
 
@@ -136,11 +145,11 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
           role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : 'Lesson instructions'}
           aria-labelledby={narrow ? 'tab-lesson' : undefined}>
           <div className={styles.readingTools}>
-            <span>Read, then try it</span>
+            <span>{lesson ? 'Read, then try it' : 'Explore the topic'}</span>
             {toc.length > 0 && <label className={styles.contents}>
               <select aria-label="Jump to lesson section" value="" onChange={event => jumpToHeading(event.target.value)}>
                 <option value="" disabled>On this page</option>
-                <option value="practice">Practice</option>
+                {lesson && <option value="practice">Practice</option>}
                 {toc.filter(heading => heading.level <= 3).map(heading =>
                   <option key={heading.id} value={heading.id}>{heading.value.replace(/<[^>]+>/g, '')}</option>)}
               </select>
@@ -178,16 +187,16 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
           onPointerUp={endResize} onLostPointerCapture={endResize} onPointerCancel={endResize}><span /></div>
 
         <section id="lesson-workspace" className={styles.workspace}
-          role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : 'Practice workspace'}
-          aria-labelledby={narrow ? `tab-${panel === 'preview' ? 'preview' : 'code'}` : undefined}>
-          <CodeWorkspace lesson={lesson} solution={solution} onSolutionChange={setSolution}
+          role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : lesson ? 'Practice workspace' : 'Topic illustration'}
+          aria-labelledby={narrow ? `tab-${lesson ? panel === 'preview' ? 'preview' : 'code' : 'illustration'}` : undefined}>
+          {lesson ? <CodeWorkspace lesson={lesson} solution={solution} onSolutionChange={setSolution}
             view={narrow ? panel === 'preview' ? 'preview' : 'code' : desktopView}
             viewControls={<div className={styles.viewButtons} role="group" aria-label="Workspace view">
               {(['split', 'code', 'preview'] as const).map(view => <button type="button" key={view}
                 aria-pressed={desktopView === view} onClick={() => setDesktopView(view)}>
                 {view === 'split' ? 'Code + preview' : view === 'code' ? 'Code' : 'Preview'}
               </button>)}
-            </div>} />
+            </div>} /> : <CourseIllustration topic={topic} />}
         </section>
         {dragging && <div className={styles.dragShield} />}
       </div>
@@ -205,14 +214,16 @@ export default function LessonStudio({lesson, children}: {lesson: Lesson; childr
           </div>
         </div>
         <nav aria-label="Course lessons">
-          <Link className={styles.courseHome} to={base} onClick={closeMenu}>Course introduction</Link>
+          <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
+            onClick={closeMenu}>Course introduction</Link>
           {overviewPaths.map((overview, index) => {
             const steps = course.filter(item => Number(item.chapter) === index + 1);
-            return <details key={overview} open={steps[0].chapter === lesson.chapter}>
+            return <details key={overview} open={index === chapterIndex}>
               <summary>{index + 1}. {steps[0].chapterTitle}</summary>
-              <Link className={styles.overviewLink} to={`${base}${overview}`} onClick={closeMenu}>Chapter introduction</Link>
+              <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
+                onClick={closeMenu}>Chapter introduction</Link>
               <ol>{steps.map(item => <li key={item.id}>
-                <Link to={`${base}${item.doc}`} aria-current={item.id === lesson.id ? 'page' : undefined}
+                <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
                   onClick={closeMenu}>{item.title}</Link>
               </li>)}</ol>
             </details>;

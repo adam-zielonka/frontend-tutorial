@@ -29,6 +29,8 @@ Read each chapter introduction before its numbered steps. It connects the small 
 4. **Check the result.** Perform **Check your work** in the lesson pane. Predict the outcome first, then compare it with the preview. In the testing chapter, distinguish the manual browser demonstration from Vitest running in a terminal.
 5. **Compare and explain.** If you get stuck, open a hint or choose **Solution** in the workspace. The solution is read-only and does not replace your work. Return to **Your code**, fix the difference, and explain what the change does before moving on.
 
+Introductions use the same layout, with a diagram of the topic beside the text. On a phone, choose **Illustration** to view it, then return to **Lesson** to continue reading. The editor appears when you reach a numbered exercise.
+
 Use **On this page** to jump to an explanation and **Lessons** to open the course outline. On a wide screen, drag the dividers to give the instructions, code, or preview more room; the focused dividers also respond to arrow keys. Each pane scrolls independently. Previous/next links remain after the result checks, with shortcuts in the lesson header.
 
 ## What happens when you open the next step?

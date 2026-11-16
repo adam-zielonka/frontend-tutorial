@@ -28,7 +28,7 @@
   --docusaurus-highlighted-code-line-bg: rgb(71, 74, 92);
 }
 
-/* The lesson shell uses the entire viewport; chapter articles keep the docs layout. */
+/* Introductions and exercises share the same full-viewport course shell. */
 .lesson-root {width: 100%; min-width: 0; flex: 1;}
 .lesson-page {--ifm-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; --studio-active-text: #fff;}
 [data-theme='dark'].lesson-page {--studio-active-text: #241033;}

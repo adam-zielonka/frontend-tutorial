@@ -1,6 +1,6 @@
 import {createContext, useContext} from 'react';
 
-export type StudioPanel = 'lesson' | 'code' | 'preview';
+export type StudioPanel = 'lesson' | 'code' | 'preview' | 'illustration';
 export const LessonStudioContext = createContext<{
   solution: boolean;
   openCode: () => void;

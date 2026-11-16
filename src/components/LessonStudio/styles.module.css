@@ -1,17 +1,20 @@
 .studio {
   --studio-border: var(--ifm-color-emphasis-200);
+  /* Infima's light --ifm-background-color is transparent, including in the top layer. */
+  --studio-surface: #fff;
   height: calc(100vh - var(--ifm-navbar-height));
   height: calc(100dvh - var(--ifm-navbar-height));
   min-height: 360px;
   display: flex;
   flex-direction: column;
-  background: var(--ifm-background-color);
+  background: var(--studio-surface);
   color: var(--ifm-font-color-base);
   font-family: var(--ifm-font-family-base);
 }
+:global([data-theme='dark']) .studio {--studio-surface: #1b1b1d;}
 .studio button, .studio select {font-family: inherit;}
 .header {display: flex; align-items: center; gap: 1rem; min-height: 60px; padding: .5rem 1rem; border-bottom: 1px solid var(--studio-border);}
-.header button, .arrows a, .viewButtons button {border: 1px solid var(--studio-border); background: var(--ifm-background-color); color: inherit; border-radius: 5px; cursor: pointer;}
+.header button, .arrows a, .viewButtons button {border: 1px solid var(--studio-border); background: var(--studio-surface); color: inherit; border-radius: 5px; cursor: pointer;}
 .menuButton {padding: .4rem .75rem; flex-shrink: 0; font-weight: 600 !important; font-size: .85rem !important; min-height: 38px;}
 .menuButton span {margin-right: .4rem;}
 .location {display: flex; gap: .6rem; align-items: baseline; min-width: 0; flex: 1; font-size: .85rem;}
@@ -26,7 +29,7 @@
 .readingTools {min-height: 39px; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .3rem 1rem; border-bottom: 1px solid var(--studio-border); font-size: .75rem; flex-shrink: 0;}
 .readingTools > span {font-weight: 600; color: var(--ifm-color-emphasis-700);}
 .contents {min-width: 0; max-width: 55%;}
-.contents select {border: 0; background: var(--ifm-background-color); color: var(--ifm-color-primary); padding: .2rem; width: 100%; font-size: .75rem; cursor: pointer;}
+.contents select {border: 0; background: var(--studio-surface); color: var(--ifm-color-primary); padding: .2rem; width: 100%; font-size: .75rem; cursor: pointer;}
 .reading {overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; min-height: 0; padding: 1.75rem clamp(1.25rem, 2.2vw, 2.5rem) 2.5rem; flex: 1;}
 .reading:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: -2px;}
 .reading :global(.markdown) {font-size: .95rem; line-height: 1.7; overflow-wrap: break-word;}
@@ -49,12 +52,12 @@
 .viewButtons button[aria-pressed='true'] {color: var(--ifm-color-primary); background: var(--ifm-color-emphasis-100); border-color: var(--studio-border);}
 .dragShield {position: absolute; inset: 0; z-index: 2; cursor: col-resize;}
 .mobileTabs {display: none;}
-.courseMenu {width: min(560px, calc(100vw - 2rem)); max-height: min(85dvh, 850px); padding: 0; border: 1px solid var(--studio-border); border-radius: 10px; background: var(--ifm-background-color); color: var(--ifm-font-color-base); box-shadow: 0 16px 80px #0004;}
+.courseMenu {width: min(560px, calc(100vw - 2rem)); max-height: min(85dvh, 850px); overflow-y: auto; overscroll-behavior: contain; padding: 0; border: 1px solid var(--studio-border); border-radius: 10px; background: var(--studio-surface); color: var(--ifm-font-color-base); box-shadow: 0 16px 80px #0004;}
 .courseMenu::backdrop {background: #10121a80;}
-.menuHeader {display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--studio-border); position: sticky; top: 0; background: var(--ifm-background-color); z-index: 1;}
-.menuHeader h2 {font-size: 1rem; margin: 0;}
+.menuHeader {display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--studio-border); position: sticky; top: 0; background: var(--studio-surface); z-index: 1;}
+.menuHeader h2 {min-width: 0; font-size: 1rem; margin: 0;}
 .menuHeader button {border: 0; background: none; color: inherit; cursor: pointer; width: 36px; height: 36px; border-radius: 5px;}
-.menuActions {display: flex; align-items: center; gap: .4rem;}
+.menuActions {flex-shrink: 0; display: flex; align-items: center; gap: .4rem;}
 .menuActions button:first-child {width: auto; font-size: .75rem; color: var(--ifm-color-primary); padding-inline: .5rem;}
 .courseMenu nav {padding: .5rem 1.25rem 1.25rem;}
 .courseHome {display: block; padding: .75rem 0; font-weight: 600;}

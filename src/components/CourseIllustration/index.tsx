@@ -159,7 +159,7 @@ function Intro({id}: DrawingProps) {
       <circle className={index === 4 || index === 7 ? styles.goldDisc : styles.disc} r="43" />
       <RouteIcon index={index} />
       <text className={styles.stepNumber} textAnchor="middle" y="-63">0{index + 1}</text>
-      <text className={styles.nodeLabel} textAnchor="middle" y="74">{stop.label}</text>
+      <text className={styles.nodeLabel} textAnchor="middle" x={index === 4 ? -30 : 0} y="74">{stop.label}</text>
     </g>)}
     <text className={styles.handNote} x="290" y="219" textAnchor="middle">Build understanding, one step at a time.</text>
     <Arrow id={id} d="M310 404H205" secondary />
@@ -170,18 +170,19 @@ function Intro({id}: DrawingProps) {
 function ToolSet({id}: DrawingProps) {
   return <>
     <Window x={22} y={34} width={260} height={186} label="TypeScript / model">
-      <text className={styles.code} x="20" y="78">type Shipment = {'{'}</text>
-      <text className={styles.code} x="36" y="112">pallets: number;</text>
-      <text className={styles.code} x="36" y="146">priority: 'high';</text>
+      <text className={styles.code} x="20" y="66">type Shipment = {'{'}</text>
+      <text className={styles.code} x="36" y="94">pallets: number;</text>
+      <text className={styles.code} x="36" y="122">priority:</text>
+      <text className={styles.code} x="36" y="150">'standard' | 'express';</text>
       <text className={styles.code} x="20" y="178">{'}'}</text>
     </Window>
     <Arrow id={id} d="M294 125H329" />
     <Window x={342} y={34} width={236} height={186} label="React / browser">
       <Pallet x={25} y={65} scale={.85} />
-      <text className={styles.metric} x="92" y="112">18</text>
+      <text className={styles.metric} x="92" y="112">16</text>
       <text className={styles.smallLabel} x="92" y="139">pallets</text>
       <path className={styles.rule} d="M18 159H218" />
-      <text className={styles.smallLabel} x="22" y="180">3 shipments · high priority</text>
+      <text className={styles.smallLabel} x="22" y="180">3 shipments · 1 express</text>
     </Window>
     <rect className={styles.wash} x="24" y="285" width="376" height="123" rx="24" />
     <text className={styles.nodeLabel} x="46" y="315">Node.js runs the tools</text>
@@ -425,7 +426,7 @@ function Ui5({id}: DrawingProps) {
     <g transform="translate(32 183)">
       <circle className={styles.goldDisc} cx="36" cy="35" r="33" />
       <path className={styles.inkLine} d="M36 20V50M21 35H51" />
-      <text className={styles.smallLabel} x="36" y="93" textAnchor="middle">registered icon</text>
+      <text className={styles.smallLabel} x="48" y="93" textAnchor="middle">registered icon</text>
     </g>
     <g transform="translate(12 310)">
       <rect className={styles.paper} width="170" height="88" rx="16" />
