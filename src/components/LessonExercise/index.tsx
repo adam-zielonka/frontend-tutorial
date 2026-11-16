@@ -26,9 +26,6 @@ export default function LessonExercise({id}: {id: string}) {
   if (!lesson) throw new Error(`Unknown lesson: ${id}`);
   const steps = course.filter(item => item.chapter === lesson.chapter);
   const index = steps.findIndex(item => item.id === id);
-  const globalIndex = course.findIndex(item => item.id === id);
-  const previous = course[globalIndex - 1];
-  const next = course[globalIndex + 1];
   const tag = lessonTag(id, solution);
   const command = `git clone --branch ${tag} --depth 1 ${repository}.git ${id}\ncd ${id}\nnpm install\nnpm run dev`;
 
@@ -44,7 +41,9 @@ export default function LessonExercise({id}: {id: string}) {
       </Link>)}
     </nav>
     <div className={styles.taskArea}>
-      <div><strong>Your task</strong><ol>{lesson.tasks.map(task => <li key={task}>{task}</li>)}</ol></div>
+      <div><strong>Now try it yourself</strong>
+        <p>Use the walkthrough above to complete this step in the editor. Make one change at a time and check the preview.</p>
+        <ol>{lesson.tasks.map(task => <li key={task}>{task}</li>)}</ol></div>
       <details className={styles.hints}>
         <summary>Need a hint?</summary>
         <ul>{lesson.hints.map(hint => <li key={hint}>{hint}</li>)}</ul>
@@ -55,17 +54,13 @@ export default function LessonExercise({id}: {id: string}) {
         <button type="button" className={`button button--sm ${solution ? 'button--secondary' : 'button--primary'}`}
           aria-pressed={!solution} onClick={() => setSolution(false)}>Your code</button>
         <button type="button" className={`button button--sm ${solution ? 'button--primary' : 'button--secondary'}`}
-          aria-pressed={solution} onClick={() => setSolution(true)}>This step’s solution</button>
+          aria-pressed={solution} onClick={() => setSolution(true)}>Compare with the solution</button>
       </div>
-      <span className={styles.note}>{solution ? 'Read-only. Your edits are kept separately.' : `Work in ${lesson.focusFiles.map(file => file.slice(1)).join(', ')}. Changes update the preview.`}</span>
+      <span className={styles.note}>{solution ? 'Read-only example. Return to Your code to continue; your edits are kept separately.' : `Work in ${lesson.focusFiles.map(file => file.slice(1)).join(', ')}. Changes update the preview.`}</span>
     </div>
     <BrowserOnly fallback={<LoadingWorkspace/>}>{() => <EditorBoundary key={id}><Suspense fallback={<LoadingWorkspace/>}>
       <Playground key={id} lesson={lesson} solution={solution} />
     </Suspense></EditorBoundary>}</BrowserOnly>
-    <nav className={styles.nextSteps} aria-label="Continue learning">
-      {previous ? <Link to={`${base}${previous.doc}`}>← {previous.title}</Link> : <span/>}
-      {next && <Link className="button button--primary" to={`${base}${next.doc}`}>Next: {next.title} →</Link>}
-    </nav>
     <p className={styles.note}>Each step starts from its prepared checkpoint. Your edits are saved separately for each step in this browser.
       The preview uses CodeSandbox and needs internet access. Do not enter private data.</p>
     <details className={styles.local}>

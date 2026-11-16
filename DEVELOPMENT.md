@@ -15,6 +15,36 @@ are reviewed separately.
 
 ## Interactive course
 
+### Writing a guided lesson
+
+A lesson must teach before asking the learner to implement something. Keep the
+explanation visible in the article; reserve collapsible sections for optional
+hints or supplementary material. Use the original tutorial at `30e83a2` as the
+coverage baseline, and retain the reason for each operation when correcting old
+examples. The chapter coverage notes in `course/guided-*-audit.md` map that
+material to the current lessons and clearly labelled continuations.
+
+For each step, explain the starting state, the problem to solve, and any supplied
+scaffolding added since the previous solution. Walk through small changes with
+filenames and insertion/replacement instructions, explain why each change works,
+and state what the learner should observe. Place the interactive exercise after
+this walkthrough, then give concrete self-checks and the reason for the next step.
+Do not hide the teaching inside the solution button or make a task list substitute
+for an explanation.
+
+Check snippets against both the current starter and solution. Distinguish the
+embedded project from optional work in an original repository: name that repository,
+its checkpoint and its different files/models. Keep optional extensions separate
+from the required progression. Do not imply that Vitest runs in Sandpack, that
+TypeScript validates network data, or that browser edits transfer between lessons.
+Link the official documentation near the concept it supports.
+
+Explanatory edits do not require republishing immutable code tags. If the exercise
+source changes, use the checkpoint publishing procedure below. Keep the page's
+contents menu available, and put continuation links after the result checks.
+
+### Editing the exercises
+
 Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and downloadable projects share the generated `course/lessons.json`. Each step mounts
 `LessonExercise` with a stable ID. The editor and preview open automatically, keep drafts per step
 in localStorage, and shows solutions without overwriting drafts. Sandpack runs in a

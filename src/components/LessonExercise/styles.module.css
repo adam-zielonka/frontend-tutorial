@@ -7,6 +7,7 @@
 .steps span {font-weight: 700; margin-right: .3rem;}
 .taskArea {padding: .85rem 1.1rem; border-left: 3px solid var(--ifm-color-primary); background: var(--ifm-color-emphasis-100); border-radius: 0 6px 6px 0;}
 .taskArea ol {margin: .35rem 0 0;}
+.taskArea p {margin: .35rem 0;}
 .toolbar, .links, .draftTools, .modeSwitch {display: flex; align-items: center; flex-wrap: wrap; gap: .6rem;}
 .toolbar {margin: 1rem 0 .6rem; justify-content: space-between;}
 .links, .draftTools {margin: .7rem 0;}
@@ -23,8 +24,6 @@
 .hints ul {margin: .5rem 0;}
 .exercise :global(.sp-wrapper) {min-width: 0;}
 .exercise :global(.sp-layout) {border-color: var(--ifm-color-emphasis-300);}
-.nextSteps {display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 1.2rem 0 .7rem;}
-.nextSteps a {max-width: 49%; white-space: normal;}
 @media (max-width: 768px) {
   .exercise :global(.sp-layout) {flex-direction: column;}
   /* Sandpack uses flex-basis: 0 for horizontal panes. In a column with an
@@ -33,6 +32,4 @@
   .links a {max-width: 100%; white-space: normal;}
   .paneLabels {display: none;}
   .taskArea {padding: .7rem;}
-  .nextSteps {align-items: stretch; flex-direction: column;}
-  .nextSteps a {max-width: 100%;}
 }
