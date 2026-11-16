@@ -6,16 +6,25 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
+This starter contains the previous step's completed typed records and list. Your own edits stay in their original step. Calculate values from the array during rendering, so the list remains the source of truth ([React on pure rendering](https://react.dev/learn/keeping-components-pure)).
 
-Continue with the typed shipments from the previous solution. The list is the source of truth: derive the total pallets and ready count from it each time the component renders.
+1. In `/App.tsx`, inside `App` before `return`, add:
 
-Use `reduce` to accumulate quantities and `filter(...).length` to count matching records. Render the summary above the same list so the numbers and rows describe the same data. No state or effect is necessary for these fixed records.
+   ```ts
+   const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);
+   const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;
+   ```
 
-</details>
+   `reduce` starts at zero and adds each quantity; `filter` keeps matching records and `length` counts them.
+2. Above the `<ul>` in the returned JSX, add a summary section containing `shipments.length`, `totalPallets`, and `readyCount` in braces. For example, `<p>{shipments.length} shipments · {totalPallets} pallets · {readyCount} ready</p>` belongs inside `<section aria-label="Summary">`.
+3. The supplied data should show 3 shipments, 16 pallets and 2 ready. If the total is wrong, check the initial `0` and that you add `shipment.pallets`, not the whole object.
+
 
 <LessonExercise id="01-02-derived-summary" />
+
+## Check your work
+
+Temporarily change S-101 from 8 to 9 pallets in `/shipments.ts`: the total should become 17. Restore it afterwards. This calculation prepares you to distinguish project data from actual tool configuration in the next chapter.
 
 ## Sources
 

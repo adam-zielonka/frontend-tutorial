@@ -6,18 +6,20 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
+Node runs development tools, TypeScript checks the shape of data, and React displays it. Vite serves the exported app. Start with three records in `/shipments.ts`; no installation is needed in the browser. An [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) describes the fields each record must have; a union limits the allowed values.
 
-Node runs development tools; TypeScript checks the model before JavaScript runs; React turns the model into a page. Vite serves the exported app. The preview already contains three shipment records so you can focus on one change.
+1. In `/shipments.ts`, replace the TODO inside `Shipment` with `priority: 'standard' | 'express';`. The field is required, so every `Shipment` must supply it.
+2. In the array below, add `priority: 'express'` to S-101 and `priority: 'standard'` to each other object. Commas separate object properties. Until all three are updated, a type checker can report missing fields.
+3. In `/App.tsx`, replace the TODO inside the list item with `<span> · {shipment.priority}</span>`. JSX braces evaluate the property for each mapped record. The preview should show all three rows with their priority.
 
-An interface describes each record. A string union restricts a field to a small set of allowed values. Add the required priority field, update all records, then render it. A type error while only some records have been updated is useful feedback; finish the model before checking the preview.
+If a value is rejected, check its spelling and quotes against the union; `Standard` is a different string. In a local export these editor files live under `src/`.
 
-The sandbox uses its own pinned dependencies, separate from this documentation website. No package installation is needed for this step.
-
-</details>
 
 <LessonExercise id="01-01-shipment-shape" />
+
+## Check your work
+
+Check that S-101 says express and both other rows say standard. Why does adding a required field affect every record? Next, use those records to calculate a summary without duplicating data.
 
 ## Sources
 

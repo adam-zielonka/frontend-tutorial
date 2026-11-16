@@ -6,16 +6,25 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
+The starter already has state and Add pallet from the previous solution. Keep `count` as the single source of truth: the displayed number and button availability both follow it. [React events](https://react.dev/learn/responding-to-events) run handlers in response to interaction.
 
-Continue with the working Add action. The counter now needs a rule: its quantity cannot be negative. Enforce that rule inside the subtract updater and also disable the button at zero so the interface communicates the limit.
+1. In `/App.tsx`, inside the `controls` div after Add pallet, insert:
 
-Reset is a different kind of update: its next value is always zero, so it does not need the previous value. Check the output and disabled state together after resetting. The only stored value remains `count`.
+   ```tsx
+   <button disabled={count === 0}
+     onClick={() => setCount(current => Math.max(0, current - 1))}>Remove pallet</button>
+   ```
 
-</details>
+   `Math.max` clamps the update itself at zero; `disabled` communicates the boundary in the interface.
+2. After that button add `<button onClick={() => setCount(0)}>Reset</button>`. Reset always sets zero, so it needs no previous value.
+3. At zero Remove should be disabled. Add three, remove once, then reset: expect 3, 2, and 0. If Remove remains disabled after adding, check `count === 0` and ensure both buttons use the same state.
+
 
 <LessonExercise id="03-03-bounded-events" />
+
+## Check your work
+
+After reset, try Remove at zero and confirm the number stays zero. You have a component with one state value and three actions; the next chapter introduces shared observable state for a larger example.
 
 ## Sources
 

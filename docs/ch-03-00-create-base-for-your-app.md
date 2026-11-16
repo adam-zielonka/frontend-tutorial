@@ -19,3 +19,45 @@ Work in order. Each lesson has its own starter, focused editor, and preview. The
 ## Official references
 
 [React components](https://react.dev/learn/your-first-component), [React state](https://react.dev/reference/react/useState), [Vite guide](https://vite.dev/guide/).
+
+## Optional: create and explore a separate Vite project
+
+This is the original tutorial's scaffold workflow, separate from the lesson exports and their pinned dependencies. With Node and pnpm installed, run the following in a terminal. The template and dependencies created by this command follow the current Vite release, so its files and requirements may differ from the course exports. See [Vite's scaffold guide](https://vite.dev/guide/#scaffolding-your-first-vite-project).
+
+```sh
+pnpm create vite my-react-app --template react-swc-ts
+cd my-react-app
+pnpm install
+pnpm dev
+```
+
+Open the printed address. Change text in `src/App.tsx` and save: Vite's development server updates the page. Stop it with Ctrl+C; `pnpm build` creates production assets. If the command fails, first check the Node version required by that Vite release and that the terminal is inside the project folder.
+
+### Follow the entry point
+
+`package.json` declares scripts and dependencies; the lockfile records resolved versions. `public/` holds static assets, while `src/` contains application code and imported assets. Projects may later organize `src/` into components, hooks, stores, styles, tests, types and utilities. `vite.config.ts` configures Vite and its React plugin; `tsconfig.json` configures TypeScript. Exact generated files vary by template version.
+
+1. In `index.html`, find `<div id="root"></div>` and the module script for `/src/main.tsx`. The former is the mounting point; the latter loads the application.
+2. In `src/main.tsx`, find `createRoot(...).render(...)` and the `App` and global CSS imports. React mounts the component into that root; Strict Mode can help reveal problems during development. See [createRoot](https://react.dev/reference/react-dom/client/createRoot).
+3. In `src/App.tsx`, inspect the imported logos and stylesheet, the `App` function, JSX and `useState` counter. JSX uses `className` for CSS classes and braces for expressions. Clicking the template button calls its state setter and renders the new count. Assets imported from `src` are processed by Vite; files in `public` are served directly ([assets guide](https://vite.dev/guide/assets.html)).
+
+### Optional Vite configuration
+
+The scaffold's `vite.config.ts` registers the React plugin. For a separate local experiment, add a `server.proxy` entry inside the object passed to `defineConfig`, alongside `plugins`:
+
+```ts
+server: { proxy: { '/api': { target: 'http://localhost:3000', changeOrigin: true } } },
+```
+
+During development, matching requests can be forwarded to a backend running at that target; it does not create that backend. Vite also supports WebSocket proxies with `ws: true`. Production source maps can be enabled with `build: { sourcemap: true }`, but can expose source code to users: decide deliberately before publishing. See [server proxy](https://vite.dev/config/server-options#server-proxy) and [build options](https://vite.dev/config/build-options). Never put real credentials in committed configuration. These examples do not alter the browser exercise.
+
+For different serve and build settings, Vite also accepts a function in `defineConfig`. For example, replace the object in a separate scaffold's config with a function returning your existing `plugins` and a conditional build option:
+
+```ts
+export default defineConfig(({ command }) => ({
+  plugins: [react()],
+  build: { sourcemap: command === 'build' },
+}));
+```
+
+This enables source maps for builds; use it only if exposing them is acceptable. Vite's `loadEnv` can read mode-specific environment files in the config when choosing a proxy target or mock backend. Environment variables exposed to browser code are not secrets. See [conditional config](https://vite.dev/config/#conditional-config) and [environment variables](https://vite.dev/guide/env-and-mode).
