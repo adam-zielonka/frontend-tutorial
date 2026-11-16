@@ -35,6 +35,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const menu = useRef<HTMLDialogElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const tabButtons = useRef<Array<HTMLButtonElement | null>>([]);
+  const firstLocation = useRef(true);
   const chapterIndex = lesson ? Number(lesson.chapter) - 1 : overviewPaths.indexOf(metadata.id);
   const chapterSteps = course.filter(item => Number(item.chapter) === chapterIndex + 1);
   const chapterTitle = chapterSteps[0]?.chapterTitle;
@@ -55,6 +56,10 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   useEffect(() => {if (narrow) endResize();}, [narrow, endResize]);
 
   useEffect(() => {
+    const initial = firstLocation.current;
+    firstLocation.current = false;
+    // Initial hydration must not steal focus from someone already typing in Search.
+    if (initial && !location.hash) return;
     // Search can navigate to a heading in the same document while Code is open.
     // Reveal the reading pane before scrolling; keep Sandpack mounted.
     setPanel('lesson');
