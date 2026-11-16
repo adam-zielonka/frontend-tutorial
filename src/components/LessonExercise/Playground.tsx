@@ -3,6 +3,7 @@ import {SandpackProvider, SandpackCodeEditor, SandpackPreview, SandpackConsole, 
 import {useColorMode} from '@docusaurus/theme-common';
 import type {Lesson} from '../../lib/course';
 import {readDraft, writeDraft, draftKey} from './drafts';
+import {editorDark, editorLight} from './editorThemes';
 import styles from './Playground.module.css';
 
 type PlaygroundView = 'split' | 'code' | 'preview';
@@ -13,6 +14,7 @@ const clampSplit = (value: number) => Math.min(MAX_SPLIT, Math.max(MIN_SPLIT, va
 function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolean; reset: () => void}) {
   const {sandpack} = useSandpack();
   const [status, setStatus] = useState(solution ? 'Read-only solution.' : 'Edits save in this browser.');
+  const [saveFailed, setSaveFailed] = useState(false);
   const first = useRef(true);
   useEffect(() => {
     if (solution) return;
@@ -21,6 +23,7 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
       const files = Object.fromEntries(Object.keys(lesson.files).map(path => [path, sandpack.files[path].code]));
       let saved = false;
       try {saved = writeDraft(window.localStorage, lesson, files);} catch { /* Storage access can be blocked. */ }
+      setSaveFailed(!saved);
       setStatus(saved ? 'Saved in this browser.' : 'Browser storage unavailable. Download your files to keep your work.');
     }, 700);
     return () => window.clearTimeout(timer);
@@ -44,6 +47,7 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
     link.href = url; link.download = `${lesson.id}-${solution ? 'solution' : 'my-files'}.json`; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     setStatus('Downloaded files as JSON. See the lesson’s local setup instructions for import commands.');
+    setSaveFailed(false);
   }
   return <div className={styles.tools}>
     <div className={styles.toolRow}>
@@ -55,7 +59,7 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
         }}>Reset</button>}
       </div>
     </div>
-    <span className={styles.saveStatus} role="status" aria-live="polite" title={status}>{status}</span>
+    <span className={styles.saveStatus} data-save-error={saveFailed || undefined} role="status" aria-live="polite" title={status}>{status}</span>
   </div>;
 }
 
@@ -223,7 +227,7 @@ function Editor({lesson, solution, reset, view}: {lesson: Lesson; solution: bool
   const [customSetup] = useState(() => ({dependencies: {...lesson.dependencies, react: '18.3.1', 'react-dom': '18.3.1'}}));
   const [options] = useState(() => ({activeFile: lesson.activeFile, visibleFiles: lesson.focusFiles, autorun: true,
     initMode: 'immediate' as const, recompileMode: 'delayed' as const, recompileDelay: 800, experimental_enableServiceWorker: true}));
-  return <SandpackProvider className={styles.playground} template="react-ts" theme={colorMode === 'dark' ? 'dark' : 'light'}
+  return <SandpackProvider className={styles.playground} template="react-ts" theme={colorMode === 'dark' ? editorDark : editorLight}
     files={files} customSetup={customSetup}
     options={options}>
     <DraftTools lesson={lesson} solution={solution} reset={reset}/>

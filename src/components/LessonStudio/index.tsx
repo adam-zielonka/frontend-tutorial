@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState, type ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import {useLocation} from '@docusaurus/router';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
 import {useColorMode} from '@docusaurus/theme-common';
 import {course, type Lesson} from '../../lib/course';
@@ -20,6 +21,7 @@ type IllustrationTopic = React.ComponentProps<typeof CourseIllustration>['topic'
 
 export default function LessonStudio({lesson, children}: {lesson?: Lesson; children: ReactNode}) {
   const {metadata, toc} = useDoc();
+  const location = useLocation();
   const {colorMode, setColorMode} = useColorMode();
   const base = useBaseUrl('/');
   const [panel, setPanel] = useState<StudioPanel>('lesson');
@@ -51,6 +53,22 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     return () => {window.removeEventListener('blur', endResize); endResize();};
   }, [endResize]);
   useEffect(() => {if (narrow) endResize();}, [narrow, endResize]);
+
+  useEffect(() => {
+    // Search can navigate to a heading in the same document while Code is open.
+    // Reveal the reading pane before scrolling; keep Sandpack mounted.
+    setPanel('lesson');
+    const frame = requestAnimationFrame(() => {
+      let id = '';
+      try {id = decodeURIComponent(location.hash.slice(1));} catch { /* Invalid external anchor. */ }
+      const heading = id ? document.getElementById(id) : document.querySelector<HTMLElement>('#lesson-reading h1');
+      if (!heading || !document.getElementById('lesson-reading')?.contains(heading)) return;
+      heading.scrollIntoView({block: 'start'});
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({preventScroll: true});
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location.key, location.hash]);
 
   useEffect(() => {
     try {
@@ -214,6 +232,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
           </div>
         </div>
         <nav aria-label="Course lessons">
+          <Link className={styles.searchLink} to={`${base}search/`} onClick={closeMenu}>Search course →</Link>
           <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
             onClick={closeMenu}>Course introduction</Link>
           {overviewPaths.map((overview, index) => {

@@ -70,6 +70,28 @@ mobile tabs are Lesson/Illustration, with no editor-only controls. Dialog surfac
 must be opaque in both themes: Infima's light `--ifm-background-color` is transparent,
 so use `--studio-surface` for the course menu and its sticky header.
 
+### Readability and interaction checks
+
+Search uses the plugin's CSS variables for text, muted labels and selected-result
+colors. Its theme wrapper keeps the clear button labelled and focusable, bounds
+the popup to the visual viewport (including the on-screen keyboard), and keeps
+keyboard-selected results in view. Keep these fixes in the wrapper instead of
+editing dependencies. The course menu includes Search for compact landscape mode.
+Search and anchor navigation must reveal the reading pane even when the user is
+already on that lesson with Code or Preview open.
+
+`editorThemes.ts` and the Prism configuration define separate readable light/dark
+syntax colors; keep theme objects stable to preserve drafts during theme changes.
+Use the [WCAG text contrast criterion](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+when checking normal, selected, muted, syntax and error states. The selected dark
+search result was measured at 1.82:1 before the fix and 9.66:1 afterward; these are
+specific measurements, not a claim of complete WCAG conformance.
+
+Check 375px portrait, reduced viewport height, and short landscape: search results
+must scroll inside the popup, editing controls must remain reachable, storage
+failures must stay visible, and diagrams must support enlargement without widening
+the page. Verify solution/theme changes and same-page search preserve the draft.
+
 ### Editing the exercises
 
 Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and downloadable projects share the generated `course/lessons.json`. Each step mounts

@@ -30,8 +30,8 @@ export function CodeWorkspace({lesson, solution, onSolutionChange, view = 'split
   return <section className={styles.workspace} data-lesson-workspace aria-label={`${lesson.title}: workspace`}>
     <div className={styles.toolbar}>
       <div className={styles.modeSwitch}>
-        <button type="button" aria-pressed={!solution} onClick={() => onSolutionChange(false)}>Your code</button>
-        <button type="button" aria-pressed={solution} onClick={() => onSolutionChange(true)}>Solution</button>
+        <button type="button" aria-pressed={!solution} onClick={event => {event.currentTarget.focus(); onSolutionChange(false);}}>Your code</button>
+        <button type="button" aria-pressed={solution} onClick={event => {event.currentTarget.focus(); onSolutionChange(true);}}>Solution</button>
       </div>
       {viewControls}
       {solution && <span className={styles.modeNote}>Read-only · your work is kept</span>}

@@ -1,4 +1,4 @@
-import React, {useId, type ReactNode} from 'react';
+import React, {useId, useState, type ReactNode} from 'react';
 import styles from './styles.module.css';
 
 export type CourseIllustrationTopic = 'intro' | '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
@@ -456,6 +456,7 @@ const drawings: Record<CourseIllustrationTopic, React.ComponentType<DrawingProps
 
 /** A chapter's visual companion; the outer region scrolls inside a flex pane. */
 export default function CourseIllustration({topic}: Props) {
+  const [enlarged, setEnlarged] = useState(false);
   const id = `course-illustration-${useId().replace(/:/g, '')}`;
   const chapter = chapters[topic];
   const Drawing = drawings[topic];
@@ -468,7 +469,14 @@ export default function CourseIllustration({topic}: Props) {
         <h2>{chapter.title}</h2>
         <p className={styles.summary}>{chapter.summary}</p>
       </header>
-      <div className={styles.stage}>
+      <div className={styles.diagramTools}>
+        <button type="button" aria-pressed={enlarged} aria-controls={`${id}-drawing`}
+          onClick={() => setEnlarged(value => !value)}>{enlarged ? 'Fit diagram' : 'Enlarge diagram'}</button>
+        {enlarged && <span>Scroll the diagram to see every detail.</span>}
+      </div>
+      <div id={`${id}-drawing`} className={`${styles.stage} ${enlarged ? styles.enlarged : ''}`}
+        tabIndex={enlarged ? 0 : undefined} role={enlarged ? 'region' : undefined}
+        aria-label={enlarged ? 'Enlarged diagram; scroll to explore' : undefined}>
         <svg className={styles.drawing} viewBox="0 0 600 450" role="img"
           aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`} focusable="false">
           <title id={`${id}-title`}>{chapter.title}</title>

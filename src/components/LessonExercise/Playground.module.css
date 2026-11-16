@@ -9,7 +9,7 @@
   min-height: 0;
   overflow: hidden;
   color: var(--ifm-font-color-base);
-  background: var(--ifm-background-color);
+  background: var(--ifm-background-surface-color);
   font-family: var(--ifm-font-family-base);
   font-size: .8125rem;
   line-height: 1.4;
@@ -80,9 +80,17 @@
   margin-top: .25rem;
   overflow: hidden;
   color: var(--ifm-color-emphasis-700);
-  font-size: .6875rem;
+  font-size: .75rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.saveStatus[data-save-error='true'] {
+  white-space: normal;
+  overflow: visible;
+  color: var(--ifm-font-color-base);
+  border-left: 3px solid var(--ifm-color-danger);
+  background: var(--ifm-color-emphasis-100);
+  padding: .35rem .5rem;
 }
 
 .surface, .panes, .pane {
@@ -154,6 +162,7 @@
 .pane :global(.cm-scroller) {
   overflow: auto;
 }
+.pane :global(.cm-gutters .cm-gutter.cm-lineNumbers) {font-size: .85em;}
 
 .pane :global(.sp-preview-iframe) {
   flex: 1 1 0%;
@@ -211,7 +220,7 @@
   min-height: 0;
   overflow: hidden;
   border-top: 1px solid var(--ifm-color-emphasis-400);
-  background: var(--ifm-background-color);
+  background: var(--ifm-background-surface-color);
   box-shadow: 0 -4px 12px rgb(0 0 0 / 12%);
 }
 
@@ -276,10 +285,13 @@
 @media (max-width: 999px) {
   /* The persistent mobile tab already names the visible pane. */
   .paneHeading {display: none;}
+  .toolButton, .projectToggle, .help > summary {min-height: 36px; font-size: .8125rem;}
+  .projectToggle {padding-block: .25rem;}
+  .help > summary {display: flex; align-items: center;}
 }
 
 @media (max-width: 999px) and (max-height: 520px) {
-  .saveStatus {position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);}
+  .saveStatus:not([data-save-error='true']) {position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);}
   .tools {padding-block: .2rem;}
   .footer {padding-block: .15rem;}
 }

@@ -24,6 +24,6 @@
 .exercise button:focus-visible, .exercise summary:focus-visible, .workspace button:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
 @media (max-width: 500px) {
   .toolbar {padding: .35rem .5rem;}
-  .modeNote {font-size: .6rem;}
-  .modeSwitch button {padding: .3rem .5rem;}
+  .modeNote {font-size: .75rem;}
+  .modeSwitch button {min-height: 36px; padding: .3rem .6rem; font-size: .8125rem;}
 }
