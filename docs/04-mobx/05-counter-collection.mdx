@@ -5,18 +5,36 @@ sidebar_position: 5
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 **Setup from step 4:** `CounterStore` now accepts a stable ID and an initial value. A new observable `Store` starts with one counter, and `App` owns that store instead of a single counter. The existing `Counter` receives its model through a prop. The supplied parent `observer` tracks list changes; each child still observes its own value.
 
 Implement adding and rendering multiple models. Use a stable ID for `key`, so later deletion will not transfer a component's identity to another counter. A temporary 20-counter safety guard keeps repeated clicks bounded; the next lesson replaces it with the original chapter's four-counter capacity.
 
 Create three counters and give them different values. Their buttons should operate independently.
 
-</details>
+
+## Walk through the change
+
+1. In `/Store.ts`, complete `addCounter`: first return when `this.counters.length >= this.safetyLimit`, then append a model:
+
+   ```ts
+   this.counters.push(new CounterStore(this.nextId++));
+   ```
+
+   Each model owns its own value; incrementing the ID supplies a distinct identity. The temporary safety limit is 20.
+2. In `/App.tsx`, replace the single `<Counter counter={store.counters[0]} />` and TODO with:
+
+   ```tsx
+   {store.counters.map(counter => <Counter key={counter.id} counter={counter} />)}
+   ```
+
+The parent observer tracks the collection; each child observer tracks its own value. Stable keys let React match models across list changes ([React list keys](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key)). Add two counters and change only the second: the others should stay at zero. If a new card is missing, check both the push and the map, and use the ID rather than the array index as key.
 
 <LessonExercise id="04-05-counter-collection" />
+
+## Check your work
+
+Create three cards and give them 1, 100 and -1. Each should retain its own value. Next, derive a shared total and capacity.
+
 
 ## Official references
 

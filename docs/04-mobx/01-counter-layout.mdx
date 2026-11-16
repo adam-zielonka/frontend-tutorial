@@ -5,16 +5,33 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 Start with the same counter layout as the original chapter: a displayed value and five controls. A small `Counter` function keeps this markup reusable. The starter already renders zero; complete its controls in `/App.tsx`. Styling is supplied in `/styles.css`, preserving the original yellow counter, green display, and blue buttons from [mobx-example](https://github.com/adam-zielonka/mobx-example/blob/02e70f73629d15da431d858da7132eeab5b91dbb/src/index.css). The button labelled `0` resets the value; widths adapt to the embedded preview.
 
 There is no changing state yet, so the finished buttons are intentionally inert. Confirm the structure before adding behavior. This first step starts a new app; it does not contain the collection or persistence code from later lessons.
 
-</details>
+
+## Walk through the change
+
+1. In `/App.tsx`, find the TODO below `<output>`. Replace it with a container and five buttons. For example, start with:
+
+   ```tsx
+   <div className="controls">
+     <button type="button">-100</button>
+     <button type="button">-1</button>
+     <button type="button" aria-label="Reset">0</button>
+   </div>
+   ```
+
+2. Add `+1` and `+100` buttons inside that same container. `App` already renders `<Counter />`; the supplied stylesheet uses `controls` to arrange the buttons. The accessible label explains what `0` does.
+
+You should see a green zero on a yellow card and five blue buttons. They intentionally have no behavior yet. If they stack unexpectedly, check the container's `className` and the existing `./styles.css` import. See [React components](https://react.dev/learn/your-first-component).
 
 <LessonExercise id="04-01-counter-layout" />
+
+## Check your work
+
+Tab through all five controls; they should be focusable, and none changes zero yet. Next, give the layout local state.
+
 
 ## Official references
 

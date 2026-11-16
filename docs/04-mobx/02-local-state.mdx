@@ -5,16 +5,31 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 This starter is the previous layout solution with a task comment added. No new model or dependency is needed: use React's `useState` to give each `Counter` its own value. Functional setter updates use the latest value when clicks are batched.
 
 Make all five controls work. The sequence **+100 → -1** should display **99**; Reset should display zero. This local version establishes behavior that the MobX store will preserve in the next step.
 
-</details>
+
+## Walk through the change
+
+1. At the top of `/App.tsx`, import `useState` from `react`. Inside `Counter`, replace the TODO with `const [value, setValue] = useState(0);`. Replace the literal zero inside `output` with `{value}`.
+2. Attach event handlers to the existing buttons. For example:
+
+   ```tsx
+   <button type="button" onClick={() => setValue(current => current - 100)}>-100</button>
+   <button type="button" aria-label="Reset" onClick={() => setValue(0)}>0</button>
+   ```
+
+3. Apply the same pattern for -1, +1 and +100, with the matching sign. An updater receives the pending state, so successive queued clicks accumulate; the reset directly supplies zero. See [React's useState reference](https://react.dev/reference/react/useState).
+
+The preview should show 99 after +100 then -1, and zero after Reset. If it changes while rendering instead of clicking, pass a function to `onClick` rather than calling the setter there.
 
 <LessonExercise id="04-02-local-state" />
+
+## Check your work
+
+Try +1 twice and Reset. Each click should update the display. Next, move these operations into a model.
+
 
 ## Official references
 

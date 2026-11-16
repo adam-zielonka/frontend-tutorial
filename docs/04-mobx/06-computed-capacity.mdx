@@ -5,18 +5,32 @@ sidebar_position: 6
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 **Setup from step 5:** the temporary safety limit becomes the original chapter's `limit = 4`. The supporting UI now displays capacity and a total, and reads two getter stubs. The starter still guards the numeric limit inside `addCounter`, so it cannot grow without bound while you complete the computed values.
 
 Implement `canAddMoreCounters` and `sum`, then reuse the capacity getter in the action. Both values are derived from existing state. A separate `isFull` field or manually updated total would duplicate facts and could drift out of sync.
 
 Add four counters, give them different values, and reset one. The total must reflect each change, and the disabled Add button must match the store's own guard.
 
-</details>
+
+## Walk through the change
+
+1. In `/Store.ts`, replace the `canAddMoreCounters` stub's return with `return this.counters.length < this.limit;`. The limit is already four.
+2. Replace the `sum` stub's return with:
+
+   ```ts
+   return this.counters.reduce((total, counter) => total + counter.value, 0);
+   ```
+
+3. At the start of `addCounter`, replace the repeated length comparison with `if (!this.canAddMoreCounters) return;`. The same rule now controls the action and the supplied disabled button.
+
+Getters inferred as [computed values](https://mobx.js.org/computeds.html) derive facts from observable state, so there is no separate total to maintain. Add until there are four cards: Add should disable. Set one to 100 and another to -1; the total should be 99. If it stays zero, check the `reduce` return and that each `counter.value` is read.
 
 <LessonExercise id="04-06-computed-capacity" />
+
+## Check your work
+
+Set two values to 100 and -1, then reset the first: total should change from 99 to -1. Next, remove models.
+
 
 ## Official references
 

@@ -5,18 +5,31 @@ sidebar_position: 7
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 **Setup from step 6:** the supplied UI gains a Remove button for each counter and an empty-list message. Each button calls a new `removeCounter(id)` stub in the parent store. All existing counter actions and computed getters are unchanged.
 
 Filter by identity, preserving the other `CounterStore` instances. Removing an item should free a slot and subtract its value from the total automatically; no extra action should repair those derived values. Stable keys make the remaining components follow their own models rather than their former array positions.
 
 Test removing the second of four differently valued counters, adding a replacement, and finally removing every counter. Removing an ID that is not present should be harmless.
 
-</details>
+
+## Walk through the change
+
+1. In `/Store.ts`, replace the TODO inside `removeCounter(id)` with:
+
+   ```ts
+   this.counters = this.counters.filter(counter => counter.id !== id);
+   ```
+
+2. The supplied Remove button already passes its counter's ID. `filter` makes a new list while retaining the other model instances. The existing computed getters then derive the new total and capacity; no manual correction is needed ([MobX computed values](https://mobx.js.org/computeds.html)).
+
+Create four counters, give the second a value, and remove it. Its value disappears from the total and Add becomes available again. Removing every card shows the empty message. If the wrong card disappears, compare IDs and make sure the map still uses `counter.id` as its key.
 
 <LessonExercise id="04-07-counter-removal" />
+
+## Check your work
+
+Remove the middle of three cards and change a remaining card; it should retain its own value. Next, share the collection through a URL.
+
 
 ## Official references
 

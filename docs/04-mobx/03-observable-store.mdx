@@ -5,18 +5,32 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 Move the previous counter's value and operations into `CounterStore`. `makeAutoObservable` infers observable fields and actions; `autoBind` keeps methods attached to their instance when passed as callbacks. `add` must accumulate its argument, rather than replace the value.
 
 **Setup from step 2:** `/Store.ts` is new. `App` creates one store with a lazy `useState` initializer and passes it to `Counter`. For this step only, the supporting component copies `counter.value` into React state after each action. This explicit bridge keeps the preview interactive while you focus on the store. It is removed in step 4, where React will subscribe through `observer`.
 
 Validate numbers before assignment: a bad delta or arithmetic overflow must leave the previous value intact.
 
-</details>
+
+## Walk through the change
+
+1. In `/Store.ts`, replace the constructor TODO with `makeAutoObservable(this, {}, { autoBind: true });`. MobX infers the field as observable and methods as actions; binding lets a method retain `this` when used as a callback. See [observable state](https://mobx.js.org/observable-state.html).
+2. In `add`, calculate `const next = this.value + delta;`, then assign only when both numbers are finite:
+
+   ```ts
+   if (Number.isFinite(delta) && Number.isFinite(next)) this.value = next;
+   ```
+
+3. In `reset`, assign `this.value = 0;`. This is a model operation independent of React. Addition must accumulate: assigning `delta` itself would replace the old value. Checking the result also rejects overflow.
+
+The supplied bridge copies the model value into React state after each action. Once completed, +100 then -1 shows 99 and Reset shows 0. If clicks do nothing, check that both the constructor and methods have been filled in.
 
 <LessonExercise id="04-03-observable-store" />
+
+## Check your work
+
+Try -100 followed by +1 and Reset; expect -99 then 0. Next, replace the bridge with a subscription.
+
 
 ## Official references
 

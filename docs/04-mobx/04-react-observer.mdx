@@ -5,18 +5,33 @@ sidebar_position: 4
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 **Setup from step 3:** the temporary React value snapshot and its bridge handlers are removed. `Counter` now reads the completed store directly and calls its bound actions. Its initial zero still renders, but clicks do not refresh the display: the missing subscription is this exercise.
 
 Wrap `Counter` with `observer`. MobX records observable reads made during that component's render and schedules updates when those values change. Keep `counter.value` inside that render; making a class observable alone does not subscribe React. `App` only owns a stable store reference at this stage.
 
 After completing the wrapper, all five controls should update immediately without any extra `setValue` call.
 
-</details>
+
+## Walk through the change
+
+1. In `/App.tsx`, locate the existing `Counter` declaration. Change its opening line to:
+
+   ```tsx
+   const Counter = observer(function Counter({ counter }: { counter: CounterStore }) {
+   ```
+
+2. Change the closing `}` of that function, immediately before `export default function App`, to `});`. Leave `counter.value` inside the render and keep the existing callbacks.
+
+During rendering, `observer` records the observable values read by this component and updates it when they change. `makeAutoObservable` alone does not subscribe React; see [MobX React integration](https://mobx.js.org/react-integration.html). The lazy `useState` initializer keeps the model for the mounted app.
+
+Click +100 and -1: the display should change from 0 to 99. If it stays at zero, verify the wrapper closes around the component and that the displayed value is read inside it.
 
 <LessonExercise id="04-04-react-observer" />
+
+## Check your work
+
+Try each button, including Reset; updates should appear without a React value setter. Next, give each card its own model.
+
 
 ## Official references
 

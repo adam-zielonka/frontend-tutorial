@@ -5,9 +5,6 @@ sidebar_position: 8
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
-
 **Setup from step 7:** the app gains a small import field, a share-query display, and an effect that calls `restoreUrl` and returns `syncUrl`'s disposer. New store/helper stubs are supplied in `/Store.ts`. The import field lets you exercise hydration even when the preview's own address bar is unavailable.
 
 Serialize values using the original chapter's `value` query parameter and semicolon format. Hydration must validate the whole payload before replacing state: accept at most four finite numbers, reject blank tokens and oversized input, and define the completely empty string as zero counters. A malformed payload must leave existing values untouched.
@@ -16,9 +13,31 @@ The reaction tracks the serialized values and writes with `replaceState`, preser
 
 Try `5;-2`, `1;;2`, `Infinity`, five values, and an empty string. In an exported project, reload `?value=5%3B-2&mode=demo#counters` and confirm unrelated URL parts survive edits.
 
-</details>
+
+## Walk through the change
+
+1. In `/Store.ts`, implement `serializedValues` with `this.counters.map(counter => counter.value).join(';')`. For example, two values become `5;-2`.
+2. In `hydrate`, reject input longer than 512 characters. Split nonempty input on `;`, but treat the completely empty string as an empty array. Reject more than `this.limit` parts or any blank trimmed part; then convert with `Number` and reject any non-finite result.
+
+   ```ts
+   const parts = raw === '' ? [] : raw.split(';');
+   if (parts.length > this.limit || parts.some(part => part.trim() === '')) return false;
+   const values = parts.map(Number);
+   if (!values.every(Number.isFinite)) return false;
+   ```
+
+3. Only after validation, replace `this.counters` with `values.map(value => new CounterStore(this.nextId++, value))` and return true. This prevents a bad token from partly replacing the list.
+4. In `restoreUrl`, read `new URL(window.location.href).searchParams.get('value')` inside `try`; return `raw !== null && store.hydrate(raw)`, and return false in `catch`. This distinguishes an absent parameter from the valid empty list.
+5. In `syncUrl`, return a [MobX reaction](https://mobx.js.org/reactions.html) whose data function reads `store.serializedValues`. Its effect creates a `URL` from the current location, sets `url.searchParams.set('value', value)`, and calls `window.history.replaceState(window.history.state, '', url)` inside `try/catch`. Pass `{ fireImmediately: true }` as the third argument. The existing React effect restores first and returns this reaction's disposer. Using the current URL preserves other parameters and the hash ([replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState)).
+
+Use the import field to try `5;-2`: two cards should appear. `1;;2` and `Infinity` should leave them unchanged; an empty string means no cards. If invalid input clears the list, check that validation finishes before assignment. The preview may restrict address-bar access.
 
 <LessonExercise id="04-08-url-state" />
+
+## Check your work
+
+Import `5;-2`, then `1;;2`; the latter must leave 5 and -2 intact. Next, keep values between visits with storage.
+
 
 ## Official references
 

@@ -2,6 +2,8 @@
 
 React components describe the interface; MobX models hold application state and the operations that change it. This chapter connects those two ideas by building the counter app from the [original mobx-example project](https://github.com/adam-zielonka/mobx-example). Begin with one static counter and the original five controls: −100, −1, Reset, +1 and +100. Then move its state into a model, subscribe React, and grow the app into a collection.
 
+The original chapter showed the counter before and after adding styles. Compare the [unstyled counter](./img/img-02-01-counter-start.png) with the [styled counter](./img/img-02-02-counter-with-css.png); the exercise adapts those styles to a narrower preview.
+
 ## Follow the lesson path
 
 Each step has its own page, focused starter files, editor, running preview and reference solution. Open the first lesson to begin. Each later starter builds on the preceding solution, with the setup changes explained on that page; your saved editor draft belongs to that individual lesson.
@@ -37,7 +39,32 @@ The app's lesson files use `/App.tsx`, `/Store.ts` and `/styles.css` at the edit
 
 `makeAutoObservable` infers observable fields, actions and computed getters. `observer` subscribes the component that reads those fields during render. A parent that renders the collection and a child that reads a counter value each need the appropriate subscription. Keep models stable for the lifetime of their owner, and use stable keys when deleting items.
 
-The original example also explores editing a value through an input and inspecting a model in the browser console. As an extension, add a number input whose action rejects non-finite values; do not confuse replacing its value with adding a delta. Prefer a local debugger breakpoint over assigning a store to `window`: these lessons keep model ownership inside the mounted app.
+## Optional continuation: edit a value and inspect the model
+
+The original project replaces its display with an input and exposes its store in the browser console. The nine mini exercises use a read-only `output` and models owned by `App`; these changes are an optional continuation of the completed local step 9 project, not files already present in the embedded exercises.
+
+1. In `src/Store.ts`, add a method to `CounterStore`, alongside `add` and `reset`:
+
+   ```ts
+   setValue(value: number) {
+     if (Number.isFinite(value)) this.value = value;
+   }
+   ```
+
+   `makeAutoObservable` infers this method as an action. Unlike `add`, it replaces the value. This corrects the original's confusing use of `add` for assignment.
+2. In `src/App.tsx`, inside the observed `Counter`, replace the value `output` with:
+
+   ```tsx
+   <input aria-label="Counter value" type="number" value={counter.value}
+     onChange={event => {
+       const value = event.currentTarget.valueAsNumber;
+       if (Number.isFinite(value)) counter.setValue(value);
+     }} />
+   ```
+
+   Enter 42 and the total should reflect 42. A controlled input gets its value from the model; invalid or empty input is rejected, so it will not stay blank. A production editor that permits intermediate text such as a minus sign should keep a separate text draft and validate on commit. See [React's input reference](https://react.dev/reference/react-dom/components/input).
+3. To inspect without making the store global, set a browser debugger breakpoint in `add` or `setValue`, click a control, and inspect `this.value` and the call stack. The original instead exported a singleton and assigned `window.store = store`; this local version creates its store inside `App`, so copying that statement would refer to a different ownership pattern. For a deliberate temporary singleton experiment, export an instance from `src/Store.ts`, import and use that same instance in `App`, and declare `Window.store` before assigning it. Remove the exposure after debugging: any page script can access that global.
+
 
 Keep persistence outside model constructors. Browser input is untrusted, storage can be unavailable, and subscriptions need disposal. The last two lessons validate complete snapshots before replacement, cap the collection at four counters, and keep effects inside a React effect with cleanup.
 
