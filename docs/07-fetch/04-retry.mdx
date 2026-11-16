@@ -6,8 +6,6 @@ sidebar_position: 4
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 A retry must start a new request rather than just dismissing the old error. Store a request counter, increment it on Retry request, and include it in the effect dependency array alongside the URL.
 
@@ -15,9 +13,20 @@ The same effect now handles first load, URL changes, and retries: it clears the 
 
 The fixture is intentionally fast. Use browser Network tools if you want to inspect repeated requests and the brief loading state. This remains local fixture practice; production API routing, authentication, and cross-origin policy need their own configuration.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, alongside the other state declarations add `const [request, setRequest] = useState(0);`. Add `request` to the effect dependencies: `[url, request]`.
+2. Replace the disabled button with `<button onClick={() => setRequest(current => current + 1)}>Retry request</button>`. The counter is a request trigger, not data: changing it reruns the existing effect, whose cleanup cancels the prior request.
+
+Try the missing fixture and retry; it should still report an error. Restore the fixture and retry for three ramps. If nothing happens, check that the button is no longer disabled and `request` is in the dependency array.
 
 <LessonExercise id="07-04-retry" />
+
+## Check your work
+
+Confirm repeated attempts do not duplicate displayed ramps. Next, build a stateful interface with UI5 components.
+
 
 ## Sources
 

@@ -6,16 +6,30 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 The selector already stores a typed filter, but its value does not yet affect the rows. Derive `visible` from the records and the selected status during render.
 
 The table and live count both read `visible`, so one expression keeps them consistent. All is a special choice that accepts every status. A filter should not delete or mutate the original records; switching back to All restores the complete view.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, replace `const visible = loadings;` with:
+
+```tsx
+const visible = loadings.filter(item => filter === 'all' || item.status === filter);
+```
+
+2. The selector already calls `setFilter`. The predicate keeps every record for All, otherwise only matching statuses. Both the count and table use this derived array, while `/data.ts` remains unchanged.
+
+Choose Waiting: one row and count one appear. Return to All for three. If the count stays at three, check that you replaced `visible`, not the `loadings` data.
 
 <LessonExercise id="05-02-status-filter" />
+
+## Check your work
+
+Select Done and verify L-103 is the only row; All restores the three. Next, reuse these results for ramps.
+
 
 ## Sources
 

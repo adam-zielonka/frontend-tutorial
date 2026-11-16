@@ -6,8 +6,6 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 Changing the URL starts another effect. The previous request may finish later, so its result must not replace the newest selection. The supplied `active` flag already guards state updates; now also cancel obsolete work.
 
@@ -15,9 +13,20 @@ Create one `AbortController` per effect setup, pass its signal to the adapter, t
 
 Rapidly toggle the fixture option and confirm the final selection determines the displayed state. A tiny local file can resolve too quickly to reveal a race, so use Network throttling in browser developer tools if needed. React Strict Mode also runs an extra setup/cleanup cycle during development, which this cleanup must tolerate.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, inside the effect before `loadLocalRamps`, create `const controller = new AbortController();` and pass `controller.signal` as its second argument.
+2. Replace cleanup with `return () => { active = false; controller.abort(); };`. React calls cleanup before replacing an effect; marking it inactive first prevents intentional cancellation from appearing as an error. The adapter already avoids fallback after abort.
+
+Toggle the fixture option rapidly. The final selection should determine the result. If the local request finishes too quickly to observe cancellation, use network throttling; development Strict Mode may also run an extra setup and cleanup.
 
 <LessonExercise id="07-03-abort-cleanup" />
+
+## Check your work
+
+Finish on the working fixture and verify three ramps. Next, add a way to request the same URL again.
+
 
 ## Sources
 

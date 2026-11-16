@@ -6,8 +6,6 @@ sidebar_position: 4
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 An empty list needs an explanation. R3 is genuinely available, while R2 can look empty merely because its loading does not match the selected filter. Render different messages for those cases.
 
@@ -15,9 +13,30 @@ Derive ramp status from **all** assignments, so selecting Done cannot make a bus
 
 Show the status text in the ramp header with `className="RampStatus"`, and pass `data-status={rampStatus}` to the `ramp-loadings` body. The supplied CSS uses the original red, yellow and green ramp tints for Waiting, Loading and Complete; Available keeps the neutral hatch. Both the label and tint must use the unfiltered business status. Keep each loading card's own status text and stripe based on `item.status`.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, inside `ramps.map` just after `assigned`, derive the unfiltered assignments and status:
+
+```tsx
+const allAssigned = loadings.filter(item => item.rampId === ramp.id);
+const rampStatus = allAssigned.length === 0 ? 'Available'
+  : allAssigned.every(item => item.status === 'done') ? 'Complete'
+  : allAssigned.some(item => item.status === 'loading') ? 'Loading' : 'Waiting';
+```
+
+The zero check must come first: `every` also returns true for an empty array. Status uses all records so a filter cannot change the business state.
+
+2. In the ramp header add `<p className="RampStatus">Ramp status: {rampStatus}</p>` and add `data-status={rampStatus}` to the body. Replace its list with a conditional: when `assigned.length === 0`, show `No loadings assigned.` if `allAssigned.length === 0`, otherwise `No matching loadings at this ramp.`; otherwise retain the existing list. The CSS connects the status attribute to the tint.
+
+If Done makes R2 look available, inspect whether status accidentally uses `assigned` rather than `allAssigned`.
 
 <LessonExercise id="05-04-empty-and-status" />
+
+## Check your work
+
+With All, check Waiting, Loading, Available for R1–R3. With Done, R2 still says Loading but explains no match. The next chapter tests state behavior independently of its interface.
+
 
 ## Sources
 

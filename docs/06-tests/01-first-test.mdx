@@ -6,8 +6,6 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 This chapter deliberately uses a small single-value `CounterStore` rather than chapter 4's collection. Its `change(delta)` adds to the current value and clamps it between 0 and 10; `reset()` returns it to zero. The implementation is already complete so you can focus on testing behavior.
 
@@ -15,9 +13,20 @@ Replace two pending cases with assertions using `describe`, `it`, and `expect(..
 
 **The live preview is a manual harness, not Vitest. Editing the test file does not update a test result on this page.** Export the edited project, install dependencies, and run `pnpm exec vitest run` in a real local or StackBlitz terminal. These store tests run in Node without a DOM emulator. Expect two passing and three pending cases. Temporarily assert an incorrect value to confirm a real failing result, then restore the correct assertion.
 
-</details>
+
+## Worked walkthrough
+
+1. Open `/Store.test.ts`. Replace the first pending case with `it('starts at zero', () => { expect(new CounterStore().value).toBe(0); });`. `it` names a behavior; `expect` compares its actual result with the expected value.
+2. Replace the next pending case with a fresh `const store = new CounterStore();`, then call `store.change(4)` and assert `expect(store.value).toBe(4)`. Call `store.change(-2)` and assert 2. A separate store makes the cases independent.
+
+Export the edited project, install its dependencies, and run `pnpm exec vitest run` in its terminal. Two pass and three remain pending. If the preview changes but no test results appear, remember it is a manual harness, not a test runner.
 
 <LessonExercise id="06-01-first-test" />
+
+## Check your work
+
+Temporarily expect 3 instead of 2 and confirm the terminal reports a failure, then restore 2. Next, check the limits.
+
 
 ## Sources
 

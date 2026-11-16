@@ -6,8 +6,6 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 The effect and loading/success/error UI are supplied so you can focus on the request. Initially `loadRamps` returns an empty array. Replace that placeholder with an awaited `fetch` and an awaited JSON parse.
 
@@ -15,9 +13,26 @@ The fixture stays at `/public/ramps.json` in the virtual project. Local Vite ser
 
 For this first step, a `Ramp[]` assertion is a temporary assumption, **not runtime validation**. The next lesson replaces it with validation and an explicit HTTP status check. Retry is also deliberately disabled until the final step.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/api.ts`, replace the placeholder return inside `loadRamps` with:
+
+```ts
+const response = await fetch(url, { signal });
+return await response.json() as Ramp[];
+```
+
+2. `fetch` resolves to a response; `json()` reads its body asynchronously. The existing effect calls `loadLocalRamps` and displays the returned records. The assertion tells TypeScript what to assume; it does not check the data at runtime.
+
+The preview should show three ramps. If it does not, keep the provided adapter and `/public/ramps.json` intact: the adapter handles the two preview paths. Retry remains intentionally disabled.
 
 <LessonExercise id="07-01-request" />
+
+## Check your work
+
+See R1, R2 and R3, then select the missing fixture to explore an error. Next, distinguish an HTTP error from valid ramp data.
+
 
 ## Sources
 

@@ -6,8 +6,6 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 The count and progress describe the same shipment, so store only `loaded` and derive `(loaded / 10) * 100`. Passing the raw count would show only 10% at full capacity.
 
@@ -15,9 +13,26 @@ For this pinned UI5 v2 release, use `ProgressIndicator` with `value`, `displayVa
 
 Check 0%, 50%, and 100%, then reset. The progress, pallet label, and button availability should all follow that single state update. Confirm Reset remains usable when Load is disabled.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, import `ProgressIndicator` from `@ui5/webcomponents-react/ProgressIndicator`. After the `loaded` state, derive `const progress = (loaded / 10) * 100;`. A derived value cannot drift out of sync with the count.
+2. Below the count, insert:
+
+```tsx
+<ProgressIndicator value={progress} displayValue={`${progress}% loaded`} accessibleName="Shipment loading progress" />
+```
+
+3. On Load, add `disabled={loaded >= 10}` and change its updater to `setLoaded(current => Math.min(10, current + 1))`. Disabling communicates the limit; clamping also protects state. For this pinned UI5 version, `value` is a percentage, not a pallet count.
+
+At five pallets expect 50%; at ten expect 100% and a disabled Load button. If it shows 10% at ten, check the percentage calculation.
 
 <LessonExercise id="08-03-progress-and-capacity" />
+
+## Check your work
+
+Check 0%, 50%, 100%, then Reset and confirm Load works again. You can now explore the optional UI5 components in the chapter overview.
+
 
 ## Sources
 

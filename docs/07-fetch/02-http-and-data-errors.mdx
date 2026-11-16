@@ -6,8 +6,6 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 A completed request is not necessarily a successful response. Check `response.ok` before parsing and include the HTTP status in the error. JSON parsing can fail separately, and valid JSON can still have the wrong structure.
 
@@ -15,9 +13,34 @@ Read the parsed value as `unknown`. Require an array, then check every element i
 
 The missing-fixture checkbox exercises the error path. A development server can return an HTML fallback with status 200 for an unknown path, so the displayed error may be a JSON parsing error rather than HTTP 404. To exercise the data guard, temporarily give a fixture record a numeric name, then restore it. The supplied path adapter can make a second request for the working fixture; it is compatibility scaffolding, not a retry button.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/api.ts`, after `fetch`, reject unsuccessful HTTP responses before parsing:
+
+```ts
+if (!response.ok) throw new Error(`HTTP ${response.status}: could not load ramps`);
+const data: unknown = await response.json();
+```
+
+2. Before returning, require an array whose entries are non-null objects with string IDs and names:
+
+```ts
+if (!Array.isArray(data) || !data.every(item =>
+  typeof item === 'object' && item !== null &&
+  typeof item.id === 'string' && typeof item.name === 'string'
+)) throw new Error('Invalid ramp data');
+return data as Ramp[];
+```
+
+The existing catch displays errors. `fetch` itself does not reject merely because a server responds with an HTTP error. If a missing URL reports a JSON error instead of 404, the dev server may have returned an HTML fallback with status 200.
 
 <LessonExercise id="07-02-http-and-data-errors" />
+
+## Check your work
+
+Try the missing fixture, then restore the working one. Temporarily change a name to a number in `/public/ramps.json` to check the guard, and restore it. Next, cancel obsolete requests.
+
 
 ## Sources
 

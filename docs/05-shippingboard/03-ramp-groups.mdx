@@ -6,8 +6,6 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-<details>
-<summary>About this step</summary>
 
 Continue with the working filter and navigation. A ramp dashboard groups the same visible records rather than creating another list to synchronize.
 
@@ -15,9 +13,36 @@ For each ramp, filter `visible` using its stable `id`, then render the matching 
 
 Reuse the supplied `Ramp` header and `ramp-loadings` body when replacing the scaffold with articles. Inside the body, render a list with a `Loading` card for each assignment: its header shows the ID, a `customer` area contains the `name`, and its footer contains `LoadingStatus` with `data-status={item.status}`. These classes restore the original card layout; the status stripe represents a category, not a completion percentage.
 
-</details>
+
+## Worked walkthrough
+
+1. In `/App.tsx`, replace the ramp scaffold inside the ramp section. Map `ramps` with a block callback so you can derive the assignments before returning each card:
+
+```tsx
+{ramps.map(ramp => {
+  const assigned = visible.filter(item => item.rampId === ramp.id);
+  return <article className="Ramp" key={ramp.id}>
+    <header><h3>{ramp.name} ({ramp.id})</h3></header>
+    <div className="ramp-loadings"><ul>{assigned.map(item =>
+      <li className="Loading" key={item.id}>
+        <header>{item.id}</header>
+        <div className="customer"><span className="name">{item.customer}</span></div>
+        <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
+      </li>)}</ul></div>
+  </article>;
+})}
+```
+
+2. Put that expression inside `<div className="Content">`. Filtering by ID groups the existing visible records, and stable keys let React track each card. The supplied CSS styles these class names.
+
+With All, R1 shows two cards, R2 one, R3 none. If cards appear in every ramp, compare `item.rampId` to `ramp.id`, not to itself.
 
 <LessonExercise id="05-03-ramp-groups" />
+
+## Check your work
+
+Filter to Loading and check only L-102 appears under R2. Next, explain why other ramp bodies can be empty.
+
 
 ## Sources
 
