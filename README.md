@@ -1,4 +1,4 @@
-# Configure editor and type checks — start
+# Configure editor and type checks — solution
 
 Distinguish a typed practice model from real editor and compiler settings.
 
