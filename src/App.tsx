@@ -7,7 +7,7 @@ export default function App() {
     <p>Node runs the tools; TypeScript checks this data; React renders it; Vite serves the exported project.</p>
     <ul>{shipments.map(shipment => <li key={shipment.id}>
       <strong>{shipment.id}</strong>: {shipment.customer} — {shipment.pallets} pallets ({shipment.status})
-      {/* TODO: display the typed priority here. */}
+      <span> · {shipment.priority}</span>
     </li>)}</ul>
   </main>;
 }
