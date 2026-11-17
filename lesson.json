@@ -1,6 +1,6 @@
 {
   "id": "07-05-retry",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Add a request counter with useState(0).",
