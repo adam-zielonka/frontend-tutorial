@@ -1,4 +1,4 @@
-# Restore and serialize URL state — start
+# Restore and serialize URL state — solution
 
 Hydrate validated values and synchronize them with the URL using a disposed reaction.
 
