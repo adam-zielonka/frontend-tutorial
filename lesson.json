@@ -1,6 +1,6 @@
 {
   "id": "07-03-validate-data",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Parse as unknown and reject anything except an array of records with string id and name fields."

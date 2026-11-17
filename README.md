@@ -1,4 +1,4 @@
-# Validate the JSON structure — start
+# Validate the JSON structure — solution
 
 Validate unknown JSON before returning ramp records.
 
