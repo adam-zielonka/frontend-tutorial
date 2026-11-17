@@ -1,8 +1,8 @@
 {
-  "id": "07-02-http-and-data-errors",
-  "variant": "solution",
+  "id": "07-03-validate-data",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Check response.ok and throw an error containing the HTTP status before parsing JSON."
+    "Parse as unknown and reject anything except an array of records with string id and name fields."
   ]
 }
