@@ -69,6 +69,13 @@ export function restoreUrl(store: Store): boolean {
 }
 
 export function syncUrl(store: Store): () => void {
-  // TODO: return a reaction disposer; preserve unrelated query parameters and hash.
-  return () => {};
+  return reaction(() => store.serializedValues, value => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('value', value);
+      window.history.replaceState(window.history.state, '', url);
+    } catch {
+      // A restricted preview must still allow counters to work.
+    }
+  }, { fireImmediately: true });
 }

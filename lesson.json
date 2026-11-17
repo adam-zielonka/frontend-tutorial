@@ -1,6 +1,6 @@
 {
   "id": "04-10-url-reaction",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Return a reaction disposer; update only the value parameter using the current URL and retain history state."

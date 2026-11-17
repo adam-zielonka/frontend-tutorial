@@ -1,4 +1,4 @@
-# Synchronize the URL and dispose the reaction — start
+# Synchronize the URL and dispose the reaction — solution
 
 Synchronize the URL and dispose the reaction.
 
