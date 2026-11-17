@@ -27,8 +27,7 @@ material to the current lessons and clearly labelled continuations.
 For each step, explain the starting state, the problem to solve, and any supplied
 scaffolding added since the previous solution. Walk through small changes with
 filenames and insertion/replacement instructions, explain why each change works,
-and state what the learner should observe. Place the interactive exercise after
-this walkthrough, then give concrete self-checks and the reason for the next step.
+and state what the learner should observe once. Keep one coherent explanation/edit/check sequence, rather than adding a second objective and list of tasks after it.
 Do not hide the teaching inside the solution button or make a task list substitute
 for an explanation.
 
@@ -45,25 +44,24 @@ contents menu available, and put continuation links after the result checks.
 
 ### Lesson workspace layout
 
-All 39 course pages use `LessonStudio`, a viewport-height React shell inspired
+All course pages use `LessonStudio`, a viewport-height React shell inspired
 by the [Svelte tutorial](https://svelte.dev/tutorial/svelte/multiple-select-bindings).
 Docusaurus still owns MDX, routing and search. The home page and eight chapter
 introductions show a topic-specific `CourseIllustration` in the right pane; the
-30 numbered exercises show the editor and live preview there. Introductions do
+numbered exercises show the editor and live preview there. Introductions do
 not mount Sandpack. Theme wrappers preserve the same navigation and reading pane
 throughout the course. Lesson text stays in its MDX file, including checks and
 references after `LessonExercise`.
 
-The studio renders that component's tasks in the reading pane and mounts one separate
+The studio renders optional hints in the reading pane and mounts one separate
 `CodeWorkspace`. Its persistent footer contains Console, Work locally, Online editor
 and Preview help. Local clone/import instructions open from Work locally; Online
-editor opens the selected v4 checkpoint in StackBlitz without transferring drafts.
+editor opens the selected v5 checkpoint in StackBlitz without transferring drafts.
 These run controls stay available while the editor loads or if it fails. A shared
 context identifies the studio around the exercise. On narrow screens,
 Lesson/Code/Preview controls change visibility,
 not component identity. Never conditionally unmount Sandpack for a panel change:
-that loses editor selection and resets the running example. Preserve the v3 draft
-key and source maps when changing the shell.
+that loses editor selection and resets the running example. Preserve previous-edition drafts when changing source maps or storage keys.
 
 The outer split controls reading width; the inner split controls editor height.
 Both support keyboard resizing. Use `min-height: 0` through the flex ancestors and
@@ -107,8 +105,7 @@ Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and do
 `LessonExercise` with a stable ID. The editor and preview open automatically, keep drafts per step
 in localStorage, and shows solutions without overwriting drafts. Sandpack runs in a
 CodeSandbox iframe and needs network access. Its TypeScript preview transpiles code;
-Vite's local `build` also type-checks. Lesson 6 uses Vitest in a real terminal; the
-embedded preview provides a separate, explicitly labelled browser check.
+Vite's local `build` also type-checks. Lesson 6 uses a real Vitest runner in a temporary StackBlitz workspace, populated from the current editor files. The visible result is a snapshot from Run tests. Chromium embeds this workspace; Safari/Firefox use a new tab. Local exports also support `pnpm test:run`.
 
 ```sh
 pnpm test          # manifest, exports, draft recovery and downloaded-file imports
@@ -119,15 +116,13 @@ pnpm build
 ```
 
 Fixtures and teaching-project dependencies are separate from the documentation site.
-Dependency profiles share pnpm lockfiles in `course/locks/v4`. After deliberately changing
+Dependency profiles share pnpm lockfiles in `course/locks/v5`. After deliberately changing
 project dependencies, run `node scripts/check-course.mjs --update-locks`, then review
 and commit the updated lockfiles. Students may also use npm; pnpm with the supplied
 lockfile provides the reproducible install.
 
 The v3 edition restores the original example styling. The v1/v2 branches and tags
-remain unchanged. Browser drafts use a separate v3 key so this edition cannot overwrite
-a student's saved v2 files. The v4 checkpoints fix StackBlitz installation only;
-lesson source maps and the v3 draft key remain unchanged.
+remain unchanged. V4 fixed StackBlitz installation without changing the v3 source maps. V5 uses its own draft key, reads compatible earlier drafts, and preserves incompatible earlier work for download. Renumbered Fetch/persistence lessons retain recovery mappings to their earlier IDs.
 
 StackBlitz currently auto-selects pnpm 8.15.6, which rejects a workspace without
 `packages` and cannot consume the pnpm 12 multi-document lockfiles. Generated
@@ -141,8 +136,8 @@ terminal to continue without losing edits. Do not force-move released tags.
 
 ### Publishing course checkpoints
 
-`pnpm course:release` creates the independent branch `course-examples-v4` and two annotated
-tags per step named `lesson-<id>-start-v4` and `lesson-<id>-solution-v4`. It uses Git objects and
+`pnpm course:release` creates the independent branch `course-examples-v5` and two annotated
+tags per step named `lesson-<id>-start-v5` and `lesson-<id>-solution-v5`. It uses Git objects and
 an isolated index, without switching the website checkout. Each tag contains a complete
 Vite app at its root. The branch history follows all ordered step start/solution pairs; its tip
 is the final solution, and its README links every checkpoint.
@@ -164,3 +159,5 @@ Integration references: [Sandpack](https://sandpack.codesandbox.io/docs/getting-
 Lesson titles and the course menu use chapter.step numbering consistently (for
 example, 4.1). Keep the Docusaurus Previous/Next cards after the article; do not add
 a second manual Previous/Next/Chapter overview row to lesson Markdown.
+
+The v5 edition splits larger concepts into smaller runnable checkpoints and includes numbered reading/project pages in `course/navigation.json`. Rebuild that manifest with `pnpm course:assemble` after changing titles, slugs or lesson order. The separate read-only Solution view remains; reference text equality is not used as a correctness test.

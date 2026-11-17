@@ -8,6 +8,7 @@ import {lessons, validateLessons, projectFiles, writeProject, tagFor} from './co
 import {readDraft, writeDraft, draftKey, previousDraft} from '../src/components/LessonExercise/drafts.ts';
 import {lessonFile, snippetSelection} from '../src/lib/lessonCode.ts';
 import {testProject, supportsTestEmbed} from '../src/lib/testProject.ts';
+import {reportCounts} from '../src/lib/testRunner.mjs';
 const lesson = () => structuredClone(lessons[0]);
 const storage = () => {const map = new Map(); return {getItem: k => map.get(k) ?? null, setItem: (k,v) => map.set(k,v)};};
 
@@ -55,6 +56,13 @@ test('a revised lesson keeps incompatible old drafts available without importing
   assert.equal(s.getItem(`frontend-tutorial:v3:${l.id}`), old);
   assert.deepEqual(readDraft(s, l), l.files);
 });
+test('renumbering a Fetch lesson preserves the old draft identifier for recovery', () => {
+  const s = storage(); const l = lessons.find(item => item.id === '07-04-abort-cleanup');
+  s.setItem('frontend-tutorial:v3:07-03-abort-cleanup', JSON.stringify({baseline: JSON.stringify(l.files), files: l.files}));
+  assert.deepEqual(readDraft(s, l), l.files);
+  s.setItem('frontend-tutorial:v3:07-03-abort-cleanup', JSON.stringify({baseline: 'old', files: {'/api.ts': 'saved work'}}));
+  assert.equal(JSON.parse(previousDraft(s, l)).lesson, '07-03-abort-cleanup');
+});
 
 test('code labels resolve only real lesson files and locate context without editing code', () => {
   const files = ['/App.tsx', '/Store.ts'];
@@ -67,7 +75,7 @@ test('code labels resolve only real lesson files and locate context without edit
   assert.equal(snippetSelection(code, 'totally unrelated example'), undefined);
 });
 
-test('Vitest receives the current files and matching UI version, not the reference solution', () => {
+test('Vitest receives the current files and a run signal, not the reference solution', () => {
   const l = lessons.find(item => item.chapter === '06');
   const files = {...l.files, '/Store.test.ts': 'expect(1).toBe(2);', '/outside': 'ignore me'};
   const project = testProject(l, files, 1);
@@ -76,12 +84,16 @@ test('Vitest receives the current files and matching UI version, not the referen
   assert.equal(project.files['src/Store.test.ts'], 'expect(1).toBe(2);');
   assert.equal(project.files['src/outside'], undefined);
   assert.equal(pkg.dependencies.vitest, l.dependencies.vitest);
-  assert.equal(pkg.dependencies['@vitest/ui'], l.dependencies.vitest);
-  assert.match(pkg.scripts.start, /^vitest --ui/);
-  assert.notEqual(project.files['vitest.config.ts'], testProject(l, files, 2).files['vitest.config.ts']);
+  assert.equal(pkg.scripts.start, 'node test-server.mjs');
+  assert.match(project.files['test-server.mjs'], /vitest\/vitest\.mjs/);
+  assert.notEqual(project.files['.test-request'], testProject(l, files, 2).files['.test-request']);
   assert.equal(supportsTestEmbed('Mozilla/5.0 Chrome/130.0.0.0 Safari/537.36'), true);
   assert.equal(supportsTestEmbed('Mozilla/5.0 (iPhone) CriOS/130.0 Mobile Safari/604.1'), false);
   assert.equal(supportsTestEmbed('Mozilla/5.0 Firefox/132.0'), false);
+});
+test('the test report includes Vitest todo cases in pending counts', () => {
+  assert.deepEqual(reportCounts({numPassedTests: 2, numFailedTests: 0, numPendingTests: 0, numTodoTests: 3}),
+    [['passed', 2, 'passed'], ['failed', 0, 'failed'], ['pending', 3, 'pending']]);
 });
 test('corrupt, incomplete, stale, or inaccessible storage falls back safely', () => {
   const s = storage(); const l = lesson();

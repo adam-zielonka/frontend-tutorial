@@ -44,7 +44,10 @@ export default function TestPanel({lesson, solution}: {lesson: Lesson; solution:
     }, 90_000);
     try {
       if (vm.current) {
-        await vm.current.applyFsDiff({create: project.files, destroy: []});
+        const {'.test-request': request, ...sourceFiles} = project.files;
+        // Commit all files before the request signal, so no run sees half an edit.
+        await vm.current.applyFsDiff({create: sourceFiles, destroy: []});
+        await vm.current.applyFsDiff({create: {'.test-request': request}, destroy: []});
       } else {
         const mount = document.createElement('div');
         host.current!.replaceChildren(mount);

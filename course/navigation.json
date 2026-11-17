@@ -121,18 +121,56 @@
   {
     "id": "04-mobx/08-url-state",
     "path": "04-mobx/08-url-state",
-    "title": "Restore and serialize URL state",
+    "title": "Serialize and validate counter values",
     "chapter": "04",
     "step": 8,
     "exerciseId": "04-08-url-state"
   },
   {
-    "id": "04-mobx/09-persistence",
-    "path": "04-mobx/09-persistence",
-    "title": "Persist counters in localStorage",
+    "id": "04-mobx/09-restore-url",
+    "path": "04-mobx/09-restore-url",
+    "title": "Restore counters from a URL",
     "chapter": "04",
     "step": 9,
-    "exerciseId": "04-09-persistence"
+    "exerciseId": "04-09-restore-url"
+  },
+  {
+    "id": "04-mobx/10-url-reaction",
+    "path": "04-mobx/10-url-reaction",
+    "title": "Synchronize the URL and dispose the reaction",
+    "chapter": "04",
+    "step": 10,
+    "exerciseId": "04-10-url-reaction"
+  },
+  {
+    "id": "04-mobx/09-persistence",
+    "path": "04-mobx/09-persistence",
+    "title": "Restore a storage snapshot as fallback",
+    "chapter": "04",
+    "step": 11,
+    "exerciseId": "04-11-persistence"
+  },
+  {
+    "id": "04-mobx/12-storage-autorun",
+    "path": "04-mobx/12-storage-autorun",
+    "title": "Save snapshots and clean up both effects",
+    "chapter": "04",
+    "step": 12,
+    "exerciseId": "04-12-storage-autorun"
+  },
+  {
+    "id": "04-mobx/13-edit-value",
+    "path": "04-mobx/13-edit-value",
+    "title": "Edit a value directly",
+    "chapter": "04",
+    "step": 13
+  },
+  {
+    "id": "04-mobx/14-inspect-model",
+    "path": "04-mobx/14-inspect-model",
+    "title": "Inspect the model",
+    "chapter": "04",
+    "step": 14
   },
   {
     "id": "05-shippingboard/01-view-switching",
@@ -285,26 +323,76 @@
   {
     "id": "07-fetch/02-http-and-data-errors",
     "path": "07-fetch/02-http-and-data-errors",
-    "title": "Reject HTTP and invalid data",
+    "title": "Reject unsuccessful HTTP responses",
     "chapter": "07",
     "step": 2,
     "exerciseId": "07-02-http-and-data-errors"
+  },
+  {
+    "id": "07-fetch/03-validate-data",
+    "path": "07-fetch/03-validate-data",
+    "title": "Validate the JSON structure",
+    "chapter": "07",
+    "step": 3,
+    "exerciseId": "07-03-validate-data"
   },
   {
     "id": "07-fetch/03-abort-cleanup",
     "path": "07-fetch/03-abort-cleanup",
     "title": "Cancel obsolete requests",
     "chapter": "07",
-    "step": 3,
-    "exerciseId": "07-03-abort-cleanup"
+    "step": 4,
+    "exerciseId": "07-04-abort-cleanup"
   },
   {
     "id": "07-fetch/04-retry",
     "path": "07-fetch/04-retry",
     "title": "Retry the same request",
     "chapter": "07",
-    "step": 4,
-    "exerciseId": "07-04-retry"
+    "step": 5,
+    "exerciseId": "07-05-retry"
+  },
+  {
+    "id": "07-fetch/06-original-project",
+    "path": "07-fetch/06-original-project",
+    "title": "Open the original ShippingBoard project",
+    "chapter": "07",
+    "step": 6
+  },
+  {
+    "id": "07-fetch/07-response-contract",
+    "path": "07-fetch/07-response-contract",
+    "title": "Describe the response contract",
+    "chapter": "07",
+    "step": 7
+  },
+  {
+    "id": "07-fetch/08-customers-await",
+    "path": "07-fetch/08-customers-await",
+    "title": "Load customers with await",
+    "chapter": "07",
+    "step": 8
+  },
+  {
+    "id": "07-fetch/09-ramps-then",
+    "path": "07-fetch/09-ramps-then",
+    "title": "Load ramps with a promise chain",
+    "chapter": "07",
+    "step": 9
+  },
+  {
+    "id": "07-fetch/10-store-initialization",
+    "path": "07-fetch/10-store-initialization",
+    "title": "Initialize dependent models in order",
+    "chapter": "07",
+    "step": 10
+  },
+  {
+    "id": "07-fetch/11-loading-and-errors",
+    "path": "07-fetch/11-loading-and-errors",
+    "title": "Show loading and failure states",
+    "chapter": "07",
+    "step": 11
   },
   {
     "id": "08-ui5/01-provider-and-button",

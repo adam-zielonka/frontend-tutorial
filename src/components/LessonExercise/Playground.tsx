@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import {SandpackProvider, SandpackCodeEditor, SandpackPreview, SandpackConsole, useSandpack} from '@codesandbox/sandpack-react';
 import {useColorMode} from '@docusaurus/theme-common';
 import type {Lesson} from '../../lib/course';
-import {readDraft, writeDraft, draftKey, previousDraft} from './drafts';
+import {readDraft, writeDraft, previousDraft} from './drafts';
 import {editorDark, editorLight} from './editorThemes';
 import styles from './Playground.module.css';
 import {useLessonStudio} from '../LessonStudio/context';
@@ -15,37 +15,43 @@ const MIN_SPLIT = 25;
 const MAX_SPLIT = 75;
 const clampSplit = (value: number) => Math.min(MAX_SPLIT, Math.max(MIN_SPLIT, value));
 
-function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolean; reset: () => void}) {
+type DraftMemory = {keepDraft: (files: Record<string, string>) => void; resetSaveFailed: boolean; saved: () => void};
+function DraftTools({lesson, solution, reset, keepDraft, resetSaveFailed, saved}: {lesson: Lesson; solution: boolean; reset: () => void} & DraftMemory) {
   const {sandpack} = useSandpack();
-  const [status, setStatus] = useState(solution ? 'Read-only solution.' : 'Edits save in this browser.');
-  const [saveFailed, setSaveFailed] = useState(false);
+  const [status, setStatus] = useState(solution ? 'Read-only solution.' : resetSaveFailed
+    ? 'Reset in this tab. Browser storage is unavailable; download your files before leaving.' : 'Edits save in this browser.');
+  const [saveFailed, setSaveFailed] = useState(!solution && resetSaveFailed);
   const [oldDraft] = useState(() => {
     try {return previousDraft(window.localStorage, lesson);} catch {return null;}
   });
   const first = useRef(true);
   useEffect(() => {
     if (solution) return;
+    keepDraft(Object.fromEntries(Object.keys(lesson.files).map(path => [path, sandpack.files[path].code])));
     if (first.current) {first.current = false; return;}
     const timer = window.setTimeout(() => {
       const files = Object.fromEntries(Object.keys(lesson.files).map(path => [path, sandpack.files[path].code]));
-      let saved = false;
-      try {saved = writeDraft(window.localStorage, lesson, files);} catch { /* Storage access can be blocked. */ }
-      setSaveFailed(!saved);
-      setStatus(saved ? 'Saved in this browser.' : 'Browser storage unavailable. Download your files to keep your work.');
+      let persisted = false;
+      try {persisted = writeDraft(window.localStorage, lesson, files);} catch { /* Storage access can be blocked. */ }
+      if (persisted) saved();
+      setSaveFailed(!persisted);
+      setStatus(persisted ? 'Saved in this browser.' : 'Browser storage unavailable. Download your files to keep your work.');
     }, 700);
     return () => window.clearTimeout(timer);
-  }, [sandpack.files, lesson, solution]);
+  }, [sandpack.files, lesson, solution, keepDraft, saved]);
   // Save synchronously on unmount/page exit, including a rapid switch to the reference.
   const latest = useRef(sandpack.files);
   latest.current = sandpack.files;
   useEffect(() => {
     if (solution) return;
     const save = () => {
-      try {writeDraft(window.localStorage, lesson, Object.fromEntries(Object.keys(lesson.files).map(path => [path, latest.current[path].code])));} catch { /* Download remains available. */ }
+      const files = Object.fromEntries(Object.keys(lesson.files).map(path => [path, latest.current[path].code]));
+      keepDraft(files);
+      try {writeDraft(window.localStorage, lesson, files);} catch { /* Download remains available. */ }
     };
     window.addEventListener('pagehide', save);
     return () => {window.removeEventListener('pagehide', save); save();};
-  }, [lesson, solution]);
+  }, [lesson, solution, keepDraft]);
   function download() {
     const files = Object.fromEntries(Object.keys(lesson.files).map(path => [path, sandpack.files[path].code]));
     const blob = new Blob([JSON.stringify({lesson: lesson.id, files}, null, 2)], {type: 'application/json'});
@@ -114,12 +120,17 @@ function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole
       return;
     }
     const frame = requestAnimationFrame(() => {
+      // Sandpack renders read-only files without CodeMirror. Consume the request
+      // before optional highlighting so later tab changes remain under user control.
+      handledRequest.current = request.sequence;
       const cm = editor.current?.getCodemirror();
-      if (!cm) return;
+      if (!cm) {
+        (codePane.current?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]') ?? codePane.current)?.focus();
+        return;
+      }
       const selection = snippetSelection(cm.state.doc.toString(), request.snippet);
       if (selection) cm.dispatch({selection, scrollIntoView: true});
       cm.focus();
-      handledRequest.current = request.sequence;
     });
     return () => cancelAnimationFrame(frame);
   }, [request, sandpack.activeFile, sandpack]);
@@ -195,13 +206,13 @@ function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole
     <div className={styles.surface}>
       <div ref={panes} className={styles.panes}>
         {/* Hiding a pane must not unmount its editor or restart its sandbox. */}
-        <section ref={codePane} id={`${id}-code`} className={styles.pane} hidden={view === 'preview'}
+        <section ref={codePane} tabIndex={-1} id={`${id}-code`} className={styles.pane} hidden={view === 'preview'}
           style={{flexGrow: view === 'split' ? split : 1}} aria-label="Code editor">
           <div className={styles.paneHeading}>Code{solution && <span>Read-only solution</span>}</div>
           <SandpackCodeEditor ref={editor} showTabs showLineNumbers showInlineErrors wrapContent readOnly={solution}/>
         </section>
         <div className={styles.separator} role="separator" tabIndex={0} hidden={view !== 'split'}
-          aria-label="Resize code and live preview" aria-orientation="horizontal" aria-controls={`${id}-code`}
+          aria-label={`Resize code and ${lesson.chapter === '06' ? 'test results' : 'live preview'}`} aria-orientation="horizontal" aria-controls={`${id}-code`}
           aria-valuemin={MIN_SPLIT} aria-valuemax={MAX_SPLIT} aria-valuenow={Math.round(split)}
           aria-valuetext={`${Math.round(split)}% code, ${100 - Math.round(split)}% preview`}
           aria-describedby={`${id}-resize-help`} title="Drag to resize, or use Arrow Up / Down, Home and End"
@@ -209,7 +220,7 @@ function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole
           onPointerCancel={endResize} onLostPointerCapture={endResize} onKeyDown={resizeWithKeyboard}/>
         <span id={`${id}-resize-help`} className={styles.srOnly}>Use Arrow Up or Arrow Down to resize. Home minimizes code; End maximizes code.</span>
         <section id={`${id}-preview`} className={styles.pane} hidden={view === 'code'}
-          style={{flexGrow: view === 'split' ? 100 - split : 1}} aria-label="Live preview">
+          style={{flexGrow: view === 'split' ? 100 - split : 1}} aria-label={lesson.chapter === '06' ? 'Test results' : 'Live preview'}>
           <div className={styles.paneHeading}>{lesson.chapter === '06' ? 'Test results' : 'Live preview'}</div>
           {lesson.chapter === '06' ? <TestPanel lesson={lesson} solution={solution}/> : <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>}
         </section>
@@ -227,10 +238,13 @@ function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole
   </>;
 }
 
-function Editor({lesson, solution, reset, view, ...consoleControls}: {lesson: Lesson; solution: boolean; reset: () => void; view: PlaygroundView} & ConsoleControls) {
+function Editor({lesson, solution, reset, view, initialDraft, keepDraft, resetSaveFailed, saved, ...consoleControls}: {
+  lesson: Lesson; solution: boolean; reset: () => void; view: PlaygroundView; initialDraft: Record<string, string> | null;
+} & ConsoleControls & DraftMemory) {
   const {colorMode} = useColorMode();
   const [initial] = useState(() => {
     if (solution) return lesson.solution;
+    if (initialDraft) return initialDraft;
     try {return readDraft(window.localStorage, lesson) ?? lesson.files;} catch {return lesson.files;}
   });
   // Sandpack resets its file state when these prop identities change. Keep them
@@ -245,7 +259,7 @@ function Editor({lesson, solution, reset, view, ...consoleControls}: {lesson: Le
   return <SandpackProvider className={styles.playground} template="react-ts" theme={colorMode === 'dark' ? editorDark : editorLight}
     files={files} customSetup={customSetup}
     options={options}>
-    <DraftTools lesson={lesson} solution={solution} reset={reset}/>
+    <DraftTools lesson={lesson} solution={solution} reset={reset} keepDraft={keepDraft} resetSaveFailed={resetSaveFailed} saved={saved}/>
     <Workspace lesson={lesson} view={view} solution={solution} {...consoleControls}/>
   </SandpackProvider>;
 }
@@ -253,15 +267,24 @@ function Editor({lesson, solution, reset, view, ...consoleControls}: {lesson: Le
 export default function Playground({lesson, solution, view = 'split', ...consoleControls}: {lesson: Lesson; solution: boolean; view?: PlaygroundView} & ConsoleControls) {
   const [generation, setGeneration] = useState(0);
   const [resetting, setResetting] = useState(false);
+  const memory = useRef<Record<string, string> | null>(null);
+  const [resetSaveFailed, setResetSaveFailed] = useState(false);
+  const keepDraft = useCallback((files: Record<string, string>) => {memory.current = files;}, []);
+  const saved = useCallback(() => setResetSaveFailed(false), []);
   // Unmount first so the old editor flushes its edits before the draft is cleared.
   useEffect(() => {
     if (!resetting) return;
     // A v5 starter also masks a compatible legacy draft; deleting only the new
     // key would import that old work again on the next mount.
-    try {writeDraft(localStorage, lesson, lesson.files);} catch { /* Storage may be blocked. */ }
+    memory.current = lesson.files;
+    let persisted = false;
+    try {persisted = writeDraft(localStorage, lesson, lesson.files);} catch { /* Storage may be blocked. */ }
+    setResetSaveFailed(!persisted);
     setGeneration(value => value + 1);
     setResetting(false);
   }, [resetting, lesson]);
   if (resetting) return <p role="status">Restoring the starter…</p>;
-  return <Editor key={`${solution}-${generation}`} lesson={lesson} solution={solution} view={view} reset={() => setResetting(true)} {...consoleControls}/>;
+  return <Editor key={`${solution}-${generation}`} lesson={lesson} solution={solution} view={view}
+    initialDraft={memory.current} keepDraft={keepDraft} resetSaveFailed={resetSaveFailed} saved={saved}
+    reset={() => setResetting(true)} {...consoleControls}/>;
 }

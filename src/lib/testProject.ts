@@ -1,4 +1,5 @@
 import type {Lesson} from './course';
+import {testServer, resultsPage} from './testRunner.mjs';
 
 // StackBlitz currently supports embedded WebContainers only in Chromium.
 // Safari/Firefox can use the same generated project in a separate tab.
@@ -21,12 +22,14 @@ export function testProject(lesson: Lesson, files: Record<string, string>, run =
       ...source,
       'package.json': JSON.stringify({
         name: `tests-${lesson.id}`, private: true, type: 'module',
-        scripts: {start: 'vitest --ui --watch --api.host 0.0.0.0 --api.port 51204 --no-open', test: 'vitest run'},
-        dependencies: {react: '18.3.1', 'react-dom': '18.3.1', ...lesson.dependencies, '@vitest/ui': version},
+        scripts: {start: 'node test-server.mjs', test: 'vitest run'},
+        dependencies: {react: '18.3.1', 'react-dom': '18.3.1', ...lesson.dependencies},
         stackblitz: {installDependencies: true, startCommand: 'npm start'},
       }, null, 2),
-      // Updating this config reruns all tests even when the source itself has not changed.
-      'vitest.config.ts': `import {defineConfig} from 'vitest/config';\nexport default defineConfig({test: {include: ['src/**/*.test.ts'], uiBase: '/', pool: 'forks', maxWorkers: 1, fileParallelism: false}});\n// Run ${run}\n`,
+      'vitest.config.ts': `import {defineConfig} from 'vitest/config';\nexport default defineConfig({test: {include: ['src/**/*.test.ts'], pool: 'forks', maxWorkers: 1, fileParallelism: false}});\n`,
+      'test-server.mjs': testServer,
+      'results.html': resultsPage,
+      '.test-request': String(run),
     },
   };
 }

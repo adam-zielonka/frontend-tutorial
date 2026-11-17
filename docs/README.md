@@ -25,7 +25,7 @@ Read each chapter introduction before its numbered steps. It connects the small 
 
 Read the explanation, make the changes in the named editor file, and check the result. Hints and a read-only solution are available when you need them. On a phone, switch between **Lesson**, **Code**, and **Preview**; the testing chapter also has **Run tests** for actual test results.
 
-Each step starts from a prepared checkpoint, while your own draft stays in its lesson. For saving, importing, refresh behavior, and local work, see [course help](./course-help.mdx). The [course examples](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v4) contain the tagged starters and solutions.
+Each step starts from a prepared checkpoint, while your own draft stays in its lesson. For saving, importing, refresh behavior, and local work, see [course help](./course-help.mdx). The [course examples](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v5) contain the tagged starters and solutions.
 
 ## Why we teach this stack
 
