@@ -40,14 +40,23 @@ export default function App() {
         <h2 className="visually-hidden">Ramp overview</h2>
         <div className="Content">{ramps.map(ramp => {
           const assigned = visible.filter(item => item.rampId === ramp.id);
+          const allAssigned = loadings.filter(item => item.rampId === ramp.id);
+          const rampStatus = allAssigned.length === 0 ? 'Available'
+            : allAssigned.every(item => item.status === 'done') ? 'Complete'
+            : allAssigned.some(item => item.status === 'loading') ? 'Loading' : 'Waiting';
           return <article className="Ramp" key={ramp.id}>
-            <header><h3>{ramp.name} ({ramp.id})</h3></header>
-            <div className="ramp-loadings">
-              <ul>{assigned.map(item => <li className="Loading" key={item.id}>
-                <header>{item.id}</header>
-                <div className="customer"><span className="name">{item.customer}</span></div>
-                <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
-              </li>)}</ul>
+            <header>
+              <h3>{ramp.name} ({ramp.id})</h3>
+              <p className="RampStatus">Ramp status: {rampStatus}</p>
+            </header>
+            <div className="ramp-loadings" data-status={rampStatus}>
+              {assigned.length === 0 ? <p className="empty-message">{allAssigned.length === 0 ? 'No loadings assigned.' : 'No matching loadings at this ramp.'}</p> : <ul>
+                {assigned.map(item => <li className="Loading" key={item.id}>
+                  <header>{item.id}</header>
+                  <div className="customer"><span className="name">{item.customer}</span></div>
+                  <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
+                </li>)}
+              </ul>}
             </div>
           </article>;
         })}</div>
