@@ -1,6 +1,6 @@
-# Restore counters from a URL — solution
+# Synchronize the URL and dispose the reaction — start
 
-Restore counters from a URL.
+Synchronize the URL and dispose the reaction.
 
 ## Run
 
@@ -15,13 +15,13 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Read the value parameter when present, reuse hydrate and catch failures without replacing valid state.
+- Return a reaction disposer; update only the value parameter using the current URL and retain history state.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-restore-url) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-restore-url-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-restore-url-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/10-url-reaction) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-10-url-reaction-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-10-url-reaction-solution-v5)
 
 ## All checkpoints
 

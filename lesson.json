@@ -1,8 +1,8 @@
 {
-  "id": "04-09-restore-url",
-  "variant": "solution",
+  "id": "04-10-url-reaction",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Read the value parameter when present, reuse hydrate and catch failures without replacing valid state."
+    "Return a reaction disposer; update only the value parameter using the current URL and retain history state."
   ]
 }
