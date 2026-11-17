@@ -1,4 +1,4 @@
-# Filter loading status — start
+# Filter loading status — solution
 
 Derive visible rows from a controlled status selector.
 

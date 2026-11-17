@@ -5,8 +5,7 @@ import './styles.css';
 export default function App() {
   const [view, setView] = useState<View>('loadings');
   const [filter, setFilter] = useState<Filter>('all');
-  // TODO: apply the selected status, keeping all rows when filter is 'all'.
-  const visible = loadings;
+  const visible = loadings.filter(item => filter === 'all' || item.status === filter);
   return <div className="App">
     <header className="Header">
       <h1>ShippingBoard Lite</h1>
