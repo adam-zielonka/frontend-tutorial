@@ -25,6 +25,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const {colorMode, setColorMode} = useColorMode();
   const base = useBaseUrl('/');
   const [panel, setPanel] = useState<StudioPanel>('lesson');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [narrow, setNarrow] = useState(false);
   const [solution, setSolution] = useState(false);
   const [readingWidth, setReadingWidth] = useState(38);
@@ -32,7 +33,8 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const [desktopView, setDesktopView] = useState<'split' | 'code' | 'preview'>('split');
   const body = useRef<HTMLDivElement>(null);
   const resizePointer = useRef<{element: HTMLDivElement; id: number} | null>(null);
-  const menu = useRef<HTMLDialogElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+  const menuAnchor = useRef<HTMLDivElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const tabButtons = useRef<Array<HTMLButtonElement | null>>([]);
   const firstLocation = useRef(true);
@@ -56,6 +58,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   useEffect(() => {if (narrow) endResize();}, [narrow, endResize]);
 
   useEffect(() => {
+    setMenuOpen(false);
     const initial = firstLocation.current;
     firstLocation.current = false;
     // Initial hydration must not steal focus from someone already typing in Search.
@@ -94,12 +97,42 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     return () => query.removeEventListener('change', update);
   }, [lesson]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOutside = (event: Event) => {
+      if (event.target instanceof Node && !menuAnchor.current?.contains(event.target)) setMenuOpen(false);
+    };
+    // Iframe clicks do not bubble to this document; losing window focus closes the list too.
+    const closeOnBlur = () => setMenuOpen(false);
+    document.addEventListener('pointerdown', closeOutside, true);
+    document.addEventListener('focusin', closeOutside);
+    window.addEventListener('blur', closeOnBlur);
+
+    const current = menu.current?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (current && menu.current) {
+      const chapter = current.closest('details');
+      if (chapter) chapter.open = true;
+      // Scroll only the dropdown, preserving the reading pane and editor positions.
+      menu.current.scrollTop += current.getBoundingClientRect().top
+        - menu.current.getBoundingClientRect().top - menu.current.clientHeight / 2;
+    }
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside, true);
+      document.removeEventListener('focusin', closeOutside);
+      window.removeEventListener('blur', closeOnBlur);
+    };
+  }, [menuOpen]);
+
   const changeWidth = (value: number) => {
     const width = Math.max(28, Math.min(55, value));
     setReadingWidth(width);
     try {window.localStorage.setItem('frontend-tutorial:reading-width', String(width));} catch { /* Optional preference. */ }
   };
-  const closeMenu = () => menu.current?.close();
+  const closeMenu = () => setMenuOpen(false);
+  const closeMenuAndFocus = () => {
+    closeMenu();
+    menuButton.current?.focus();
+  };
   const openCode = () => {
     setPanel('code');
     setDesktopView('split');
@@ -124,10 +157,51 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   return <LessonStudioContext.Provider value={{solution, openCode}}>
     <div className={styles.studio} data-lesson-studio data-panel={panel} data-page-kind={lesson ? 'exercise' : 'introduction'}>
       <header className={styles.header}>
-        <button ref={menuButton} type="button" className={styles.menuButton}
-          aria-haspopup="dialog" onClick={() => menu.current?.showModal()}>
-          <span aria-hidden="true">☰</span> Lessons
-        </button>
+        <div ref={menuAnchor} className={styles.menuAnchor} onKeyDown={event => {
+          if (menuOpen && event.key === 'Escape') {
+            event.preventDefault();
+            event.stopPropagation();
+            closeMenuAndFocus();
+          }
+        }}>
+          <button ref={menuButton} type="button" className={styles.menuButton}
+            aria-expanded={menuOpen} aria-controls="course-menu" onClick={event => {
+              // Safari does not focus buttons on pointer clicks by default.
+              event.currentTarget.focus({preventScroll: true});
+              setMenuOpen(open => !open);
+            }}>
+            <span aria-hidden="true">☰</span> Lessons
+            <span className={styles.menuChevron} aria-hidden="true">⌄</span>
+          </button>
+          <div ref={menu} id="course-menu" className={styles.courseMenu} hidden={!menuOpen}>
+            <div className={styles.menuHeader}>
+              <h2 id="course-menu-title">Course lessons</h2>
+              <div className={styles.menuActions}>
+                <button type="button" onClick={() => setColorMode(colorMode === 'dark' ? 'light' : 'dark')}>
+                  {colorMode === 'dark' ? 'Light theme' : 'Dark theme'}
+                </button>
+                <button type="button" onClick={closeMenuAndFocus} aria-label="Close lesson menu">✕</button>
+              </div>
+            </div>
+            <nav aria-labelledby="course-menu-title">
+              <Link className={styles.searchLink} to={`${base}search/`} onClick={closeMenu}>Search course →</Link>
+              <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
+                onClick={closeMenu}>Course introduction</Link>
+              {overviewPaths.map((overview, index) => {
+                const steps = course.filter(item => Number(item.chapter) === index + 1);
+                return <details key={overview} open={index === chapterIndex}>
+                  <summary>{index + 1}. {steps[0].chapterTitle}</summary>
+                  <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
+                    onClick={closeMenu}>Chapter introduction</Link>
+                  <ol>{steps.map(item => <li key={item.id}>
+                    <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
+                      onClick={closeMenu}>{item.title}</Link>
+                  </li>)}</ol>
+                </details>;
+              })}
+            </nav>
+          </div>
+        </div>
         <div className={styles.location}>
           <Link to={lesson ? `${base}${overviewPaths[chapterIndex]}` : base}>
             {lesson ? chapterTitle : 'Frontend tutorial'}
@@ -223,37 +297,6 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
         </section>
         {dragging && <div className={styles.dragShield} />}
       </div>
-
-      <dialog ref={menu} className={styles.courseMenu} aria-labelledby="course-menu-title"
-        onClose={() => menuButton.current?.focus()}
-        onClick={event => {if (event.target === event.currentTarget) closeMenu();}}>
-        <div className={styles.menuHeader}>
-          <h2 id="course-menu-title">Course lessons</h2>
-          <div className={styles.menuActions}>
-            <button type="button" onClick={() => setColorMode(colorMode === 'dark' ? 'light' : 'dark')}>
-              {colorMode === 'dark' ? 'Light theme' : 'Dark theme'}
-            </button>
-            <button type="button" onClick={closeMenu} aria-label="Close lesson menu">✕</button>
-          </div>
-        </div>
-        <nav aria-label="Course lessons">
-          <Link className={styles.searchLink} to={`${base}search/`} onClick={closeMenu}>Search course →</Link>
-          <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
-            onClick={closeMenu}>Course introduction</Link>
-          {overviewPaths.map((overview, index) => {
-            const steps = course.filter(item => Number(item.chapter) === index + 1);
-            return <details key={overview} open={index === chapterIndex}>
-              <summary>{index + 1}. {steps[0].chapterTitle}</summary>
-              <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
-                onClick={closeMenu}>Chapter introduction</Link>
-              <ol>{steps.map(item => <li key={item.id}>
-                <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
-                  onClick={closeMenu}>{item.title}</Link>
-              </li>)}</ol>
-            </details>;
-          })}
-        </nav>
-      </dialog>
     </div>
   </LessonStudioContext.Provider>;
 }

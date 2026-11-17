@@ -65,10 +65,15 @@ The outer split controls reading width; the inner split controls editor height.
 Both support keyboard resizing. Use `min-height: 0` through the flex ancestors and
 dynamic viewport height; avoid reintroducing fixed 520px panes. Verify desktop,
 375px portrait and short landscape screens, panel toggles, solution/draft recovery,
-navigation, dialogs, and heading links when changing the layout. On introductions,
-mobile tabs are Lesson/Illustration, with no editor-only controls. Dialog surfaces
+navigation, the Lessons dropdown, and heading links when changing the layout. On introductions,
+mobile tabs are Lesson/Illustration, with no editor-only controls. Dropdown surfaces
 must be opaque in both themes: Infima's light `--ifm-background-color` is transparent,
 so use `--studio-surface` for the course menu and its sticky header.
+The lesson list opens directly below its trigger, before the workspace in keyboard
+order. Check toggle, outside click, Escape, Tab departure and lesson navigation;
+only Escape and the close button should return focus to the trigger. Keep its
+height within the space below the header and scroll the list to the current lesson
+without scrolling the reading pane or remounting the editor.
 
 ### Readability and interaction checks
 
