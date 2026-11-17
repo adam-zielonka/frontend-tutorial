@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/14-dialog-occupancy
 course_workspace: original-project
 course_chapter: "05"
 course_step: 13
+course_illustration: "/course/shippingboard/13-ramp-status.svg"
+course_illustration_alt: "Evaluate status in the original priority order"
+course_illustration_description: "Empty first: Then all loaded \u2192 Any not started: Before in progress \u2192 ramp.status: Class on <main>. Zero-picked overlaps with isInProgress. E stays red until its waiting loading moves."
 ---
 
 An assigned card list does not yet describe whether the ramp is ready, finished or waiting. Derive that business status from all assignments and connect it to the existing body colour rules.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![Evaluate status in the original priority order](./diagrams/13-ramp-status.svg)
 
 Zero-picked overlaps with isInProgress. E stays red until its waiting loading moves.
 

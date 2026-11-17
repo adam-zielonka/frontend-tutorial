@@ -2,9 +2,12 @@ import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import {SandpackProvider, SandpackCodeEditor, SandpackPreview, SandpackConsole, useSandpack} from '@codesandbox/sandpack-react';
 import {useColorMode} from '@docusaurus/theme-common';
 import type {Lesson} from '../../lib/course';
-import {readDraft, writeDraft, draftKey} from './drafts';
+import {readDraft, writeDraft, draftKey, previousDraft} from './drafts';
 import {editorDark, editorLight} from './editorThemes';
 import styles from './Playground.module.css';
+import {useLessonStudio} from '../LessonStudio/context';
+import {snippetSelection} from '../../lib/lessonCode';
+import TestPanel from './TestPanel';
 
 type PlaygroundView = 'split' | 'code' | 'preview';
 type ConsoleControls = {consoleOpen: boolean; consoleId: string; closeConsole: () => void};
@@ -16,6 +19,9 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
   const {sandpack} = useSandpack();
   const [status, setStatus] = useState(solution ? 'Read-only solution.' : 'Edits save in this browser.');
   const [saveFailed, setSaveFailed] = useState(false);
+  const [oldDraft] = useState(() => {
+    try {return previousDraft(window.localStorage, lesson);} catch {return null;}
+  });
   const first = useRef(true);
   useEffect(() => {
     if (solution) return;
@@ -54,6 +60,13 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
     <div className={styles.toolRow}>
       <ProjectFiles lesson={lesson}/>
       <div className={styles.actions}>
+        {!solution && oldDraft && <button type="button" className={styles.toolButton} onClick={() => {
+          const url = URL.createObjectURL(new Blob([oldDraft], {type: 'application/json'}));
+          const link = document.createElement('a');
+          link.href = url; link.download = `${lesson.id}-previous-edition.json`; link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          setStatus('Downloaded your previous-edition draft. Its starter differs from this lesson.');
+        }}>Previous draft</button>}
         <button type="button" className={styles.toolButton} onClick={download}>Download {solution ? 'solution' : 'my files'}</button>
         {!solution && <button type="button" className={styles.toolButton} aria-label="Reset exercise" onClick={() => {
           if (window.confirm('Reset this exercise? Your saved edits for this lesson will be replaced by the starter.')) reset();
@@ -80,7 +93,7 @@ function ProjectFiles({lesson}: {lesson: Lesson}) {
   }}/> Support files<span className={styles.srOnly}> (read-only)</span></label>;
 }
 
-function Workspace({view, solution, consoleOpen, consoleId, closeConsole}: {view: PlaygroundView; solution: boolean} & ConsoleControls) {
+function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole}: {lesson: Lesson; view: PlaygroundView; solution: boolean} & ConsoleControls) {
   const id = useId();
   const panes = useRef<HTMLDivElement>(null);
   const codePane = useRef<HTMLElement>(null);
@@ -89,6 +102,27 @@ function Workspace({view, solution, consoleOpen, consoleId, closeConsole}: {view
   const [dragging, setDragging] = useState(false);
   const drag = useRef<{handle: HTMLDivElement; pointerId: number; startY: number; startSplit: number; height: number} | null>(null);
   const consoleClose = useRef<HTMLButtonElement>(null);
+  const {sandpack} = useSandpack();
+  const studio = useLessonStudio();
+  const handledRequest = useRef(0);
+  const request = studio?.fileRequest;
+  useEffect(() => {
+    if (!request || !sandpack.files[request.file] || handledRequest.current === request.sequence) return;
+    if (sandpack.activeFile !== request.file) {
+      sandpack.openFile(request.file);
+      sandpack.setActiveFile(request.file);
+      return;
+    }
+    const frame = requestAnimationFrame(() => {
+      const cm = editor.current?.getCodemirror();
+      if (!cm) return;
+      const selection = snippetSelection(cm.state.doc.toString(), request.snippet);
+      if (selection) cm.dispatch({selection, scrollIntoView: true});
+      cm.focus();
+      handledRequest.current = request.sequence;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [request, sandpack.activeFile, sandpack]);
 
   // A mobile Lesson tab may hide the entire workspace with display:none.
   // Observe the actual pane, rather than only window resizes, and remeasure
@@ -176,8 +210,8 @@ function Workspace({view, solution, consoleOpen, consoleId, closeConsole}: {view
         <span id={`${id}-resize-help`} className={styles.srOnly}>Use Arrow Up or Arrow Down to resize. Home minimizes code; End maximizes code.</span>
         <section id={`${id}-preview`} className={styles.pane} hidden={view === 'code'}
           style={{flexGrow: view === 'split' ? 100 - split : 1}} aria-label="Live preview">
-          <div className={styles.paneHeading}>Live preview</div>
-          <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>
+          <div className={styles.paneHeading}>{lesson.chapter === '06' ? 'Test results' : 'Live preview'}</div>
+          {lesson.chapter === '06' ? <TestPanel lesson={lesson} solution={solution}/> : <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>}
         </section>
       </div>
       <section id={consoleId} className={styles.consoleDrawer} hidden={!consoleOpen} aria-label="Console and runtime errors"
@@ -212,7 +246,7 @@ function Editor({lesson, solution, reset, view, ...consoleControls}: {lesson: Le
     files={files} customSetup={customSetup}
     options={options}>
     <DraftTools lesson={lesson} solution={solution} reset={reset}/>
-    <Workspace view={view} solution={solution} {...consoleControls}/>
+    <Workspace lesson={lesson} view={view} solution={solution} {...consoleControls}/>
   </SandpackProvider>;
 }
 
@@ -222,7 +256,9 @@ export default function Playground({lesson, solution, view = 'split', ...console
   // Unmount first so the old editor flushes its edits before the draft is cleared.
   useEffect(() => {
     if (!resetting) return;
-    try {localStorage.removeItem(draftKey(lesson));} catch { /* In-memory reset still works. */ }
+    // A v5 starter also masks a compatible legacy draft; deleting only the new
+    // key would import that old work again on the next mount.
+    try {writeDraft(localStorage, lesson, lesson.files);} catch { /* Storage may be blocked. */ }
     setGeneration(value => value + 1);
     setResetting(false);
   }, [resetting, lesson]);

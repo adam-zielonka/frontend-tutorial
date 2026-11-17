@@ -1,9 +1,10 @@
 import React, {useEffect, useId, useState, type ReactNode} from 'react';
 import styles from './styles.module.css';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 export type CourseIllustrationTopic = 'intro' | '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
 
-type Props = {topic: CourseIllustrationTopic};
+type Props = {topic: CourseIllustrationTopic; illustration?: {src: string; title: string; alt: string; description: string}};
 type DrawingProps = {id: string};
 
 const chapters: Record<CourseIllustrationTopic, {
@@ -60,7 +61,7 @@ const chapters: Record<CourseIllustrationTopic, {
     title: 'Make the expectation executable.',
     summary: 'Arrange a value. Act on it. Assert the result.',
     description: 'Arrange a counter at eight, act by changing it by five, and assert that the value is ten. A boundary rail shows the attempted value of thirteen being clamped to the upper limit of ten; the lower limit is zero.',
-    caption: 'Run assertions with Vitest in a terminal. The lesson preview is a separate manual harness.',
+    caption: 'Edit a test, run it with Vitest, and compare the actual result with your expectation.',
   },
   '07': {
     label: '07 / Load data with Fetch',
@@ -455,11 +456,12 @@ const drawings: Record<CourseIllustrationTopic, React.ComponentType<DrawingProps
 };
 
 /** A chapter's visual companion; the outer region scrolls inside a flex pane. */
-export default function CourseIllustration({topic}: Props) {
+export default function CourseIllustration({topic, illustration}: Props) {
   const [enlarged, setEnlarged] = useState(false);
   const id = `course-illustration-${useId().replace(/:/g, '')}`;
   const chapter = chapters[topic];
   const Drawing = drawings[topic];
+  const illustrationUrl = useBaseUrl(illustration?.src ?? '/');
 
   useEffect(() => {
     const mobile = window.matchMedia('(max-width: 999px)');
@@ -476,8 +478,8 @@ export default function CourseIllustration({topic}: Props) {
     <figure className={styles.sheet}>
       <header className={styles.heading}>
         <p className={styles.eyebrow}><span className={styles.chapterMark} aria-hidden="true" />{chapter.label}</p>
-        <h2>{chapter.title}</h2>
-        <p className={styles.summary}>{chapter.summary}</p>
+        <h2>{illustration?.title ?? chapter.title}</h2>
+        <p className={styles.summary}>{illustration ? 'Follow the change in the original application.' : chapter.summary}</p>
       </header>
       <div className={styles.diagramTools}>
         <button type="button" aria-pressed={enlarged} aria-controls={`${id}-drawing`}
@@ -487,7 +489,7 @@ export default function CourseIllustration({topic}: Props) {
       <div id={`${id}-drawing`} className={`${styles.stage} ${enlarged ? styles.enlarged : ''}`}
         tabIndex={enlarged ? 0 : undefined} role={enlarged ? 'region' : undefined}
         aria-label={enlarged ? 'Enlarged diagram; scroll to explore' : undefined}>
-        <svg className={styles.drawing} viewBox="0 0 600 450" role="img"
+        {illustration ? <img className={styles.drawing} src={illustrationUrl} alt={illustration.alt} /> : <svg className={styles.drawing} viewBox="0 0 600 450" role="img"
           aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`} focusable="false">
           <title id={`${id}-title`}>{chapter.title}</title>
           <desc id={`${id}-description`}>{chapter.description}</desc>
@@ -500,11 +502,11 @@ export default function CourseIllustration({topic}: Props) {
             </marker>
           </defs>
           <Drawing id={id} />
-        </svg>
+        </svg>}
       </div>
       <figcaption className={styles.caption}>
         <span className={styles.captionLine} aria-hidden="true" />
-        <p>{chapter.caption}</p>
+        <p>{illustration?.description ?? chapter.caption}</p>
       </figcaption>
     </figure>
   </section>;

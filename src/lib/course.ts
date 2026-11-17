@@ -1,4 +1,5 @@
 import lessons from '../../course/lessons.json';
+import pages from '../../course/navigation.json';
 
 export type Lesson = {
   id: string;
@@ -16,6 +17,7 @@ export type Lesson = {
   dependencies: Record<string, string>;
 };
 export const course = lessons as Lesson[];
+export const coursePages = pages;
 export const repository = 'https://github.com/adam-zielonka/frontend-tutorial';
 export const release = 'v4';
 export function lessonTag(id: string, solution = false) {

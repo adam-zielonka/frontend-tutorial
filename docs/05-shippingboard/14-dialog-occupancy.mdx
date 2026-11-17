@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/15-complete-board
 course_workspace: original-project
 course_chapter: "05"
 course_step: 14
+course_illustration: "/course/shippingboard/14-dialog-occupancy.svg"
+course_illustration_alt: "Occupancy guides assignment choices"
+course_illustration_description: "Ramp.loadings: quantity = length \u2192 Details buttons: Empty / current / other \u2192 Button intent: Neutral / primary / danger. Active marks the current assignment. \u2205 clears it; occupied choices remain selectable."
 ---
 
 The dashboard shows progress; the assignment dialog needs different information: which ramps are occupied, and by how many loadings. Derive those counts from the same relationship instead of maintaining another counter.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![Occupancy guides assignment choices](./diagrams/14-dialog-occupancy.svg)
 
 Active marks the current assignment. ∅ clears it; occupied choices remain selectable.
 

@@ -1,4 +1,6 @@
 import {readdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {buildNavigation} from './course-navigation.mjs';
 const directory = new URL('../course/chapters/', import.meta.url);
 const chapters = readdirSync(directory).filter(file => file.endsWith('.json')).sort();
 if (chapters.length !== 8) throw Error('Expected all eight chapter files before assembling');
@@ -10,4 +12,11 @@ if (process.argv.includes('--check')) {
 } else {
   writeFileSync(output, serialized);
   console.log(`Assembled ${lessons.length} step lessons in ${chapters.length} chapters`);
+}
+const navigation = JSON.stringify(buildNavigation(lessons, fileURLToPath(new URL('../docs/', import.meta.url))), null, 2) + '\n';
+const navigationOutput = new URL('../course/navigation.json', import.meta.url);
+if (process.argv.includes('--check')) {
+  if (readFileSync(navigationOutput, 'utf8') !== navigation) throw Error('Run pnpm course:assemble to update navigation');
+} else {
+  writeFileSync(navigationOutput, navigation);
 }

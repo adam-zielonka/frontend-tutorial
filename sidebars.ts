@@ -1,5 +1,6 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 import lessons from './course/lessons.json';
+import pages from './course/navigation.json';
 
 const overviews = [
   'ch-01-00-explain-the-tool-set', 'ch-02-00-tools-around-development',
@@ -15,8 +16,8 @@ const sidebars: SidebarsConfig = {
       type: 'category' as const,
       label: `${i + 1}. ${steps[0]?.chapterTitle ?? chapter}`,
       link: {type: 'doc' as const, id: overview},
-      items: steps.map(lesson => lesson.doc),
+      items: pages.filter(page => page.chapter === chapter).map(page => page.id),
     };
-  })],
+  }), 'course-help'],
 };
 export default sidebars;

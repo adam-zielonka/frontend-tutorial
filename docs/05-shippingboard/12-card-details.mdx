@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/13-ramp-status
 course_workspace: original-project
 course_chapter: "05"
 course_step: 12
+course_illustration: "/course/shippingboard/12-card-details.svg"
+course_illustration_alt: "One selection, one existing dialog"
+course_illustration_description: "LoadingBox click: Pass loading model \u2192 UI.selectedLoading: Existing shared state \u2192 Details.tsx: Change assignment. Table rows call the same action. Reassigning moves the same card between ramps."
 ---
 
 The table already opens a working details dialog. Let loading cards call that same store action so an assignment change updates both presentations of the same model.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![One selection, one existing dialog](./diagrams/12-card-details.svg)
 
 Table rows call the same action. Reassigning moves the same card between ramps.
 

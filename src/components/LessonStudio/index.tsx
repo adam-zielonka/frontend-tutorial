@@ -3,7 +3,7 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
-import {course, type Lesson} from '../../lib/course';
+import {course, coursePages, type Lesson} from '../../lib/course';
 import {CodeWorkspace} from '../LessonExercise';
 import CourseIllustration from '../CourseIllustration';
 import {LessonStudioContext, type StudioPanel} from './context';
@@ -19,13 +19,14 @@ const overviewPaths = [
 type IllustrationTopic = React.ComponentProps<typeof CourseIllustration>['topic'];
 
 export default function LessonStudio({lesson, children}: {lesson?: Lesson; children: ReactNode}) {
-  const {metadata, toc} = useDoc();
+  const {metadata, toc, frontMatter} = useDoc();
   const location = useLocation();
   const base = useBaseUrl('/');
   const [panel, setPanel] = useState<StudioPanel>('lesson');
   const [menuOpen, setMenuOpen] = useState(false);
   const [narrow, setNarrow] = useState(false);
   const [solution, setSolution] = useState(false);
+  const [fileRequest, setFileRequest] = useState<{file: string; snippet?: string; sequence: number} | null>(null);
   const [readingWidth, setReadingWidth] = useState(38);
   const [dragging, setDragging] = useState(false);
   const [desktopView, setDesktopView] = useState<'split' | 'code' | 'preview'>('split');
@@ -36,12 +37,20 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const menuButton = useRef<HTMLButtonElement>(null);
   const tabButtons = useRef<Array<HTMLButtonElement | null>>([]);
   const firstLocation = useRef(true);
-  const chapterIndex = lesson ? Number(lesson.chapter) - 1 : overviewPaths.indexOf(metadata.id);
+  const currentPage = coursePages.find(page => page.id === metadata.id);
+  const chapterIndex = currentPage ? Number(currentPage.chapter) - 1 : overviewPaths.indexOf(metadata.id);
   const chapterSteps = course.filter(item => Number(item.chapter) === chapterIndex + 1);
+  const chapterPages = coursePages.filter(item => Number(item.chapter) === chapterIndex + 1);
   const chapterTitle = chapterSteps[0]?.chapterTitle;
-  const step = chapterSteps.findIndex(item => item.id === lesson?.id) + 1;
+  const step = currentPage?.step;
   const topic: IllustrationTopic = chapterIndex < 0 ? 'intro' : String(chapterIndex + 1).padStart(2, '0') as IllustrationTopic;
   const panels: StudioPanel[] = lesson ? ['lesson', 'code', 'preview'] : ['lesson', 'illustration'];
+  const illustration = typeof frontMatter.course_illustration === 'string' ? {
+    src: frontMatter.course_illustration,
+    title: currentPage?.title ?? metadata.title,
+    alt: String(frontMatter.course_illustration_alt ?? metadata.title),
+    description: String(frontMatter.course_illustration_description ?? ''),
+  } : undefined;
   const endResize = useCallback(() => {
     const pointer = resizePointer.current;
     resizePointer.current = null;
@@ -146,7 +155,12 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     });
   }
 
-  return <LessonStudioContext.Provider value={{solution}}>
+  return <LessonStudioContext.Provider value={{solution, files: Object.keys(lesson?.files ?? {}), fileRequest,
+    openFile: (file, snippet) => {
+      setPanel('code');
+      if (desktopView === 'preview') setDesktopView('split');
+      setFileRequest(previous => ({file, snippet, sequence: (previous?.sequence ?? 0) + 1}));
+    }}}>
     <div className={styles.studio} data-lesson-studio data-panel={panel} data-page-kind={lesson ? 'exercise' : 'introduction'}>
       <header className={styles.header}>
         <div ref={menuAnchor} className={styles.menuAnchor} onKeyDown={event => {
@@ -169,27 +183,29 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
                 onClick={closeMenu}>Course introduction</Link>
               {overviewPaths.map((overview, index) => {
-                const steps = course.filter(item => Number(item.chapter) === index + 1);
+                const steps = coursePages.filter(item => Number(item.chapter) === index + 1);
                 return <details key={overview} open={index === chapterIndex}>
-                  <summary>{index + 1}. {steps[0].chapterTitle}</summary>
+                  <summary>{index + 1}. {course.find(item => Number(item.chapter) === index + 1)?.chapterTitle}</summary>
                   <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
                     onClick={closeMenu}>Chapter introduction</Link>
                   <ol role="list">{steps.map(item => <li key={item.id}>
-                    <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
-                      onClick={closeMenu}>{Number(item.chapter)}.{Number(item.id.split('-')[1])}. {item.title}</Link>
+                    <Link to={`${base}${item.path}`} aria-current={item.id === metadata.id ? 'page' : undefined}
+                      onClick={closeMenu}>{Number(item.chapter)}.{item.step}. {item.title}</Link>
                   </li>)}</ol>
                 </details>;
               })}
+              <Link className={styles.courseHome} to={`${base}course-help`} onClick={closeMenu}
+                aria-current={metadata.id === 'course-help' ? 'page' : undefined}>Course help</Link>
             </nav>
           </div>
         </div>
         <div className={styles.location}>
-          <Link to={lesson ? `${base}${overviewPaths[chapterIndex]}` : base}>
-            {lesson ? chapterTitle : 'Frontend tutorial'}
+          <Link to={currentPage ? `${base}${overviewPaths[chapterIndex]}` : base}>
+            {currentPage ? chapterTitle : 'Frontend tutorial'}
           </Link>
-          <span className={styles.lessonName}>{lesson?.title ?? chapterTitle ?? 'Course introduction'}</span>
+          <span className={styles.lessonName}>{currentPage?.title ?? chapterTitle ?? metadata.title}</span>
         </div>
-        <span className={styles.step}>{lesson ? `Step ${step} / ${chapterSteps.length}` : 'Introduction'}</span>
+        <span className={styles.step}>{currentPage ? `Step ${step} / ${chapterPages.length}` : 'Introduction'}</span>
         <nav className={styles.arrows} aria-label="Adjacent lessons">
           {metadata.previous && <Link to={metadata.previous.permalink} title={metadata.previous.title}
             aria-label={`Previous: ${metadata.previous.title}`}>←</Link>}
@@ -214,7 +230,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               tabButtons.current[target]?.focus();
             }
           }}>
-          {name === 'lesson' ? 'Lesson' : name === 'code' ? 'Code' : name === 'preview' ? 'Preview' : 'Illustration'}
+          {name === 'lesson' ? 'Lesson' : name === 'code' ? 'Code' : name === 'preview' ? lesson?.chapter === '06' ? 'Tests' : 'Preview' : 'Illustration'}
         </button>)}
       </div>
 
@@ -227,7 +243,6 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
             {toc.length > 0 && <label className={styles.contents}>
               <select aria-label="Jump to lesson section" value="" onChange={event => jumpToHeading(event.target.value)}>
                 <option value="" disabled>On this page</option>
-                {lesson && <option value="practice">Practice</option>}
                 {toc.filter(heading => heading.level <= 3).map(heading =>
                   <option key={heading.id} value={heading.id}>{heading.value.replace(/<[^>]+>/g, '')}</option>)}
               </select>
@@ -272,9 +287,9 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
             viewControls={<div className={styles.viewButtons} role="group" aria-label="Workspace view">
               {(['split', 'code', 'preview'] as const).map(view => <button type="button" key={view}
                 aria-pressed={desktopView === view} onClick={() => setDesktopView(view)}>
-                {view === 'split' ? 'Code + preview' : view === 'code' ? 'Code' : 'Preview'}
+                {view === 'code' ? 'Code' : view === 'split' ? lesson.chapter === '06' ? 'Code + tests' : 'Code + preview' : lesson.chapter === '06' ? 'Tests' : 'Preview'}
               </button>)}
-            </div>} /> : <CourseIllustration topic={topic} />}
+            </div>} /> : <CourseIllustration topic={topic} illustration={illustration} />}
         </section>
         {dragging && <div className={styles.dragShield} />}
       </div>

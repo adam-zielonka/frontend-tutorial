@@ -5,7 +5,9 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {lessons, validateLessons, projectFiles, writeProject, tagFor} from './course-project.mjs';
-import {readDraft, writeDraft, draftKey} from '../src/components/LessonExercise/drafts.ts';
+import {readDraft, writeDraft, draftKey, previousDraft} from '../src/components/LessonExercise/drafts.ts';
+import {lessonFile, snippetSelection} from '../src/lib/lessonCode.ts';
+import {testProject, supportsTestEmbed} from '../src/lib/testProject.ts';
 const lesson = () => structuredClone(lessons[0]);
 const storage = () => {const map = new Map(); return {getItem: k => map.get(k) ?? null, setItem: (k,v) => map.set(k,v)};};
 
@@ -42,6 +44,44 @@ test('checkpoint packaging updates preserve existing v3 student drafts', () => {
   const files = {...l.files, '/App.tsx': 'saved before checkpoint packaging update'};
   s.setItem(`frontend-tutorial:v3:${l.id}`, JSON.stringify({baseline: JSON.stringify(l.files), files}));
   assert.deepEqual(readDraft(s, l), files);
+});
+test('a revised lesson keeps incompatible old drafts available without importing them', () => {
+  const s = storage(); const l = lesson();
+  const old = JSON.stringify({baseline: 'old starter', files: {'/App.tsx': 'old work'}});
+  s.setItem(`frontend-tutorial:v3:${l.id}`, old);
+  assert.equal(readDraft(s, l), null);
+  assert.equal(JSON.parse(previousDraft(s, l)).files['/App.tsx'], 'old work');
+  writeDraft(s, l, l.files);
+  assert.equal(s.getItem(`frontend-tutorial:v3:${l.id}`), old);
+  assert.deepEqual(readDraft(s, l), l.files);
+});
+
+test('code labels resolve only real lesson files and locate context without editing code', () => {
+  const files = ['/App.tsx', '/Store.ts'];
+  assert.equal(lessonFile('src/Store.ts — add members', files), '/Store.ts');
+  assert.equal(lessonFile('/App.tsx', files), '/App.tsx');
+  assert.equal(lessonFile('pnpm install', files), undefined);
+  const code = 'function Counter() {\n  return counter.value;\n}';
+  const selection = snippetSelection(code, 'const Counter = observer(function Counter() {');
+  assert.equal(code.slice(selection.anchor, selection.head), 'Counter');
+  assert.equal(snippetSelection(code, 'totally unrelated example'), undefined);
+});
+
+test('Vitest receives the current files and matching UI version, not the reference solution', () => {
+  const l = lessons.find(item => item.chapter === '06');
+  const files = {...l.files, '/Store.test.ts': 'expect(1).toBe(2);', '/outside': 'ignore me'};
+  const project = testProject(l, files, 1);
+  const pkg = JSON.parse(project.files['package.json']);
+  assert.equal(project.template, 'node');
+  assert.equal(project.files['src/Store.test.ts'], 'expect(1).toBe(2);');
+  assert.equal(project.files['src/outside'], undefined);
+  assert.equal(pkg.dependencies.vitest, l.dependencies.vitest);
+  assert.equal(pkg.dependencies['@vitest/ui'], l.dependencies.vitest);
+  assert.match(pkg.scripts.start, /^vitest --ui/);
+  assert.notEqual(project.files['vitest.config.ts'], testProject(l, files, 2).files['vitest.config.ts']);
+  assert.equal(supportsTestEmbed('Mozilla/5.0 Chrome/130.0.0.0 Safari/537.36'), true);
+  assert.equal(supportsTestEmbed('Mozilla/5.0 (iPhone) CriOS/130.0 Mobile Safari/604.1'), false);
+  assert.equal(supportsTestEmbed('Mozilla/5.0 Firefox/132.0'), false);
 });
 test('corrupt, incomplete, stale, or inaccessible storage falls back safely', () => {
   const s = storage(); const l = lesson();

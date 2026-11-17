@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/11-ramp-assignments
 course_workspace: original-project
 course_chapter: "05"
 course_step: 10
+course_illustration: "/course/shippingboard/10-loading-card.svg"
+course_illustration_alt: "Translate model getters into one card"
+course_illustration_description: "Loading model: Dates / customer \u2192 LoadingBox.tsx: picked of pallets \u2192 ProgressBar: Ratio from 0 to 1. Temporary preview: the same 0007701 card in every ramp; assignments come next."
 ---
 
 Each ramp needs a readable loading summary. Build one card from the original Loading model before connecting ramp assignments; its dates, customer and numeric pallet progress are richer than the mini fixture’s category stripe.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![Translate model getters into one card](./diagrams/10-loading-card.svg)
 
 Temporary preview: the same 0007701 card in every ramp; assignments come next.
 

@@ -11,3 +11,11 @@ Each lesson opens a prepared checkpoint. The next lesson starts from its prepare
 **Download my files** saves a JSON file containing your edited lesson files. Choose **Work locally** for the matching clone, installation, and import commands. Importing replaces that local lesson project's exercise files; use a separate clone and the matching lesson download. A tagged online editor opens its checkpoint, not your browser edits. Virtual `/App.tsx` and similar source paths correspond to files under `src/` in the local project; public assets live under `public/`.
 
 A preview refresh restarts the running example and retains source edits. It can recreate models whose old instances survived a hot update, but it does not transfer your edits to another lesson. If the embedded preview cannot connect, use **Work locally** or the online editor. Do not enter private data in the examples.
+
+## Running tests
+
+In chapter 6, **Run tests** sends the current editor files to a temporary StackBlitz workspace running the real, pinned Vitest version. The first run installs dependencies; later runs update those files and rerun the tests. The results belong to the last run: after editing, choose **Run tests** again. The workspace is not saved to a StackBlitz account unless you choose to fork it there.
+
+Embedded WebContainers are supported in Chromium browsers. On Safari (including iPhone) and Firefox, **Run tests** opens the same files in a separate tab. If an embedded workspace cannot connect, **Open these tests in a new tab** keeps your edits; **Work locally** remains available for running `pnpm test:run` after importing them. See [StackBlitz browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support) and [Vitest UI](https://v3.vitest.dev/guide/ui).
+
+The test workspace is a snapshot. Changes made inside its separate UI do not replace your course editor draft. Make lesson changes in **Your code**, then run again. **Solution** uses its own read-only source snapshot.

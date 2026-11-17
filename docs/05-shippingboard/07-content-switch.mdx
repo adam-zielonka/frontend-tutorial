@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/08-view-url
 course_workspace: original-project
 course_chapter: "05"
 course_step: 7
+course_illustration: "/course/shippingboard/07-content-switch.svg"
+course_illustration_alt: "Keep the table as one branch of Content"
+course_illustration_description: "UI.view: Selected view \u2192 Content.tsx: isLoadingsOpen? \u2192 One branch: Table / placeholder. App still renders Header + Content + Details. The shared dialog stays mounted."
 ---
 
 The header now changes the view choice, but the content still always shows the table. Make the existing Content component read that same choice before adding any ramp UI.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![Keep the table as one branch of Content](./diagrams/07-content-switch.svg)
 
 App still renders Header + Content + Details. The shared dialog stays mounted.
 

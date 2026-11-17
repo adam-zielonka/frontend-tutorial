@@ -4,6 +4,7 @@ import {course, type Lesson} from '../../lib/course';
 import {useLessonStudio} from '../LessonStudio/context';
 import styles from './styles.module.css';
 import RunActions from './RunActions';
+import Link from '@docusaurus/Link';
 
 const Playground = lazy(() => import('./Playground'));
 class EditorBoundary extends React.Component<{children: React.ReactNode}, {failed: boolean}> {
@@ -59,6 +60,7 @@ export function CodeWorkspace({lesson, solution, onSolutionChange, view = 'split
           <p>If the preview cannot connect, choose <strong>Work locally</strong> or <strong>Online editor</strong> below.</p>
           <p>Online editor opens the selected starter or solution in StackBlitz, without your browser edits. Support files are read-only.</p>
           <p>Downloads contain the lesson’s files as JSON. <strong>Work locally</strong> explains how to import them.</p>
+          <p><Link to="/course-help">Course and workspace help</Link></p>
         </div>
       </details>
     </div>
@@ -72,13 +74,7 @@ export default function LessonExercise({id}: {id: string}) {
   if (!lesson) throw new Error(`Unknown lesson: ${id}`);
   const solution = studio?.solution ?? standaloneSolution;
 
-  return <section className={styles.exercise} data-lesson-exercise aria-label="Practice instructions">
-    <h2 id="practice">Now try it yourself</h2>
-    <p>{lesson.objective}</p>
-    <p className={styles.focus}>Edit {lesson.focusFiles.map((file, index) => <React.Fragment key={file}>
-      {index > 0 && ', '}<code>{file.slice(1)}</code>
-    </React.Fragment>)}. Make one change at a time and check the preview.</p>
-    <ol>{lesson.tasks.map(task => <li key={task}>{task}</li>)}</ol>
+  return <section className={styles.exercise} data-lesson-exercise aria-label="Lesson hints">
     <details className={styles.hints}>
       <summary>Need a hint?</summary>
       <ul>{lesson.hints.map(hint => <li key={hint}>{hint}</li>)}</ul>

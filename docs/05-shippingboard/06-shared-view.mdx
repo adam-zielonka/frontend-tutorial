@@ -8,13 +8,14 @@ pagination_next: 05-shippingboard/07-content-switch
 course_workspace: original-project
 course_chapter: "05"
 course_step: 6
+course_illustration: "/course/shippingboard/06-shared-view.svg"
+course_illustration_alt: "One observable choice drives both view buttons"
+course_illustration_description: "Header.tsx: Dashboard / Loadings \u2192 UI.view: dashboard | loadings \u2192 observer: Active button. makeAutoObservable: field \u2192 observable; getters \u2192 computed; functions \u2192 actions."
 ---
 
 The original header and content must agree on one selected view. Put that choice in the existing MobX UI store so both observing components can read it, just as the mini board read one React state value.
 
 Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-![One observable choice drives both view buttons](./diagrams/06-shared-view.svg)
 
 makeAutoObservable: field → observable; getters → computed; functions → actions.
 
