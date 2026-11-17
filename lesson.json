@@ -1,10 +1,8 @@
 {
-  "id": "04-07-counter-removal",
-  "variant": "solution",
+  "id": "04-08-url-state",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Implement removeCounter with filter, excluding the supplied ID and retaining the other instances.",
-    "Fill all four slots, assign different values, and remove a middle counter. Check the remaining IDs and values.",
-    "Verify capacity and total update, add a new counter, then remove all counters and recover using Add counter."
+    "Serialize counter values with semicolons and validate a complete payload before replacing the collection."
   ]
 }

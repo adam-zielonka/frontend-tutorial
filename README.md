@@ -1,6 +1,6 @@
-# Remove a counter safely — solution
+# Serialize and validate counter values — start
 
-Remove by stable identity while derived state updates automatically.
+Serialize and validate counter values.
 
 ## Run
 
@@ -15,15 +15,13 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Implement removeCounter with filter, excluding the supplied ID and retaining the other instances.
-- Fill all four slots, assign different values, and remove a middle counter. Check the remaining IDs and values.
-- Verify capacity and total update, add a new counter, then remove all counters and recover using Add counter.
+- Serialize counter values with semicolons and validate a complete payload before replacing the collection.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/07-counter-removal) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-07-counter-removal-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/08-url-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-solution-v5)
 
 ## All checkpoints
 
