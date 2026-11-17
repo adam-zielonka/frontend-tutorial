@@ -123,11 +123,10 @@
   min-width: 0;
   padding-block: 8px;
 }
-.diagramTools {display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; color: var(--muted-ink); font-size: .8rem;}
+.diagramTools {display: none; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem; color: var(--muted-ink); font-size: .8rem; text-align: center;}
+.diagramTools > span {flex-basis: 100%;}
 .diagramTools button {min-height: 36px; padding: .35rem .65rem; border: 1px solid var(--purple); border-radius: 5px; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer;}
 .diagramTools button:focus-visible, .enlarged:focus-visible {outline: 2px solid var(--purple); outline-offset: 2px;}
-.enlarged {overflow-x: auto; justify-content: flex-start;}
-.enlarged .drawing {flex-shrink: 0; min-width: 680px;}
 
 .drawing {
   display: block;
@@ -244,6 +243,12 @@
   .caption {gap: 9px;}
   .captionLine {flex-basis: 18px;}
   .caption p {font-size: .78rem;}
+}
+
+@media screen and (max-width: 999px) {
+  .diagramTools {display: flex;}
+  .enlarged {overflow-x: auto; justify-content: flex-start;}
+  .enlarged .drawing {flex-shrink: 0; min-width: 680px;}
 }
 
 @media print {

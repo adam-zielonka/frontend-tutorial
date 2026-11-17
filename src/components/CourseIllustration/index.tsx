@@ -1,4 +1,4 @@
-import React, {useId, useState, type ReactNode} from 'react';
+import React, {useEffect, useId, useState, type ReactNode} from 'react';
 import styles from './styles.module.css';
 
 export type CourseIllustrationTopic = 'intro' | '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
@@ -460,6 +460,16 @@ export default function CourseIllustration({topic}: Props) {
   const id = `course-illustration-${useId().replace(/:/g, '')}`;
   const chapter = chapters[topic];
   const Drawing = drawings[topic];
+
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 999px)');
+    const fitOnDesktop = () => {
+      if (!mobile.matches) setEnlarged(false);
+    };
+    fitOnDesktop();
+    mobile.addEventListener('change', fitOnDesktop);
+    return () => mobile.removeEventListener('change', fitOnDesktop);
+  }, []);
 
   return <section className={styles.illustration} data-course-illustration={topic}
     aria-label={`${chapter.label} illustration`} tabIndex={0}>
