@@ -36,4 +36,8 @@ export class Store {
     if (!this.canAddMoreCounters) return;
     this.counters.push(new CounterStore(this.nextId++));
   }
+
+  removeCounter(id: number) {
+    // TODO: replace counters with a list that excludes this ID.
+  }
 }
