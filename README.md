@@ -1,4 +1,4 @@
-# Group loadings by ramp — start
+# Group loadings by ramp — solution
 
 Render each ramp with its matching visible assignments.
 
