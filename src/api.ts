@@ -1,8 +1,8 @@
 export interface Ramp { id: string; name: string }
 
 export async function loadRamps(url: string, signal?: AbortSignal): Promise<Ramp[]> {
-  // TODO: fetch the URL with the optional signal and parse its JSON response.
-  return [];
+  const response = await fetch(url, { signal });
+  return await response.json() as Ramp[];
 }
 
 // Vite serves public files at /; Sandpack's static-file service worker uses /public/.
