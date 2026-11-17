@@ -18,9 +18,7 @@
 .menuButton {padding: .4rem .75rem; flex-shrink: 0; font-weight: 600 !important; font-size: .85rem !important; min-height: 38px;}
 .menuButton span {margin-right: .4rem;}
 .menuAnchor {position: relative; flex-shrink: 0;}
-.menuButton .menuChevron {display: inline-block; margin: 0 0 0 .4rem;}
 .menuButton[aria-expanded='true'] {background: var(--ifm-color-emphasis-100); border-color: var(--ifm-color-primary);}
-.menuButton[aria-expanded='true'] .menuChevron {transform: rotate(180deg);}
 .location {display: flex; gap: .6rem; align-items: baseline; min-width: 0; flex: 1; font-size: .85rem;}
 .location a {flex-shrink: 0; color: var(--ifm-color-emphasis-700);}
 .lessonName {white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600;}
@@ -57,15 +55,9 @@
 .dragShield {position: absolute; inset: 0; z-index: 2; cursor: col-resize;}
 .mobileTabs {display: none;}
 .courseMenu {position: absolute; top: calc(100% + .5rem); left: 0; width: min(420px, calc(100vw - 2rem)); max-height: min(680px, calc(100dvh - var(--ifm-navbar-height) - 90px)); overflow-y: auto; overscroll-behavior: contain; padding: 0; border: 1px solid var(--studio-border); border-radius: 8px; background: var(--studio-surface); color: var(--ifm-font-color-base); box-shadow: 0 8px 28px #0003;}
-.menuHeader {display: flex; align-items: center; justify-content: space-between; padding: .35rem .75rem; position: sticky; top: 0; background: var(--studio-surface); z-index: 1;}
-.menuHeader h2 {min-width: 0; font-size: .85rem; margin: 0;}
-.menuHeader button {border: 0; background: none; color: inherit; cursor: pointer; width: 36px; height: 36px; border-radius: 5px;}
-.menuActions {flex-shrink: 0; display: flex; align-items: center; gap: .4rem;}
-.menuActions button:first-child {width: auto; font-size: .75rem; color: var(--ifm-color-primary); padding-inline: .5rem;}
-.courseMenu nav {padding: .15rem .75rem .75rem; font-size: .875rem; line-height: 1.4;}
+.courseMenu nav {padding: .65rem .75rem; font-size: .875rem; line-height: 1.4;}
 .courseMenu nav a {display: block; min-height: 32px; padding: .35rem .4rem; border-radius: 4px; color: inherit;}
-.courseMenu .courseHome, .courseMenu .searchLink {padding-left: 1.5rem;}
-.searchLink {font-size: .8rem; text-decoration: underline;}
+.courseMenu .courseHome {padding-left: 1.5rem;}
 .courseMenu details {border: 0; margin: 0; padding: 0;}
 .courseMenu summary {display: flex; align-items: center; gap: .65rem; min-height: 32px; padding: .35rem .4rem; border-radius: 4px; cursor: pointer; font-size: inherit; font-weight: 500; list-style: none;}
 .courseMenu summary::-webkit-details-marker {display: none;}
@@ -87,7 +79,6 @@
   .step {display: none;}
   .arrows a {width: 40px; height: 40px;}
   .menuButton {min-height: 40px; padding-inline: .5rem; font-size: .8125rem !important;}
-  .menuHeader button {min-width: 40px; height: 40px;}
   .contents select {min-height: 32px;}
   .menuButton span {margin-right: .2rem;}
   .mobileTabs {display: flex; border-bottom: 1px solid var(--studio-border); flex-shrink: 0;}

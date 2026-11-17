@@ -3,7 +3,6 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
-import {useColorMode} from '@docusaurus/theme-common';
 import {course, type Lesson} from '../../lib/course';
 import {CodeWorkspace} from '../LessonExercise';
 import CourseIllustration from '../CourseIllustration';
@@ -22,7 +21,6 @@ type IllustrationTopic = React.ComponentProps<typeof CourseIllustration>['topic'
 export default function LessonStudio({lesson, children}: {lesson?: Lesson; children: ReactNode}) {
   const {metadata, toc} = useDoc();
   const location = useLocation();
-  const {colorMode, setColorMode} = useColorMode();
   const base = useBaseUrl('/');
   const [panel, setPanel] = useState<StudioPanel>('lesson');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -171,20 +169,9 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               setMenuOpen(open => !open);
             }}>
             <span aria-hidden="true">☰</span> Lessons
-            <span className={styles.menuChevron} aria-hidden="true">⌄</span>
           </button>
           <div ref={menu} id="course-menu" className={styles.courseMenu} hidden={!menuOpen}>
-            <div className={styles.menuHeader}>
-              <h2 id="course-menu-title">Course lessons</h2>
-              <div className={styles.menuActions}>
-                <button type="button" onClick={() => setColorMode(colorMode === 'dark' ? 'light' : 'dark')}>
-                  {colorMode === 'dark' ? 'Light theme' : 'Dark theme'}
-                </button>
-                <button type="button" onClick={closeMenuAndFocus} aria-label="Close lesson menu">✕</button>
-              </div>
-            </div>
-            <nav aria-labelledby="course-menu-title">
-              <Link className={styles.searchLink} to={`${base}search/`} onClick={closeMenu}>Search course →</Link>
+            <nav aria-label="Course lessons">
               <Link className={styles.courseHome} to={base} aria-current={metadata.id === 'README' ? 'page' : undefined}
                 onClick={closeMenu}>Course introduction</Link>
               {overviewPaths.map((overview, index) => {

@@ -68,10 +68,10 @@ dynamic viewport height; avoid reintroducing fixed 520px panes. Verify desktop,
 navigation, the Lessons dropdown, and heading links when changing the layout. On introductions,
 mobile tabs are Lesson/Illustration, with no editor-only controls. Dropdown surfaces
 must be opaque in both themes: Infima's light `--ifm-background-color` is transparent,
-so use `--studio-surface` for the course menu and its sticky header.
+so use `--studio-surface` for the course menu.
 The lesson list opens directly below its trigger, before the workspace in keyboard
 order. Check toggle, outside click, Escape, Tab departure and lesson navigation;
-only Escape and the close button should return focus to the trigger. Keep its
+Escape should return focus to the trigger. Keep its
 height within the space below the header and scroll the list to the current lesson
 without scrolling the reading pane or remounting the editor.
 
@@ -81,7 +81,7 @@ Search uses the plugin's CSS variables for text, muted labels and selected-resul
 colors. Its theme wrapper keeps the clear button labelled and focusable, bounds
 the popup to the visual viewport (including the on-screen keyboard), and keeps
 keyboard-selected results in view. Keep these fixes in the wrapper instead of
-editing dependencies. The course menu includes Search for compact landscape mode.
+editing dependencies. The course dropdown contains only lesson navigation.
 Search and anchor navigation must reveal the reading pane even when the user is
 already on that lesson with Code or Preview open.
 
