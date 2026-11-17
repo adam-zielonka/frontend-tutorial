@@ -1,6 +1,6 @@
-# Validate the JSON structure — solution
+# Cancel obsolete requests — start
 
-Validate unknown JSON before returning ramp records.
+Pair every effect request with cancellation and stale-result protection.
 
 ## Run
 
@@ -15,13 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Parse as unknown and reject anything except an array of records with string id and name fields.
+- Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.
+- In cleanup set active to false before calling controller.abort().
+- Keep both success and error handlers guarded by active; rapidly toggle the missing-fixture option and check the final selection wins.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/03-validate-data) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-validate-data-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-03-validate-data-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/07-fetch/03-abort-cleanup) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-abort-cleanup-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-07-04-abort-cleanup-solution-v5)
 
 ## All checkpoints
 

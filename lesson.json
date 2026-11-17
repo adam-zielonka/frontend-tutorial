@@ -1,8 +1,10 @@
 {
-  "id": "07-03-validate-data",
-  "variant": "solution",
+  "id": "07-04-abort-cleanup",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Parse as unknown and reject anything except an array of records with string id and name fields."
+    "Create an AbortController inside each effect setup and pass controller.signal to loadLocalRamps.",
+    "In cleanup set active to false before calling controller.abort().",
+    "Keep both success and error handlers guarded by active; rapidly toggle the missing-fixture option and check the final selection wins."
   ]
 }
