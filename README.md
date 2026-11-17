@@ -1,4 +1,4 @@
-# Wire actions and register icons — start
+# Wire actions and register icons — solution
 
 Update React state from UI5 buttons with registered icons.
 
