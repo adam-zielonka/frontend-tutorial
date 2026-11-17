@@ -37,7 +37,7 @@ Use **On this page** to jump to an explanation and **Lessons** to open the cours
 
 Each step opens a prepared checkpoint, with the required setup explained in its walkthrough. **Your edits are not automatically copied into the next step.** This lets you continue even if your current experiment is unfinished. Return to the same lesson to find its browser draft.
 
-Drafts are saved separately in this browser. Download your edited files if you want to keep a copy, move to another device, or continue in a local editor. Read the instructions under **Run this step locally or in an online editor** before importing a download: the importer replaces that project's exercise files.
+Drafts are saved separately in this browser. Download your edited files if you want to keep a copy, move to another device, or continue in a local editor. Choose **Work locally** beside **Console** for instructions before importing a download: the importer replaces that project's exercise files.
 
 The embedded preview needs internet access to use CodeSandbox. If it cannot start, the lesson's text and code examples are still readable; the local project and StackBlitz links offer another way to work. Do not enter private data into the examples.
 

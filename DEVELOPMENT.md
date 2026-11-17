@@ -54,9 +54,13 @@ not mount Sandpack. Theme wrappers preserve the same navigation and reading pane
 throughout the course. Lesson text stays in its MDX file, including checks and
 references after `LessonExercise`.
 
-The studio renders that component's tasks and local-run guidance in the reading
-pane, and mounts one separate `CodeWorkspace`. A shared context synchronizes the
-solution choice. On narrow screens, Lesson/Code/Preview controls change visibility,
+The studio renders that component's tasks in the reading pane and mounts one separate
+`CodeWorkspace`. Its persistent footer contains Console, Work locally, Online editor
+and Preview help. Local clone/import instructions open from Work locally; Online
+editor opens the selected v4 checkpoint in StackBlitz without transferring drafts.
+These run controls stay available while the editor loads or if it fails. A shared
+context identifies the studio around the exercise. On narrow screens,
+Lesson/Code/Preview controls change visibility,
 not component identity. Never conditionally unmount Sandpack for a panel change:
 that loses editor selection and resets the running example. Preserve the v3 draft
 key and source maps when changing the shell.
@@ -156,3 +160,7 @@ The importer validates the lesson and allowlists filenames before writing.
 Integration references: [Sandpack](https://sandpack.codesandbox.io/docs/getting-started/usage),
 [Sandpack static files](https://sandpack.codesandbox.io/docs/advanced-usage/serving-static-files),
 [StackBlitz Git refs](https://developer.stackblitz.com/guides/integration/open-from-github).
+
+Lesson titles and the course menu use chapter.step numbering consistently (for
+example, 4.1). Keep the Docusaurus Previous/Next cards after the article; do not add
+a second manual Previous/Next/Chapter overview row to lesson Markdown.

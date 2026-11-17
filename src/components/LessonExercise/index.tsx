@@ -1,18 +1,16 @@
-import React, {lazy, Suspense, useState} from 'react';
+import React, {lazy, Suspense, useId, useRef, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import CodeBlock from '@theme/CodeBlock';
-import {course, lessonTag, repository, type Lesson} from '../../lib/course';
+import {course, type Lesson} from '../../lib/course';
 import {useLessonStudio} from '../LessonStudio/context';
 import styles from './styles.module.css';
+import RunActions from './RunActions';
 
 const Playground = lazy(() => import('./Playground'));
 class EditorBoundary extends React.Component<{children: React.ReactNode}, {failed: boolean}> {
   state = {failed: false};
   static getDerivedStateFromError() {return {failed: true};}
   render() {
-    if (this.state.failed) return <p className={styles.error} role="alert">The editor could not load. Reload this page, or use the StackBlitz and local project links in the lesson.</p>;
+    if (this.state.failed) return <p className={styles.error} role="alert">The editor could not load. Reload this page, or use Work locally or Online editor below.</p>;
     return this.props.children;
   }
 }
@@ -27,6 +25,13 @@ export function CodeWorkspace({lesson, solution, onSolutionChange, view = 'split
   view?: 'split' | 'code' | 'preview';
   viewControls?: React.ReactNode;
 }) {
+  const id = useId();
+  const [consoleOpen, setConsoleOpen] = useState(false);
+  const consoleToggle = useRef<HTMLButtonElement>(null);
+  const closeConsole = () => {
+    setConsoleOpen(false);
+    consoleToggle.current?.focus();
+  };
   return <section className={styles.workspace} data-lesson-workspace aria-label={`${lesson.title}: workspace`}>
     <div className={styles.toolbar}>
       <div className={styles.modeSwitch}>
@@ -38,36 +43,26 @@ export function CodeWorkspace({lesson, solution, onSolutionChange, view = 'split
     </div>
     <div className={styles.playground}>
       <BrowserOnly fallback={<LoadingWorkspace/>}>{() => <EditorBoundary key={lesson.id}><Suspense fallback={<LoadingWorkspace/>}>
-        <Playground key={lesson.id} lesson={lesson} solution={solution} view={view} />
+        <Playground key={lesson.id} lesson={lesson} solution={solution} view={view}
+          consoleOpen={consoleOpen} consoleId={`${id}-console`} closeConsole={closeConsole} />
       </Suspense></EditorBoundary>}</BrowserOnly>
     </div>
-  </section>;
-}
-
-function LocalProject({lesson, solution}: {lesson: Lesson; solution: boolean}) {
-  const base = useBaseUrl('/');
-  const tag = lessonTag(lesson.id, solution);
-  const command = `git clone --branch ${tag} --depth 1 ${repository}.git ${lesson.id}\ncd ${lesson.id}\npnpm install --frozen-lockfile\npnpm dev`;
-  return <details className={styles.local}>
-    <summary>Run this step locally or in an online editor</summary>
-    <p>Use Node.js 24, pnpm 12.14 and Git; <Link to={`${base}ch-01-00-explain-the-tool-set#a-first-local-installation-check`}>chapter 1 explains their installation</Link>.
-      This is the {solution ? 'solution' : 'starter'} checkpoint for this step:</p>
-    <CodeBlock language="bash">{command}</CodeBlock>
-    <p>To save your own commits: <code>git switch -c my-work</code>.
-      {lesson.chapter === '06' && <> Run <code>pnpm exec vitest run</code> in another terminal for Vitest.</>}</p>
-    <div className={styles.links}>
-      <a target="_blank" rel="noopener noreferrer"
-        href={`https://stackblitz.com/github/adam-zielonka/frontend-tutorial/tree/${tag}?file=src/${lesson.activeFile.slice(1)}`}>
-        Open {solution ? 'solution' : 'starter'} in StackBlitz ↗
-      </a>
-      <a target="_blank" rel="noopener noreferrer" href={`${repository}/tree/${tag}`}>Browse tagged source ↗</a>
+    <div className={styles.footer} role="group" aria-label="Workspace tools">
+      <button ref={consoleToggle} type="button" className={styles.toolButton} aria-expanded={consoleOpen}
+        aria-controls={`${id}-console`} onClick={() => setConsoleOpen(value => !value)}>Console</button>
+      <RunActions lesson={lesson} solution={solution} />
+      <details className={styles.help}>
+        <summary>Preview help</summary>
+        <div className={styles.helpBody}>
+          <p>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.</p>
+          <p>After editing a store constructor or method, use Refresh preview if an existing model still has its old behavior. Your source edits are kept.</p>
+          <p>If the preview cannot connect, choose <strong>Work locally</strong> or <strong>Online editor</strong> below.</p>
+          <p>Online editor opens the selected starter or solution in StackBlitz, without your browser edits. Support files are read-only.</p>
+          <p>Downloads contain the lesson’s files as JSON. <strong>Work locally</strong> explains how to import them.</p>
+        </div>
+      </details>
     </div>
-    <p>To continue your browser edits locally, choose <strong>Download {solution ? 'solution' : 'my files'}</strong> in the workspace.
-      This downloads a JSON file, not a standalone project. Stop the local server with Ctrl+C, copy the download into the cloned folder, and run:</p>
-    <CodeBlock language="bash">{`node import-draft.mjs ./${lesson.id}-${solution ? 'solution' : 'my-files'}.json\npnpm dev`}</CodeBlock>
-    <p className={styles.note}>The import replaces this project's exercise files. Back up any local edits first.
-      StackBlitz and source links open the checkpoint; they do not transfer browser edits.</p>
-  </details>;
+  </section>;
 }
 
 export default function LessonExercise({id}: {id: string}) {
@@ -88,10 +83,6 @@ export default function LessonExercise({id}: {id: string}) {
       <summary>Need a hint?</summary>
       <ul>{lesson.hints.map(hint => <li key={hint}>{hint}</li>)}</ul>
     </details>
-    {studio && <button type="button" className={styles.openCode} onClick={studio.openCode}>Try it in the code editor →</button>}
     {!studio && <div className={styles.standalone}><CodeWorkspace lesson={lesson} solution={solution} onSolutionChange={setStandaloneSolution} /></div>}
-    <p className={styles.note}>Use <strong>Solution</strong> to compare a read-only example; return to <strong>Your code</strong> to continue.
-      Each step starts from a prepared checkpoint and keeps its own browser draft. The preview needs internet access; do not enter private data.</p>
-    <LocalProject lesson={lesson} solution={solution} />
   </section>;
 }

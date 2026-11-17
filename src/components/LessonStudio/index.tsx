@@ -131,12 +131,6 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     closeMenu();
     menuButton.current?.focus();
   };
-  const openCode = () => {
-    setPanel('code');
-    setDesktopView('split');
-    if (narrow) tabButtons.current[1]?.focus();
-    else requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-lesson-workspace] .cm-content')?.focus());
-  };
 
   function jumpToHeading(id: string) {
     setPanel('lesson');
@@ -152,7 +146,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     });
   }
 
-  return <LessonStudioContext.Provider value={{solution, openCode}}>
+  return <LessonStudioContext.Provider value={{solution}}>
     <div className={styles.studio} data-lesson-studio data-panel={panel} data-page-kind={lesson ? 'exercise' : 'introduction'}>
       <header className={styles.header}>
         <div ref={menuAnchor} className={styles.menuAnchor} onKeyDown={event => {
@@ -177,12 +171,12 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               {overviewPaths.map((overview, index) => {
                 const steps = course.filter(item => Number(item.chapter) === index + 1);
                 return <details key={overview} open={index === chapterIndex}>
-                  <summary>{steps[0].chapterTitle}</summary>
+                  <summary>{index + 1}. {steps[0].chapterTitle}</summary>
                   <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
                     onClick={closeMenu}>Chapter introduction</Link>
                   <ol role="list">{steps.map(item => <li key={item.id}>
                     <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
-                      onClick={closeMenu}>{item.title}</Link>
+                      onClick={closeMenu}>{Number(item.chapter)}.{Number(item.id.split('-')[1])}. {item.title}</Link>
                   </li>)}</ol>
                 </details>;
               })}

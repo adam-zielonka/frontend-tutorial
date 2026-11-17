@@ -7,6 +7,7 @@ import {editorDark, editorLight} from './editorThemes';
 import styles from './Playground.module.css';
 
 type PlaygroundView = 'split' | 'code' | 'preview';
+type ConsoleControls = {consoleOpen: boolean; consoleId: string; closeConsole: () => void};
 const MIN_SPLIT = 25;
 const MAX_SPLIT = 75;
 const clampSplit = (value: number) => Math.min(MAX_SPLIT, Math.max(MIN_SPLIT, value));
@@ -46,7 +47,7 @@ function DraftTools({lesson, solution, reset}: {lesson: Lesson; solution: boolea
     const link = document.createElement('a');
     link.href = url; link.download = `${lesson.id}-${solution ? 'solution' : 'my-files'}.json`; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus('Downloaded files as JSON. See the lesson’s local setup instructions for import commands.');
+    setStatus('Downloaded files as JSON. Choose Work locally below for import commands.');
     setSaveFailed(false);
   }
   return <div className={styles.tools}>
@@ -79,7 +80,7 @@ function ProjectFiles({lesson}: {lesson: Lesson}) {
   }}/> Support files<span className={styles.srOnly}> (read-only)</span></label>;
 }
 
-function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) {
+function Workspace({view, solution, consoleOpen, consoleId, closeConsole}: {view: PlaygroundView; solution: boolean} & ConsoleControls) {
   const id = useId();
   const panes = useRef<HTMLDivElement>(null);
   const codePane = useRef<HTMLElement>(null);
@@ -87,8 +88,6 @@ function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) 
   const [split, setSplit] = useState(60);
   const [dragging, setDragging] = useState(false);
   const drag = useRef<{handle: HTMLDivElement; pointerId: number; startY: number; startSplit: number; height: number} | null>(null);
-  const [consoleOpen, setConsoleOpen] = useState(false);
-  const consoleToggle = useRef<HTMLButtonElement>(null);
   const consoleClose = useRef<HTMLButtonElement>(null);
 
   // A mobile Lesson tab may hide the entire workspace with display:none.
@@ -158,11 +157,6 @@ function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) 
     event.preventDefault();
   }
 
-  function closeConsole() {
-    setConsoleOpen(false);
-    consoleToggle.current?.focus();
-  }
-
   return <>
     <div className={styles.surface}>
       <div ref={panes} className={styles.panes}>
@@ -186,7 +180,7 @@ function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) 
           <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>
         </section>
       </div>
-      <section id={`${id}-console`} className={styles.consoleDrawer} hidden={!consoleOpen} aria-label="Console and runtime errors"
+      <section id={consoleId} className={styles.consoleDrawer} hidden={!consoleOpen} aria-label="Console and runtime errors"
         onKeyDown={event => {if (event.key === 'Escape') {event.stopPropagation(); closeConsole();}}}>
         <div className={styles.drawerHeading}>
           <span>Console and runtime errors</span>
@@ -196,23 +190,10 @@ function Workspace({view, solution}: {view: PlaygroundView; solution: boolean}) 
       </section>
       {dragging && <div className={styles.dragShield} aria-hidden="true"/>}
     </div>
-    <div className={styles.footer}>
-      <button ref={consoleToggle} type="button" className={styles.toolButton} aria-expanded={consoleOpen}
-        aria-controls={`${id}-console`} onClick={() => setConsoleOpen(value => !value)}>Console</button>
-      <details className={styles.help}>
-        <summary>Preview help</summary>
-        <div className={styles.helpBody}>
-          <p>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.</p>
-          <p>After editing a store constructor or method, use Refresh preview if an existing model still has its old behavior. Your source edits are kept.</p>
-          <p>If the preview cannot connect, use StackBlitz or clone the project from the lesson’s local setup links.</p>
-          <p>Support files are read-only. Downloads contain the lesson’s files as JSON; the local setup instructions explain how to import them.</p>
-        </div>
-      </details>
-    </div>
   </>;
 }
 
-function Editor({lesson, solution, reset, view}: {lesson: Lesson; solution: boolean; reset: () => void; view: PlaygroundView}) {
+function Editor({lesson, solution, reset, view, ...consoleControls}: {lesson: Lesson; solution: boolean; reset: () => void; view: PlaygroundView} & ConsoleControls) {
   const {colorMode} = useColorMode();
   const [initial] = useState(() => {
     if (solution) return lesson.solution;
@@ -231,11 +212,11 @@ function Editor({lesson, solution, reset, view}: {lesson: Lesson; solution: bool
     files={files} customSetup={customSetup}
     options={options}>
     <DraftTools lesson={lesson} solution={solution} reset={reset}/>
-    <Workspace view={view} solution={solution}/>
+    <Workspace view={view} solution={solution} {...consoleControls}/>
   </SandpackProvider>;
 }
 
-export default function Playground({lesson, solution, view = 'split'}: {lesson: Lesson; solution: boolean; view?: PlaygroundView}) {
+export default function Playground({lesson, solution, view = 'split', ...consoleControls}: {lesson: Lesson; solution: boolean; view?: PlaygroundView} & ConsoleControls) {
   const [generation, setGeneration] = useState(0);
   const [resetting, setResetting] = useState(false);
   // Unmount first so the old editor flushes its edits before the draft is cleared.
@@ -246,5 +227,5 @@ export default function Playground({lesson, solution, view = 'split'}: {lesson: 
     setResetting(false);
   }, [resetting, lesson]);
   if (resetting) return <p role="status">Restoring the starter…</p>;
-  return <Editor key={`${solution}-${generation}`} lesson={lesson} solution={solution} view={view} reset={() => setResetting(true)}/>;
+  return <Editor key={`${solution}-${generation}`} lesson={lesson} solution={solution} view={view} reset={() => setResetting(true)} {...consoleControls}/>;
 }
