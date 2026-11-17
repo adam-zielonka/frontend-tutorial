@@ -1,6 +1,6 @@
 {
   "id": "04-08-url-state",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Serialize counter values with semicolons and validate a complete payload before replacing the collection."

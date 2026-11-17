@@ -1,4 +1,4 @@
-# Serialize and validate counter values — start
+# Serialize and validate counter values — solution
 
 Serialize and validate counter values.
 
