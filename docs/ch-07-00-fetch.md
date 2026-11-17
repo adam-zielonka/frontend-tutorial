@@ -1,106 +1,30 @@
+---
+sidebar_position: 70
+---
+
 # 7. Fetch
 
-## Preparing workspace
+Load ramp data and make waiting, success and failure visible. Follow the diagram's request → response → validation → UI path: receiving a response, parsing JSON and checking its shape are separate boundaries. Then cancel obsolete work and retry deliberately.
 
-To start working on this project you have two option: development using local or online editor:
+## Lessons
 
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/create-fetch)
-2. Local development
-    - Clone repo from [**shippingboard-lite**](https://github.com/adam-zielonka/shippingboard-lite/tree/create-fetch) and set branch to `create-fetch`. You can use this command: 
-    ```shell
-    git clone --branch create-fetch https://github.com/adam-zielonka/shippingboard-lite.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code shippingboard-lite
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
+1. [Fetch the local ramp fixture](./07-fetch/01-request.mdx).
+2. [Reject unsuccessful HTTP responses](./07-fetch/02-http-and-data-errors.mdx).
+3. [Validate the JSON structure](./07-fetch/03-validate-data.mdx).
+4. [Cancel obsolete requests](./07-fetch/03-abort-cleanup.mdx).
+5. [Retry the same request](./07-fetch/04-retry.mdx).
 
-## Setup Base URL
+The bundled fixture and preview-path adapter are supplied. Work in order: each solution forms the next starter. See [course help](./course-help) for the editor and local exports.
 
-So in normal case the api exist in the same domain that web app is available so the base url can be `/api/`, but in our case we get data from github, so what we need to add to `api.ts` file is that line:
+## Apply it to the original project
 
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-const BASE_URL = "https://raw.githubusercontent.com/adam-zielonka/shippingboard-lite/main/src/api/";
-```
+These supplemental guided pages use a separate archived ShippingBoard project, with its own files and model constructors:
 
-## Setup types
+6. [Open the original ShippingBoard project](./07-fetch/06-original-project.mdx).
+7. [Describe the response contract](./07-fetch/07-response-contract.mdx).
+8. [Load customers with await](./07-fetch/08-customers-await.mdx).
+9. [Load ramps with a promise chain](./07-fetch/09-ramps-then.mdx).
+10. [Initialize dependent models in order](./07-fetch/10-store-initialization.mdx).
+11. [Show loading and failure states](./07-fetch/11-loading-and-errors.mdx).
 
-```ts title="src/api/api.ts (on the beginning of file after imports)"
-type CustomerResponse = {
-  kunnr: string
-  name1: string
-  ort01: string
-  land1: string
-}
-
-type RampResponse = {
-  ramp_id: string
-  description: string
-}
-```
-
-## Fetch using await
-
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getCustomers(): Promise<Customer[]> {
-    const response = await fetch(BASE_URL + "CUSTOMERS.json");
-
-    if (!response.ok) {
-      return [];
-    }
-
-    if (!response.body) {
-      return [];
-    }
-
-    const json = await response.json() as CustomerResponse[];
-
-    return json.map(c => new Customer(c.kunnr, c.name1, c.ort01, c.land1));
-  }
-```
-
-## Fetch using then
-
-```ts showLineNumbers title="src/api/api.ts"
-export class API {
-  async getRamps(): Promise<Ramp[]> {
-    return await fetch(BASE_URL + "RAMPS.json")
-      .then(response => {
-        if (!response.ok) {
-          return [];
-        }
-    
-        if (!response.body) {
-          return [];
-        }
-
-        return response.json() as Promise<RampResponse[]>;
-      }).then(json => {
-        return json.map(r => new Ramp(r.ramp_id, r.description));
-      });
-  }
-```
-
-## Fixing store
-
-```ts title="src/store/Store.ts" showLineNumbers
-export class Store {
-  //...
-  init = async () => {
-    this.customers = await api.getCustomers();
-    this.ramps = await api.getRamps();
-    this.loadings = api.getLoadings();
-    store.ui.init();
-  };
-}
-```
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) · [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) · [React effects](https://react.dev/reference/react/useEffect) · [Vite static assets](https://vite.dev/guide/assets.html#the-public-directory)

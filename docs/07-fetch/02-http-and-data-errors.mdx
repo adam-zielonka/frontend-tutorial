@@ -1,0 +1,31 @@
+---
+title: "7.2. Reject unsuccessful HTTP responses"
+slug: /07-fetch/02-http-and-data-errors
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A completed request can carry an unsuccessful HTTP response. `fetch` rejects for failures such as network errors, but a status like 404 or 503 still resolves to a `Response`. Check its status before treating the body as data.
+
+## Edit the status guard
+
+In `/api.ts`, insert the highlighted line between the existing request and JSON parse:
+
+```ts title="/api.ts" {2}
+const response = await fetch(url, { signal });
+if (!response.ok) throw new Error(`HTTP ${response.status}: could not load ramps`);
+return await response.json() as Ramp[];
+```
+
+The effect's existing catch handler displays the error. Do not turn it into an empty successful array: an empty result and a failed request communicate different things.
+
+The missing-fixture checkbox explores failure, but development servers sometimes return HTML with status 200 for an unknown path. That produces a JSON parse error rather than HTTP 404. The following controlled check isolates HTTP handling from that server behavior.
+
+<LessonExercise id="07-02-http-and-data-errors" />
+
+## Check your work
+
+Temporarily replace the `fetch` line in the editable `/api.ts` with `const response = new Response('Unavailable', { status: 503 });`. Expect “HTTP 503: could not load ramps”, then restore the real request. The path adapter may try its alternate fixture path too; both pass through the same guard. Next, validate successful JSON's structure.
+
+[Fetch response status](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)

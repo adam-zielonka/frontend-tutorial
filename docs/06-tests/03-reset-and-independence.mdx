@@ -1,0 +1,39 @@
+---
+title: "6.3. Test reset and independent stores"
+slug: /06-tests/03-reset-and-independence
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A reset test must start with a changed value: otherwise a reset that does nothing could pass. Separate instances should also retain independent state.
+
+In `/Store.test.ts`, replace the last two `it.todo` entries with:
+
+```ts title="/Store.test.ts"
+it('resets a changed counter to zero', () => {
+  const store = new CounterStore();
+  store.change(7);
+  expect(store.value).toBe(7);
+  store.reset();
+  expect(store.value).toBe(0);
+});
+
+it('keeps two store instances independent', () => {
+  const first = new CounterStore();
+  const second = new CounterStore();
+  first.change(3);
+  expect(first.value).toBe(3);
+  expect(second.value).toBe(0);
+});
+```
+
+These cases test the store, not rendered DOM or keyboard behavior. Explore those and coverage in [more testing techniques](./optional-testing.mdx).
+
+<LessonExercise id="06-03-reset-and-independence" />
+
+## Observe
+
+Choose **Run tests**: all five cases should pass with none pending.
+
+[Vitest guide](https://vitest.dev/guide/).

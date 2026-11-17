@@ -1,370 +1,42 @@
+---
+sidebar_position: 50
+---
+
 # 5. ShippingBoard Lite
 
-```mdx-code-block
-import BrowserWindow from '@site/src/components/BrowserWindow';
-```
+Add a ramp dashboard to the original ShippingBoard Lite application while keeping its loading table, details dialog and styling. Start with four small React examples, then carry one pinned MobX application checkout through the full original assignment.
 
-In this chapter we have job to add additional view to application `ShippingBoard Lite`. Now all loadings are displayed as a table and what business needs is overview what they have on loading ramps. 
+## Final result
 
-What we planning to do is:
+![Original ramp dashboard](./img/img-05-01-final-result.jpeg)
 
-<BrowserWindow url="https://adam-zielonka.github.io/shippingboard-lite/">
+The finished dashboard shows assigned loadings, pallet progress and ramp status; table rows and dashboard cards open the same details dialog. The [public demo](https://adam-zielonka.github.io/shippingboard-lite/) illustrates the result but can change independently of the pinned lesson source.
 
-![Final Result](img/img-05-01-final-result.jpeg)
+## Lessons
 
-</BrowserWindow>
+Lessons **5.1–5.4** use three fixed records, React state and the supplied ShippingBoard-inspired CSS. Each embedded starter includes the preceding solution; saved drafts stay with their own lesson. For exporting drafts, editor/local file paths and preview help, use [Course help](/course-help).
 
-But what we have is:
+1. [5.1. Switch between board views](./05-shippingboard/01-view-switching.mdx)
+2. [5.2. Filter loading status](./05-shippingboard/02-status-filter.mdx)
+3. [5.3. Group loadings by ramp](./05-shippingboard/03-ramp-groups.mdx)
+4. [5.4. Explain empty ramps and ramp status](./05-shippingboard/04-empty-and-status.mdx)
 
-<BrowserWindow>
+<span id="worked-continuation-upgrade-the-original-shippingboard-lite" />
 
-![what we have](img/img-05-02-what-we-have.jpeg)
+## Original application
 
-</BrowserWindow>
+Lessons **5.5–5.15** are the main project: work in one separate checkout of [ShippingBoard Lite at `3634bcb9a1ee`](https://github.com/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99), keeping each stage’s edits. It uses eleven loading models, MobX and Blueprint 4, not the mini editor’s `App.tsx`. Start at 5.5 for the exact local/online setup. Earlier overview section links below now lead to the extracted lessons.
 
-## Preparing workspace
+5. <span id="1-prepare-and-inspect-the-original-workspace" /><span id="preparing-workspace" />[5.5. Prepare the original application](./05-shippingboard/05-original-workspace.mdx)
+6. <span id="2-give-the-ui-store-a-view-and-connect-the-header" /><span id="store-info-about-view" /><span id="creating-buttons-for-view-changing" />[5.6. Share view state with the header](./05-shippingboard/06-shared-view.mdx)
+7. <span id="3-switch-the-content-before-building-the-dashboard" /><span id="switching-between-views" />[5.7. Switch the original content](./05-shippingboard/07-content-switch.mdx)
+8. <span id="4-restore-the-view-from-the-url-without-losing-loading-links" /><span id="add-view-to-url-params" />[5.8. Restore view and loading links](./05-shippingboard/08-view-url.mdx)
+9. <span id="5-render-the-existing-ramps-with-their-original-styles" /><span id="create-rampbox" />[5.9. Render the original ramp shells](./05-shippingboard/09-ramp-shells.mdx)
+10. <span id="6-build-one-loading-card-from-the-original-model" /><span id="create-loadingbox" />[5.10. Build a loading card](./05-shippingboard/10-loading-card.mdx)
+11. <span id="7-derive-each-ramps-own-loadings" />[5.11. Derive ramp assignments](./05-shippingboard/11-ramp-assignments.mdx)
+12. <span id="8-open-the-existing-details-dialog-from-a-card" />[5.12. Open shared loading details](./05-shippingboard/12-card-details.mdx)
+13. <span id="9-derive-ramp-status-and-apply-the-original-colours" /><span id="add-status-to-rampbox" />[5.13. Derive ramp status](./05-shippingboard/13-ramp-status.mdx)
+14. <span id="10-show-occupancy-and-intent-in-the-existing-assignment-dialog" /><span id="add-ramp-status-and-quantity-to-content-details" />[5.14. Show occupancy in the dialog](./05-shippingboard/14-dialog-occupancy.mdx)
+15. <span id="11-verify-the-complete-continuation" />[5.15. Verify the complete board](./05-shippingboard/15-complete-board.mdx)
 
-To start working on this project you have two option: development using local or online editor:
-
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/create-ramp-view)
-2. Local development
-    - Clone repo from [**shippingboard-lite**](https://github.com/adam-zielonka/shippingboard-lite/tree/create-ramp-view) and set branch to `create-ramp-view`. You can use this command: 
-    ```shell
-    git clone --branch create-ramp-view https://github.com/adam-zielonka/shippingboard-lite.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code shippingboard-lite
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
-
-## Store info about view
-
-Firstly we need to prepare area for our new view, but we also need it to define view also in store and action for changing. Because view is only information that is relevant on frontend there is store created for this purpose: `UI.ts`.
-
-To distinguish on witch of view we are, we need to add field to class UI called `view` and also getters and action for it:
-
-```ts showLineNumbers title='src/store/UI.ts'
-type View = "dashboard" | "loadings";
-
-//...
-
-export class UI {
-  view: View = "dashboard";
-
-  //...
-
-  get isDashboardOpen(): boolean {
-    return this.view === "dashboard";
-  }
-
-  get isLoadingsOpen(): boolean {
-    return this.view === "loadings";
-  }
-
-  openDashboard = () => {
-    this.view = "dashboard";
-  };
-
-  openLoadings = () => {
-    this.view = "loadings";
-  };
-}
-```
-
-## Creating buttons for view changing
-
-
-```tsx showLineNumbers title='src/components/Header.tsx'
-export const Header = observer(() => {
-  const { ui } = store;
-    
-  return <Navbar>
-    <Navbar.Group align={Alignment.LEFT}>
-      <Navbar.Heading>ShippingBoard Lite</Navbar.Heading>
-      // highlight-start
-      <Navbar.Divider />
-      <ButtonGroup>
-        <Button outlined icon="dashboard" text="Dashboard" intent="primary"
-          onClick={ui.openDashboard} active={ui.isDashboardOpen}/>
-        <Button outlined icon="th" text="Loadings" intent="primary"
-          onClick={ui.openLoadings} active={ui.isLoadingsOpen} />
-      </ButtonGroup>
-      // highlight-end
-    </Navbar.Group>
-    <Navbar.Group align={Alignment.RIGHT}>
-      <ButtonGroup minimal>
-        <Button icon="add" text="Add loading" intent="primary"
-          onClick={() => ui.openLoadingDialog(Loading.create())}/>
-      </ButtonGroup>
-    </Navbar.Group>
-  </Navbar>;
-});
-
-```
-
-## Switching between views
-
-```tsx showLineNumbers title='src/components/Content.tsx'
-export const Content = observer(() => {
-  const { ui } = store;
-
-  // highlight-start
-  if (ui.isLoadingsOpen) {
-    return <LoadingsTable/>;
-  }
-
-  return <div className="Content">
-    Ramps
-  </div>;
-  // highlight-end
-}
-```
-
-## Add view to url params
-
-```tsx showLineNumbers title='src/store/UI.ts'
-export class UI {
-  view: View = "dashboard";
-  selectedLoading?: Loading;
-
-  constructor() {
-  init = () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-
-    // highlight-start
-    const view = urlSearchParams.get("view");
-    if (view === "loadings") {
-      this.view = "loadings";
-    }
-    // highlight-end
-    
-    //...
-
-    // highlight-next-line
-    reaction(() => this.view, view => addQueryParam("view", view, "dashboard"));
-    reaction(() => this.selectedLoading, loading => addQueryParam("loading", loading?.id ?? "", ""));
-  };
-
-  //..
-}
-```
-
-## Create RampBox
-
-```tsx showLineNumbers title='src/components/RampBox.tsx'
-import { Card, Elevation } from "@blueprintjs/core";
-import { observer } from "mobx-react-lite";
-
-export const RampBox = observer(() => {
-
-  return <Card className="Ramp" elevation={Elevation.ONE}>
-    <header>Title</header>
-    <main>
-      Value
-    </main>
-  </Card>;
-});
-```
-
-And we need to use this box in `Content` component:
-
-```tsx showLineNumbers title='src/components/Content.tsx'
-  return <div className="Content">
-    <RampBox/>
-  </div>;
-```
-
-Of course we need to add styles:
-
-```tsx
-import "./Ramp.scss";
-```
-
-And we can use now Ramps that we have in store:
-
-```tsx showLineNumbers title='src/components/RampBox.tsx'
-import { Card, Elevation } from "@blueprintjs/core";
-import { observer } from "mobx-react-lite";
-// highlight-next-line
-import { Ramp } from "../store/Ramp";
-
-// highlight-next-line
-export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
-
-  return <Card className="Ramp" elevation={Elevation.ONE}>
-    // highlight-next-line
-    <header>{ramp.description}</header>
-    <main>
-      Value
-    </main>
-  </Card>;
-});
-```
-
-And now we need to pass ramps from store:
-
-```tsx showLineNumbers title='src/components/Content.tsx'
-export const Content = observer(() => {
-  // highlight-next-line
-  const { ui, ramps } = store;
-
-  if (ui.isLoadingsOpen) {
-    return <LoadingsTable/>;
-  }
-
-  return <div className="Content">
-    // highlight-next-line
-    {ramps.map(ramp => <RampBox key={ramp.id} ramp={ramp} />)}
-  </div>;
-});
-```
-
-## Create LoadingBox
-
-```tsx showLineNumbers title='src/components/LoadingBox.tsx'
-import { Card, Elevation, ProgressBar } from "@blueprintjs/core";
-import { observer } from "mobx-react-lite";
-import { Loading } from "../store/Loading";
-
-export const LoadingBox = observer(({ loading }: { loading: Loading }) => {
-  const { customer } = loading;
-
-  return <Card className="Loading" elevation={Elevation.TWO} interactive>
-    <header>
-      <div>{loading.id}</div>
-    </header>
-    <main>
-      <div className="details">
-        {loading.start.date} 
-        <div>
-          <span>{loading.start.time}</span>-{loading.end.time}
-        </div>
-      </div>
-      <div className="customer">
-        {customer && <>
-          <div className="name">{customer.name}</div>
-          <div className="city">{customer.country}, {customer.city}</div>
-          <div className="id">{customer.id.replace(/^0*/,"")}</div>
-        </>}
-      </div>
-    </main>
-    <footer>
-      <div>
-        <b>{loading.picked}</b> of <b>{loading.pallets}</b>
-      </div>
-      <ProgressBar animate={false} value={loading.loadedRatio} intent={loading.isLoaded ? "success" : "primary"}/>
-    </footer>
-  </Card>;
-});
-```
-
-And try to display one in RampBox:
-
-```tsx showLineNumbers title='src/components/RampBox.tsx'
-    <main>
-      // highlight-next-line
-      <LoadingBox loading={store.loadings[0]}/>
-    </main>
-```
-
-Now we can add getter for Ramp store for retrieving lodgings assigned to particular Ramp:
-
-```tsx showLineNumbers title='src/store/Ramp.tsx'
-export class Ramp {
-  //...
-
-  get loadings(): Loading[] {
-    return store.loadings.filter(l => l.ramp === this);
-  }
-}
-```
-
-And we can use this in RampBox:
-
-```tsx showLineNumbers title='src/components/RampBox.tsx'
-    <main>
-      // highlight-next-line
-      {ramp.loadings.map(l => <LoadingBox key={l.id} loading={l}/>)}
-    </main>
-```
-
-In the end we can handle on click event to open loading details:
-
-```tsx showLineNumbers title='src/components/LoadingBox.tsx'
-  return <Card className="Loading" elevation={Elevation.TWO} interactive onClick={() => store.ui.openLoadingDialog(loading)}>
-```
-
-## Add status to RampBox
-
-```ts showLineNumbers title='src/store/Ramp.tsx'
-export type Status = "empty" | "loaded" | "progress" | "not-started" | ""
-
-export class Ramp {
-  //...
-
-  get isEmpty(): boolean {
-    return !this.loadings.length;
-  }
-
-  get isLoaded(): boolean {
-    return !this.loadings.some(l => !l.isLoaded);
-  }
-
-  get isInProgress(): boolean {
-    return this.loadings.some(l => l.isInProgress);
-  }
-
-  get isSomeNotStarted(): boolean {
-    return this.loadings.some(l => !l.isStarted);
-  }
-
-  get status(): Status {
-    if (this.isEmpty) return "empty";
-    if (this.isLoaded) return "loaded";
-    if (this.isSomeNotStarted) return "not-started";
-    if (this.isInProgress) return "progress";
-
-    return "";
-  }
-}
-```
-
-And add style to RampBox component:
-
-```tsx showLineNumbers title='src/components/RampBox.tsx'
-    <main className={ramp.status}>
-```
-
-## Add ramp status and quantity to content details
-
-```ts showLineNumbers title='src/store/Ramp.tsx'
-export type Status = "empty" | "loaded" | "progress" | "not-started" | ""
-
-export class Ramp {
-  //...
-
-  get quantity(): number {
-    return this.loadings.length;
-  }
-}
-```
-
-```tsx showLineNumbers title='src/components/Details.tsx'
-          {ramps.map((r) => <Button key={r.id} className="ramp-button" outlined 
-            active={r === loading.ramp} onClick={() => loading.setRamp(r)} 
-            // highlight-next-line
-            intent={r.isEmpty ? Intent.NONE : r === loading.ramp ? Intent.PRIMARY : Intent.DANGER}>
-            {r.description}
-            // highlight-next-line
-            <sup>{r.quantity > 0 && r.quantity}</sup>
-          </Button>)}
-```
+<span id="official-references" />References now accompany the concept in each lesson.

@@ -1,0 +1,41 @@
+---
+title: "5.15. Verify the complete board"
+slug: /05-shippingboard/15-complete-board
+sidebar_position: 15
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/14-dialog-occupancy
+pagination_next: ch-06-00-tests
+course_workspace: original-project
+course_chapter: "05"
+course_step: 15
+course_illustration: "/course/shippingboard/15-complete-board.svg"
+course_illustration_alt: "One model shared across the finished application"
+course_illustration_description: "Dashboard: Cards + progress \u2192 MobX models: Assignments + UI \u2192 Table + Details: Rows + ramp choices. Build and inspect the same checkout. Reload restores fixtures; assignments are in memory."
+---
+
+The dashboard, table and details dialog are now connected. Verify them together as one application so a working individual component does not conceal a broken assignment or deep link.
+
+Use the **same `shippingboard-lite-ramp-lesson` checkout** from [5.5](./05-original-workspace.mdx), with all edits through [5.14](./14-dialog-occupancy.mdx). No new starter or reset is needed.
+
+Build and inspect the same checkout. Reload restores fixtures; assignments are in memory.
+
+## Run the build
+
+Run the build again:
+
+```shell
+pnpm dlx pnpm@8.15.9 run build
+```
+
+## Check the complete application
+
+Use this single acceptance walkthrough in the running local app (reload before starting):
+
+1. Reload with no query. Dashboard is active; seven ramps show eight assigned cards with the original styling and the [status table in lesson 5.13](./13-ramp-status.mdx#expected-fixture-status).
+2. Select Loadings. All eleven rows appear, including the three unassigned loadings; selecting Dashboard returns to the same models.
+3. Open `0007703` from either view. Check its date/time, customer Kang Tao, `11 of 22` and half-filled progress. In the dialog, move it between ramps, observe counts and assignments, then clear its ramp with ∅.
+4. Reload `/?view=loadings&loading=0007703&keep=yes#dock`. The table and correct dialog open together. Closing the dialog and changing views retain `keep=yes` and the hash. Reload `/?view=unknown&loading=missing`: the default dashboard opens with no dialog.
+5. Reload the fixture before testing mixed states. B is loaded, E is not-started, C/D are in progress, and A/F/G are empty. A ramp containing a waiting and a started loading remains not-started.
+6. Open **Add loading**. The existing new-loading dialog still opens. It is not a new persistence workflow: this lesson does not add saving, a backend or a dashboard bucket for unassigned loadings.
+
+You have changed `UI.ts`, `Ramp.ts`, `Header.tsx`, `Content.tsx` and the ramp-choice section in `Details.tsx`, and created `RampBox.tsx` and `LoadingBox.tsx`. `Loading.ts`, the API mapping, fixture data, `App.tsx` and all Sass files stay as supplied. The dashboard, table and dialog now share the same observable models, so changing an assignment updates each presentation without copying or manually synchronizing their data.

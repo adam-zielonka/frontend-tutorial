@@ -1,0 +1,33 @@
+---
+title: "4.1. Build the counter layout"
+slug: /04-mobx/01-counter-layout
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A counter needs a visible value and controls before it needs changing state. This new app already renders `Counter` with a zero. Its supplied stylesheet keeps the original yellow card, green display, blue buttons and Verdana type, adapted to a narrow preview.
+
+## Edit the controls
+
+In `/App.tsx`, replace the TODO below `output` with:
+
+```tsx title="/App.tsx"
+<div className="controls">
+  <button type="button">-100</button>
+  <button type="button">-1</button>
+  <button type="button" aria-label="Reset">0</button>
+  <button type="button">+1</button>
+  <button type="button">+100</button>
+</div>
+```
+
+`Counter` is a reusable [React component](https://react.dev/learn/your-first-component); `App` already renders it. `className="controls"` connects the markup to `/styles.css`. The `0` caption retains the original appearance, while its accessible name explains Reset. The buttons intentionally have no handlers yet.
+
+<LessonExercise id="04-01-counter-layout" />
+
+## Check your work
+
+Tab through the five blue controls on the yellow card: all receive focus and the green display stays at zero. Next, give them behavior.
+
+Compare the original [unstyled](../img/img-02-01-counter-start.png) and [styled](../img/img-02-02-counter-with-css.png) counters, or inspect the [source stylesheet](https://github.com/adam-zielonka/mobx-example/blob/02e70f73629d15da431d858da7132eeab5b91dbb/src/index.css).

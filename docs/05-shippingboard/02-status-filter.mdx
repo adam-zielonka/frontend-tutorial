@@ -1,0 +1,29 @@
+---
+title: "5.2. Filter loading status"
+slug: /05-shippingboard/02-status-filter
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+This starter includes the working view buttons from 5.1. The status selector already stores a typed `filter`, but the table still reads every loading. Derive the visible rows during render so the table and its count always agree, without deleting records or storing a second array in state.
+
+## Derive the visible records
+
+In `/App.tsx`, replace `const visible = loadings;` with:
+
+```tsx title="/App.tsx"
+const visible = loadings.filter(item => filter === 'all' || item.status === filter);
+```
+
+The first condition accepts every record for All; the second accepts an exact status match. The selector already calls `setFilter`, and both the table and live count already read `visible`, so no other wiring is needed. `/data.ts` remains the fixed source.
+
+<LessonExercise id="05-02-status-filter" />
+
+## Check your work
+
+Choose Done, then All: the table and count change together from only L-103 (one) back to all three records. If the count stays at three, check that you replaced `visible`. Next, group these derived records by ramp.
+
+## Sources
+
+[React choosing the state structure](https://react.dev/learn/choosing-the-state-structure), [rendering lists](https://react.dev/learn/rendering-lists).

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
+<title id="title">Occupancy guides assignment choices</title>
+<desc id="desc">Ramp.loadings: quantity = length → Details buttons: Empty / current / other → Button intent: Neutral / primary / danger. Active marks the current assignment. ∅ clears it; occupied choices remain selectable.</desc>
+<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
+<g font-family="system-ui, sans-serif" fill="#182026">
+<text x="24" y="36" font-size="21" font-weight="700">Occupancy guides assignment choices</text>
+<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="40" y="103" font-size="18" font-weight="600">Ramp.loadings</text>
+<text x="40" y="136" font-size="15">quantity = length</text>
+<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="326" y="103" font-size="18" font-weight="600">Details buttons</text>
+<text x="326" y="136" font-size="15">Empty / current / other</text>
+<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="612" y="103" font-size="18" font-weight="600">Button intent</text>
+<text x="612" y="136" font-size="15">Neutral / primary / danger</text>
+</g></svg>

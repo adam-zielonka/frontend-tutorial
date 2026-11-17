@@ -1,0 +1,30 @@
+---
+title: "7.8. Load customers with await"
+sidebar_position: 8
+---
+
+Continue from [7.7](./07-response-contract.mdx). Customers arrive asynchronously, so the API must return a promise rather than an immediate array.
+
+## Edit the customer request
+
+In `src/api/api.ts`, remove only the static `CUSTOMERS` JSON import, then replace `getCustomers` inside `API` with:
+
+```ts title="src/api/api.ts"
+async getCustomers(): Promise<Customer[]> {
+  const response = await fetch(BASE_URL + 'CUSTOMERS.json');
+  if (!response.ok) throw new Error(`Customers: HTTP ${response.status}`);
+  const json: unknown = await response.json();
+  if (!Array.isArray(json) || !json.every(isCustomerResponse)) {
+    throw new Error('Invalid customer response');
+  }
+  return json.map(c => new Customer(c.kunnr, c.name1, c.ort01, c.land1));
+}
+```
+
+An `async` method returns a promise, so callers can no longer treat its result as an array immediately. The first `await` waits for the response; the second reads and parses the body. Only validated records become `Customer` instances. An HTTP failure, malformed JSON, or invalid record rejects the operation rather than silently returning an empty list. See [Fetch response handling](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+This changes the API contract before its caller. Pages 7.8–7.10 form one migration: expect temporary array/promise type errors in `Store.init` until we add `await`. Keep the dev server stopped during that migration.
+
+## Check your work
+
+Run `pnpm build`: expect TypeScript to flag the old assignment of `Promise<Customer[]>` to `Customer[]` in `Store.init`. This locates the caller that must change. Next, [load ramps with a promise chain](./09-ramps-then.mdx).

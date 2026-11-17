@@ -1,0 +1,30 @@
+---
+title: "7.1. Fetch the local ramp fixture"
+slug: /07-fetch/01-request
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The loading/success/error UI and its effect are supplied. `loadRamps` currently returns an empty array; replace it with the two asynchronous stages of a request: getting a response and reading its JSON body.
+
+Keep `/public/ramps.json` and the supplied `loadLocalRamps` adapter. Vite serves this file at `/ramps.json`; Sandpack can require `/public/ramps.json`. The adapter tries the compatible local paths, without a remote API or credentials. Its fallback is separate from the user-triggered retry taught later.
+
+## Edit the request
+
+In `/api.ts`, replace the placeholder inside `loadRamps` with:
+
+```ts title="/api.ts"
+const response = await fetch(url, { signal });
+return await response.json() as Ramp[];
+```
+
+`fetch` resolves to a `Response`; `json()` asynchronously reads and parses its body. The effect displays the returned records. `as Ramp[]` is a temporary TypeScript assumption, **not runtime validation**. The next two lessons add an HTTP guard and a data guard. Retry intentionally stays disabled until the final step.
+
+<LessonExercise id="07-01-request" />
+
+## Check your work
+
+The empty result becomes three named ramps: R1, R2 and R3. Next, reject unsuccessful HTTP responses before reading their bodies.
+
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) · [Vite public directory](https://vite.dev/guide/assets.html#the-public-directory)

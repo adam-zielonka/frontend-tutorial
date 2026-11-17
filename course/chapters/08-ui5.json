@@ -1,0 +1,112 @@
+[
+  {
+    "id": "08-01-provider-and-button",
+    "title": "Add a UI5 provider and button",
+    "doc": "08-ui5/01-provider-and-button",
+    "objective": "Compose a UI5 React component inside its provider.",
+    "tasks": [
+      "Import ThemeProvider and Button from their @ui5/webcomponents-react component paths.",
+      "Wrap the existing main element in ThemeProvider.",
+      "Replace the native button with Button, keeping its Load pallet text; confirm it renders and accepts keyboard focus."
+    ],
+    "hints": [
+      "The lesson already includes matching UI5 v2 dependencies.",
+      "Place the provider inside App for this exercise; the generated entry does not add another one."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import './styles.css';\n\nexport default function App() {\n  return <main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p>0 / 10 pallets loaded</p>\n      <button>Load pallet</button>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';\nimport { Button } from '@ui5/webcomponents-react/Button';\nimport './styles.css';\n\nexport default function App() {\n  return <ThemeProvider><main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p>0 / 10 pallets loaded</p>\n      <Button>Load pallet</Button>\n    </section>\n  </main></ThemeProvider>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {
+      "@ui5/webcomponents-react": "2.15.0",
+      "@ui5/webcomponents": "2.15.0",
+      "@ui5/webcomponents-base": "2.15.0",
+      "@ui5/webcomponents-fiori": "2.15.0",
+      "@ui5/webcomponents-icons": "2.15.0"
+    },
+    "chapter": "08",
+    "chapterTitle": "UI5 Web Components for React",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  },
+  {
+    "id": "08-02-events-and-icons",
+    "title": "Wire actions and register icons",
+    "doc": "08-ui5/02-events-and-icons",
+    "objective": "Update React state from UI5 buttons with registered icons.",
+    "tasks": [
+      "Add loaded state initialized to 0 and render it in the pallet count with aria-live=\"polite\".",
+      "Wire Load pallet to increment and add Reset shipment to set loaded to 0.",
+      "Import add.js and refresh.js from @ui5/webcomponents-icons/dist, then give the buttons matching icon names.",
+      "Use Tab and Enter or Space to load a few pallets and reset; keep visible button text."
+    ],
+    "hints": [
+      "The side-effect imports register the icon names; setting icon alone does not register an icon.",
+      "Use a functional updater when incrementing from the previous value."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';\nimport { Button } from '@ui5/webcomponents-react/Button';\nimport './styles.css';\n\nexport default function App() {\n  return <ThemeProvider><main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p>0 / 10 pallets loaded</p>\n      <Button>Load pallet</Button>\n    </section>\n  </main></ThemeProvider>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { useState } from 'react';\nimport { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';\nimport { Button } from '@ui5/webcomponents-react/Button';\nimport '@ui5/webcomponents-icons/dist/add.js';\nimport '@ui5/webcomponents-icons/dist/refresh.js';\nimport './styles.css';\n\nexport default function App() {\n  const [loaded, setLoaded] = useState(0);\n  return <ThemeProvider><main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p aria-live=\"polite\">{loaded} / 10 pallets loaded</p>\n      <div className=\"controls\">\n        <Button icon=\"add\" onClick={() => setLoaded(current => current + 1)}>Load pallet</Button>\n        <Button icon=\"refresh\" onClick={() => setLoaded(0)}>Reset shipment</Button>\n      </div>\n    </section>\n  </main></ThemeProvider>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {
+      "@ui5/webcomponents-react": "2.15.0",
+      "@ui5/webcomponents": "2.15.0",
+      "@ui5/webcomponents-base": "2.15.0",
+      "@ui5/webcomponents-fiori": "2.15.0",
+      "@ui5/webcomponents-icons": "2.15.0"
+    },
+    "chapter": "08",
+    "chapterTitle": "UI5 Web Components for React",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  },
+  {
+    "id": "08-03-progress-and-capacity",
+    "title": "Show progress and enforce capacity",
+    "doc": "08-ui5/03-progress-and-capacity",
+    "objective": "Derive a percentage and keep loading bounded at ten pallets.",
+    "tasks": [
+      "Import ProgressIndicator and derive progress as (loaded / 10) * 100.",
+      "Render it with value, displayValue, and an accessibleName describing shipment progress.",
+      "Clamp the Load updater to ten and disable Load pallet at capacity.",
+      "Confirm five loads show 50%, ten show 100%, another load is unavailable, and Reset restores 0% and the enabled action."
+    ],
+    "hints": [
+      "The pinned UI5 v2 indicator uses value for a 0–100 percentage, not the raw 0–10 pallet count.",
+      "Reset only loaded; the percentage and disabled state should follow automatically."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import { useState } from 'react';\nimport { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';\nimport { Button } from '@ui5/webcomponents-react/Button';\nimport '@ui5/webcomponents-icons/dist/add.js';\nimport '@ui5/webcomponents-icons/dist/refresh.js';\nimport './styles.css';\n\nexport default function App() {\n  const [loaded, setLoaded] = useState(0);\n  return <ThemeProvider><main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p aria-live=\"polite\">{loaded} / 10 pallets loaded</p>\n      <div className=\"controls\">\n        <Button icon=\"add\" onClick={() => setLoaded(current => current + 1)}>Load pallet</Button>\n        <Button icon=\"refresh\" onClick={() => setLoaded(0)}>Reset shipment</Button>\n      </div>\n    </section>\n  </main></ThemeProvider>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { useState } from 'react';\nimport { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';\nimport { Button } from '@ui5/webcomponents-react/Button';\nimport { ProgressIndicator } from '@ui5/webcomponents-react/ProgressIndicator';\nimport '@ui5/webcomponents-icons/dist/add.js';\nimport '@ui5/webcomponents-icons/dist/refresh.js';\nimport './styles.css';\n\nexport default function App() {\n  const [loaded, setLoaded] = useState(0);\n  const progress = (loaded / 10) * 100;\n  return <ThemeProvider><main>\n    <h1>UI5 loading progress</h1>\n    <p>Load a ten-pallet shipment using UI5 components.</p>\n    <section aria-label=\"Shipment loading\">\n      <p aria-live=\"polite\">{loaded} / 10 pallets loaded</p>\n      <ProgressIndicator value={progress} displayValue={`${progress}% loaded`} accessibleName=\"Shipment loading progress\" />\n      <div className=\"controls\">\n        <Button icon=\"add\" disabled={loaded >= 10} onClick={() => setLoaded(current => Math.min(10, current + 1))}>Load pallet</Button>\n        <Button icon=\"refresh\" onClick={() => setLoaded(0)}>Reset shipment</Button>\n      </div>\n    </section>\n  </main></ThemeProvider>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {
+      "@ui5/webcomponents-react": "2.15.0",
+      "@ui5/webcomponents": "2.15.0",
+      "@ui5/webcomponents-base": "2.15.0",
+      "@ui5/webcomponents-fiori": "2.15.0",
+      "@ui5/webcomponents-icons": "2.15.0"
+    },
+    "chapter": "08",
+    "chapterTitle": "UI5 Web Components for React",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  }
+]

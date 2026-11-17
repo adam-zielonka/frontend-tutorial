@@ -1,0 +1,259 @@
+.illustration {
+  --ink: #3d245e;
+  --muted-ink: #695d7b;
+  --purple: #7436b8;
+  --purple-wash: #eee6f6;
+  --paper: #fffcf7;
+  --canvas: #f6f1e9;
+  --rule: #d8cddd;
+  --amber: #a9670b;
+  --gold: #f2c668;
+  --gold-wash: #f9e6b8;
+  --green: #237756;
+  --green-wash: #d4e9db;
+  --red: #a34553;
+  --shadow: #3d245e0e;
+  --solid-purple: #6330a0;
+  --on-purple: #fffaf4;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  color: var(--ink);
+  background-color: var(--canvas);
+  background-image: radial-gradient(var(--rule) .65px, transparent .65px);
+  background-size: 19px 19px;
+  font-family: var(--ifm-font-family-base, system-ui, sans-serif);
+  container-type: inline-size;
+}
+
+:global([data-theme='dark']) .illustration {
+  --ink: #eee1fc;
+  --muted-ink: #c0afcf;
+  --purple: #c19ae8;
+  --purple-wash: #33253f;
+  --paper: #251f2e;
+  --canvas: #1c1822;
+  --rule: #493b54;
+  --amber: #ecc274;
+  --gold: #c59543;
+  --gold-wash: #493921;
+  --green: #8bc5a4;
+  --green-wash: #273e34;
+  --red: #efa0aa;
+  --shadow: #0003;
+  --solid-purple: #b28cda;
+  --on-purple: #21152e;
+}
+
+.illustration:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: -4px;
+}
+
+.sheet {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 30px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.heading {
+  width: 100%;
+  max-width: 740px;
+  align-self: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 17px;
+  color: var(--muted-ink);
+  font-size: .69rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.chapterMark {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 19px;
+  height: 13px;
+  border: 2px solid var(--ink);
+  border-radius: 3px 3px 5px 1px;
+  background: var(--gold);
+  transform: rotate(-7deg);
+}
+
+.heading h2 {
+  max-width: 25ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.55rem, 3.8cqw, 2.2rem);
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.summary {
+  margin: 12px 0 0;
+  color: var(--muted-ink);
+  font-size: .85rem;
+  line-height: 1.6;
+}
+
+.stage {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding-block: 8px;
+}
+.diagramTools {display: none; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem; color: var(--muted-ink); font-size: .8rem; text-align: center;}
+.diagramTools > span {flex-basis: 100%;}
+.diagramTools button {min-height: 36px; padding: .35rem .65rem; border: 1px solid var(--purple); border-radius: 5px; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer;}
+.diagramTools button:focus-visible, .enlarged:focus-visible {outline: 2px solid var(--purple); outline-offset: 2px;}
+
+.drawing {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  max-height: 530px;
+  overflow: visible;
+  color: var(--ink);
+  font-family: inherit;
+}
+
+.drawing text {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.paper, .goldPaper, .wash, .disc, .goldDisc, .provider {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.8;
+}
+
+.goldPaper, .goldDisc {fill: var(--gold-wash);}
+.wash, .disc {fill: var(--purple-wash);}
+.wash {stroke: var(--rule);}
+.provider {fill: var(--purple-wash); stroke: var(--purple); stroke-dasharray: 7 6;}
+.shadow {fill: var(--shadow);}
+.dot {fill: var(--purple);}
+.selectedTab {fill: var(--purple-wash); stroke: var(--purple); stroke-width: 1;}
+.rule {fill: none; stroke: var(--rule); stroke-width: 1.5;}
+.inkLine, .icon, .package, .arrow, .dashedLine, .reactMark, .route, .tick, .amberLine, .onPurpleLine {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon {stroke-width: 2.7;}
+.package {fill: var(--gold-wash); stroke-width: 2;}
+.arrow {stroke: var(--purple); stroke-width: 2.4;}
+.arrowHead, .amberHead {fill: none; stroke: var(--purple); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;}
+.amberLine, .amberHead {stroke: var(--amber);}
+.dashedLine {stroke: var(--muted-ink); stroke-width: 1.8; stroke-dasharray: 5 7;}
+.reactMark {stroke: var(--purple); stroke-width: 2;}
+.reactMark circle {fill: var(--purple);}
+.route {stroke: var(--purple); stroke-width: 2; stroke-dasharray: 5 9;}
+.routeHalo {fill: none; stroke: var(--purple-wash); stroke-width: 15; stroke-linecap: round;}
+.tick {stroke: var(--purple); stroke-width: 1.5;}
+.check {fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;}
+.cross {fill: none; stroke: var(--red); stroke-width: 2.5; stroke-linecap: round;}
+.loadingRing {fill: none; stroke: var(--purple); stroke-width: 3; stroke-dasharray: 58 24;}
+
+.drawing .windowLabel {font-size: 17px; font-weight: 600;}
+.drawing .nodeLabel {font-size: 22px; font-weight: 650; letter-spacing: -.4px;}
+.drawing .smallLabel {font-size: 18px; fill: var(--muted-ink);}
+.drawing .statusLabel {font-size: 17px; font-weight: 650;}
+.drawing .stepNumber {font-size: 17px; fill: var(--purple); font-weight: 700; letter-spacing: 2px;}
+.drawing .code, .drawing .codeSmall, .drawing .codeAccent {
+  font-family: var(--ifm-font-family-monospace, ui-monospace, SFMono-Regular, Consolas, monospace);
+  font-size: 18px;
+  letter-spacing: -.7px;
+}
+.drawing .codeSmall {font-size: 16px;}
+.drawing .codeAccent {fill: var(--purple);}
+.drawing .lineNumber {font-size: 16px; fill: var(--muted-ink);}
+.drawing .metric {font-size: 50px; font-weight: 600; letter-spacing: -2px;}
+.drawing .counterValue {font-size: 31px; font-weight: 600;}
+.drawing .oldValue {font-size: 34px; fill: var(--muted-ink);}
+.drawing .buttonText {font-size: 28px; font-weight: 650;}
+.drawing .handNote {font-size: 21px; font-style: italic; fill: var(--muted-ink); letter-spacing: -.4px;}
+.drawing .rampLetter {font-size: 25px; font-weight: 750;}
+.drawing .shipmentId {font-size: 19px; font-weight: 700;}
+.drawing .onPurpleText {fill: var(--on-purple); font-size: 20px; font-weight: 650;}
+.solidPurple {fill: var(--solid-purple);}
+.onPurpleLine {stroke: var(--on-purple);}
+.stripeBase {fill: var(--paper);}
+.stripeInk {fill: var(--rule); opacity: .65;}
+.loadedWash {fill: var(--green-wash);}
+.progressWash {fill: var(--gold-wash);}
+.track {fill: var(--rule);}
+.loadedFill {fill: var(--green);}
+.progressFill {fill: var(--amber);}
+
+.caption {
+  display: flex;
+  align-items: flex-start;
+  align-self: center;
+  gap: 13px;
+  width: 100%;
+  max-width: 740px;
+  color: var(--muted-ink);
+}
+
+.captionLine {
+  flex: 0 0 25px;
+  height: 3px;
+  margin-top: .65em;
+  border-radius: 1px;
+  background: var(--amber);
+  transform: rotate(-5deg);
+}
+
+.caption p {margin: 0; max-width: 66ch; font-size: .8rem; line-height: 1.65;}
+
+@container (max-width: 420px) {
+  .sheet {padding: 25px 12px 22px; gap: 15px;}
+  .heading, .caption {padding-inline: 5px;}
+  .eyebrow {font-size: .65rem; letter-spacing: .06em; margin-bottom: 13px; gap: 8px;}
+  .heading h2 {font-size: 1.5rem;}
+  .summary {font-size: .8rem; margin-top: 10px;}
+  .stage {padding-block: 10px;}
+  .caption {gap: 9px;}
+  .captionLine {flex-basis: 18px;}
+  .caption p {font-size: .78rem;}
+}
+
+@media screen and (max-width: 999px) {
+  .diagramTools {display: flex;}
+  .enlarged {overflow-x: auto; justify-content: flex-start;}
+  .enlarged .drawing {flex-shrink: 0; min-width: 680px;}
+}
+
+@media print {
+  .diagramTools {display: none;}
+  .illustration {height: auto; overflow: visible; background-image: none; break-inside: avoid;}
+  .sheet {min-height: 0;}
+  .drawing {max-height: 380px;}
+}

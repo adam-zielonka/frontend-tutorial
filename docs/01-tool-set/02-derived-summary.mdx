@@ -1,0 +1,31 @@
+---
+title: "1.2. Derive the manifest summary"
+slug: /01-tool-set/02-derived-summary
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+This starter contains the previous step's completed typed records and list. Your own edits stay in their original step. Calculate values from the array during rendering, so the list remains the source of truth ([React on pure rendering](https://react.dev/learn/keeping-components-pure)).
+
+1. In `/App.tsx`, inside `App` before `return`, add:
+
+   ```ts title="/App.tsx"
+   const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);
+   const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;
+   ```
+
+   `reduce` starts at zero and adds each quantity; `filter` keeps matching records and `length` counts them.
+2. Above the `<ul>` in the returned JSX, add a summary section containing `shipments.length`, `totalPallets`, and `readyCount` in braces. For example, `<p>{shipments.length} shipments · {totalPallets} pallets · {readyCount} ready</p>` belongs inside `<section aria-label="Summary">`.
+If the total is wrong, check the initial `0` and that you add `shipment.pallets`, not the whole object.
+
+
+<LessonExercise id="01-02-derived-summary" />
+
+## Observe
+
+Confirm the summary shows 3 shipments, 16 pallets, and 2 ready.
+
+## Sources
+
+[React keeping components pure](https://react.dev/learn/keeping-components-pure), [TypeScript everyday types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).

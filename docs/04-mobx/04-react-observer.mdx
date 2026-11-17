@@ -1,0 +1,29 @@
+---
+title: "4.4. Subscribe React with observer"
+slug: /04-mobx/04-react-observer
+sidebar_position: 4
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Making a model observable does not subscribe React. This starter removes the temporary value copy and bridge handlers: `Counter` reads `counter.value` directly and calls bound model actions. The initial zero renders, but clicks do not refresh it yet.
+
+## Edit the component wrapper
+
+In `/App.tsx`, change the opening line of `Counter` to:
+
+```tsx title="/App.tsx"
+const Counter = observer(function Counter({ counter }: { counter: CounterStore }) {
+```
+
+Change its closing `}` immediately before `export default function App` to `});`. Keep the existing JSX and handlers inside the wrapper.
+
+[`observer`](https://mobx.js.org/react-integration.html) records the observable values read during this component's render and updates it when they change. Keep `counter.value` inside that render. Wrapping only `App` would not track reads inside an unwrapped child; `App` currently owns only a stable model reference.
+
+<LessonExercise id="04-04-react-observer" />
+
+## Check your work
+
+Click +100 → −1 → Reset: expect 100 → 99 → 0 without a React numeric setter. Next, manage several model instances.
+
+[Observable state](https://mobx.js.org/observable-state.html)

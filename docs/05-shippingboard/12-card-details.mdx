@@ -1,0 +1,41 @@
+---
+title: "5.12. Open shared loading details"
+slug: /05-shippingboard/12-card-details
+sidebar_position: 12
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/11-ramp-assignments
+pagination_next: 05-shippingboard/13-ramp-status
+course_workspace: original-project
+course_chapter: "05"
+course_step: 12
+course_illustration: "/course/shippingboard/12-card-details.svg"
+course_illustration_alt: "One selection, one existing dialog"
+course_illustration_description: "LoadingBox click: Pass loading model \u2192 UI.selectedLoading: Existing shared state \u2192 Details.tsx: Change assignment. Table rows call the same action. Reassigning moves the same card between ramps."
+---
+
+The table already opens a working details dialog. Let loading cards call that same store action so an assignment change updates both presentations of the same model.
+
+Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
+
+Table rows call the same action. Reassigning moves the same card between ramps.
+
+## Make the change
+
+In `src/components/LoadingBox.tsx`, add this import:
+
+```tsx title="src/components/LoadingBox.tsx — store import"
+import { store } from "../store/Store";
+```
+
+Replace only its opening `return <Card ...>` line with these lines; keep the header, main, footer and closing tags from lesson 5.10:
+
+```tsx title="src/components/LoadingBox.tsx — click handler"
+return <Card className="Loading" elevation={Elevation.TWO} interactive
+  onClick={() => store.ui.openLoadingDialog(loading)}>
+```
+
+`interactive` provides Blueprint's card interaction styling; `onClick` supplies the behavior. Pass the existing model to the same action used by a table row. Do not create another dialog or another selected-loading state.
+
+## Check your work
+
+Clicking `0007703` on C opens its details and writes `loading=0007703` to the URL. Assign it to A with the existing ramp buttons and close the dialog: its card moves from C to A. Switch to Loadings and the same row shows ramp A. Reload to restore the original fixture assignments; this checkpoint edits in-memory models and does not persist assignments to a server.

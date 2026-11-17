@@ -1,0 +1,39 @@
+---
+title: "4.6. Derive capacity and the total"
+slug: /04-mobx/06-computed-capacity
+sidebar_position: 6
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Capacity and total are facts derived from the counters. Storing separate copies would let them drift out of sync. This starter replaces the temporary limit with `limit = 4` and supplies a total display, a disabled-button binding and two getter stubs. The action already guards the numeric limit while those getters are unfinished.
+
+## Edit the derived values
+
+In `/Store.ts`, replace the getter stubs with:
+
+```ts title="/Store.ts"
+get canAddMoreCounters(): boolean {
+  return this.counters.length < this.limit;
+}
+
+get sum(): number {
+  return this.counters.reduce((total, counter) => total + counter.value, 0);
+}
+```
+
+A getter is read as `store.sum`, without parentheses. `makeAutoObservable` infers [computed values](https://mobx.js.org/computeds.html) from getters, tracking the state read while deriving the result. `reduce` starts at zero, so an empty collection also totals zero.
+
+At the start of `addCounter`, replace its length comparison with:
+
+```ts title="/Store.ts"
+if (!this.canAddMoreCounters) return;
+```
+
+The disabled button explains capacity to the user; the action's guard enforces it for every caller. Both now use the same rule. See [actions](https://mobx.js.org/actions.html).
+
+<LessonExercise id="04-06-computed-capacity" />
+
+## Check your work
+
+Fill all four slots, set two cards to 100 and −1, then reset the first: Add stays disabled and the total changes from 99 to −1. Next, free a slot by removing a model.

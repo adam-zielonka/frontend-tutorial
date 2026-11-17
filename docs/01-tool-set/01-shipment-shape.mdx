@@ -1,0 +1,40 @@
+---
+title: "1.1. Describe a shipment with types"
+slug: /01-tool-set/01-shipment-shape
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Node runs development tools, TypeScript checks the shape of data, and React displays it. Vite serves the exported app. Start with three records in `/shipments.ts`; no installation is needed in the browser. An [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) describes the fields each record must have; a union limits the allowed values.
+
+We want the operator to distinguish urgent shipments. Adding text only in the interface would leave that information disconnected from the record. Start with the data model, fill in the records, and then read that data in the component.
+
+1. In `/shipments.ts`, replace the TODO inside `Shipment` with this field:
+
+   ```ts title="/shipments.ts"
+   priority: 'standard' | 'express';
+   ```
+
+   The colon introduces a type, and `|` means either of the two string values is allowed. The field is required, so every `Shipment` must supply it. The interface describes data; it does not create a priority value by itself.
+2. In the array below, add `priority: 'express'` to S-101 and `priority: 'standard'` to each other object. Commas separate object properties. Until all three are updated, a type checker can report missing fields.
+3. In `/App.tsx`, replace the TODO inside the list item with:
+
+   ```tsx title="/App.tsx"
+   <span> · {shipment.priority}</span>
+   ```
+
+   The existing `shipments.map(...)` renders one list item per record. Within that item, `shipment` names the current record. JSX braces read its priority instead of displaying the literal words `shipment.priority`.
+
+If a value is rejected, check its spelling and quotes against the union; `Standard` is a different string. In a local export these editor files live under `src/`.
+
+
+<LessonExercise id="01-01-shipment-shape" />
+
+## Observe
+
+Confirm S-101 shows express and the other two rows show standard.
+
+## Sources
+
+[TypeScript object types](https://www.typescriptlang.org/docs/handbook/2/objects.html), [union types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types), [React JavaScript in JSX](https://react.dev/learn/javascript-in-jsx-with-curly-braces).

@@ -1,0 +1,32 @@
+---
+title: "3.1. Render the counter component"
+slug: /03-react-basics/01-component
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The starter has a static `count` of zero and a placeholder paragraph in `/App.tsx` (locally `src/App.tsx`). The exercise supplies the entry point. A [component](https://react.dev/learn/your-first-component) is a function returning JSX; braces insert a JavaScript value into its markup.
+
+1. Inside the existing `<main>`, replace the placeholder paragraph with a short instruction such as `Count pallets as they arrive.` Keep the heading and default export.
+2. Below the paragraph add a section labelled for its purpose:
+
+   ```tsx title="/App.tsx"
+   <section aria-label="Pallet counter">
+     <p>Pallets: <output aria-live="polite">{count}</output></p>
+   </section>
+   ```
+
+   `output` presents the quantity; the polite live region can announce later changes without interrupting the user. The existing stylesheet styles the section and output.
+If you see literal `count` instead of a number, use `{count}` inside the output. JSX attributes such as `aria-label` remain quoted strings here.
+
+
+<LessonExercise id="03-01-component" />
+
+## Observe
+
+The preview should show “Pallets: 0”.
+
+## Sources
+
+[React your first component](https://react.dev/learn/your-first-component), [writing markup with JSX](https://react.dev/learn/writing-markup-with-jsx).

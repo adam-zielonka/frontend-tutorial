@@ -1,0 +1,36 @@
+---
+title: "6.1. Write the first store tests"
+slug: /06-tests/01-first-test
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The complete `CounterStore` starts at zero, clamps changes between 0 and 10, and resets to zero. A test makes an expectation repeatable: arrange a fresh store, act, then assert the result. Construction itself needs no action.
+
+In `/Store.test.ts`, keep the imports and `describe` group. Replace the first two `it.todo` entries with:
+
+```ts title="/Store.test.ts"
+it('starts at zero', () => {
+  const store = new CounterStore();
+  expect(store.value).toBe(0);
+});
+
+it('adds and subtracts from the current value', () => {
+  const store = new CounterStore();
+  store.change(4);
+  expect(store.value).toBe(4);
+  store.change(-2);
+  expect(store.value).toBe(2);
+});
+```
+
+`it` names each case; `expect(...).toBe(...)` compares actual and expected values. The intermediate assertion shows that subtraction starts from the changed value. Leave the other three cases pending.
+
+<LessonExercise id="06-01-first-test" />
+
+## Observe
+
+Choose **Run tests**: two cases should pass and three remain pending. Try expecting 3 instead of 2 to see a failure, then restore 2.
+
+[Vitest guide](https://vitest.dev/guide/), [assertions](https://vitest.dev/api/expect.html).

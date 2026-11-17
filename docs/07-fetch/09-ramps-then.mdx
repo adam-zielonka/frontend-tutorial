@@ -1,0 +1,32 @@
+---
+title: "7.9. Load ramps with a promise chain"
+sidebar_position: 9
+---
+
+Continue from [7.8](./08-customers-await.mdx). A promise chain can express the same request, status check, validation and model conversion as `async`/`await`.
+
+## Edit the ramp request
+
+In `src/api/api.ts`, remove only the static `RAMPS` JSON import, then replace `getRamps` with the equivalent stages written using `.then`:
+
+```ts title="src/api/api.ts"
+getRamps(): Promise<Ramp[]> {
+  return fetch(BASE_URL + 'RAMPS.json')
+    .then(response => {
+      if (!response.ok) throw new Error(`Ramps: HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((json: unknown) => {
+      if (!Array.isArray(json) || !json.every(isRampResponse)) {
+        throw new Error('Invalid ramp response');
+      }
+      return json.map(r => new Ramp(r.ramp_id, r.description));
+    });
+}
+```
+
+Returning `response.json()` makes the next callback wait for the parsed data. Returning the outer chain lets `Store.init` await the whole operation. Forgetting either return breaks that chain. There is no need for an additional `async` keyword when the method already returns the promise directly. Use whichever style makes the sequence clearest; both must propagate errors to their caller.
+
+## Check your work
+
+Run `pnpm build`: the ramp assignment in `Store.init` now reports the same promise/array mismatch as the customer assignment; next, [await them during initialization](./10-store-initialization.mdx).

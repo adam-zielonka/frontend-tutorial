@@ -1,0 +1,57 @@
+---
+title: "5.14. Show occupancy in the dialog"
+slug: /05-shippingboard/14-dialog-occupancy
+sidebar_position: 14
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/13-ramp-status
+pagination_next: 05-shippingboard/15-complete-board
+course_workspace: original-project
+course_chapter: "05"
+course_step: 14
+course_illustration: "/course/shippingboard/14-dialog-occupancy.svg"
+course_illustration_alt: "Occupancy guides assignment choices"
+course_illustration_description: "Ramp.loadings: quantity = length \u2192 Details buttons: Empty / current / other \u2192 Button intent: Neutral / primary / danger. Active marks the current assignment. \u2205 clears it; occupied choices remain selectable."
+---
+
+The dashboard shows progress; the assignment dialog needs different information: which ramps are occupied, and by how many loadings. Derive those counts from the same relationship instead of maintaining another counter.
+
+Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
+
+Active marks the current assignment. ∅ clears it; occupied choices remain selectable.
+
+## Make the change
+
+Add this getter **inside** `Ramp` in `src/store/Ramp.ts`, alongside the other getters from lesson 5.13:
+
+```ts title="src/store/Ramp.ts — quantity"
+get quantity(): number {
+  return this.loadings.length;
+}
+```
+
+This is a count of loadings, not pallets. It changes automatically when `setRamp` or `clearRamp` changes the relationship.
+
+In `src/components/Details.tsx`, find the existing `<section className="ramps">` and replace **that entire section only** with the following. Keep the rest of the file, including its existing `Intent` import, local dialog animation state, dates, duration slider, other fields and close handlers:
+
+```tsx title="src/components/Details.tsx — ramp choices"
+<section className="ramps">
+  <FormGroup label="Ramp:" className="ramps-list">
+    {ramps.map(r => <Button key={r.id} className="ramp-button" outlined
+      active={r === loading.ramp}
+      onClick={() => loading.setRamp(r)}
+      intent={r.isEmpty ? Intent.NONE
+        : r === loading.ramp ? Intent.PRIMARY : Intent.DANGER}>
+      {r.description}
+      <sup>{r.quantity > 0 ? r.quantity : null}</sup>
+    </Button>)}
+    <Button onClick={loading.clearRamp} active={!loading.ramp}
+      outlined className="ramp-button">∅</Button>
+  </FormGroup>
+</section>
+```
+
+The empty/current/occupied order means an empty ramp is neutral; a nonempty current ramp is primary; another occupied ramp is danger. `active` still identifies the current assignment. The superscript renders only positive counts; the explicit ternary prevents a stray `0` from appearing. `Intent` and `active` are Blueprint button props, not status fields on the `Loading` model. These colours describe occupancy when choosing a ramp, whereas the dashboard body colour describes loading progress.
+
+## Check your work
+
+after reload, open `0007703`. C is active/primary with count 2; B, D and E are danger with counts 1, 3 and 2; A, F and G are neutral without counts. Click A: its count becomes 1 and it becomes active/primary, while C's count becomes 1 and it becomes danger. Click ∅: A becomes neutral again, the loading disappears from the ramp board and it remains in the table with no ramp. Other occupied ramps are still selectable; danger intent is information, not a capacity constraint.
