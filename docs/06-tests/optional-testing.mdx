@@ -1,0 +1,72 @@
+---
+title: "More testing techniques"
+---
+
+# More testing techniques
+
+## Where test configuration belongs
+
+
+The exported `package.json` already has `test` (watch mode) and `test:run` (one run). That is why `pnpm test` and `pnpm test:run` work without inventing new scripts. The direct command `pnpm exec vitest run` invokes the same local test runner.
+
+No config file is needed for these store tests. If you want to make the environment explicit, create a separate `vitest.config.ts` at the project root:
+
+```ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    environment: 'node',
+  },
+});
+```
+
+Use `defineConfig` from `vitest/config` here so TypeScript knows about the `test` options. This file configures tests, not the development server. You can keep `vite.config.ts` unchanged. With these pure model tests, the same five checks should pass before and after adding the file. Browser emulation only becomes relevant when the tested code needs a DOM.
+
+## Optional continuation: UI and end-to-end tests
+
+The original [mobx-example `create-tests` checkpoint](https://github.com/adam-zielonka/mobx-example/tree/create-tests) tests a different store. The mini export already includes Vitest, so no installation or DOM emulator is needed for its store tests. In a separate UI test, install compatible testing dependencies for that project and configure the [Vitest v3 environment](https://v3.vitest.dev/guide/environment.html) as `happy-dom` or `jsdom` when browser APIs are required. For example, in a Vitest config use `test: { environment: 'happy-dom' }` after installing happy-dom. Keep Node for pure store tests. The original configuration's browser emulation is not a real browser.
+
+Run tests once with `pnpm exec vitest run`, or omit `run` to watch edits. For coverage in a local chapter 6 copy, run `pnpm add -D @vitest/coverage-v8@3.2.6` to match the installed Vitest, then `pnpm exec vitest run --coverage`. Inspect missed branches as well as percentages. A high percentage alone cannot establish that assertions are meaningful. For user journeys across the browser and application, [Playwright](https://playwright.dev/docs/intro) provides end-to-end tests; use it separately from the unit tests, for example to open the page, click a control and assert the visible result.
+
+### Apply the tests to the counter collection
+
+The original exercise also asked you to test invalid inputs and adding/removing counters. Use a **separate local clone of the completed MobX chapter**, rather than putting these tests into the smaller chapter 6 fixture:
+
+```sh
+git clone --branch lesson-04-09-persistence-solution-v3 --depth 1 https://github.com/adam-zielonka/frontend-tutorial.git counter-collection-tests
+cd counter-collection-tests
+pnpm install --frozen-lockfile
+```
+
+That export already includes its own Vitest version. Create `src/Store.test.ts` with the following two cases and run `pnpm exec vitest run`:
+
+```ts
+import { expect, it } from 'vitest';
+import { CounterStore, Store } from './Store';
+
+it('keeps a valid value when an invalid delta arrives, then resets', () => {
+  const counter = new CounterStore(1);
+  counter.add(7);
+  counter.add(Number.NaN);
+  counter.add(Infinity);
+  expect(counter.value).toBe(7);
+  counter.reset();
+  expect(counter.value).toBe(0);
+});
+
+it('enforces capacity and frees a slot when a counter is removed', () => {
+  const store = new Store();
+  expect(store.counters).toHaveLength(1);
+  for (let i = 0; i < 6; i++) store.addCounter();
+  expect(store.counters).toHaveLength(4);
+  expect(store.canAddMoreCounters).toBe(false);
+  const removedId = store.counters[1].id;
+  store.removeCounter(removedId);
+  expect(store.counters).toHaveLength(3);
+  expect(store.counters.some(counter => counter.id === removedId)).toBe(false);
+  expect(store.canAddMoreCounters).toBe(true);
+});
+```
+
+The model starts at zero and a collection starts with one model. These tests assert those actual contracts, instead of retaining the original sample's incorrect expectation that a new counter has value 1. Persistence helpers are not started by constructing these classes, so these tests do not need a browser. Add a case that gives two counters different values and verifies the computed sum before and after deleting one.

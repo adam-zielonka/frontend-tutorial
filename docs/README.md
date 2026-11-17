@@ -23,31 +23,9 @@ Read each chapter introduction before its numbered steps. It connects the small 
 
 ## How to work through a lesson
 
-1. **Understand the starting point.** Read what the app already does and the problem this step will solve. A starter may deliberately contain a placeholder or an unconnected button; the lesson explains what to expect before editing.
-2. **Follow the walkthrough.** It names the file to edit, shows the relevant lines, and explains why they work. Apply one change at a time rather than replacing everything with a solution.
-3. **Try it in the editor.** On a wide screen, the editor and live preview start beside the lesson. On a phone, switch between **Lesson**, **Code**, and **Preview**. Your editor stays open when you switch panels. Only the files relevant to this step are editable by default; you can inspect the supporting files too.
-4. **Check the result.** Perform **Check your work** in the lesson pane. Predict the outcome first, then compare it with the preview. In the testing chapter, distinguish the manual browser demonstration from Vitest running in a terminal.
-5. **Compare and explain.** If you get stuck, open a hint or choose **Solution** in the workspace. The solution is read-only and does not replace your work. Return to **Your code**, fix the difference, and explain what the change does before moving on.
+Read the explanation, make the changes in the named editor file, and check the result. Hints and a read-only solution are available when you need them. On a phone, switch between **Lesson**, **Code**, and **Preview**; the testing chapter also has **Run tests** for actual test results.
 
-Introductions use the same layout, with a diagram of the topic beside the text. On a phone, choose **Illustration** to view it, then return to **Lesson** to continue reading. The editor appears when you reach a numbered exercise.
-
-Use **On this page** to jump to an explanation and **Lessons** to open the course outline. On a wide screen, drag the dividers to give the instructions, code, or preview more room; the focused dividers also respond to arrow keys. Each pane scrolls independently. Previous/next links remain after the result checks, with shortcuts in the lesson header.
-
-## What happens when you open the next step?
-
-Each step opens a prepared checkpoint, with the required setup explained in its walkthrough. **Your edits are not automatically copied into the next step.** This lets you continue even if your current experiment is unfinished. Return to the same lesson to find its browser draft.
-
-Drafts are saved separately in this browser. Download your edited files if you want to keep a copy, move to another device, or continue in a local editor. Choose **Work locally** beside **Console** for instructions before importing a download: the importer replaces that project's exercise files.
-
-The embedded preview needs internet access to use CodeSandbox. If it cannot start, the lesson's text and code examples are still readable; the local project and StackBlitz links offer another way to work. Do not enter private data into the examples.
-
-## Work locally or online
-
-Every lesson includes commands to clone its exact starter or solution, plus a StackBlitz link. For local development, use Node.js 24 and Git; chapters 1–3 explain the tools and commands. A `git clone --branch lesson-…` command selects a **tagged checkpoint**, so create your own branch with `git switch -c my-work` before committing changes.
-
-In the embedded editor, `/App.tsx` means the virtual project file; in the cloned Vite project it is `src/App.tsx`. The same applies to other lesson source files. Public assets are the exception: they live in the project's `public/` folder.
-
-The current code is on [`course-examples-v4`](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v4), with `lesson-<chapter>-<step>-<name>-start-v4` and matching `solution-v4` tags. Earlier v1, v2 and v3 checkpoints remain available. The v4 update fixes online installation while keeping the same exercise code. The explanatory text can improve without changing these code checkpoints or your saved v3 drafts.
+Each step starts from a prepared checkpoint, while your own draft stays in its lesson. For saving, importing, refresh behavior, and local work, see [course help](./course-help.mdx). The [course examples](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v4) contain the tagged starters and solutions.
 
 ## Why we teach this stack
 

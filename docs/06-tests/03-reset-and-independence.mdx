@@ -6,36 +6,34 @@ sidebar_position: 3
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+A reset test must start with a changed value: otherwise a reset that does nothing could pass. Separate instances should also retain independent state.
 
-Reset needs a changed value to be a meaningful test: a broken no-op reset would pass if the store began and stayed at zero. Assert the nonzero value before calling `reset()` and zero afterwards.
+In `/Store.test.ts`, replace the last two `it.todo` entries with:
 
-A separate independence test should create two stores, change one, and inspect both. Together with a fresh store in every test, this guards against accidental shared state.
+```ts title="/Store.test.ts"
+it('resets a changed counter to zero', () => {
+  const store = new CounterStore();
+  store.change(7);
+  expect(store.value).toBe(7);
+  store.reset();
+  expect(store.value).toBe(0);
+});
 
-Run `pnpm exec vitest run` in a real terminal: five tests should pass with none pending. `pnpm exec vitest` enables watch mode. Coverage can be added separately with `@vitest/coverage-v8@3.2.6` to match this chapter's pinned Vitest version; code execution coverage does not prove that assertions cover all meaningful behavior. These tests verify the store, not keyboard operation or rendered DOM updates.
-
-
-## Worked walkthrough
-
-1. In `/Store.test.ts`, replace the reset TODO with a test that creates a store, changes it by 7, asserts 7, calls `store.reset()`, then asserts 0. Starting at a nonzero value prevents a no-op reset from passing.
-2. Replace the independence TODO with two fresh stores. Change `first` by 3 and assert `first.value` is 3 and `second.value` is 0:
-
-```ts
-const first = new CounterStore();
-const second = new CounterStore();
-first.change(3);
-expect(first.value).toBe(3);
-expect(second.value).toBe(0);
+it('keeps two store instances independent', () => {
+  const first = new CounterStore();
+  const second = new CounterStore();
+  first.change(3);
+  expect(first.value).toBe(3);
+  expect(second.value).toBe(0);
+});
 ```
 
-Run the exported project with `pnpm exec vitest run`: five should pass. If a case is pending, replace `it.todo` with an `it` callback rather than adding code beside it.
+These cases test the store, not rendered DOM or keyboard behavior. Explore those and coverage in [more testing techniques](./optional-testing.mdx).
 
 <LessonExercise id="06-03-reset-and-independence" />
 
-## Check your work
+## Observe
 
-Confirm five passing cases and no pending cases. These checks cover store behavior; the next chapter handles data arriving from outside the app.
+Choose **Run tests**: all five cases should pass with none pending.
 
-
-## Sources
-
-[Vitest test isolation](https://v3.vitest.dev/guide/features.html#threads), [Vitest coverage](https://v3.vitest.dev/guide/coverage.html), [Testing Library principles](https://testing-library.com/docs/guiding-principles/).
+[Vitest guide](https://v3.vitest.dev/guide/).

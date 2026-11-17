@@ -10,21 +10,21 @@ The starter already has state and Add pallet from the previous solution. Keep `c
 
 1. In `/App.tsx`, inside the `controls` div after Add pallet, insert:
 
-   ```tsx
+   ```tsx title="/App.tsx"
    <button disabled={count === 0}
      onClick={() => setCount(current => Math.max(0, current - 1))}>Remove pallet</button>
    ```
 
    `Math.max` clamps the update itself at zero; `disabled` communicates the boundary in the interface.
 2. After that button add `<button onClick={() => setCount(0)}>Reset</button>`. Reset always sets zero, so it needs no previous value.
-3. At zero Remove should be disabled. Add three, remove once, then reset: expect 3, 2, and 0. If Remove remains disabled after adding, check `count === 0` and ensure both buttons use the same state.
+If Remove remains disabled after adding, check `count === 0` and ensure both buttons use the same state.
 
 
 <LessonExercise id="03-03-bounded-events" />
 
-## Check your work
+## Observe
 
-After reset, try Remove at zero and confirm the number stays zero. You have a component with one state value and three actions; the next chapter introduces shared observable state for a larger example.
+Add three, remove once, then reset: the count should be 3, 2, then 0, with Remove disabled at zero.
 
 ## Sources
 

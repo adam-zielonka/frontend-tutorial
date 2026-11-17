@@ -11,21 +11,21 @@ The starter has a static `count` of zero and a placeholder paragraph in `/App.ts
 1. Inside the existing `<main>`, replace the placeholder paragraph with a short instruction such as `Count pallets as they arrive.` Keep the heading and default export.
 2. Below the paragraph add a section labelled for its purpose:
 
-   ```tsx
+   ```tsx title="/App.tsx"
    <section aria-label="Pallet counter">
      <p>Pallets: <output aria-live="polite">{count}</output></p>
    </section>
    ```
 
    `output` presents the quantity; the polite live region can announce later changes without interrupting the user. The existing stylesheet styles the section and output.
-3. The preview should show “Pallets: 0”. If you see literal `count` instead, use `{count}` inside the output. JSX attributes such as `aria-label` remain quoted strings here.
+If you see literal `count` instead of a number, use `{count}` inside the output. JSX attributes such as `aria-label` remain quoted strings here.
 
 
 <LessonExercise id="03-01-component" />
 
-## Check your work
+## Observe
 
-Locate the zero in both the code and preview. It is fixed for now; next, state will let a button change it.
+The preview should show “Pallets: 0”.
 
 ## Sources
 

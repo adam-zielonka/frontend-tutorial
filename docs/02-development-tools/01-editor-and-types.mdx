@@ -8,17 +8,15 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 The starter is a checklist model, not the configuration of your editor or compiler. `/App.tsx` reads its values; `/project.ts` holds them. Formatting and type checking solve different problems: formatting makes layout consistent, while [strict](https://www.typescriptlang.org/tsconfig/strict.html) enables stricter compiler checks.
 
-## Understand the two kinds of feedback
-
 A formatter can arrange whitespace without knowing whether your data makes sense. The TypeScript checker can reject a wrong type even when the code is neatly formatted. We want both kinds of feedback during development. The checklist below helps distinguish them; the local instructions show where the real settings live.
 
 1. In `/project.ts`, find `project` below the interface and change these two properties in that object:
 
-   ```ts
+   ```ts title="/project.ts"
    formatOnSave: true,
    strict: true,
    ```
-2. These are boolean values, not strings: omit quotation marks. Leave the existing `scripts` object in place. The preview should show 2 / 4 settings ready; script settings are for the next step.
+2. These are boolean values, not strings: omit quotation marks. Leave the existing `scripts` object in place. Script settings are for the next step.
 3. For a real local project, export it and open its folder in VS Code. Open Settings, search for `editor.formatOnSave`, enable it and select a formatter if needed. Inspect `compilerOptions.strict` in the exported `tsconfig.json` (already enabled). See [VS Code settings](https://code.visualstudio.com/docs/configure/settings).
 
 If the checklist does not change, edit the values in the object, not the `boolean` declarations in the interface. The editor model does not actually change VS Code.
@@ -26,9 +24,9 @@ If the checklist does not change, edit the values in the object, not the `boolea
 
 <LessonExercise id="02-01-editor-and-types" />
 
-## Check your work
+## Observe
 
-Confirm only Format on save and Strict types say Ready. In your local project, verify the actual setting and `tsconfig.json` separately. Next you will model scripts and run real commands in a terminal.
+Confirm Format on save and Strict types show Ready, for 2 / 4 settings.
 
 ## Sources
 

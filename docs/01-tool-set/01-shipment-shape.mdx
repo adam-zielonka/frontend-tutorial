@@ -8,13 +8,11 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 Node runs development tools, TypeScript checks the shape of data, and React displays it. Vite serves the exported app. Start with three records in `/shipments.ts`; no installation is needed in the browser. An [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) describes the fields each record must have; a union limits the allowed values.
 
-## Add information to the model, then display it
-
 We want the operator to distinguish urgent shipments. Adding text only in the interface would leave that information disconnected from the record. Start with the data model, fill in the records, and then read that data in the component.
 
 1. In `/shipments.ts`, replace the TODO inside `Shipment` with this field:
 
-   ```ts
+   ```ts title="/shipments.ts"
    priority: 'standard' | 'express';
    ```
 
@@ -22,20 +20,20 @@ We want the operator to distinguish urgent shipments. Adding text only in the in
 2. In the array below, add `priority: 'express'` to S-101 and `priority: 'standard'` to each other object. Commas separate object properties. Until all three are updated, a type checker can report missing fields.
 3. In `/App.tsx`, replace the TODO inside the list item with:
 
-   ```tsx
+   ```tsx title="/App.tsx"
    <span> · {shipment.priority}</span>
    ```
 
-   The existing `shipments.map(...)` renders one list item per record. Within that item, `shipment` names the current record. JSX braces read its priority instead of displaying the literal words `shipment.priority`. The preview should show all three rows with their priority.
+   The existing `shipments.map(...)` renders one list item per record. Within that item, `shipment` names the current record. JSX braces read its priority instead of displaying the literal words `shipment.priority`.
 
 If a value is rejected, check its spelling and quotes against the union; `Standard` is a different string. In a local export these editor files live under `src/`.
 
 
 <LessonExercise id="01-01-shipment-shape" />
 
-## Check your work
+## Observe
 
-Check that S-101 says express and both other rows say standard. Why does adding a required field affect every record? Next, use those records to calculate a summary without duplicating data.
+Confirm S-101 shows express and the other two rows show standard.
 
 ## Sources
 

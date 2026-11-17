@@ -21,7 +21,7 @@ A package manager downloads project dependencies from a registry and records ver
 1. [Describe a shipment with types](./01-tool-set/01-shipment-shape.mdx) — Add a required priority to the shipment model and display it.
 2. [Derive the manifest summary](./01-tool-set/02-derived-summary.mdx) — Calculate summary values from the typed records.
 
-Work in order. Each lesson has its own starter, focused editor, and preview. The previous solution forms the next starter within the chapter; your saved edits remain scoped to the lesson where you made them.
+Work in order; each lesson opens a prepared checkpoint. See [course help](./course-help.mdx) for drafts and local work.
 
 ## Official references
 

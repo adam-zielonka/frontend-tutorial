@@ -9,30 +9,25 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 Continue with the provider and button. UI5 button click handlers can request React state updates just like the native buttons in chapter 3. Add one `loaded` value and derive the displayed count from it.
 
-Register `add` and `refresh` using their individual `.js` icon imports before using the names on the buttons. Keep the text labels so the icons supplement accessible names. Add Reset and check both actions with the keyboard.
+Keep the text labels so icons supplement accessible names. The capacity rule arrives next, so use a few loads below ten for now.
 
-This step establishes the actions; the ten-pallet capacity rule and progress display arrive next. For now use a few loads below capacity, then reset.
-
-
-## Worked walkthrough
 
 1. In `/App.tsx`, import `useState` from React and register the icons with side-effect imports:
 
-```tsx
+```tsx title="/App.tsx"
 import '@ui5/webcomponents-icons/dist/add.js';
 import '@ui5/webcomponents-icons/dist/refresh.js';
 ```
 
 2. Inside `App`, before `return`, add `const [loaded, setLoaded] = useState(0);`. Replace the static zero with `{loaded}`. Add `icon="add"` and `onClick={() => setLoaded(current => current + 1)}` to Load; add a Reset button with `icon="refresh"` and `onClick={() => setLoaded(0)}`. The updater uses the previous value; the icon imports register names before use.
 
-Load a few pallets and reset. If an icon is missing, check the exact `.js` import and icon name. Text labels remain useful accessible names.
+If an icon is missing, check its `.js` import and name.
 
 <LessonExercise id="08-02-events-and-icons" />
 
-## Check your work
+## Observe
 
-Use keyboard activation for both actions and confirm the count returns to zero. Next, represent capacity visually and enforce the limit.
-
+Use the keyboard to load a few pallets and reset; the count should return to zero.
 
 ## Sources
 

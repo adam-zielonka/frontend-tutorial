@@ -11,21 +11,21 @@ The starter contains the previous static component. A normal local variable is r
 1. At the top of `/App.tsx`, add `import { useState } from 'react';`. Inside `App`, replace `const count = 0;` with `const [count, setCount] = useState(0);`.
 2. Inside the section, below the output paragraph, add:
 
-   ```tsx
+   ```tsx title="/App.tsx"
    <div className="controls">
      <button onClick={() => setCount(current => current + 1)}>Add pallet</button>
    </div>
    ```
 
    The outer function is the click handler; the inner updater receives the previous state, including queued updates. The existing output reads the new `count` on the next render.
-3. Click Add pallet three times; expect 3. If it updates during rendering instead of on click, check that `onClick` receives a function rather than calling the setter directly.
+If it updates during rendering instead of on click, check that `onClick` receives a function rather than calling the setter directly.
 
 
 <LessonExercise id="03-02-state" />
 
-## Check your work
+## Observe
 
-Click once more and check for 4. The counter can now grow; the next step adds removal while protecting its lower bound.
+Click Add pallet three times and confirm the count is 3.
 
 ## Sources
 

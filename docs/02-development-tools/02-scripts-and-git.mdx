@@ -8,20 +8,18 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 The starter carries forward the two enabled checklist values. The strings in `/project.ts` describe commands for practice; they do not run them. A real terminal and the exported project's `package.json` are separate.
 
-## Give repeated commands a name
-
 Developers run the same commands frequently: start a server, check types, and build a release. A real `package.json` script gives a command a short, shared name. Here we first describe those commands in the practice model, then run them in the actual project.
 
 1. In `/project.ts`, replace the existing `scripts` object inside `project` with:
 
-   ```ts
+   ```ts title="/project.ts"
    scripts: {
      dev: 'vite --host 0.0.0.0',
      typecheck: 'tsc --noEmit',
    },
    ```
 
-   `vite` starts the development server; `tsc --noEmit` checks types without producing JavaScript files. The preview compares exact strings and should show 4 / 4 ready. `--host` listens on all addresses; use it only when network access is intended ([Vite server options](https://vite.dev/config/server-options)).
+   `vite` starts the development server; `tsc --noEmit` checks types without producing JavaScript files. The preview compares exact strings. `--host` listens on all addresses; use it only when network access is intended ([Vite server options](https://vite.dev/config/server-options)).
 2. Clone this step using **Work locally** beside **Console** in the workspace. That dialog also explains how to import a JSON download of your browser edits. In a terminal in the cloned project, run `pnpm install --frozen-lockfile`, then `pnpm exec tsc --noEmit` and `pnpm dev`. Open the printed local address; Ctrl+C stops Vite. To run `pnpm typecheck` instead, add `"typecheck": "tsc --noEmit"` to the actual `scripts` object in `package.json`, with a comma between entries.
 3. If you cloned a lesson tag, create a branch with `git switch -c my-work`; Git is already initialized. For a separate newly created project, run `git init` instead. Then run `git status` and `git diff` to inspect your work. After changing the cloned lesson's `src/project.ts`, use `git add src/project.ts`, then `git diff --staged` to inspect exactly what will be saved, and `git commit -m "Complete project checklist"`. Git records staged changes; `.gitignore` excludes dependencies from the exported project. A local commit does not upload anything. See [Git's guide](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
 
@@ -30,9 +28,9 @@ If the model remains at 2 / 4, compare spaces and spelling in the strings. If a 
 
 <LessonExercise id="02-02-scripts-and-git" />
 
-## Check your work
+## Observe
 
-Check 4 / 4 in the preview, then use `git status` locally to see the result of your checkpoint. The next chapter uses the same tool chain to render and update a React component.
+Confirm the preview shows 4 / 4 ready; locally, `git status` shows your checkpoint state.
 
 ## Sources
 

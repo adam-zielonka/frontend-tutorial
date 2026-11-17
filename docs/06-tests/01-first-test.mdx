@@ -6,24 +6,11 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+The complete `CounterStore` starts at zero, clamps changes between 0 and 10, and resets to zero. A test makes an expectation repeatable: arrange a fresh store, act, then assert the result. Construction itself needs no action.
 
-This chapter deliberately uses a small single-value `CounterStore` rather than chapter 4's collection. Its `change(delta)` adds to the current value and clamps it between 0 and 10; `reset()` returns it to zero. The implementation is already complete so you can focus on testing behavior.
+In `/Store.test.ts`, keep the imports and `describe` group. Replace the first two `it.todo` entries with:
 
-Replace two pending cases with assertions using `describe`, `it`, and `expect(...).toBe(...)`. Use a fresh store per test. Assert the intermediate value after adding as well as the result after subtracting.
-
-**The live preview is a manual harness, not Vitest. Editing the test file does not update a test result on this page.** Export the edited project, install dependencies, and run `pnpm exec vitest run` in a real local or StackBlitz terminal. These store tests run in Node without a DOM emulator. Expect two passing and three pending cases. Temporarily assert an incorrect value to confirm a real failing result, then restore the correct assertion.
-
-
-If you are editing here first, follow the [download, clone, import and run instructions](../ch-06-00-tests.md#run-this-step-from-your-edited-browser-files) to execute these exact files.
-
-## Worked walkthrough
-
-1. Open `/Store.test.ts`. Replace the first pending case with `it('starts at zero', () => { expect(new CounterStore().value).toBe(0); });`. `it` names a behavior; `expect` compares its actual result with the expected value.
-2. Replace the next pending case with a fresh `const store = new CounterStore();`, then call `store.change(4)` and assert `expect(store.value).toBe(4)`. Call `store.change(-2)` and assert 2. A separate store makes the cases independent.
-
-Keep the existing imports and the outer `describe('CounterStore', ...)`. Inside that group, replace the two `it.todo` entries with these two cases, leaving the other three TODOs for later lessons:
-
-```ts
+```ts title="/Store.test.ts"
 it('starts at zero', () => {
   const store = new CounterStore();
   expect(store.value).toBe(0);
@@ -38,17 +25,12 @@ it('adds and subtracts from the current value', () => {
 });
 ```
 
-Read a test as arrange, act, assert: create a known starting state, perform the operation, and compare its result. The first case needs no action because it checks construction itself. The second assertion in the arithmetic case proves that subtraction starts from the changed value, rather than from zero.
-
-Export the edited project, install its dependencies, and run `pnpm exec vitest run` in its terminal. Two pass and three remain pending. If the preview changes but no test results appear, remember it is a manual harness, not a test runner.
+`it` names each case; `expect(...).toBe(...)` compares actual and expected values. The intermediate assertion shows that subtraction starts from the changed value. Leave the other three cases pending.
 
 <LessonExercise id="06-01-first-test" />
 
-## Check your work
+## Observe
 
-Temporarily expect 3 instead of 2 and confirm the terminal reports a failure, then restore 2. Next, check the limits.
+Choose **Run tests**: two cases should pass and three remain pending. Try expecting 3 instead of 2 to see a failure, then restore 2.
 
-
-## Sources
-
-[Vitest writing tests](https://v3.vitest.dev/guide/), [Vitest expect](https://v3.vitest.dev/api/expect.html), [MobX observable state](https://mobx.js.org/observable-state.html).
+[Vitest guide](https://v3.vitest.dev/guide/), [assertions](https://v3.vitest.dev/api/expect.html).

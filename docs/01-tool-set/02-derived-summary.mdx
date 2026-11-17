@@ -10,21 +10,21 @@ This starter contains the previous step's completed typed records and list. Your
 
 1. In `/App.tsx`, inside `App` before `return`, add:
 
-   ```ts
+   ```ts title="/App.tsx"
    const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);
    const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;
    ```
 
    `reduce` starts at zero and adds each quantity; `filter` keeps matching records and `length` counts them.
 2. Above the `<ul>` in the returned JSX, add a summary section containing `shipments.length`, `totalPallets`, and `readyCount` in braces. For example, `<p>{shipments.length} shipments · {totalPallets} pallets · {readyCount} ready</p>` belongs inside `<section aria-label="Summary">`.
-3. The supplied data should show 3 shipments, 16 pallets and 2 ready. If the total is wrong, check the initial `0` and that you add `shipment.pallets`, not the whole object.
+If the total is wrong, check the initial `0` and that you add `shipment.pallets`, not the whole object.
 
 
 <LessonExercise id="01-02-derived-summary" />
 
-## Check your work
+## Observe
 
-Inspect the supplied records without editing them: 8 + 5 + 3 explains the total of 16. In the editable `/App.tsx`, temporarily change the filter from `'ready'` to `'loading'`: its count should become 1. Restore `'ready'` and confirm 2. `/shipments.ts` is a read-only supporting file in this step. This calculation prepares you to distinguish project data from actual tool configuration in the next chapter.
+Confirm the summary shows 3 shipments, 16 pallets, and 2 ready.
 
 ## Sources
 

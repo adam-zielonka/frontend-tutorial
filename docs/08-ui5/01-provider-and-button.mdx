@@ -9,24 +9,22 @@ import LessonExercise from '@site/src/components/LessonExercise';
 
 The exercise pins UI5 Web Components for React and its matching packages to 2.15.0. They are already installed for the preview, independently from the documentation site's dependencies.
 
-Start with composition: import `ThemeProvider` and `Button`, wrap the app, and replace the native button. The provider supplies UI5 React context. The button has no event handler yet; first check its label, rendering, and keyboard focus. Keep a single provider in `App.tsx`; do not add another in the generated entry point.
+The provider supplies UI5 React context. The button has no event handler yet; first check its rendering and keyboard focus. Keep a single provider in `App.tsx`, not another in the entry point.
 
-
-## Worked walkthrough
 
 1. At the top of `/App.tsx`, import `ThemeProvider` from `@ui5/webcomponents-react/ThemeProvider` and `Button` from `@ui5/webcomponents-react/Button`.
 2. Wrap the returned `<main>...</main>` in `<ThemeProvider>...</ThemeProvider>` and replace the native button with `<Button>Load pallet</Button>`. The provider supplies UI5 React context; composition keeps the rest of the page intact.
 
 These are named imports from the installed package, not local files:
 
-```tsx
+```tsx title="/App.tsx"
 import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';
 import { Button } from '@ui5/webcomponents-react/Button';
 ```
 
 Keep `import './styles.css';`. Put `<ThemeProvider>` immediately before the existing opening `<main>`, and `</ThemeProvider>` immediately after `</main>`. Inside the existing shipment section, the replacement is:
 
-```tsx
+```tsx title="/App.tsx"
 <Button>Load pallet</Button>
 ```
 
@@ -36,10 +34,9 @@ The button renders and receives keyboard focus but has no action yet. If the imp
 
 <LessonExercise id="08-01-provider-and-button" />
 
-## Check your work
+## Observe
 
-Tab to the button and confirm its label. Next, connect it to state.
-
+Tab to the rendered button and confirm its label.
 
 ## Sources
 
