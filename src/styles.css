@@ -1,0 +1,19 @@
+:root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+h1 { font-size: 1.65rem; }
+h2 { font-size: 1.15rem; }
+section, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }
+button, input, select { font: inherit; padding: .5rem .75rem; }
+button { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }
+button:disabled { cursor: default; opacity: .55; }
+:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }
+output { font-size: 1.4rem; font-weight: 700; }
+li { margin-block: .5rem; }
+label { display: inline-flex; align-items: center; gap: .5rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }
+code { overflow-wrap: anywhere; }
+[role="alert"] { color: #a31515; }
