@@ -1,4 +1,4 @@
-# Fetch the local ramp fixture — start
+# Fetch the local ramp fixture — solution
 
 Make a request and render its JSON response through the existing effect.
 
