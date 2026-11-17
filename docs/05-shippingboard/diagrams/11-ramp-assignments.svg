@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
+<title id="title">Assignment is an object relationship</title>
+<desc id="desc">loading.ramp: A Ramp or undefined → Ramp.loadings: Filter by === this → RampBox.tsx: Map matching models. setRamp / clearRamp change the source relationship; no second assignment array.</desc>
+<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
+<g font-family="system-ui, sans-serif" fill="#182026">
+<text x="24" y="36" font-size="21" font-weight="700">Assignment is an object relationship</text>
+<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="40" y="103" font-size="18" font-weight="600">loading.ramp</text>
+<text x="40" y="136" font-size="15">A Ramp or undefined</text>
+<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="326" y="103" font-size="18" font-weight="600">Ramp.loadings</text>
+<text x="326" y="136" font-size="15">Filter by === this</text>
+<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="612" y="103" font-size="18" font-weight="600">RampBox.tsx</text>
+<text x="612" y="136" font-size="15">Map matching models</text>
+</g></svg>

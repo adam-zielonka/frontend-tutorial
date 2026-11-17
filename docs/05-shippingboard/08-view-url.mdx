@@ -1,0 +1,113 @@
+---
+title: "5.8. Restore view and loading links"
+slug: /05-shippingboard/08-view-url
+sidebar_position: 8
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/07-content-switch
+pagination_next: 05-shippingboard/09-ramp-shells
+course_workspace: original-project
+course_chapter: "05"
+course_step: 8
+---
+
+A selected view alone is not enough for a shareable link: the existing loading selection must survive too. Restore both choices at startup, then reflect later changes in the address.
+
+Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
+
+![Restore first, react to later changes](./diagrams/08-view-url.svg)
+
+Loading links, unrelated query parameters and the hash survive. No popstate router.
+
+## Make the change
+
+A link such as `/?view=loadings&loading=0007703` should select the table **and** open the existing loading dialog after reload. Restore state first, then observe later changes. Do not replace `init` with a fragment that discards its existing loading lookup or its loading reaction.
+
+Replace `src/store/UI.ts` with this complete version, including the view members from lesson 5.6:
+
+```ts title="src/store/UI.ts — complete URL integration"
+import { makeAutoObservable, reaction } from "mobx";
+import { Loading } from "./Loading";
+import { store } from "./Store";
+
+type View = "dashboard" | "loadings";
+
+function addQueryParam(name: string, value: string, defaultValue: string) {
+  const url = new URL(window.location.href);
+  if (value !== defaultValue) {
+    url.searchParams.set(name, value);
+  } else {
+    url.searchParams.delete(name);
+  }
+  window.history.pushState(null, "", url.pathname + url.search + url.hash);
+}
+
+export class UI {
+  view: View = "dashboard";
+  selectedLoading?: Loading;
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  init = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const view = urlSearchParams.get("view");
+    this.view = view === "loadings" ? "loadings" : "dashboard";
+
+    const loadingId = urlSearchParams.get("loading");
+    if (loadingId) {
+      const loading = store.loadings.find(l => l.id === loadingId);
+      if (loading) {
+        this.selectedLoading = loading;
+      }
+    }
+
+    reaction(
+      () => this.view,
+      view => addQueryParam("view", view, "dashboard"),
+    );
+    reaction(
+      () => this.selectedLoading,
+      loading => addQueryParam("loading", loading?.id ?? "", ""),
+    );
+  };
+
+  get isDashboardOpen(): boolean {
+    return this.view === "dashboard";
+  }
+
+  get isLoadingsOpen(): boolean {
+    return this.view === "loadings";
+  }
+
+  get isLoadingDialogOpen(): boolean {
+    return !!this.selectedLoading;
+  }
+
+  openDashboard = () => {
+    this.view = "dashboard";
+  };
+
+  openLoadings = () => {
+    this.view = "loadings";
+  };
+
+  openLoadingDialog = (loading: Loading) => {
+    this.selectedLoading = loading;
+  };
+
+  closeLoadingDialog = () => {
+    this.selectedLoading = undefined;
+  };
+}
+```
+
+The URL value is untrusted text: only `loadings` selects that view; missing, `dashboard` or unknown values select the default dashboard. Do not cast arbitrary input to `View`. The loading lookup still ignores unknown loading IDs. `Store.init` already creates loadings before calling `ui.init`, so the selected instance can be found.
+
+A [`reaction`](https://mobx.js.org/reactions.html#reaction) tracks its first function and runs the second when that value changes. We keep its default of **not writing immediately**, so initialization does not overwrite a deep link. Later, selecting Loadings writes `view=loadings`, selecting Dashboard removes the default parameter, and closing details removes `loading`. The helper still uses the checkpoint's `pushState` approach, with a small correction: building from a full URL preserves its hash and avoids a stray `?` when the query is empty. It also retains unrelated query parameters. See [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and [History.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState).
+
+This is startup restoration plus state-to-URL synchronization, not a router: there is no `popstate` listener, so Back/Forward alone does not restore the UI. These reactions belong to the application-lifetime singleton, initialized once by `Store.ts`; do not call `ui.init()` from a React render or effect. If you later give the store a shorter lifetime, retain and call the reaction disposers when disposing that store, as described in [MobX reaction disposal](https://mobx.js.org/reactions.html#always-dispose-of-reactions).
+
+## Check your work
+
+load `/?view=loadings&loading=0007703&keep=yes#dock` directly. You should see the table and dialog for `0007703`. Close it: `loading` disappears while `view`, `keep` and `#dock` remain. Select Dashboard: `view` disappears and the placeholder returns. Reload `/?view=unknown`: the dashboard is selected, without accepting `unknown` as store state. The unused invalid parameter may remain until a later view change because initialization deliberately does not write the URL.

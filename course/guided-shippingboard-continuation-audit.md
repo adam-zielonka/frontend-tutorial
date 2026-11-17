@@ -1,6 +1,10 @@
-# ShippingBoard original-project continuation: coverage and validation
+# ShippingBoard numbered lessons: coverage and validation
 
-Scope: `docs/ch-05-00-shippingboard-lite.md`, alongside the existing four mini-lessons. The mini pages, chapter JSON, fixtures, locks and registry are unchanged by this scoped continuation. The original ShippingBoard walkthrough has now been executed against its pinned checkpoint; validation of the other applied chapters is recorded separately in `guided-applied-audit.md`.
+Scope: `docs/ch-05-00-shippingboard-lite.md`, `docs/05-shippingboard/**` and this audit. The overview is now a short goal, final-result image and ordered map. The chapter has **15 lessons, 5.1–5.15**: four embedded React examples followed by eleven stages of the original MobX application. The latter are the required main project, not an optional discarded extension.
+
+The four mini pages now teach why → concrete edit → one observable check. Their exercise IDs, starter/solution maps, styles and immutable checkpoint tags are unchanged. `course/chapters/05-shippingboard.json` and assembled lessons are unchanged. The parent is removing the generated duplicate objectives/tasks/checks from `LessonExercise`, retaining hints.
+
+The continuation carries the same `shippingboard-lite-ramp-lesson` checkout from 5.5 through 5.15. Each page identifies its original `src/` files and build command, keeps its complete code or precise insertion instructions, and has a stage-specific accessible SVG diagram under `docs/05-shippingboard/diagrams/`. It does not mount a mini editor or claim new per-stage source checkpoints. Local and alternative online setup remain together in 5.5.
 
 ## Source of truth
 
@@ -11,21 +15,20 @@ Scope: `docs/ch-05-00-shippingboard-lite.md`, alongside the existing four mini-l
 
 ## Worked coverage
 
-| Original teaching content | Restored location in the overview | Concrete learner result |
+| Original teaching content | Numbered lesson | Concrete learner result |
 | --- | --- | --- |
-| Intended dashboard and starting table | Introduction to the worked continuation | Both original screenshots retained; live demo distinguished from pinned starting source. |
-| Workspace, branch, install and development command | Step 1 | Exact clone, commit, learner branch, lockfile install, dev and build commands; expected initial table/dialog. |
-| UI view field, getters and actions | Step 2 | Add class members to the real `UI.ts`, preserving its constructor and existing dialog behavior. |
-| Header buttons | Step 2 | Complete `Header.tsx`, including all imports, active flags and existing Add loading action. |
-| Conditional content | Step 3 | Complete intermediate `Content.tsx`, with working table branch and explicit dashboard placeholder. |
-| URL initialization and reactions | Step 4 | Complete `UI.ts`, including helper, constructor, both restorations, both reactions, view getters/actions and all dialog getters/actions. |
-| Ramp shell and styling | Step 5 | Complete new `RampBox.tsx` and updated `Content.tsx`; existing `Ramp.scss` imported without restyling. |
-| Loading card, dates, customers, quantities and progress | Step 6 | Complete new `LoadingBox.tsx`, data-to-model mapping table and temporary first-loading preview. |
-| Assigned loadings and keyed component mapping | Step 7 | Complete intermediate `Ramp.ts` and `RampBox.tsx`; object-reference relationship explained, temporary imports removed. |
-| Click to open loading details | Step 8 | Exact store import and replacement Card opening tag using the existing dialog action. |
-| Computed ramp predicates and status priority | Step 9 | Complete `Ramp.ts` with all predicates and status getter; correct body class, fixture-specific results and mixed-state check. |
-| Ramp quantity and assignment intent | Step 10 | Exact quantity getter and complete replacement ramp section in `Details.tsx`, including ∅; existing dialog lifecycle retained. |
-| Acceptance of the complete original assignment | Step 11 | Build command and manual scenarios for both views, shared dialog, reassign/clear, URL restoration and mixed ramp states. |
+| Intended dashboard and starting table | Overview; [5.5](../docs/05-shippingboard/05-original-workspace.mdx) | Both original screenshots retained; live demo distinguished from pinned starting source. |
+| Workspace, branch, install and development command | [5.5. Prepare the original application](../docs/05-shippingboard/05-original-workspace.mdx) | Exact clone, commit, learner branch, lockfile install, dev and build commands; expected initial table/dialog. |
+| UI view field, getters, actions and header buttons | [5.6. Share view state with the header](../docs/05-shippingboard/06-shared-view.mdx) | Insert class members into the real `UI.ts`; complete `Header.tsx` preserves Add loading. |
+| Conditional content | [5.7. Switch the original content](../docs/05-shippingboard/07-content-switch.mdx) | Complete intermediate `Content.tsx`, working table branch and explicit dashboard placeholder. |
+| URL initialization and reactions | [5.8. Restore view and loading links](../docs/05-shippingboard/08-view-url.mdx) | Complete `UI.ts`, helper, constructor, both restorations/reactions, view and dialog members. |
+| Ramp shell and styling | [5.9. Render the original ramp shells](../docs/05-shippingboard/09-ramp-shells.mdx) | Complete `RampBox.tsx` and updated `Content.tsx`; existing `Ramp.scss` imported without restyling. |
+| Loading card, dates, customers, quantities and progress | [5.10. Build a loading card](../docs/05-shippingboard/10-loading-card.mdx) | Complete `LoadingBox.tsx`, model mapping table and temporary first-loading preview. |
+| Assigned loadings and keyed component mapping | [5.11. Derive ramp assignments](../docs/05-shippingboard/11-ramp-assignments.mdx) | Complete intermediate `Ramp.ts` and `RampBox.tsx`; object relationship explained, temporary imports removed. |
+| Click to open loading details | [5.12. Open shared loading details](../docs/05-shippingboard/12-card-details.mdx) | Exact import and Card tag replacement reuse the existing dialog action. |
+| Computed ramp predicates and status priority | [5.13. Derive ramp status](../docs/05-shippingboard/13-ramp-status.mdx) | Complete `Ramp.ts`, original body class, fixture results and mixed-state check. |
+| Ramp quantity and assignment intent | [5.14. Show occupancy in the dialog](../docs/05-shippingboard/14-dialog-occupancy.mdx) | Exact quantity getter and complete ramp-section replacement in `Details.tsx`, including ∅. |
+| Acceptance of the complete original assignment | [5.15. Verify the complete board](../docs/05-shippingboard/15-complete-board.mdx) | Build and acceptance walkthrough covering both views, shared dialog, reassign/clear, URL restoration and status. |
 
 Each step explains its purpose and expected observable result. Replacement files contain their real imports. Partial snippets say exactly where to add them or which element/section to replace. Intermediate placeholders are explicitly removed by the next complete replacement. The learner need not infer missing actions, helpers or component wiring from external links.
 
@@ -43,7 +46,7 @@ Each step explains its purpose and expected observable result. Replacement files
 - Quantity counts assignments, not pallets. The dialog uses neutral for an empty ramp, primary for the occupied current ramp and danger for another occupied ramp. Its superscript uses an explicit ternary so zero does not render as an unwanted `0`.
 - All original Sass, including Blueprint 4 selectors, stays unchanged. No decorative UI, additional filters, backend setup or dependency migration is introduced.
 
-## Validation performed
+## Earlier restoration validation (before extraction)
 
 Environment: Node.js 24.22.3; commands invoked pnpm 8.15.9 through the available pnpm runner. Validation was performed in `/tmp/shippingboard-continuation-u922c0xk`.
 
@@ -67,8 +70,30 @@ The extraction/apply driver and runtime entry live only in the temporary validat
 - [Blueprint core 4.20.2 Card source](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/card/card.tsx), [Button source](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/button/buttons.tsx), [ProgressBar source](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/progress-bar/progressBar.tsx). Installed package declarations and production compilation also checked these exact props.
 - [MDN URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams), [History.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState) and [Vite's development/build scripts and Node requirement](https://vite.dev/guide/).
 
-## Explicit gaps and handoff
+## Validation of the numbered edition
 
-No browser tools were used, as requested. The manual acceptance scenarios are instructions for the learner, not a claim of automated clicks, visual inspection, keyboard testing or screenshot comparison. Dialog button intents/count markup and the Card click handler are source-checked and typechecked; real browser events, dialog portals and animations are not covered by the Node/SSR assertions. Styles were preserved and compiled, not visually inspected. The optional StackBlitz route was not run; the local pinned workflow was the verified path.
+Environment: Node.js 24.22.3. Exported the exact application checkpoint with `git archive` from the existing read-only repository into `/tmp/shippingboard-numbered-9aihwjw8`, then installed with the documented `pnpm dlx pnpm@8.15.9 install --frozen-lockfile`.
 
-The full tutorial-site build and integrated course checks belong to the root task and were not run by this scoped implementation. This work does not publish a preview, change host configuration, alter the original application repository or push commits.
+- Compared the **17 TypeScript/TSX code fences** in the preceding overview against the extracted 5.6–5.14 fences: byte-for-byte identical and in the same teaching order. No original code, imports, model getters, dialog behavior or styling was discarded during extraction.
+- Built the untouched checkpoint, applied the fences and precise insertions directly from the new lesson pages in order, typechecked all **nine intermediate editing stages (5.6–5.14)** and built the finished application: all passed. Only the five existing application files and two new components listed above changed. Every original Sass file, fixture and the lockfile remained byte-for-byte unchanged. Lockfile SHA-256: `bd4ef7371ec481fa32aee4f917f170f317c6e7a69654aef59a17857678bb5fe1`.
+- Bundled the final real components with Vite SSR and ran runtime assertions in four fresh Node processes: `/`, `/?view=loadings&loading=0007703&keep=yes#dock`, `/?view=dashboard&loading=0007701`, and `/?view=unknown&loading=missing`. Passed startup selection/no initial writes, seven ramp/eight assigned-card markup, eleven table records, Kang Tao and `11 of 22`/50% card markup, observable/computed annotations, assignment/count/status reactions, mixed-state priority, empty new-loading defaults and URL parameter/hash retention. This uses a small location/history stub; it does not simulate browser clicks or dialog portals.
+- Applied the four mini pages’ actual snippets and prose instructions to their current starters. The results match the published solutions after ignoring formatting/comments, and all four snippet-applied projects typecheck. No exercise source or tag changes are needed.
+- Compiled the overview and all **15 MDX pages** with the installed MDX compiler and Docusaurus headings plugin. Checked every local Markdown/image link, the lesson 5.13 status-table anchor, ordered page metadata/pager targets, accessible SVG titles/descriptions and every level-2/3 overview anchor from both `30e83a2` and the preceding continuation. Passed; the two `/course-help` links deliberately await the parent’s shared page.
+- `node scripts/assemble-course.mjs --check` and `node --test scripts/course.test.mjs`: passed (8 tests). `git diff --check`: passed.
+
+The extraction/apply, mini-snippet and Markdown validation scripts are temporary `/tmp/validate-numbered-shippingboard.py`, `/tmp/validate-shippingboard-mini.py` and `/tmp/validate-shippingboard-docs.mjs`; they are not new common course infrastructure.
+
+## Explicit gaps and integration handoff
+
+No browser, visual comparison, real click/keyboard, portal or animation testing was performed. Original Sass was preserved and production-compiled. The alternative StackBlitz route was not run. The Vite builds retain the existing large-chunk warning. A complete tutorial-site build, preview and combined course verification belong to the parent integration.
+
+The following shared changes are **required outside this scoped commit**:
+
+1. Register all eleven new docs (5.5–5.15, the ordered routes in the coverage table) in the sidebar and shared Lessons menu. The current `sidebars.ts` and `LessonStudio` derive navigation from embedded exercises only. Do **not** add fake `LessonExercise` records to `course/chapters/05-shippingboard.json` or generate new mini checkpoint tags for these pages.
+2. Treat the new pages as chapter 05 original-project lessons without Sandpack. Their frontmatter provides `course_workspace: original-project`, `course_chapter: "05"`, `course_step: 5` through `15`, titles, slugs and `sidebar_position`. Their same-basename SVG assets under `diagrams/` supply stage-specific context; the page already displays the diagram and caption in the article. The parent can use those assets for the right pane as well. Until the shared shell recognizes these pages, its fallback is the generic introduction illustration, and it cannot show their correct chapter/step in its header/menu.
+3. Create the shared `/course-help` page and finish the hints-only `LessonExercise` body. Both references are explicit integration dependencies, not new boilerplate copied into this chapter.
+4. Preserve the native Docusaurus page sequence. 5.4 overrides `pagination_next` to 5.5; every new page supplies `pagination_prev`, `pagination_next` and `displayed_sidebar: tutorial`; 5.15 leads to the Tests overview. This provides ordered Previous/Next links without duplicate manual navigation rows. Full sidebar registration should use the same order.
+
+The overview retains all old important section anchors (original baseline and the 11-stage continuation) as spans next to explanatory destination links. The `worked-continuation-upgrade-the-original-shippingboard-lite` anchor leads to the main-project map; no code remains hidden in a long overview.
+
+No push, preview deployment, host configuration change, external-repository edit, assembled-lesson edit or unrelated chapter/UI change is part of this work.

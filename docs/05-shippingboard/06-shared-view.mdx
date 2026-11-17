@@ -1,0 +1,83 @@
+---
+title: "5.6. Share view state with the header"
+slug: /05-shippingboard/06-shared-view
+sidebar_position: 6
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/05-original-workspace
+pagination_next: 05-shippingboard/07-content-switch
+course_workspace: original-project
+course_chapter: "05"
+course_step: 6
+---
+
+The original header and content must agree on one selected view. Put that choice in the existing MobX UI store so both observing components can read it, just as the mini board read one React state value.
+
+Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
+
+![One observable choice drives both view buttons](./diagrams/06-shared-view.svg)
+
+makeAutoObservable: field → observable; getters → computed; functions → actions.
+
+## Make the change
+
+Keep the existing imports, URL helper, constructor and loading-dialog code in `src/store/UI.ts`. The checkpoint already declares `type View = "dashboard" | "loadings"`; keep that one declaration. Add the following members **inside** `export class UI`, alongside `selectedLoading` and the existing methods:
+
+```ts title="src/store/UI.ts — add class members"
+view: View = "dashboard";
+
+get isDashboardOpen(): boolean {
+  return this.view === "dashboard";
+}
+
+get isLoadingsOpen(): boolean {
+  return this.view === "loadings";
+}
+
+openDashboard = () => {
+  this.view = "dashboard";
+};
+
+openLoadings = () => {
+  this.view = "loadings";
+};
+```
+
+Only `view` stores a choice. The getters derive booleans instead of maintaining two flags that could both be true. The existing constructor's `makeAutoObservable(this)` makes fields observable, getters computed and these functions actions; no decorators or second store are needed. See [MobX automatic annotations](https://mobx.js.org/observable-state.html#makeautoobservable).
+
+Replace `src/components/Header.tsx` with this complete file:
+
+```tsx title="src/components/Header.tsx"
+import { Alignment, Button, ButtonGroup, Navbar } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { Loading } from "../store/Loading";
+import { store } from "../store/Store";
+
+export const Header = observer(() => {
+  const { ui } = store;
+
+  return <Navbar>
+    <Navbar.Group align={Alignment.LEFT}>
+      <Navbar.Heading>ShippingBoard Lite</Navbar.Heading>
+      <Navbar.Divider />
+      <ButtonGroup>
+        <Button outlined icon="dashboard" text="Dashboard" intent="primary"
+          onClick={ui.openDashboard} active={ui.isDashboardOpen} />
+        <Button outlined icon="th" text="Loadings" intent="primary"
+          onClick={ui.openLoadings} active={ui.isLoadingsOpen} />
+      </ButtonGroup>
+    </Navbar.Group>
+    <Navbar.Group align={Alignment.RIGHT}>
+      <ButtonGroup minimal>
+        <Button icon="add" text="Add loading" intent="primary"
+          onClick={() => ui.openLoadingDialog(Loading.create())} />
+      </ButtonGroup>
+    </Navbar.Group>
+  </Navbar>;
+});
+```
+
+`observer` subscribes the header to the observable values it reads, so the active button follows the store. Pass the action to `onClick`; calling `ui.openDashboard()` while rendering would change state before a click. The existing **Add loading** action remains intact. See [MobX React integration](https://mobx.js.org/react-integration.html).
+
+## Check your work
+
+Clicking the two view buttons changes their active appearance. The table stays visible for now because `Content` still always renders it. A fresh reload selects Dashboard by default.

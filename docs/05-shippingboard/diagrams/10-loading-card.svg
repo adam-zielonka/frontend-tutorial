@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
+<title id="title">Translate model getters into one card</title>
+<desc id="desc">Loading model: Dates / customer → LoadingBox.tsx: picked of pallets → ProgressBar: Ratio from 0 to 1. Temporary preview: the same 0007701 card in every ramp; assignments come next.</desc>
+<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
+<g font-family="system-ui, sans-serif" fill="#182026">
+<text x="24" y="36" font-size="21" font-weight="700">Translate model getters into one card</text>
+<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="40" y="103" font-size="18" font-weight="600">Loading model</text>
+<text x="40" y="136" font-size="15">Dates / customer</text>
+<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="326" y="103" font-size="18" font-weight="600">LoadingBox.tsx</text>
+<text x="326" y="136" font-size="15">picked of pallets</text>
+<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
+<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
+<text x="612" y="103" font-size="18" font-weight="600">ProgressBar</text>
+<text x="612" y="136" font-size="15">Ratio from 0 to 1</text>
+</g></svg>

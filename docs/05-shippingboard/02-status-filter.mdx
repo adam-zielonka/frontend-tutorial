@@ -6,30 +6,23 @@ sidebar_position: 2
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+This starter includes the working view buttons from 5.1. The status selector already stores a typed `filter`, but the table still reads every loading. Derive the visible rows during render so the table and its count always agree, without deleting records or storing a second array in state.
 
-The selector already stores a typed filter, but its value does not yet affect the rows. Derive `visible` from the records and the selected status during render.
+## Derive the visible records
 
-The table and live count both read `visible`, so one expression keeps them consistent. All is a special choice that accepts every status. A filter should not delete or mutate the original records; switching back to All restores the complete view.
+In `/App.tsx`, replace `const visible = loadings;` with:
 
-
-## Worked walkthrough
-
-1. In `/App.tsx`, replace `const visible = loadings;` with:
-
-```tsx
+```tsx title="/App.tsx"
 const visible = loadings.filter(item => filter === 'all' || item.status === filter);
 ```
 
-2. The selector already calls `setFilter`. The predicate keeps every record for All, otherwise only matching statuses. Both the count and table use this derived array, while `/data.ts` remains unchanged.
-
-Choose Waiting: one row and count one appear. Return to All for three. If the count stays at three, check that you replaced `visible`, not the `loadings` data.
+The first condition accepts every record for All; the second accepts an exact status match. The selector already calls `setFilter`, and both the table and live count already read `visible`, so no other wiring is needed. `/data.ts` remains the fixed source.
 
 <LessonExercise id="05-02-status-filter" />
 
 ## Check your work
 
-Select Done and verify L-103 is the only row; All restores the three. Next, reuse these results for ramps.
-
+Choose Done, then All: the table and count change together from only L-103 (one) back to all three records. If the count stays at three, check that you replaced `visible`. Next, group these derived records by ramp.
 
 ## Sources
 

@@ -1,0 +1,71 @@
+---
+title: "5.11. Derive ramp assignments"
+slug: /05-shippingboard/11-ramp-assignments
+sidebar_position: 11
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/10-loading-card
+pagination_next: 05-shippingboard/12-card-details
+course_workspace: original-project
+course_chapter: "05"
+course_step: 11
+---
+
+The temporary card proves the presentation works, but repeats one loading everywhere. Derive membership from the existing object relationship so each ramp shows only its own assignments.
+
+Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
+
+![Assignment is an object relationship](./diagrams/11-ramp-assignments.svg)
+
+setRamp / clearRamp change the source relationship; no second assignment array.
+
+## Make the change
+
+Replace `src/store/Ramp.ts` with this complete intermediate model:
+
+```ts title="src/store/Ramp.ts — assigned loadings"
+import { makeAutoObservable } from "mobx";
+import { Loading } from "./Loading";
+import { store } from "./Store";
+
+export class Ramp {
+  constructor(
+    public id: string,
+    public description: string,
+  ) {
+    makeAutoObservable(this);
+  }
+
+  get loadings(): Loading[] {
+    return store.loadings.filter(loading => loading.ramp === this);
+  }
+}
+```
+
+`FromResponse.ramp` in `src/api/parse.ts` resolves each fixture's ramp ID to a `store.ramps` instance. The dialog's existing `setRamp` action assigns one of those same objects. That is why reference equality works here. Unassigned loadings have `ramp === undefined` and stay in the table; they do not belong to an invented extra ramp. The fallback for an unknown API ramp ID is outside this fixture and this dashboard exercise.
+
+Do not store another mutable array of assignments on each ramp. The getter derives it from the single source, `store.loadings`. `makeAutoObservable` makes it computed, and an observing component updates when a loading's assignment changes. See [MobX computed values](https://mobx.js.org/computeds.html).
+
+Replace `src/components/RampBox.tsx` completely, removing the temporary `store` import and single-loading example:
+
+```tsx title="src/components/RampBox.tsx — assigned cards"
+import { Card, Elevation } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { Ramp } from "../store/Ramp";
+import { LoadingBox } from "./LoadingBox";
+import "./Ramp.scss";
+
+export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
+  return <Card className="Ramp" elevation={Elevation.ONE}>
+    <header>{ramp.description}</header>
+    <main>
+      {ramp.loadings.map(loading =>
+        <LoadingBox key={loading.id} loading={loading} />
+      )}
+    </main>
+  </Card>;
+});
+```
+
+## Check your work
+
+A, F and G are empty; B has `0007701`; C has `0007702` and `0007703`; D has `0007704`–`0007706`; E has `0007707` and `0007708`. The three unassigned loadings `0007709`–`0007711` remain accessible through Loadings. Empty ramps retain their header and striped body, rather than disappearing.
