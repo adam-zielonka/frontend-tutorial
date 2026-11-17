@@ -2,7 +2,14 @@ import type {Lesson} from '../../lib/course';
 
 type StorageLike = Pick<Storage, 'getItem' | 'setItem'>;
 export const draftKey = (lesson: Lesson) => `frontend-tutorial:v5:${lesson.id}`;
-const legacyKey = (lesson: Lesson) => `frontend-tutorial:v3:${lesson.id}`;
+const previousIds: Record<string, string> = {
+  '04-11-persistence': '04-09-persistence',
+  '04-12-storage-autorun': '04-09-persistence',
+  '07-04-abort-cleanup': '07-03-abort-cleanup',
+  '07-05-retry': '07-04-retry',
+};
+const previousId = (lesson: Lesson) => previousIds[lesson.id] ?? lesson.id;
+const legacyKey = (lesson: Lesson) => `frontend-tutorial:v3:${previousId(lesson)}`;
 export function readDraft(storage: StorageLike, lesson: Lesson): Record<string, string> | null {
   try {
     const draft = JSON.parse(storage.getItem(draftKey(lesson)) ?? storage.getItem(legacyKey(lesson)) ?? 'null');
@@ -19,7 +26,7 @@ export function previousDraft(storage: StorageLike, lesson: Lesson): string | nu
     if (!raw) return null;
     const draft = JSON.parse(raw);
     if (draft.baseline === JSON.stringify(lesson.files) || !draft.files || typeof draft.files !== 'object') return null;
-    return JSON.stringify({lesson: lesson.id, release: 'v3-v4', files: draft.files}, null, 2);
+    return JSON.stringify({lesson: previousId(lesson), release: 'v3-v4', files: draft.files}, null, 2);
   } catch {return null;}
 }
 export function writeDraft(storage: StorageLike, lesson: Lesson, files: Record<string, string>): boolean {
