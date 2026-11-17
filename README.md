@@ -1,4 +1,4 @@
-# Derive the manifest summary — start
+# Derive the manifest summary — solution
 
 Calculate summary values from the typed records.
 
