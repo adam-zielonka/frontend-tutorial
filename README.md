@@ -1,4 +1,4 @@
-# Reject unsuccessful HTTP responses — start
+# Reject unsuccessful HTTP responses — solution
 
 Reject unsuccessful HTTP responses before parsing their bodies.
 

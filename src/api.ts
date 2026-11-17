@@ -2,6 +2,7 @@ export interface Ramp { id: string; name: string }
 
 export async function loadRamps(url: string, signal?: AbortSignal): Promise<Ramp[]> {
   const response = await fetch(url, { signal });
+  if (!response.ok) throw new Error(`HTTP ${response.status}: could not load ramps`);
   return await response.json() as Ramp[];
 }
 
