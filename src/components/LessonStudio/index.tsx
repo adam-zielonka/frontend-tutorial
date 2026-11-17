@@ -45,11 +45,14 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const step = currentPage?.step;
   const topic: IllustrationTopic = chapterIndex < 0 ? 'intro' : String(chapterIndex + 1).padStart(2, '0') as IllustrationTopic;
   const panels: StudioPanel[] = lesson ? ['lesson', 'code', 'preview'] : ['lesson', 'illustration'];
-  const illustration = typeof frontMatter.course_illustration === 'string' ? {
-    src: frontMatter.course_illustration,
+  const artwork = frontMatter as typeof frontMatter & {
+    course_illustration?: string; course_illustration_alt?: string; course_illustration_description?: string;
+  };
+  const illustration = typeof artwork.course_illustration === 'string' ? {
+    src: artwork.course_illustration,
     title: currentPage?.title ?? metadata.title,
-    alt: String(frontMatter.course_illustration_alt ?? metadata.title),
-    description: String(frontMatter.course_illustration_description ?? ''),
+    alt: artwork.course_illustration_alt ?? metadata.title,
+    description: artwork.course_illustration_description ?? '',
   } : undefined;
   const endResize = useCallback(() => {
     const pointer = resizePointer.current;
