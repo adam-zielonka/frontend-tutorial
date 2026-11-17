@@ -4,11 +4,12 @@ import {readFileSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
+import {runInNewContext} from 'node:vm';
 import {lessons, validateLessons, projectFiles, writeProject, tagFor} from './course-project.mjs';
 import {readDraft, writeDraft, draftKey, previousDraft} from '../src/components/LessonExercise/drafts.ts';
 import {lessonFile, snippetSelection} from '../src/lib/lessonCode.ts';
 import {testProject, supportsTestEmbed} from '../src/lib/testProject.ts';
-import {reportCounts} from '../src/lib/testRunner.mjs';
+import {reportCounts, resultsPage} from '../src/lib/testRunner.mjs';
 const lesson = () => structuredClone(lessons[0]);
 const storage = () => {const map = new Map(); return {getItem: k => map.get(k) ?? null, setItem: (k,v) => map.set(k,v)};};
 
@@ -94,6 +95,34 @@ test('Vitest receives the current files and a run signal, not the reference solu
 test('the test report includes Vitest todo cases in pending counts', () => {
   assert.deepEqual(reportCounts({numPassedTests: 2, numFailedTests: 0, numPendingTests: 0, numTodoTests: 3}),
     [['passed', 2, 'passed'], ['failed', 0, 'failed'], ['pending', 3, 'pending']]);
+});
+test('a successful poll restores connection status even if the report is unchanged', async () => {
+  const elements = new Map();
+  const element = () => ({textContent: '', replaceChildren() {}, append() {}});
+  let nextPoll;
+  let disconnected = false;
+  const document = {
+    getElementById(id) {if (!elements.has(id)) elements.set(id, element()); return elements.get(id);},
+    createElement: element,
+    createTextNode: text => ({textContent: text}),
+  };
+  const script = resultsPage.match(/<script>([\s\S]*?)<\/script>/)[1];
+  const context = {
+    document,
+    fetch: async () => {
+      if (disconnected) throw Error('offline');
+      return {ok: true, text: async () => JSON.stringify({status: 'complete', report: null, output: ''})};
+    },
+    setTimeout: callback => {nextPoll = callback;},
+  };
+  await runInNewContext(script, context);
+  assert.equal(elements.get('status').textContent, 'Run finished.');
+  disconnected = true;
+  await nextPoll();
+  assert.match(elements.get('status').textContent, /reconnect/);
+  disconnected = false;
+  await nextPoll();
+  assert.equal(elements.get('status').textContent, 'Run finished.');
 });
 test('corrupt, incomplete, stale, or inaccessible storage falls back safely', () => {
   const s = storage(); const l = lesson();

@@ -76,4 +76,6 @@ Use a short context, explain the new idea beside the change, and give one observ
 
 The v5 source revision keeps v3/v4 drafts in their original keys. Compatible work is read into the new edition; incompatible work under the same lesson ID is offered through Previous draft.
 
-Runtime references: [StackBlitz SDK](https://developer.stackblitz.com/platform/api/javascript-sdk), [browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support), [Vitest reporters](https://vitest.dev/guide/reporters).
+The submitted test project uses Vitest's `threads` pool, keeping workers inside the CLI process. The report server stops that process after 30 seconds or on shutdown, so a synchronous loop cannot leave a forked test worker running across retries. Local checkpoint exports keep their standard Vitest command.
+
+Runtime references: [StackBlitz SDK](https://developer.stackblitz.com/platform/api/javascript-sdk), [browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support), [Vitest reporters](https://vitest.dev/guide/reporters), [Vitest worker pools](https://vitest.dev/guide/parallelism).

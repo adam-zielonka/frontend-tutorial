@@ -82,10 +82,12 @@ async function update() {
     const response = await fetch('/results', {cache:'no-store'});
     if (!response.ok) throw new Error('Could not read test results');
     const raw = await response.text();
+    const state = JSON.parse(raw), report = state.report;
+    // A successful poll restores connection status even when results did not
+    // change while the connection was down.
+    $('status').textContent = state.status === 'running' ? 'Running your tests…' : state.status === 'complete' ? 'Run finished.' : state.status === 'failed' ? 'Run failed. Read the failing case or runner output.' : 'Starting…';
     if (raw !== previous) {
       previous = raw;
-      const state = JSON.parse(raw), report = state.report;
-      $('status').textContent = state.status === 'running' ? 'Running your tests…' : state.status === 'complete' ? 'Run finished.' : state.status === 'failed' ? 'Run failed. Read the failing case or runner output.' : 'Starting…';
       $('counts').replaceChildren(); $('cases').replaceChildren();
       if (report) {
         for (const [label, value, style] of (${reportCounts.toString()})(report)) {

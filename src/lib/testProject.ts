@@ -26,7 +26,9 @@ export function testProject(lesson: Lesson, files: Record<string, string>, run =
         dependencies: {react: '18.3.1', 'react-dom': '18.3.1', ...lesson.dependencies},
         stackblitz: {installDependencies: true, startCommand: 'npm start'},
       }, null, 2),
-      'vitest.config.ts': `import {defineConfig} from 'vitest/config';\nexport default defineConfig({test: {include: ['src/**/*.test.ts'], pool: 'forks', maxWorkers: 1, fileParallelism: false}});\n`,
+      // Keep test workers in the CLI process: killing a timed-out run must also
+      // stop synchronous loops, without leaving forked workers behind.
+      'vitest.config.ts': `import {defineConfig} from 'vitest/config';\nexport default defineConfig({test: {include: ['src/**/*.test.ts'], pool: 'threads', maxWorkers: 1, fileParallelism: false}});\n`,
       'test-server.mjs': testServer,
       'results.html': resultsPage,
       '.test-request': String(run),
