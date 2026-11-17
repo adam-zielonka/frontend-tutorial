@@ -1,6 +1,6 @@
-# Synchronize the URL and dispose the reaction — solution
+# Restore a storage snapshot as fallback — start
 
-Synchronize the URL and dispose the reaction.
+Restore a storage snapshot as fallback.
 
 ## Run
 
@@ -15,13 +15,13 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Return a reaction disposer; update only the value parameter using the current URL and retain history state.
+- Restore a validated numeric storage array only when URL restoration fails; restore before URL synchronization.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/10-url-reaction) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-10-url-reaction-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-10-url-reaction-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-persistence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-11-persistence-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-11-persistence-solution-v5)
 
 ## All checkpoints
 

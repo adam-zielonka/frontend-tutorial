@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { CounterStore, Store, restoreUrl, syncUrl } from './Store';
+import { CounterStore, Store, connectPersistence } from './Store';
 import './styles.css';
 
 const Counter = observer(function Counter({ counter, onRemove }: { counter: CounterStore; onRemove: () => void }) {
@@ -22,10 +22,7 @@ const App = observer(function App() {
   const [store] = useState(() => new Store());
   const [draft, setDraft] = useState('5;-2');
   const [message, setMessage] = useState('');
-  useEffect(() => {
-    restoreUrl(store);
-    return syncUrl(store);
-  }, [store]);
+  useEffect(() => connectPersistence(store), [store]);
   return <main className="app">
     <h1>MobX counters</h1>
     <section className="url-values" aria-label="URL values">

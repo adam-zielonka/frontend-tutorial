@@ -1,8 +1,8 @@
 {
-  "id": "04-10-url-reaction",
-  "variant": "solution",
+  "id": "04-11-persistence",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Return a reaction disposer; update only the value parameter using the current URL and retain history state."
+    "Restore a validated numeric storage array only when URL restoration fails; restore before URL synchronization."
   ]
 }
