@@ -1,4 +1,4 @@
-# Cancel obsolete requests — start
+# Cancel obsolete requests — solution
 
 Pair every effect request with cancellation and stale-result protection.
 

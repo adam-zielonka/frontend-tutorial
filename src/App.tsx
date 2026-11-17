@@ -15,8 +15,8 @@ export default function App() {
     let active = true;
     setStatus('loading');
     setError('');
-    // TODO: pass an AbortController signal and abort it in cleanup.
-    loadLocalRamps(url).then(data => {
+    const controller = new AbortController();
+    loadLocalRamps(url, controller.signal).then(data => {
       if (active) { setRamps(data); setStatus('success'); }
     }).catch((reason: unknown) => {
       if (active) {
@@ -24,7 +24,10 @@ export default function App() {
         setStatus('error');
       }
     });
-    return () => { active = false; };
+    return () => {
+      active = false;
+      controller.abort();
+    };
   }, [url]);
 
   return <main>
