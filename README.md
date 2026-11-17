@@ -1,4 +1,4 @@
-# Restore a storage snapshot as fallback — start
+# Restore a storage snapshot as fallback — solution
 
 Restore a storage snapshot as fallback.
 
