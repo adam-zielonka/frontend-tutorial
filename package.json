@@ -14,6 +14,7 @@
     "typecheck": "tsc",
     "test": "node scripts/assemble-course.mjs --check && node --test scripts/course.test.mjs",
     "course:check": "node scripts/check-course.mjs",
+    "course:check:online": "node scripts/check-course.mjs --npm",
     "course:release": "node scripts/release-course.mjs",
     "course:assemble": "node scripts/assemble-course.mjs"
   },

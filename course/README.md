@@ -61,7 +61,7 @@ pnpm build
 
 `course:check` builds both variants of every step in temporary directories and
 runs test files from solutions. Dependency profiles share lockfiles under
-`locks/v3/`; v1 and v2 lockfiles are retained with their earlier editions. To change
+`locks/v4/`; v1, v2 and v3 lockfiles are retained with their earlier editions. To change
 project dependencies intentionally, run `node scripts/check-course.mjs --update-locks`.
 See [the development guide](../DEVELOPMENT.md) for release instructions.
 

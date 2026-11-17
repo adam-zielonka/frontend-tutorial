@@ -2,8 +2,8 @@ import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 
-export const release = 'v3';
-export const branch = 'course-examples-v3';
+export const release = 'v4';
+export const branch = 'course-examples-v4';
 export const repo = 'https://github.com/adam-zielonka/frontend-tutorial';
 export const lessons = JSON.parse(readFileSync(new URL('../course/lessons.json', import.meta.url), 'utf8'));
 export const tagFor = (id, variant) => `lesson-${id}-${variant}-${release}`;
@@ -50,8 +50,10 @@ export function projectFiles(lesson, variant) {
   files['tsconfig.json'] = JSON.stringify({compilerOptions: {target: 'ES2022', lib: ['ES2022', 'DOM', 'DOM.Iterable'], module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', strict: true, skipLibCheck: true, esModuleInterop: true, resolveJsonModule: true, noEmit: true}, include: ['src']}, null, 2);
   files['.gitignore'] = 'node_modules/\ndist/\ncoverage/\n*.local\n';
   files['.node-version'] = '24\n';
-  files['pnpm-workspace.yaml'] = 'allowBuilds:\n  esbuild: true\n';
-  files['.stackblitzrc'] = JSON.stringify({startCommand: 'npm run dev'}, null, 2);
+  files['pnpm-workspace.yaml'] = "packages:\n  - '.'\nallowBuilds:\n  esbuild: true\n";
+  // WebContainers currently auto-select pnpm 8, which cannot read pnpm 12 lockfiles.
+  // Use the documented custom installer; retain pinned pnpm for local checkouts.
+  files['.stackblitzrc'] = JSON.stringify({installDependencies: false, startCommand: 'npm install && npm run dev'}, null, 2);
   files['lesson.json'] = JSON.stringify({id: lesson.id, variant, release, tasks: lesson.tasks}, null, 2);
   files['import-draft.mjs'] = `import {readFileSync,writeFileSync} from 'node:fs';\nconst draft = JSON.parse(readFileSync(process.argv[2], 'utf8'));\nif (draft.lesson !== ${JSON.stringify(lesson.id)}) throw Error('This download belongs to another lesson');\nconst allowed = ${JSON.stringify(Object.keys(source))};\nfor (const name of allowed) {\n  if (typeof draft.files?.[name] !== 'string') throw Error('Missing file: ' + name);\n}\nfor (const name of allowed) writeFileSync(name.startsWith('/public/') ? name.slice(1) : 'src' + name, draft.files[name]);\nconsole.log('Imported exercise files. Run npm run dev.');\n`;
   files['README.md'] = `# ${lesson.title} — ${variant}\n\n${lesson.objective}\n\n## Run\n\nUse Node.js 24.\n\n\`\`\`sh\nnpm install\nnpm run dev\n\`\`\`\n\nOr use the pinned pnpm version and lockfile: \`pnpm install --frozen-lockfile\`, then \`pnpm dev\`. Run \`npm run build\` to type-check and bundle. Lesson 6 also uses \`npm test\` (watch mode) or \`npm run test:run\`. Its starter tests are deliberately incomplete; finish the pending cases and assertions.\n\n## Tasks\n\n${lesson.tasks.map(t => '- ' + t).join('\n')}\n\n## Continue your work\n\nA tag checkout is detached: run \`git switch -c my-work\` before making your own commits. To import a JSON download from the lesson editor, copy it here and run \`npm run import-draft -- ./download.json\` (this replaces your exercise files).\n\n[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/${lesson.doc}) · [Starter](${repo}/tree/${tagFor(lesson.id, 'start')}) · [Solution](${repo}/tree/${tagFor(lesson.id, 'solution')})\n\n## All checkpoints\n\n${lessons.map(l => `- ${l.title}: [start](${repo}/tree/${tagFor(l.id, 'start')}) · [solution](${repo}/tree/${tagFor(l.id, 'solution')})`).join('\n')}\n\nThese are self-contained teaching projects. The documentation website has its own dependency versions.\n`;

@@ -22,6 +22,10 @@ test('each step has its own exercise page, and exports complete runnable project
       const pkg = JSON.parse(files['package.json']);
       assert.equal(pkg.scripts.build, 'tsc --noEmit && vite build');
       assert.ok(pkg.dependencies.react);
+      const stackblitz = JSON.parse(files['.stackblitzrc']);
+      assert.equal(stackblitz.installDependencies, false, 'do not auto-install with StackBlitz pnpm 8');
+      assert.equal(stackblitz.startCommand, 'npm install && npm run dev', 'install before starting Vite');
+      assert.match(files['pnpm-workspace.yaml'], /packages:\n\s+- ['"]?\.['"]?\n/, 'standalone workspace includes its root');
     }
   }
 });
@@ -32,6 +36,12 @@ test('drafts survive reload and remain isolated by lesson', () => {
   assert.deepEqual(readDraft(s, l), files);
   assert.equal(readDraft(s, lessons[1]), null);
   assert.notEqual(l.solution['/App.tsx'], 'student work');
+});
+test('checkpoint packaging updates preserve existing v3 student drafts', () => {
+  const s = storage(); const l = lesson();
+  const files = {...l.files, '/App.tsx': 'saved before checkpoint packaging update'};
+  s.setItem(`frontend-tutorial:v3:${l.id}`, JSON.stringify({baseline: JSON.stringify(l.files), files}));
+  assert.deepEqual(readDraft(s, l), files);
 });
 test('corrupt, incomplete, stale, or inaccessible storage falls back safely', () => {
   const s = storage(); const l = lesson();

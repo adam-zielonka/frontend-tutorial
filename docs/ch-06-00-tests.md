@@ -24,7 +24,7 @@ The **Download my files** button saves JSON containing your source files, not a 
 2. In a terminal, clone its starter into a separate directory:
 
    ```sh
-   git clone --branch lesson-06-01-first-test-start-v3 --depth 1 https://github.com/adam-zielonka/frontend-tutorial.git test-practice
+   git clone --branch lesson-06-01-first-test-start-v4 --depth 1 https://github.com/adam-zielonka/frontend-tutorial.git test-practice
    cd test-practice
    git switch -c my-work
    pnpm install --frozen-lockfile

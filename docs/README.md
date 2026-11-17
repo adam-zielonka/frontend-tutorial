@@ -47,7 +47,7 @@ Every lesson includes commands to clone its exact starter or solution, plus a St
 
 In the embedded editor, `/App.tsx` means the virtual project file; in the cloned Vite project it is `src/App.tsx`. The same applies to other lesson source files. Public assets are the exception: they live in the project's `public/` folder.
 
-The current code is on [`course-examples-v3`](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v3), with `lesson-<chapter>-<step>-<name>-start-v3` and matching `solution-v3` tags. Earlier v1 and v2 checkpoints remain available. The explanatory text can improve without changing these code checkpoints or your saved v3 drafts.
+The current code is on [`course-examples-v4`](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v4), with `lesson-<chapter>-<step>-<name>-start-v4` and matching `solution-v4` tags. Earlier v1, v2 and v3 checkpoints remain available. The v4 update fixes online installation while keeping the same exercise code. The explanatory text can improve without changing these code checkpoints or your saved v3 drafts.
 
 ## Why we teach this stack
 
