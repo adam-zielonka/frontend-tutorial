@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { CounterStore, Store } from './Store';
+import { CounterStore, Store, restoreUrl, syncUrl } from './Store';
 import './styles.css';
 
 const Counter = observer(function Counter({ counter, onRemove }: { counter: CounterStore; onRemove: () => void }) {
@@ -20,8 +20,25 @@ const Counter = observer(function Counter({ counter, onRemove }: { counter: Coun
 
 const App = observer(function App() {
   const [store] = useState(() => new Store());
+  const [draft, setDraft] = useState('5;-2');
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    restoreUrl(store);
+    return syncUrl(store);
+  }, [store]);
   return <main className="app">
     <h1>MobX counters</h1>
+    <section className="url-values" aria-label="URL values">
+      <label>Values separated by semicolons
+        <input value={draft} onChange={event => setDraft(event.target.value)} />
+      </label>
+      <button type="button" onClick={() => setMessage(store.hydrate(draft)
+        ? 'Values loaded.' : 'Invalid values. Use up to four finite numbers; empty removes all counters.')}>
+        Load values
+      </button>
+      <p role="status">{message}</p>
+      <p>Share query: <code>?value={encodeURIComponent(store.serializedValues)}</code></p>
+    </section>
     <p>{store.counters.length} / {store.limit} counters</p>
     <aside className="total" aria-label="Total"><output aria-live="polite">{store.sum}</output></aside>
     {store.counters.length === 0 && <p>No counters. Add one to start again.</p>}
