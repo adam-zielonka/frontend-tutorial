@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from 'mobx';
+import { autorun, makeAutoObservable, reaction } from 'mobx';
 
 export class CounterStore {
   constructor(public readonly id = 1, public value = 0) {
@@ -78,4 +78,19 @@ export function syncUrl(store: Store): () => void {
       // A restricted preview must still allow counters to work.
     }
   }, { fireImmediately: true });
+}
+
+export const STORAGE_KEY = 'mobx-counter-values-v1';
+
+export function connectPersistence(store: Store): () => void {
+  const restoredFromUrl = restoreUrl(store);
+  // TODO: when URL restoration fails, read and validate a JSON array from storage.
+  // Keep the initial state on a missing, malformed or inaccessible storage value.
+  void restoredFromUrl;
+  const stopUrl = syncUrl(store);
+  // TODO: start an autorun that saves a plain number array, catching write failures.
+  return () => {
+    stopUrl();
+    // TODO: also dispose the storage autorun.
+  };
 }
