@@ -1,4 +1,4 @@
-# Retry the same request — start
+# Retry the same request — solution
 
 Start a fresh request without changing the URL or reloading the page.
 
