@@ -1,4 +1,4 @@
-# Remove a counter safely — start
+# Remove a counter safely — solution
 
 Remove by stable identity while derived state updates automatically.
 
