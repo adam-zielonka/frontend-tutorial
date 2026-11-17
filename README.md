@@ -1,4 +1,4 @@
-# Derive capacity and the total — start
+# Derive capacity and the total — solution
 
 Use computed getters for the four-counter limit and sum.
 
