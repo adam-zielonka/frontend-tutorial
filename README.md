@@ -1,4 +1,4 @@
-# Remember the pallet count — start
+# Remember the pallet count — solution
 
 Use local React state to update the rendered count.
 
