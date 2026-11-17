@@ -2,7 +2,13 @@ export interface Ramp { id: string; name: string }
 
 export async function loadRamps(url: string, signal?: AbortSignal): Promise<Ramp[]> {
   const response = await fetch(url, { signal });
-  return await response.json() as Ramp[];
+  if (!response.ok) throw new Error(`HTTP ${response.status}: could not load ramps`);
+  const data: unknown = await response.json();
+  if (!Array.isArray(data) || !data.every(item =>
+    typeof item === 'object' && item !== null &&
+    typeof item.id === 'string' && typeof item.name === 'string'
+  )) throw new Error('Invalid ramp data');
+  return data as Ramp[];
 }
 
 // Vite serves public files at /; Sandpack's static-file service worker uses /public/.
