@@ -2,9 +2,17 @@ import { describe, expect, it } from 'vitest';
 import { CounterStore } from './Store';
 
 describe('CounterStore', () => {
-  it.todo('starts at zero');
+  it('starts at zero', () => {
+    expect(new CounterStore().value).toBe(0);
+  });
 
-  it.todo('adds and subtracts from the current value');
+  it('adds and subtracts from the current value', () => {
+    const store = new CounterStore();
+    store.change(4);
+    expect(store.value).toBe(4);
+    store.change(-2);
+    expect(store.value).toBe(2);
+  });
 
   it.todo('clamps large positive and negative changes to 10 and 0');
 
