@@ -1,10 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 
 export class CounterStore {
-  value = 0;
-
-  constructor() {
-    makeAutoObservable(this, {}, { autoBind: true });
+  constructor(public readonly id = 1, public value = 0) {
+    makeAutoObservable(this, { id: false }, { autoBind: true });
   }
 
   add(delta: number) {
@@ -14,5 +12,19 @@ export class CounterStore {
 
   reset() {
     this.value = 0;
+  }
+}
+
+export class Store {
+  counters: CounterStore[] = [new CounterStore(1)];
+  nextId = 2;
+  readonly safetyLimit = 20;
+
+  constructor() {
+    makeAutoObservable(this, { nextId: false, safetyLimit: false }, { autoBind: true });
+  }
+
+  addCounter() {
+    // TODO: guard safetyLimit, then push a new CounterStore with the next unique ID.
   }
 }
