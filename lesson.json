@@ -1,8 +1,8 @@
 {
-  "id": "04-08-url-state",
-  "variant": "solution",
+  "id": "04-09-restore-url",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Serialize counter values with semicolons and validate a complete payload before replacing the collection."
+    "Read the value parameter when present, reuse hydrate and catch failures without replacing valid state."
   ]
 }

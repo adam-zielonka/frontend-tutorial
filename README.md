@@ -1,6 +1,6 @@
-# Serialize and validate counter values — solution
+# Restore counters from a URL — start
 
-Serialize and validate counter values.
+Restore counters from a URL.
 
 ## Run
 
@@ -15,13 +15,13 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Serialize counter values with semicolons and validate a complete payload before replacing the collection.
+- Read the value parameter when present, reuse hydrate and catch failures without replacing valid state.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/08-url-state) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-08-url-state-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-restore-url) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-restore-url-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-09-restore-url-solution-v5)
 
 ## All checkpoints
 
