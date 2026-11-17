@@ -190,10 +190,10 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               {overviewPaths.map((overview, index) => {
                 const steps = course.filter(item => Number(item.chapter) === index + 1);
                 return <details key={overview} open={index === chapterIndex}>
-                  <summary>{index + 1}. {steps[0].chapterTitle}</summary>
+                  <summary>{steps[0].chapterTitle}</summary>
                   <Link className={styles.overviewLink} to={`${base}${overview}`} aria-current={metadata.id === overview ? 'page' : undefined}
                     onClick={closeMenu}>Chapter introduction</Link>
-                  <ol>{steps.map(item => <li key={item.id}>
+                  <ol role="list">{steps.map(item => <li key={item.id}>
                     <Link to={`${base}${item.doc}`} aria-current={item.id === lesson?.id ? 'page' : undefined}
                       onClick={closeMenu}>{item.title}</Link>
                   </li>)}</ol>

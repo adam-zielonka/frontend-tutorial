@@ -56,22 +56,26 @@
 .viewButtons button[aria-pressed='true'] {color: var(--ifm-color-primary); background: var(--ifm-color-emphasis-100); border-color: var(--studio-border);}
 .dragShield {position: absolute; inset: 0; z-index: 2; cursor: col-resize;}
 .mobileTabs {display: none;}
-.courseMenu {position: absolute; top: calc(100% + .5rem); left: 0; width: min(480px, calc(100vw - 2rem)); max-height: min(680px, calc(100dvh - var(--ifm-navbar-height) - 90px)); overflow-y: auto; overscroll-behavior: contain; padding: 0; border: 1px solid var(--studio-border); border-radius: 8px; background: var(--studio-surface); color: var(--ifm-font-color-base); box-shadow: 0 8px 28px #0003;}
-.menuHeader {display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--studio-border); position: sticky; top: 0; background: var(--studio-surface); z-index: 1;}
-.menuHeader h2 {min-width: 0; font-size: 1rem; margin: 0;}
+.courseMenu {position: absolute; top: calc(100% + .5rem); left: 0; width: min(420px, calc(100vw - 2rem)); max-height: min(680px, calc(100dvh - var(--ifm-navbar-height) - 90px)); overflow-y: auto; overscroll-behavior: contain; padding: 0; border: 1px solid var(--studio-border); border-radius: 8px; background: var(--studio-surface); color: var(--ifm-font-color-base); box-shadow: 0 8px 28px #0003;}
+.menuHeader {display: flex; align-items: center; justify-content: space-between; padding: .35rem .75rem; position: sticky; top: 0; background: var(--studio-surface); z-index: 1;}
+.menuHeader h2 {min-width: 0; font-size: .85rem; margin: 0;}
 .menuHeader button {border: 0; background: none; color: inherit; cursor: pointer; width: 36px; height: 36px; border-radius: 5px;}
 .menuActions {flex-shrink: 0; display: flex; align-items: center; gap: .4rem;}
 .menuActions button:first-child {width: auto; font-size: .75rem; color: var(--ifm-color-primary); padding-inline: .5rem;}
-.courseMenu nav {padding: .5rem 1.25rem 1.25rem;}
-.courseHome {display: block; padding: .75rem 0; font-weight: 600;}
-.searchLink {display: block; padding: .6rem 0; font-size: .85rem; text-decoration: underline;}
-.courseMenu details {border-top: 1px solid var(--studio-border); padding: .5rem 0;}
-.courseMenu summary {padding: .5rem 0; cursor: pointer; font-size: .9rem; font-weight: 600;}
-.courseMenu ol {margin: .3rem 0 .5rem; padding-left: 1.65rem; font-size: .85rem;}
-.courseMenu li {padding-left: .25rem;}
-.courseMenu li a {display: block; padding: .4rem .5rem; border-radius: 5px;}
-.courseMenu a[aria-current='page'] {background: var(--ifm-color-emphasis-100); color: var(--ifm-color-primary); font-weight: 600;}
-.overviewLink {display: block; font-size: .8rem; padding: .4rem 0 .4rem 1.5rem;}
+.courseMenu nav {padding: .15rem .75rem .75rem; font-size: .875rem; line-height: 1.4;}
+.courseMenu nav a {display: block; min-height: 32px; padding: .35rem .4rem; border-radius: 4px; color: inherit;}
+.courseMenu .courseHome, .courseMenu .searchLink {padding-left: 1.5rem;}
+.searchLink {font-size: .8rem; text-decoration: underline;}
+.courseMenu details {border: 0; margin: 0; padding: 0;}
+.courseMenu summary {display: flex; align-items: center; gap: .65rem; min-height: 32px; padding: .35rem .4rem; border-radius: 4px; cursor: pointer; font-size: inherit; font-weight: 500; list-style: none;}
+.courseMenu summary::-webkit-details-marker {display: none;}
+.courseMenu summary::before {content: ''; flex: 0 0 .4rem; width: .4rem; height: .4rem; border-right: 1.5px solid var(--ifm-color-emphasis-700); border-bottom: 1.5px solid var(--ifm-color-emphasis-700); transform: rotate(-45deg);}
+.courseMenu details[open] > summary::before {transform: rotate(45deg);}
+.courseMenu ol {list-style: none; margin: 0 0 .2rem; padding-left: 1.1rem; font-size: inherit;}
+.courseMenu li {margin: 0; padding: 0;}
+.courseMenu nav a:hover, .courseMenu summary:hover {background: var(--ifm-color-emphasis-100); text-decoration: none;}
+.courseMenu a[aria-current='page'] {color: var(--ifm-color-primary); font-weight: 600;}
+.courseMenu .overviewLink {margin-left: 1.1rem;}
 .studio button:focus-visible, .studio select:focus-visible, .studio a:focus-visible, .studio summary:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
 @media (min-width: 1800px) {
   .reading {padding-inline: clamp(2rem, 4vw, 5rem);}
