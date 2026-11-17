@@ -1,51 +1,37 @@
 ---
-title: "7.3. Cancel obsolete requests"
+title: "7.4. Cancel obsolete requests"
 slug: /07-fetch/03-abort-cleanup
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+Changing the fixture URL starts another effect. An older request may finish later, so it must not overwrite the newest selection. The supplied `active` flag already guards state updates; now cancel obsolete network work too.
 
-Changing the URL starts another effect. The previous request may finish later, so its result must not replace the newest selection. The supplied `active` flag already guards state updates; now also cancel obsolete work.
+## Edit effect setup and cleanup
 
-Create one `AbortController` per effect setup, pass its signal to the adapter, then mark the effect inactive **before** aborting in cleanup. This order keeps intentional cancellation out of the error UI. The adapter already avoids its fallback when the signal is aborted.
+In `/App.tsx`, replace the request line with:
 
-Rapidly toggle the fixture option and confirm the final selection determines the displayed state. A tiny local file can resolve too quickly to reveal a race, so use Network throttling in browser developer tools if needed. React Strict Mode also runs an extra setup/cleanup cycle during development, which this cleanup must tolerate.
-
-
-## Worked walkthrough
-
-1. In `/App.tsx`, inside the effect before `loadLocalRamps`, create `const controller = new AbortController();` and pass `controller.signal` as its second argument.
-2. Replace cleanup with `return () => { active = false; controller.abort(); };`. React calls cleanup before replacing an effect; marking it inactive first prevents intentional cancellation from appearing as an error. The adapter already avoids fallback after abort.
-
-The existing effect contains the success/error handlers. Keep those handlers and their `if (active)` checks. Replace the request line with:
-
-```ts
+```ts title="/App.tsx"
 const controller = new AbortController();
 loadLocalRamps(url, controller.signal).then(data => {
 ```
 
-The second line opens the existing success callback: retain its body, closing braces and `.catch(...)` below it. At the end of the effect, replace the old cleanup with:
+The second line opens the existing callback: retain its body and the `.catch(...)` below it, including their `if (active)` checks. At the end of the effect, replace the old cleanup with:
 
-```ts
+```ts title="/App.tsx"
 return () => {
   active = false;
   controller.abort();
 };
 ```
 
-The controller requests cancellation of the fetch operation. The flag protects React state even if a completion has already been queued. A controller belongs to one effect run: creating it outside the effect could reuse an already-aborted signal on the next request.
+React cleans up before replacing an effect and on unmount. Mark it inactive **before** aborting so intentional cancellation cannot display an error. The adapter also avoids its path fallback when the signal is aborted.
 
-Toggle the fixture option rapidly. The final selection should determine the result. If the local request finishes too quickly to observe cancellation, use network throttling; development Strict Mode may also run an extra setup and cleanup.
+The controller requests cancellation; the flag protects state if completion was already queued. Create a fresh controller inside each setup: an already-aborted signal cannot serve the next request. This also tolerates development Strict Mode's extra setup/cleanup cycle. See [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) and [React effect cleanup](https://react.dev/reference/react/useEffect#fetching-data-with-effects).
 
-<LessonExercise id="07-03-abort-cleanup" />
+<LessonExercise id="07-04-abort-cleanup" />
 
 ## Check your work
 
-Finish on the working fixture and verify three ramps. Next, add a way to request the same URL again.
-
-
-## Sources
-
-[AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), [React effect cleanup](https://react.dev/reference/react/useEffect#fetching-data-with-effects).
+Toggle the fixture option rapidly, ending on the working fixture: only that final selection should determine the three displayed ramps, without a cancellation error. Use browser Network throttling if the tiny fixture resolves too quickly to observe the sequence. Next, request the same URL again.

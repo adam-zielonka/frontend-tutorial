@@ -1,36 +1,27 @@
 ---
 title: "4.7. Remove a counter safely"
+slug: /04-mobx/07-counter-removal
 sidebar_position: 7
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-**Setup from step 6:** the supplied UI gains an `X` button (labelled “Remove counter” for assistive technology) for each counter and an empty-list message. Each button calls a new `removeCounter(id)` stub in the parent store. All existing counter actions and computed getters are unchanged.
+Removal should change the collection while preserving surviving models. This starter supplies an `X` button with an accessible “Remove counter” name, a `removeCounter(id)` stub and an empty-list message. The other actions and computed getters are complete.
 
-Filter by identity, preserving the other `CounterStore` instances. Removing an item should free a slot and subtract its value from the total automatically; no extra action should repair those derived values. Stable keys make the remaining components follow their own models rather than their former array positions.
+## Edit the removal action
 
-Test removing the second of four differently valued counters, adding a replacement, and finally removing every counter. Removing an ID that is not present should be harmless.
+In `/Store.ts`, replace the TODO inside `removeCounter` with:
 
+```ts title="/Store.ts"
+this.counters = this.counters.filter(counter => counter.id !== id);
+```
 
-## Walk through the change
+`filter` makes a new array but keeps each surviving `CounterStore` instance. A missing ID leaves all models in place. Keep IDs and `nextId` unchanged: identity is independent of position. The [stable keys](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) preserve that relationship in React.
 
-1. In `/Store.ts`, replace the TODO inside `removeCounter(id)` with:
-
-   ```ts
-   this.counters = this.counters.filter(counter => counter.id !== id);
-   ```
-
-2. The supplied Remove button already passes its counter's ID. `filter` makes a new list while retaining the other model instances. The existing computed getters then derive the new total and capacity; no manual correction is needed ([MobX computed values](https://mobx.js.org/computeds.html)).
-
-Create four counters, give the second a value, and remove it. Its value disappears from the total and Add becomes available again. Removing every card shows the empty message. If the wrong card disappears, compare IDs and make sure the map still uses `counter.id` as its key.
+The computed total and capacity follow the new collection automatically; no action needs to repair them. See [actions](https://mobx.js.org/actions.html) and [computed values](https://mobx.js.org/computeds.html).
 
 <LessonExercise id="04-07-counter-removal" />
 
 ## Check your work
 
-Remove the middle of three cards and change a remaining card; it should retain its own value. Next, share the collection through a URL.
-
-
-## Official references
-
-[Actions and binding](https://mobx.js.org/actions.html) · [Computed values](https://mobx.js.org/computeds.html) · [Stable keys](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key)
+Fill four slots, give the second counter 100, then remove it: the other IDs and values survive, the total loses 100 and Add becomes available. Removing all cards is also supported; the supplied empty message lets you add one again. Next, represent the collection as text.

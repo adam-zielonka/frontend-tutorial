@@ -1,0 +1,36 @@
+---
+title: "4.9. Restore counters from a URL"
+slug: /04-mobx/09-restore-url
+sidebar_position: 9
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The import field now validates complete snapshots. Read the same format from the browser URL so a shared link can recreate the counters. A missing parameter and an intentionally empty list are different: `get('value')` returns `null` for absence and `''` for `?value=`.
+
+## Edit URL restoration
+
+In `/Store.ts`, replace the `restoreUrl` helper outside the class with:
+
+```ts title="/Store.ts"
+export function restoreUrl(store: Store): boolean {
+  try {
+    const raw = new URL(window.location.href).searchParams.get('value');
+    return raw !== null && store.hydrate(raw);
+  } catch {
+    return false;
+  }
+}
+```
+
+The helper delegates all validation to `hydrate`. It returns false for missing, malformed or inaccessible input, leaving the existing model intact. It only reads the URL; this step still has no browser writer.
+
+The supplied `useEffect` calls `restoreUrl(store)` before `syncUrl(store)`. Restoring during effect setup keeps browser access outside the model constructor. `syncUrl` still returns an inert cleanup function; the next step implements it.
+
+<LessonExercise id="04-09-restore-url" />
+
+## Check your work
+
+In a local export, open `?value=5%3B-2&mode=demo#counters` and reload: two counters should hold 5 and −2. Use [course help](../course-help) for local setup if the embedded frame hides its URL. Next, update this URL when values change.
+
+[URLSearchParams.get](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get) · [React effects](https://react.dev/reference/react/useEffect)

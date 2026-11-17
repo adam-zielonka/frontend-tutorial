@@ -1,60 +1,44 @@
 ---
 title: "4.3. Create an observable counter store"
+slug: /04-mobx/03-observable-store
 sidebar_position: 3
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-Move the previous counter's value and operations into `CounterStore`. `makeAutoObservable` infers observable fields and actions; `autoBind` keeps methods attached to their instance when passed as callbacks. `add` must accumulate its argument, rather than replace the value.
+A model gives the value and its operations one home that other components and tests can use. A class is a blueprint: `new CounterStore()` creates an instance, its constructor prepares it, and `this.value` belongs to that instance.
 
-**Setup from step 2:** `/Store.ts` is new. `App` creates one store with a lazy `useState` initializer and passes it to `Counter`. For this step only, the supporting component copies `counter.value` into React state after each action. This explicit bridge keeps the preview interactive while you focus on the store. It is removed in step 4, where React will subscribe through `observer`.
+This starter adds `/Store.ts`. `App` retains one model with `useState(() => new CounterStore())`. For this step, `Counter` copies the model's value into React state after each action. This temporary bridge keeps the buttons usable while you implement the model; the next step replaces it with a subscription.
 
-## Why introduce a store?
+## Edit the model
 
-Local state worked for one component. A model gives the value and the operations that change it one home, so other components and tests can use the same rules. A class is a blueprint for those objects: `new CounterStore()` creates one instance, its constructor prepares it, and `this.value` refers to that instance's value. Two instances can hold different values.
+In `/Store.ts`, complete the constructor:
 
-Here `observable` means MobX can track reads and changes; an `action` is an operation that changes observable state. `makeAutoObservable` connects ordinary fields and methods to that machinery. It does not draw anything on screen by itself. The second argument allows overrides (none are needed yet); the third enables `autoBind`, so passing `counter.reset` as a callback does not lose which counter `this` refers to.
+```ts title="/Store.ts"
+constructor() {
+  makeAutoObservable(this, {}, { autoBind: true });
+}
+```
 
-The supplied `useState(() => new CounterStore())` retains the model object for this mounted app. It is not the temporary copy of the numeric value inside `Counter`; that separate bridge exists only for this lesson.
+MobX infers observable fields and actions from the class. Observable state can be tracked; actions change it. The empty second argument supplies no overrides. `autoBind` preserves the instance's `this` when a method such as `counter.reset` is passed directly as a callback.
 
-Validate numbers before assignment: a bad delta or arithmetic overflow must leave the previous value intact.
+Replace `add` and `reset` with:
 
+```ts title="/Store.ts"
+add(delta: number) {
+  const next = this.value + delta;
+  if (Number.isFinite(delta) && Number.isFinite(next)) this.value = next;
+}
 
-## Walk through the change
+reset() {
+  this.value = 0;
+}
+```
 
-1. In `/Store.ts`, keep the existing import and value field, and complete the constructor:
-
-   ```ts
-   constructor() {
-     makeAutoObservable(this, {}, { autoBind: true });
-   }
-   ```
-
-   MobX infers the field as observable and methods as actions; binding lets a method retain `this` when used as a callback. See [observable state](https://mobx.js.org/observable-state.html).
-2. Replace the body of the supplied `add` method so it calculates a possible next value before assigning it:
-
-   ```ts
-   add(delta: number) {
-     const next = this.value + delta;
-     if (Number.isFinite(delta) && Number.isFinite(next)) this.value = next;
-   }
-   ```
-
-   `delta` is the change, not the desired final value: from 100, adding -1 produces 99. Rejecting a non-finite input or result keeps a bad value out of the model.
-
-3. In `reset`, assign `this.value = 0;`. This is a model operation independent of React. Addition must accumulate: assigning `delta` itself would replace the old value. Checking the result also rejects overflow.
-
-The supplied bridge copies the model value into React state after each action. Once completed, +100 then -1 shows 99 and Reset shows 0. If clicks do nothing, check that both the constructor and methods have been filled in.
-
-If the preview still behaves like the starter after those edits, use **Refresh preview** to recreate the model with your updated constructor and methods. Hot updates can keep an instance created from the earlier code; refreshing the running example does not clear your editor draft.
+`delta` is a change, so add it to the previous value. Check both the input and result: even finite operands can overflow. Invalid arithmetic leaves the old value intact. These operations work independently of React; [makeAutoObservable](https://mobx.js.org/observable-state.html) does not draw the interface. See also [actions and binding](https://mobx.js.org/actions.html).
 
 <LessonExercise id="04-03-observable-store" />
 
 ## Check your work
 
-Try -100 followed by +1 and Reset; expect -99 then 0. Next, replace the bridge with a subscription.
-
-
-## Official references
-
-[Observable state](https://mobx.js.org/observable-state.html) · [Actions and binding](https://mobx.js.org/actions.html)
+Click −100 → +1 → Reset: expect −100 → −99 → 0 through the supplied bridge. If an older model instance survives a hot update, use **Refresh preview** to recreate it; your editor draft remains saved. Next, let React observe the model directly.

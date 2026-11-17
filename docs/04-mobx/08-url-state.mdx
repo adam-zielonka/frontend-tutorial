@@ -1,70 +1,41 @@
 ---
-title: "4.8. Restore and serialize URL state"
+title: "4.8. Serialize and validate counter values"
+slug: /04-mobx/08-url-state
 sidebar_position: 8
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-**Setup from step 7:** the app gains a small import field, a share-query display, and an effect that calls `restoreUrl` and returns `syncUrl`'s disposer. New store/helper stubs are supplied in `/Store.ts`. The import field lets you exercise hydration even when the preview's own address bar is unavailable.
+A shareable value must be plain text rather than live model objects. Use the original `value` parameter's semicolon format: two counters holding 5 and −2 become `5;-2`.
 
-Serialize values using the original chapter's `value` query parameter and semicolon format. Hydration must validate the whole payload before replacing state: accept at most four finite numbers, reject blank tokens and oversized input, and define the completely empty string as zero counters. A malformed payload must leave existing values untouched.
+This starter adds an import field and a share-query display. Its browser helpers are intentionally inert until the next two steps; the supplied effect will eventually restore first and return the URL reaction's cleanup. For now, work only on the model.
 
-The reaction tracks the serialized values and writes with `replaceState`, preserving other parameters and the hash. Read the URL before starting that reaction. Start it in the provided React effect and return its disposer, so unmounts and development Strict Mode do not accumulate subscriptions.
+## Edit serialization and validation
 
-Try `5;-2`, `1;;2`, `Infinity`, five values, and an empty string. In an exported project, reload `?value=5%3B-2&mode=demo#counters` and confirm unrelated URL parts survive edits.
+In `/Store.ts`, replace the return in `serializedValues` with:
 
-
-## Walk through the change
-
-1. In `/Store.ts`, implement `serializedValues` with `this.counters.map(counter => counter.value).join(';')`. For example, two values become `5;-2`.
-2. In `hydrate`, reject input longer than 512 characters. Split nonempty input on `;`, but treat the completely empty string as an empty array. Reject more than `this.limit` parts or any blank trimmed part; then convert with `Number` and reject any non-finite result.
-
-   ```ts
-   const parts = raw === '' ? [] : raw.split(';');
-   if (parts.length > this.limit || parts.some(part => part.trim() === '')) return false;
-   const values = parts.map(Number);
-   if (!values.every(Number.isFinite)) return false;
-   ```
-
-3. Only after validation, replace `this.counters` with `values.map(value => new CounterStore(this.nextId++, value))` and return true. This prevents a bad token from partly replacing the list.
-4. In `restoreUrl`, read `new URL(window.location.href).searchParams.get('value')` inside `try`; return `raw !== null && store.hydrate(raw)`, and return false in `catch`. This distinguishes an absent parameter from the valid empty list.
-5. In `syncUrl`, return a [MobX reaction](https://mobx.js.org/reactions.html) whose data function reads `store.serializedValues`. Its effect creates a `URL` from the current location, sets `url.searchParams.set('value', value)`, and calls `window.history.replaceState(window.history.state, '', url)` inside `try/catch`. Pass `{ fireImmediately: true }` as the third argument. The existing React effect restores first and returns this reaction's disposer. Using the current URL preserves other parameters and the hash ([replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState)).
-
-### Connect the reaction to the browser
-
-Step 5 changes the body of the existing `syncUrl` helper, outside the `Store` class. Keep the `reaction` import at the top and replace that helper with:
-
-```ts
-export function syncUrl(store: Store): () => void {
-  return reaction(
-    () => store.serializedValues,
-    value => {
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.set('value', value);
-        window.history.replaceState(window.history.state, '', url);
-      } catch {
-        // The counter must still work if the preview blocks URL updates.
-      }
-    },
-    { fireImmediately: true },
-  );
-}
+```ts title="/Store.ts"
+return this.counters.map(counter => counter.value).join(';');
 ```
 
-The first function says **what to watch**; the second says **what to do when it changes**. Reading the computed string also tracks the counter values it depends on. `replaceState` updates the current history entry instead of creating a Back-button entry for every click. `fireImmediately` writes the restored initial state too.
+Replace the body of `hydrate` with:
 
-The supporting `App` already calls `restoreUrl(store)` and then `return syncUrl(store)` inside `useEffect`. Calling `syncUrl` starts the reaction now; the function it returns is the disposer React will call when cleaning up. Do not call that disposer immediately, or the URL would stop following the counters.
+```ts title="/Store.ts"
+if (raw.length > 512) return false;
+const parts = raw === '' ? [] : raw.split(';');
+if (parts.length > this.limit || parts.some(part => part.trim() === '')) return false;
+const values = parts.map(Number);
+if (!values.every(Number.isFinite)) return false;
+this.counters = values.map(value => new CounterStore(this.nextId++, value));
+return true;
+```
 
-Use the import field to try `5;-2`: two cards should appear. `1;;2` and `Infinity` should leave them unchanged; an empty string means no cards. If invalid input clears the list, check that validation finishes before assignment. The preview may restrict address-bar access.
+The completely empty string means zero counters. A blank token *inside* a nonempty payload is invalid: `Number('')` would otherwise become zero. Limit input size and counter count, reject `NaN` and infinities, and validate **every** value before assigning anything. New instances receive session-local IDs; IDs are not part of the shared data.
 
 <LessonExercise id="04-08-url-state" />
 
 ## Check your work
 
-Import `5;-2`, then `1;;2`; the latter must leave 5 and -2 intact. Next, keep values between visits with storage.
+Load `5;-2`, then `1;;2`: the second import must report invalid values and preserve both counters. The same guard rejects `Infinity`, more than four values and oversized input; an empty field intentionally removes all counters. Next, read this format from a URL.
 
-
-## Official references
-
-[Reactions and disposal](https://mobx.js.org/reactions.html) · [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) · [History.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState) · [Effect cleanup](https://react.dev/reference/react/useEffect)
+[Observable state](https://mobx.js.org/observable-state.html) · [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)

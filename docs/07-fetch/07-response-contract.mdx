@@ -1,0 +1,35 @@
+---
+title: "7.7. Describe the response contract"
+sidebar_position: 7
+---
+
+Continue in the archived project from [7.6](./06-original-project.mdx). Define the server response before turning records into application models.
+
+## Edit the response boundary
+
+In `src/api/api.ts`, keep the static imports for now so the existing methods still compile. Also keep the model imports, `LOADINGS` and `getLoadings`. After the imports, add:
+
+```ts title="src/api/api.ts"
+const BASE_URL = 'https://raw.githubusercontent.com/adam-zielonka/shippingboard-lite/bdd5494f80b7b78080e5d5dc479405a614458579/src/api/';
+type CustomerResponse = { kunnr: string; name1: string; ort01: string; land1: string };
+type RampResponse = { ramp_id: string; description: string };
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+function isCustomerResponse(value: unknown): value is CustomerResponse {
+  return isRecord(value) && typeof value.kunnr === 'string' &&
+    typeof value.name1 === 'string' && typeof value.ort01 === 'string' &&
+    typeof value.land1 === 'string';
+}
+function isRampResponse(value: unknown): value is RampResponse {
+  return isRecord(value) && typeof value.ramp_id === 'string' &&
+    typeof value.description === 'string';
+}
+```
+
+The URL ends in `/`, so appending `CUSTOMERS.json` selects a file from the same checkpoint. A real same-origin backend could use `/api/` instead, if it exposes those resources. The response types use the server's field names; the models have constructor arguments designed for the application. The guards check data before it crosses that boundary. A type assertion alone cannot establish what the server actually sent.
+
+## Check your work
+
+Run `pnpm build`: the new response types and guards compile without changing the board behavior. Next, [load customers with await](./08-customers-await.mdx).

@@ -6,34 +6,25 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+The loading/success/error UI and its effect are supplied. `loadRamps` currently returns an empty array; replace it with the two asynchronous stages of a request: getting a response and reading its JSON body.
 
-The effect and loading/success/error UI are supplied so you can focus on the request. Initially `loadRamps` returns an empty array. Replace that placeholder with an awaited `fetch` and an awaited JSON parse.
+Keep `/public/ramps.json` and the supplied `loadLocalRamps` adapter. Vite serves this file at `/ramps.json`; Sandpack can require `/public/ramps.json`. The adapter tries the compatible local paths, without a remote API or credentials. Its fallback is separate from the user-triggered retry taught later.
 
-The fixture stays at `/public/ramps.json` in the virtual project. Local Vite serves it as `/ramps.json`, while Sandpack's static-file service worker can require `/public/ramps.json`; the supplied `loadLocalRamps` adapter tries the compatible local paths. Keep it intact. No remote API or credentials are used.
+## Edit the request
 
-For this first step, a `Ramp[]` assertion is a temporary assumption, **not runtime validation**. The next lesson replaces it with validation and an explicit HTTP status check. Retry is also deliberately disabled until the final step.
+In `/api.ts`, replace the placeholder inside `loadRamps` with:
 
-
-## Worked walkthrough
-
-1. In `/api.ts`, replace the placeholder return inside `loadRamps` with:
-
-```ts
+```ts title="/api.ts"
 const response = await fetch(url, { signal });
 return await response.json() as Ramp[];
 ```
 
-2. `fetch` resolves to a response; `json()` reads its body asynchronously. The existing effect calls `loadLocalRamps` and displays the returned records. The assertion tells TypeScript what to assume; it does not check the data at runtime.
-
-The preview should show three ramps. If it does not, keep the provided adapter and `/public/ramps.json` intact: the adapter handles the two preview paths. Retry remains intentionally disabled.
+`fetch` resolves to a `Response`; `json()` asynchronously reads and parses its body. The effect displays the returned records. `as Ramp[]` is a temporary TypeScript assumption, **not runtime validation**. The next two lessons add an HTTP guard and a data guard. Retry intentionally stays disabled until the final step.
 
 <LessonExercise id="07-01-request" />
 
 ## Check your work
 
-See R1, R2 and R3, then select the missing fixture to explore an error. Next, distinguish an HTTP error from valid ramp data.
+The empty result becomes three named ramps: R1, R2 and R3. Next, reject unsuccessful HTTP responses before reading their bodies.
 
-
-## Sources
-
-[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [Vite public directory](https://vite.dev/guide/assets.html#the-public-directory).
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) · [Vite public directory](https://vite.dev/guide/assets.html#the-public-directory)

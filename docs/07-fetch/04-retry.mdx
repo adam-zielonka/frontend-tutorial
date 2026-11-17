@@ -1,47 +1,33 @@
 ---
-title: "7.4. Retry the same request"
+title: "7.5. Retry the same request"
 slug: /07-fetch/04-retry
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
+Retry should start a fresh request for the same URL. Clearing the error alone would not do that, and setting a URL to its current value would not change an effect dependency. Use a separate request counter as a trigger.
 
-A retry must start a new request rather than just dismissing the old error. Store a request counter, increment it on Retry request, and include it in the effect dependency array alongside the URL.
+## Edit the retry trigger
 
-The same effect now handles first load, URL changes, and retries: it clears the old error, shows loading, and finishes with data or an error. Cleanup cancels the preceding request. Repeating the missing path should fail again; restore the working fixture and retry to return to the three ramps.
+In `/App.tsx`, add this state declaration beside `broken`:
 
-The fixture is intentionally fast. Use browser Network tools if you want to inspect repeated requests and the brief loading state. This remains local fixture practice; production API routing, authentication, and cross-origin policy need their own configuration.
-
-
-## Worked walkthrough
-
-1. In `/App.tsx`, alongside the other state declarations add `const [request, setRequest] = useState(0);`. Add `request` to the effect dependencies: `[url, request]`.
-2. Replace the disabled button with `<button onClick={() => setRequest(current => current + 1)}>Retry request</button>`. The counter is a request trigger, not data: changing it reruns the existing effect, whose cleanup cancels the prior request.
-
-Add the trigger beside `broken` at the top of `App`:
-
-```ts
+```ts title="/App.tsx"
 const [request, setRequest] = useState(0);
 ```
 
-At the end of the existing effect, change `}, [url]);` to `}, [url, request]);`. Then replace the disabled Retry button with:
+Change the effect's final dependency array from `[url]` to `[url, request]`. Replace the disabled button and its TODO with:
 
-```tsx
+```tsx title="/App.tsx"
 <button onClick={() => setRequest(current => current + 1)}>Retry request</button>
 ```
 
-Setting the URL to its existing value would not be a new state change. Incrementing `request` gives React a changed dependency even when the URL stays the same. The effect's existing loading/error handling and cleanup can therefore be reused.
+Incrementing the trigger reruns the same effect: cleanup cancels the preceding request, then setup clears the old error, shows loading and finishes with data or a new error. The functional updater handles queued clicks. Successful results replace the ramps rather than append duplicates.
 
-Try the missing fixture and retry; it should still report an error. Restore the fixture and retry for three ramps. If nothing happens, check that the button is no longer disabled and `request` is in the dependency array.
+A retry of a missing path still fails; it does not repair the resource. Network tools can reveal repeated requests and the brief loading state. These lessons use local fixtures; production API routing, authentication and cross-origin policy require their own configuration. See [effect dependencies](https://react.dev/reference/react/useEffect#specifying-reactive-dependencies) and [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
-<LessonExercise id="07-04-retry" />
+<LessonExercise id="07-05-retry" />
 
 ## Check your work
 
-Confirm repeated attempts do not duplicate displayed ramps. Next, build a stateful interface with UI5 components.
-
-
-## Sources
-
-[React effect dependencies](https://react.dev/reference/react/useEffect#specifying-reactive-dependencies), [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+With the working fixture selected, click Retry twice: Network tools show fresh requests while the results remain exactly three ramps. Continue with the [original ShippingBoard API project](./06-original-project.mdx) to apply the same boundaries to model construction.
