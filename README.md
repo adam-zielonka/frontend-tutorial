@@ -1,4 +1,4 @@
-# Switch between board views — start
+# Switch between board views — solution
 
 Connect view selection to two presentations of the same data.
 
