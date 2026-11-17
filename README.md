@@ -1,4 +1,4 @@
-# Test reset and independent stores — start
+# Test reset and independent stores — solution
 
 Prove reset changes a nonzero value and instances do not share state.
 
