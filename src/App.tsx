@@ -21,8 +21,10 @@ const App = observer(function App() {
   const [store] = useState(() => new Store());
   return <main className="app">
     <h1>MobX counters</h1>
+    <p>{store.counters.length} / {store.limit} counters</p>
+    <aside className="total" aria-label="Total"><output aria-live="polite">{store.sum}</output></aside>
     {store.counters.map(counter => <Counter key={counter.id} counter={counter} />)}
-    <button type="button" aria-label="Add counter" onClick={store.addCounter}>+</button>
+    <button type="button" aria-label="Add counter" disabled={!store.canAddMoreCounters} onClick={store.addCounter}>+</button>
   </main>;
 });
 

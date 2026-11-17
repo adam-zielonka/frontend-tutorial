@@ -1,6 +1,6 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 const draft = JSON.parse(readFileSync(process.argv[2], 'utf8'));
-if (draft.lesson !== "04-05-counter-collection") throw Error('This download belongs to another lesson');
+if (draft.lesson !== "04-06-computed-capacity") throw Error('This download belongs to another lesson');
 const allowed = ["/App.tsx","/Store.ts","/styles.css"];
 for (const name of allowed) {
   if (typeof draft.files?.[name] !== 'string') throw Error('Missing file: ' + name);

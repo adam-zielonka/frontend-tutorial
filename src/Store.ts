@@ -18,14 +18,25 @@ export class CounterStore {
 export class Store {
   counters: CounterStore[] = [new CounterStore(1)];
   nextId = 2;
-  readonly safetyLimit = 20;
+  readonly limit = 4;
 
   constructor() {
-    makeAutoObservable(this, { nextId: false, safetyLimit: false }, { autoBind: true });
+    makeAutoObservable(this, { nextId: false, limit: false }, { autoBind: true });
+  }
+
+  get canAddMoreCounters(): boolean {
+    // TODO: derive whether the collection has room.
+    return true;
+  }
+
+  get sum(): number {
+    // TODO: derive the total from every counter value.
+    return 0;
   }
 
   addCounter() {
-    if (this.counters.length >= this.safetyLimit) return;
+    // TODO: use canAddMoreCounters instead of repeating this length comparison.
+    if (this.counters.length >= this.limit) return;
     this.counters.push(new CounterStore(this.nextId++));
   }
 }
