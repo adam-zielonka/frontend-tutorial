@@ -100,5 +100,16 @@ export function connectPersistence(store: Store): () => void {
   }
   // Restore before either effect writes. A valid URL (including value=) wins.
   const stopUrl = syncUrl(store);
-  return stopUrl;
+  const stopStorage = autorun(() => {
+    const snapshot = JSON.stringify(store.counters.map(counter => counter.value));
+    try {
+      window.localStorage.setItem(STORAGE_KEY, snapshot);
+    } catch {
+      // Storage may be blocked or full; counters continue to work in memory.
+    }
+  });
+  return () => {
+    stopUrl();
+    stopStorage();
+  };
 }

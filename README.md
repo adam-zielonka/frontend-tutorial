@@ -1,4 +1,4 @@
-# Save snapshots and clean up both effects — start
+# Save snapshots and clean up both effects — solution
 
 Save snapshots and clean up both effects.
 

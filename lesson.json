@@ -1,6 +1,6 @@
 {
   "id": "04-12-storage-autorun",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Write a plain numeric JSON snapshot in autorun, catch storage failures and dispose both browser subscriptions."
