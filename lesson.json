@@ -1,6 +1,6 @@
 {
   "id": "04-09-restore-url",
-  "variant": "start",
+  "variant": "solution",
   "release": "v5",
   "tasks": [
     "Read the value parameter when present, reuse hydrate and catch failures without replacing valid state."

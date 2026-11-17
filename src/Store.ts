@@ -60,8 +60,12 @@ export class Store {
 
 // Browser effects are owned by App's effect, never started at module import time.
 export function restoreUrl(store: Store): boolean {
-  // TODO: read the value query parameter; hydrate when present. Catch URL failures.
-  return false;
+  try {
+    const raw = new URL(window.location.href).searchParams.get('value');
+    return raw !== null && store.hydrate(raw);
+  } catch {
+    return false;
+  }
 }
 
 export function syncUrl(store: Store): () => void {

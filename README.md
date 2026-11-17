@@ -1,4 +1,4 @@
-# Restore counters from a URL — start
+# Restore counters from a URL — solution
 
 Restore counters from a URL.
 
