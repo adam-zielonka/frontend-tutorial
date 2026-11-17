@@ -1,6 +1,6 @@
-# Save snapshots and clean up both effects — solution
+# Switch between board views — start
 
-Save snapshots and clean up both effects.
+Connect view selection to two presentations of the same data.
 
 ## Run
 
@@ -15,13 +15,15 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Write a plain numeric JSON snapshot in autorun, catch storage failures and dispose both browser subscriptions.
+- Wire the Loadings and Ramps buttons to setView with the matching View value.
+- Confirm aria-pressed follows the selected view and the section changes.
+- Switch back to Loadings and verify the three fixed records are preserved.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/12-storage-autorun) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-12-storage-autorun-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-12-storage-autorun-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/05-shippingboard/01-view-switching) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-05-01-view-switching-solution-v5)
 
 ## All checkpoints
 
