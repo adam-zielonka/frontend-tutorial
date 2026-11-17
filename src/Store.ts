@@ -25,18 +25,15 @@ export class Store {
   }
 
   get canAddMoreCounters(): boolean {
-    // TODO: derive whether the collection has room.
-    return true;
+    return this.counters.length < this.limit;
   }
 
   get sum(): number {
-    // TODO: derive the total from every counter value.
-    return 0;
+    return this.counters.reduce((total, counter) => total + counter.value, 0);
   }
 
   addCounter() {
-    // TODO: use canAddMoreCounters instead of repeating this length comparison.
-    if (this.counters.length >= this.limit) return;
+    if (!this.canAddMoreCounters) return;
     this.counters.push(new CounterStore(this.nextId++));
   }
 }
