@@ -25,6 +25,7 @@ export class Store {
   }
 
   addCounter() {
-    // TODO: guard safetyLimit, then push a new CounterStore with the next unique ID.
+    if (this.counters.length >= this.safetyLimit) return;
+    this.counters.push(new CounterStore(this.nextId++));
   }
 }
