@@ -1,19 +1,53 @@
-:root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }
+/* Adapted from adam-zielonka/mobx-example, src/index.css (MIT).
+   Original colors, typography, borders and shadows; fluid widths for lesson previews. */
+:root { font-family: Verdana, Geneva, Tahoma, sans-serif; color: #000; background: #fff; }
 * { box-sizing: border-box; }
 body { margin: 0; }
-main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
-h1 { font-size: 1.65rem; }
-h2 { font-size: 1.15rem; }
-section, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }
-button, input, select { font: inherit; padding: .5rem .75rem; }
-button { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }
+#root { min-height: 100vh; display: grid; place-items: center; }
+.app { position: relative; display: grid; justify-items: center; width: 100%; padding: 1rem 0; }
+.app > h1, .counter > h2 {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.counter, .total {
+  background-color: rgb(252, 252, 140);
+  border: 4px solid rgb(255, 165, 0);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px 5px rgba(241, 122, 43, .2), inset 0 0 7px 6px rgba(255, 165, 0, .7);
+}
+.counter { position: relative; width: min(384px, calc(100% - 32px)); margin: 30px 0; }
+.counter > output, .total > output {
+  display: block; text-align: center; font-size: 30px;
+  background-color: lightgreen; color: green;
+  box-shadow: inset -2px -2px 7px 3px rgba(47, 121, 53, .3);
+  border: 2px solid green; padding: 5px 30px; border-radius: 15px;
+  overflow-wrap: anywhere;
+}
+.controls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+button {
+  font-size: 20px; border-radius: 100px; border: 2px solid rgb(42, 42, 156);
+  background-color: rgb(175, 219, 247); color: #000; cursor: pointer;
+  box-shadow: 2px 2px 2px 2px rgba(42, 42, 156, .2);
+}
+button:hover:not(:disabled) { background-color: white; }
+button:active:not(:disabled) { background-color: red; border-color: red; color: white; box-shadow: none; }
 button:disabled { cursor: default; opacity: .55; }
-:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }
-.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }
-output { font-size: 1.4rem; font-weight: 700; }
-li { margin-block: .5rem; }
-label { display: inline-flex; align-items: center; gap: .5rem; }
-table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }
+:focus-visible { outline: 3px solid rgb(42, 42, 156); outline-offset: 3px; }
+.app > button { font-size: 30px; font-weight: 500; min-width: 44px; min-height: 44px; }
+.remove {
+  position: absolute; top: 22px; right: 23px; width: 30px; height: 33px;
+  background: none; border: 2px solid transparent; box-shadow: none; color: green;
+}
+.remove:hover:not(:disabled) { color: #000; border-color: rgb(42, 42, 156); background-color: rgb(175, 219, 247); }
+.total { justify-self: end; margin: 10px 16px; max-width: calc(100% - 32px); }
+.app > p { margin: .4rem 16px; text-align: center; }
+.url-values { width: min(36rem, calc(100% - 32px)); padding: 1rem; border: 1px solid #aaa; border-radius: 15px; }
+label { display: grid; gap: .5rem; }
+input { font: inherit; min-width: 0; width: 100%; padding: .5rem; }
+.url-values button { margin-top: .75rem; }
 code { overflow-wrap: anywhere; }
-[role="alert"] { color: #a31515; }
+@media (max-width: 420px) {
+  .controls { gap: 6px; }
+  .controls > button { font-size: clamp(16px, 5vw, 20px); padding-inline: 0; }
+}
