@@ -1,8 +1,8 @@
 {
-  "id": "04-11-persistence",
-  "variant": "solution",
+  "id": "04-12-storage-autorun",
+  "variant": "start",
   "release": "v5",
   "tasks": [
-    "Restore a validated numeric storage array only when URL restoration fails; restore before URL synchronization."
+    "Write a plain numeric JSON snapshot in autorun, catch storage failures and dispose both browser subscriptions."
   ]
 }

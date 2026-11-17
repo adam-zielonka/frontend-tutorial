@@ -1,6 +1,6 @@
-# Restore a storage snapshot as fallback — solution
+# Save snapshots and clean up both effects — start
 
-Restore a storage snapshot as fallback.
+Save snapshots and clean up both effects.
 
 ## Run
 
@@ -15,13 +15,13 @@ Or use the pinned pnpm version and lockfile: `pnpm install --frozen-lockfile`, t
 
 ## Tasks
 
-- Restore a validated numeric storage array only when URL restoration fails; restore before URL synchronization.
+- Write a plain numeric JSON snapshot in autorun, catch storage failures and dispose both browser subscriptions.
 
 ## Continue your work
 
 A tag checkout is detached: run `git switch -c my-work` before making your own commits. To import a JSON download from the lesson editor, copy it here and run `npm run import-draft -- ./download.json` (this replaces your exercise files).
 
-[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/09-persistence) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-11-persistence-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-11-persistence-solution-v5)
+[Read the lesson](https://adam-zielonka.github.io/frontend-tutorial/04-mobx/12-storage-autorun) · [Starter](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-12-storage-autorun-start-v5) · [Solution](https://github.com/adam-zielonka/frontend-tutorial/tree/lesson-04-12-storage-autorun-solution-v5)
 
 ## All checkpoints
 
