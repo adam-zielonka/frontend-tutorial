@@ -1,4 +1,4 @@
-# Render the counter component — start
+# Render the counter component — solution
 
 Build a small semantic component before adding behavior.
 
