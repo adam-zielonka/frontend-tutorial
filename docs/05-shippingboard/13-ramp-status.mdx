@@ -13,7 +13,7 @@ course_illustration_alt: "A decision ladder tests empty, all loaded, any not sta
 course_illustration_description: "Ramp.status becomes the class on the ramp body. Empty keeps its stripes. Move 0007707 to A and E changes from red to amber."
 ---
 
-An assigned card list does not yet describe whether the ramp is ready, finished or waiting. Derive that business status from all assignments and connect it to the existing body colour rules.
+A ramp can have two loadings at different stages. If one has started and the other is still waiting, which status should the dashboard show? The original app gives waiting work priority. You’ll express that rule in the ramp model and use its result to colour the ramp body.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
@@ -72,9 +72,12 @@ In `src/components/RampBox.tsx`, change its opening `<main>` tag to:
 <main className={ramp.status}>
 ```
 
-Keep the class on the ramp's **body**, where the existing `Ramp.scss` selectors expect it. Its `loaded`, `progress` and `not-started` rules provide green, amber and red backgrounds. There is no filled `.empty` rule: empty ramps keep their striped background. Do not rewrite the stylesheet.
+Use the class on the ramp’s `<main>` element. The existing rules in `Ramp.scss` colour that part of the card green for `loaded`, amber for `progress` and red for `not-started`. An empty ramp keeps its stripes.
 
-The order is deliberate. An empty array satisfies `every`, so `isLoaded` alone is true for an empty ramp; the `isEmpty` branch must run first. Any not-started assignment takes precedence over a partially picked assignment. Also inspect the original `Loading` getters: `isInProgress` means `picked !== pallets`, so a positive-total loading with zero picked pallets satisfies it too. The earlier `isSomeNotStarted` branch resolves that overlap. We preserve those model semantics rather than substituting the mini fixture's status strings.
+Two details explain the order of the checks:
+
+1. **An empty ramp.** JavaScript’s `every` returns true for an empty array. Checking `isEmpty` first gives a ramp with no cards the striped background. Otherwise it would appear fully loaded.
+2. **A ramp with waiting work.** Look at E. One loading has 0 of 42 pallets picked, the other has 3 of 29. The first already satisfies the model’s `isInProgress` test (`picked !== pallets`), even though work hasn’t started. Checking `isSomeNotStarted` first gives E the intended red background.
 
 ## Expected fixture status
 
@@ -92,4 +95,6 @@ After a fresh reload, expect:
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-E must be red even though `0007708` has started. This original rule is **Not started before In progress**; the four mini-lessons intentionally use a different **Loading before Waiting** rule. Do not copy that priority here. Open `0007707`, move it to A and close: A becomes red and E becomes amber. Move it back to restore the initial distribution, or reload.
+Find ramp E. In the mini board **Loading** takes priority over **Waiting**. Here the rule is different: the waiting loading makes E red even though work on `0007708` has begun.
+
+Open the waiting loading (`0007707`), move it to A and close the dialog. A should turn red. E now has only the loading that has started, so it should turn amber. Move `0007707` back, or reload to restore the original assignments.

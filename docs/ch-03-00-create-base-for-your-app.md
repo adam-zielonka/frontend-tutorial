@@ -4,9 +4,11 @@ sidebar_position: 30
 
 # 3. React basics
 
-Build the counter in three small steps: static JSX, remembered state, and bounded actions. Each embedded starter opens `App.tsx` beside the preview and builds on the preceding step.
+A pallet arrives. You click **Add pallet** and expect the number on screen to go from 0 to 1. You’ll build that interaction in three steps: draw the counter, teach it to remember the count, then handle subtraction and reset so the count stays at or above zero. Each exercise opens `App.tsx` beside the preview with the previous step already in place.
 
-The exercise supplies the entry point. In a local export, `index.html` contains the root element, `src/main.tsx` mounts `App`, and `src/App.tsx` contains the component. Run `pnpm install`, `pnpm dev`, and `pnpm build` in the exported project to install, serve, and type-check/build it. This sandbox uses React 18.3.1 separately from the documentation website.
+If you work locally, follow the page from the outside in. The browser opens `index.html`, which has an empty root element. Then `src/main.tsx` puts the React component from `src/App.tsx` into that element. The browser exercises already connect those files for you.
+
+In an exported project, run `pnpm install` to get the dependencies and `pnpm dev` to see your edits as you work. Run `pnpm build` to check the types and build the app. These examples use React 18.3.1 with their own dependencies.
 
 ## Lessons
 

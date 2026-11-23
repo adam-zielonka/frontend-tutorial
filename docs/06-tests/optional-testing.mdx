@@ -11,7 +11,7 @@ course_illustration_description: "In the collection test, check the length, conf
 ## Where test configuration belongs
 
 
-In the export, `pnpm test` or `pnpm exec vitest` watches for edits. `pnpm test:run` and `pnpm exec vitest run` run the suite once. Store tests work without a config file. To explicitly select Node, create `vitest.config.ts` at the project root:
+In the exported project, `pnpm test` or `pnpm exec vitest` runs tests and watches for edits so it can run them again. `pnpm test:run` and `pnpm exec vitest run` run the suite once. Store tests work without a config file. To explicitly select Node, create `vitest.config.ts` at the project root:
 
 ```ts
 import { defineConfig } from 'vitest/config';
@@ -27,7 +27,7 @@ Use `defineConfig` from `vitest/config` here so TypeScript knows about the `test
 
 ## Optional continuation: UI and end-to-end tests
 
-The original [mobx-example checkpoint](https://github.com/adam-zielonka/mobx-example/tree/create-tests) tests a different store. For a component that reads the DOM, install a compatible emulator in your UI test project and set the [Vitest environment](https://vitest.dev/guide/environment.html), for example `test: { environment: 'happy-dom' }` with `happy-dom` installed. Another option is `jsdom`. Both emulate the DOM in Node.
+The original [mobx-example checkpoint](https://github.com/adam-zielonka/mobx-example/tree/create-tests) tests a different store. For a component that reads the DOM, install a compatible emulator in your UI test project and set the [Vitest environment](https://vitest.dev/guide/environment.html), for example `test: { environment: 'happy-dom' }` with `happy-dom` installed. Another option is `jsdom`. Both provide a simulated browser document, or DOM, while the tests run in Node.
 
 For coverage in a local chapter 6 copy, run `pnpm add -D @vitest/coverage-v8@5.1.0` to match the installed Vitest, then `pnpm exec vitest run --coverage`. Inspect missed branches as well as percentages. A high percentage alone cannot establish that assertions are meaningful. For user journeys across the browser and application, [Playwright](https://playwright.dev/docs/intro) provides end-to-end tests; use it separately from the unit tests, for example to open the page, click a control and assert the visible result.
 

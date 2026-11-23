@@ -11,7 +11,7 @@ course_illustration_description: "Trace the two jobs of index.html: it provides 
 ## Optional: create and explore a separate Vite project
 
 
-With Node and pnpm installed, create a separate project from the current Vite template. Its files and Node requirements can differ from the pinned course exports. See [Vite’s scaffold guide](https://vite.dev/guide/#scaffolding-your-first-vite-project).
+With Node and pnpm installed, create a separate project from the current Vite template. The first command generates a starter project; the remaining commands enter its folder, install dependencies, and start the development server. Its files and Node requirements can differ from the pinned course exports. See [Vite’s scaffold guide](https://vite.dev/guide/#scaffolding-your-first-vite-project).
 
 ```sh
 pnpm create vite my-react-app --template react-swc-ts
@@ -26,7 +26,7 @@ Open the printed address. Change text in `src/App.tsx` and save: Vite's developm
 
 `package.json` declares scripts and dependencies; the lockfile records resolved versions. `public/` holds static assets, while `src/` contains application code and imported assets. Projects may later organize `src/` into components, hooks, stores, styles, tests, types and utilities. `vite.config.ts` configures Vite and its React plugin; `tsconfig.json` configures TypeScript. Exact generated files vary by template version.
 
-1. In `index.html`, find `<div id="root"></div>` and the module script for `/src/main.tsx`. The former is the mounting point; the latter loads the application.
+1. In `index.html`, find `<div id="root"></div>` and the module script for `/src/main.tsx`. The `div` is where React will display the app; the script loads the application.
 2. In `src/main.tsx`, find `createRoot(...).render(...)` and the `App` and global CSS imports. React mounts the component into that root; Strict Mode can help reveal problems during development. See [createRoot](https://react.dev/reference/react-dom/client/createRoot).
 3. In `src/App.tsx`, inspect the imported logos and stylesheet, the `App` function, JSX and `useState` counter. JSX uses `className` for CSS classes and braces for expressions. Clicking the template button calls its state setter and renders the new count. Assets imported from `src` are processed by Vite; files in `public` are served directly ([assets guide](https://vite.dev/guide/assets.html)).
 

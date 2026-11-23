@@ -13,9 +13,15 @@ course_illustration_alt: "The dashboard card and table row for 0007703 open the 
 course_illustration_description: "Both click handlers pass the same Loading instance to openLoadingDialog. The selection also writes loading=0007703 to the URL."
 ---
 
-The table already opens a working details dialog. Let loading cards call that same store action so an assignment change updates both presentations of the same model.
+import {AssignedBays} from '@site/src/components/LoadingBays';
+
+Click a row in the loading table and its details dialog opens. Someone looking at the dashboard should be able to open that same dialog by clicking a card. You’ll connect the card to the action the table already uses, so changing the ramp in one view also updates the other.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+In this example the truck tracks only `0007703`. Assign it to A and compare the dashboard cards with its table row.
+
+<AssignedBays />
 
 ## Make the change
 
@@ -32,10 +38,12 @@ return <Card className="Loading" elevation={Elevation.TWO} interactive
   onClick={() => store.ui.openLoadingDialog(loading)}>
 ```
 
-`interactive` provides Blueprint's card interaction styling; `onClick` supplies the behavior. Pass the existing model to the same action used by a table row. Do not create another dialog or another selected-loading state.
+The two props do different jobs. `interactive` gives the card Blueprint’s hover and pressed styles. `onClick` passes the loading itself to the action that table rows already use. Both entry points now share one selected loading and one dialog.
 
 ## Check your work
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-Clicking `0007703` on C opens its details and writes `loading=0007703` to the URL. Assign it to A with the existing ramp buttons and close the dialog: its card moves from C to A. Switch to Loadings and the same row shows ramp A. Reload to restore the original fixture assignments; this checkpoint edits in-memory models and does not persist assignments to a server.
+1. On ramp C, open card **0007703**. Its details should appear, and the address should include `loading=0007703`.
+2. In the dialog, choose **A** and close it. Look for the card under A, then switch to **Loadings**. The row for `0007703` should show A too.
+3. Reload and find the same loading. It is back on C because this app keeps assignment changes in memory.

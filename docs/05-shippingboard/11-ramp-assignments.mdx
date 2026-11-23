@@ -13,7 +13,7 @@ course_illustration_alt: "Four fixture rows show the lookup: 0007701 belongs to 
 course_illustration_description: "Ramp.loadings selects by object identity with loading.ramp === this. RampBox renders those matches. An undefined ramp leaves the loading accessible only in Loadings."
 ---
 
-The temporary card proves the presentation works, but repeats one loading everywhere. Derive membership from the existing object relationship so each ramp shows only its own assignments.
+The card now looks right, but every ramp shows the same loading. Each loading already knows which ramp it belongs to. You can use that reference to answer the question from the other direction: which loadings belong on this ramp?
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
@@ -40,9 +40,11 @@ export class Ramp {
 }
 ```
 
-`FromResponse.ramp` in `src/api/parse.ts` resolves each fixture's ramp ID to a `store.ramps` instance. The dialog’s `setRamp` action assigns one of those objects; `clearRamp` removes that reference. That is why reference equality works here. Unassigned loadings have `ramp === undefined` and stay in the table; they do not belong to an invented extra ramp. The fallback for an unknown API ramp ID is outside this fixture and this dashboard exercise.
+Take loading `0007703`. When the app reads its data, `FromResponse.ramp` in `src/api/parse.ts` looks up C in `store.ramps`. It puts that exact ramp object in `loading.ramp`. Inside C’s getter, `this` is the same object, so `loading.ramp === this` includes `0007703`. Inside D’s getter, that comparison is false.
 
-Do not store another mutable array of assignments on each ramp. The getter derives it from the single source, `store.loadings`. `makeAutoObservable` makes it computed, and an observing component updates when a loading's assignment changes. See [MobX computed values](https://mobx.js.org/computeds.html).
+Choosing a ramp in the dialog calls `setRamp` and changes that one reference. Clearing the ramp calls `clearRamp` and sets the reference to `undefined`, so the loading appears only in the table. All assigned IDs in this exercise refer to known ramps.
+
+With `makeAutoObservable`, MobX treats the getter as a [computed value](https://mobx.js.org/computeds.html). When the assignment changes, components that read the getter can show the new list. You only have to update the loading itself.
 
 Replace `src/components/RampBox.tsx` completely, removing the temporary `store` import and single-loading example:
 
@@ -69,4 +71,14 @@ export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-A, F and G are empty; B has `0007701`; C has `0007702` and `0007703`; D has `0007704`–`0007706`; E has `0007707` and `0007708`. The three unassigned loadings `0007709`–`0007711` remain accessible through Loadings. Empty ramps retain their header and striped body, rather than disappearing.
+Start on the dashboard and compare the cards with the assignments below.
+
+| Ramp | Loadings |
+| --- | --- |
+| A, F and G | None. Each ramp still has a header and a striped body. |
+| B | `0007701` |
+| C | `0007702` and `0007703` |
+| D | `0007704` through `0007706` |
+| E | `0007707` and `0007708` |
+
+Switch to **Loadings**. You can still open the three unassigned records, `0007709` through `0007711`, from the table.

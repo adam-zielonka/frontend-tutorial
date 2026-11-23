@@ -13,7 +13,7 @@ course_illustration_alt: "The temporary card for 0007701 shows Militech, today�
 course_illustration_description: "LoadingBox reads the model’s date, customer and pallet values. loadedRatio supplies 1 to the progress bar. This first fixture is temporarily rendered in every ramp."
 ---
 
-Each ramp needs a readable loading summary. Build one card from the original Loading model before connecting ramp assignments; its dates, customer and numeric pallet progress are richer than the mini fixture’s category stripe.
+Pick one loading and imagine what the person at the ramp needs to know: who the delivery is for, when it is due, and how many pallets are ready. Build a card from those values on the Loading model. For now you’ll use the same loading in every ramp so you can check the card on its own.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
@@ -68,7 +68,7 @@ Use the model's existing presentation getters rather than interpreting raw API f
 | Pallet counts | `picked` from `picked_hus`, and `pallets` from the API's total. The card reads picked **of** total. |
 | Progress | `loadedRatio`: `picked / pallets`, with `0` when the total is zero; `isLoaded` requires a positive total and exact equality. |
 
-Blueprint's [`ProgressBar` value is a ratio from 0 to 1](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/progress-bar/progressBar.tsx), not a percentage from 0 to 100. We pass the existing numeric getter, turn off animation and use success intent only for a completed loading. This differs from the mini app's categorical status stripe.
+Suppose 11 of 22 pallets are ready. The model’s `loadedRatio` returns `0.5`, which fills half of Blueprint’s [progress bar](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/progress-bar/progressBar.tsx). It expects a number from 0 to 1. Keep the bar still by turning off animation, and give it the success colour when the loading is complete. In the earlier mini board, a stripe showed a status category. Here the bar tells you how much work is done.
 
 For a short visual check before connecting the relationship, add these imports to `RampBox.tsx`:
 
@@ -91,4 +91,6 @@ The pinned data guarantees a first loading; this is a temporary component check,
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-Every ramp temporarily shows the **same** `0007701` card: Militech, US/Washington, D.C., customer ID `771996`, `2 of 2` and a full success bar. The dates follow the local current day and the time window is 06:00–09:00. The `.Loading` styles apply because the card is inside `.Ramp`. Clicking is not connected yet. If you see duplicated cards, that is expected at this intermediate step; fix the relationship next.
+Pick any ramp and look for **0007701**. The customer is Militech in Washington, D.C., US, with ID `771996`. The time window is 06:00–09:00 on the current local date. With `2 of 2` pallets picked, the bar should be full and show the success colour.
+
+Now look at a second ramp. It should show the very same card, styled by the `.Loading` rules inside `.Ramp`. The next step replaces that temporary copy with each ramp’s own loadings. You’ll connect the click handler after that.

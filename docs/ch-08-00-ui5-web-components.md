@@ -4,9 +4,9 @@ sidebar_position: 80
 
 # 8. UI5 Web Components for React
 
-Compose UI5 components, add stateful actions with registered icons, then derive progress and enforce capacity. Each embedded exercise opens its prepared `App.tsx` beside the preview.
+A shipment has room for ten pallets. Give someone a button to load one, then show how full the shipment is after each click. At ten, the button should stop accepting more. You’ll build this screen with buttons, icons and a progress indicator from UI5. Each exercise opens `App.tsx` beside the preview.
 
-The exercises pin `@ui5/webcomponents-react`, `@ui5/webcomponents`, `@ui5/webcomponents-base`, `@ui5/webcomponents-fiori`, and `@ui5/webcomponents-icons` to 2.15.0. These dependencies belong to the lesson project, separately from the website. A single `ThemeProvider` lives inside `App`; the generated entry does not add another one.
+In the first exercise, wrap the controls in one `ThemeProvider` inside `App`. The starter leaves this to you. If you follow the examples locally, use the versions pinned in the exercise. The React wrapper (`@ui5/webcomponents-react`) and its four UI5 packages (`@ui5/webcomponents`, `@ui5/webcomponents-base`, `@ui5/webcomponents-fiori`, `@ui5/webcomponents-icons`) all use 2.15.0. The course website manages its own dependencies.
 
 ## Lessons
 

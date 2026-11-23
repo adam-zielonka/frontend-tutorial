@@ -13,13 +13,13 @@ course_illustration_alt: "A URL timeline starts with the table and dialog open. 
 course_illustration_description: "UI.init restores the view and looks up 0007703 before registering the reactions. Later pushState calls retain keep=yes and #dock."
 ---
 
-A selected view alone is not enough for a shareable link: the existing loading selection must survive too. Restore both choices at startup, then reflect later changes in the address.
+Suppose a colleague sends you a link to a loading they want you to check. Opening the link should take you straight to its details, with the right view behind the dialog. That means reading two things from the address when the app starts: the selected view and the loading ID.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
-A link such as `/?view=loadings&loading=0007703` should select the table **and** open the existing loading dialog after reload. Restore state first, then observe later changes. Do not replace `init` with a fragment that discards its existing loading lookup or its loading reaction.
+Try reading `/?view=loadings&loading=0007703` as two instructions. The first opens the table. The second finds loading `0007703` and opens its dialog. The existing `init` method already handles the loading ID. Extend it to restore the view too, then watch for changes to either choice.
 
 Replace `src/store/UI.ts` with this complete version, including the view members from lesson 5.6:
 
@@ -101,14 +101,20 @@ export class UI {
 }
 ```
 
-The URL value is untrusted text: only `loadings` selects that view; missing, `dashboard` or unknown values select the default dashboard. Do not cast arbitrary input to `View`. The loading lookup still ignores unknown loading IDs. `Store.init` already creates loadings before calling `ui.init`, so the selected instance can be found.
+**When the app opens.** `Store.init` creates the loadings before it calls `ui.init`. By then the app can look up the ID in the address and open the dialog for that loading. An unknown ID opens no dialog. For the view, only the string `loadings` selects the table. A missing value, `dashboard` or a typo all select Dashboard. Checking the string before assigning it keeps an unexpected value out of the store.
 
-A [`reaction`](https://mobx.js.org/reactions.html#reaction) tracks its first function and runs the second when that value changes. We keep its default of **not writing immediately**, so initialization does not overwrite a deep link. Later, selecting Loadings writes `view=loadings`, selecting Dashboard removes the default parameter, and closing details removes `loading`. The helper still uses the checkpoint's `pushState` approach, with a small correction: building from a full URL preserves its hash and avoids a stray `?` when the query is empty. It also retains unrelated query parameters. See [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and [History.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState).
+**When someone clicks.** A MobX [reaction](https://mobx.js.org/reactions.html#reaction) watches the value returned by its first function. When that value changes, the second function updates the address. By default it waits for a change, so opening the page preserves the link you came in on. Choosing Loadings adds `view=loadings`. Choosing Dashboard removes `view` because Dashboard is the default. Closing the dialog removes `loading`.
 
-This is startup restoration plus state-to-URL synchronization, not a router: there is no `popstate` listener, so Back/Forward alone does not restore the UI. These reactions belong to the application-lifetime singleton, initialized once by `Store.ts`; do not call `ui.init()` from a React render or effect. If you later give the store a shorter lifetime, retain and call the reaction disposers when disposing that store, as described in [MobX reaction disposal](https://mobx.js.org/reactions.html#always-dispose-of-reactions).
+The helper starts from the current URL so other query parameters and the hash survive each edit. It leaves off the question mark when the query becomes empty. See [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and [History.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState).
+
+**What happens with Back and Forward?** The browser can change the address, but this app only reads it at startup. Following history changes would also require a `popstate` listener.
+
+`Store.ts` calls `ui.init()` once for the lifetime of the app. Calling it again inside a React render or effect would register another pair of reactions. For a shorter-lived store, save the function each reaction returns and call it when you dispose of the store. See [MobX reaction disposal](https://mobx.js.org/reactions.html#always-dispose-of-reactions).
 
 ## Check your work
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-Load `/?view=loadings&loading=0007703&keep=yes#dock` directly. You should see the table and dialog for `0007703`. Close it: `loading` disappears while `view`, `keep` and `#dock` remain. Select Dashboard: `view` disappears and the placeholder returns. Reload `/?view=unknown`: the dashboard is selected, without accepting `unknown` as store state. The unused invalid parameter may remain until a later view change because initialization deliberately does not write the URL.
+1. Open `/?view=loadings&loading=0007703&keep=yes#dock`. The table should be visible behind the dialog for `0007703`.
+2. Close the dialog. Only `loading` should disappear from the address. Select Dashboard. The placeholder returns and `view` disappears too. You should still see `keep=yes#dock`.
+3. Open `/?view=unknown`. Dashboard should be selected. You may still see `unknown` in the address until you change views, because the app waits for a change before writing to the URL.

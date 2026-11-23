@@ -4,17 +4,19 @@ sidebar_position: 10
 
 # 1. Explain the tool set
 
-Node.js runs development tools on your computer; TypeScript checks the model; React renders it; Vite serves and builds the exported app. The browser runs transformed JavaScript. The lesson projects use React 18.3.1 and their own pinned dependencies; the documentation website has a separate toolchain.
+Open the first exercise and you’ll see three shipments. Someone looking at the list wants to know which one is urgent. You’ll give each shipment a priority, display it in the list, then work out how many pallets there are and how many shipments are ready.
 
-Use Node 24 when working locally and check it with `node --version`. In the browser you can begin immediately: each small step opens the needed file beside a live preview.
+You can do both exercises in your browser. Each one opens the file you need beside a live preview. If you prefer to work on your computer, the installation steps are further down this page.
 
 ## How the tools fit together
 
-[Node.js](https://nodejs.org/en/) runs JavaScript outside the browser, including development tools. Node's [release schedule](https://nodejs.org/en/about/previous-releases) distinguishes Current from longer-supported LTS releases. Projects can require different versions; a version manager such as [nodenv](https://github.com/nodenv/nodenv) can select a project version via `.node-version`. Check the active version with `node --version`; these exports use Node 24. The original tutorial also discussed pnpm's Node management; current pnpm uses [`pnpm runtime`](https://pnpm.io/cli/runtime), while the old `pnpm env` command is deprecated.
+Follow one change from the data to the screen. [TypeScript](https://www.typescriptlang.org/docs/handbook/intro.html) lets you declare the allowed priorities. Your editor can then suggest a value or flag a misspelling. [React](https://react.dev/learn) reads that value and displays it in a row. Later, you’ll use [MobX](https://mobx.js.org/README.html) to update the display when data changes. When data comes from an external service, you’ll also need to check it at runtime.
 
-A package manager downloads project dependencies from a registry and records versions in a lockfile. npm, Yarn and pnpm are alternatives. [pnpm's shared store](https://pnpm.io/motivation) can save disk space between projects. Install from the supplied lockfile rather than upgrading dependencies as part of this course.
+On your computer, [Node.js](https://nodejs.org/en/) runs development tools. The package manager downloads the libraries those tools and your app need. This course uses pnpm. It can [share downloaded packages](https://pnpm.io/motivation) between projects, and the project’s lockfile records which versions to install. npm and Yarn are other package managers.
 
-[Vite](https://vite.dev/guide/) provides a development server with fast updates and builds assets for production. [TypeScript](https://www.typescriptlang.org/docs/handbook/intro.html) adds types to JavaScript: they help editors offer completion and catch misspelled properties or incompatible values before runtime, but require learning and do not validate arbitrary runtime data automatically. [React](https://react.dev/learn) describes the interface as components. [MobX](https://mobx.js.org/README.html) manages observable state, which we explore later. Tools change over time; surveys such as [State of JavaScript](https://stateofjs.com/) offer context rather than a prescription.
+Once the packages are installed, [Vite](https://vite.dev/guide/) serves the app locally and updates the page as you edit. It can also build files for publication. In both cases the browser runs JavaScript. The exercises use React 18.3.1 and pin their dependencies separately from this course website.
+
+For local exercises, use Node 24. Node’s [release schedule](https://nodejs.org/en/about/previous-releases) shows which releases receive long-term support. If another project needs a different version, a manager such as [nodenv](https://github.com/nodenv/nodenv) can select it from a `.node-version` file. pnpm also offers [`pnpm runtime`](https://pnpm.io/cli/runtime), the successor to its deprecated `pnpm env` command. For a wider view of the tools developers use, see [State of JavaScript](https://stateofjs.com/).
 
 ## Lessons
 

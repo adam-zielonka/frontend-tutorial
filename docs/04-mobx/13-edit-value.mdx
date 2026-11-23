@@ -6,7 +6,7 @@ course_illustration_alt: "With one counter, typing 42 sets its value and total t
 course_illustration_description: "The controlled input writes through setValue. The +1 button calls add. Both read back from the same counter."
 ---
 
-This guided continuation uses your completed local **4.12 solution**, not another embedded starter. The original project makes its value display editable. Keep that capability with a separate assignment action: `add` must continue to mean accumulation.
+This guided continuation uses your completed local **4.12 solution**, not another embedded starter. The original project lets users edit the displayed value. Add a separate action to set the value directly, while keeping `add` for increasing or decreasing the existing value.
 
 ## Edit the setter and input
 
@@ -28,7 +28,7 @@ setValue(value: number) {
   }} />
 ```
 
-The model owns this [controlled input](https://react.dev/reference/react-dom/components/input). Empty or invalid input is rejected, so it will not stay blank. An editor that permits intermediate text such as a minus sign needs a separate text draft and validation on commit. The existing computed total and browser effects read the same model value, so no extra synchronization is needed.
+This is a [controlled input](https://react.dev/reference/react-dom/components/input): its displayed value comes from the model, and changes go back through `setValue`. Empty or invalid input is rejected, so it will not stay blank. An editor that permits intermediate text such as a minus sign needs a separate text draft and validation on commit. The existing computed total and browser effects read the same model value, so no extra synchronization is needed.
 
 To keep the original display styling on the new input, extend the `.counter > output, .total > output` selector in `src/styles.css` to include `.counter > input`; retain its declarations.
 

@@ -7,18 +7,18 @@ course_illustration_description: "Choose the local checkpoint for the same lesso
 
 # Course help
 
-Each embedded exercise opens a prepared starter. Your edits stay in that lesson’s browser draft. Download work you want to keep: clearing storage, changing devices or a starter update can make the draft unavailable.
+When you return to a browser exercise on the same device, **Your code** shows the draft saved for that lesson if browser storage is available. The next exercise opens with its own starting files. You can look at the hints or the read-only **Solution** at any time, then switch back to your draft.
 
-Use the hints or compare the read-only **Solution**, then return to **Your code** to continue editing.
+**To keep a copy**, choose **Download my files**. It saves your edited files together in a JSON download. Keep that download if you plan to clear browser storage or switch devices. It also gives you a backup if a course update changes the lesson’s starting files.
 
-**Download my files** saves a JSON file containing your edited lesson files. Choose **Work locally** for the matching clone, installation, and import commands. Importing replaces that local lesson project's exercise files; use a separate clone and the matching lesson download. A tagged online editor opens its checkpoint, not your browser edits. Virtual `/App.tsx` and similar source paths correspond to files under `src/` in the local project; public assets live under `public/`.
+**To continue on your computer**, choose **Work locally** in the same lesson. Follow its commands to clone the matching project, install its dependencies and import your download. Use a separate clone because importing replaces its exercise files. A file called `/App.tsx` in the browser lives at `src/App.tsx` in the clone. Public assets live under `public/`.
 
-Refresh the preview to restart the example with your source edits and recreate models that survived a hot update. If the embedded preview cannot connect, use **Work locally** or the online editor. Do not enter private data in the examples.
+**If the preview seems out of date**, refresh it. This restarts the app with your edited source files and creates fresh models in memory. If the preview cannot connect, you can work locally or open the online editor. The online editor opens the lesson’s starting point or solution, so download your draft if you want to take it with you. Use sample data in the exercises and keep private data out of them.
 
 ## Running tests
 
-In chapter 6, **Run tests** sends the current editor files to a temporary StackBlitz workspace running the real, pinned Vitest version. The first run installs dependencies; later runs update those files and rerun the tests. The workspace is not saved to a StackBlitz account unless you choose to fork it there.
+After editing a test in chapter 6, choose **Run tests**. The course sends the files currently shown in the editor to a temporary StackBlitz workspace, where Vitest runs them. The first run installs the lesson’s pinned dependencies, so it can take longer. Later runs update the files and run the tests again.
 
-Embedded WebContainers are supported in Chromium browsers. On Safari (including iPhone) and Firefox, **Run tests** opens the same files in a separate tab. If an embedded workspace cannot connect, **Open these tests in a new tab** keeps your edits; **Work locally** remains available for running `pnpm test:run` after importing them. See [StackBlitz browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support) and [Vitest reporters](https://vitest.dev/guide/reporters).
+Read the report, make your next edit in **Your code**, then run again. The report shows what happened on the last run. If you run the tests while viewing **Solution**, the result is for the solution files. Edits you make directly in StackBlitz stay there. To save that temporary workspace to your StackBlitz account, fork it.
 
-The report shows the last run. Edit **Your code** and run again to test a change. Edits made in StackBlitz stay there. Running **Solution** tests its separate, read-only snapshot.
+In Chromium browsers the tests can run inside the lesson. Safari (including on iPhone) and Firefox open a separate tab with the same files. If an embedded run cannot connect, choose **Open these tests in a new tab** to keep testing your edits. You can also import the files with **Work locally** and run `pnpm test:run`. See [StackBlitz browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support) and [Vitest reporters](https://vitest.dev/guide/reporters).

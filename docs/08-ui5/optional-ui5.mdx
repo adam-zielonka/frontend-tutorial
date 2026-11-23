@@ -11,13 +11,13 @@ course_illustration_description: "Use one React state value for visibility. When
 ## Optional continuation: a new project and other controls
 
 
-In the course editor, `/App.tsx` corresponds to local `src/App.tsx`. The exercises already include the UI5 packages. Wrap the app in one `ThemeProvider`.
+In the course editor, `/App.tsx` corresponds to local `src/App.tsx`. The exercises already include the UI5 packages and wrap the app in one `ThemeProvider`, which supplies the theme to its components.
 
 Try `design="Emphasized"` on a labelled UI5 button with a registered icon, then compare it with the default. Choose a control for the behavior you want:
 
 - Show progress for one shipment with a labelled [ProgressIndicator](https://ui5.github.io/webcomponents-react/v2/?path=/docs/data-display-progressindicator--docs). Explore a [BulletChart](https://ui5.github.io/webcomponents-react/v2/?path=/docs/charts-bulletchart--docs) to compare a measure with a target.
 - Guide the user through ordered steps with a [Wizard](https://ui5.github.io/webcomponents-react/v2/?path=/docs/layouts-floorplans-wizard--docs).
-- Open a [Dialog](https://ui5.github.io/webcomponents-react/v2/?path=/docs/modals-popovers-dialog--docs) from a button. Keep its open state in React, provide a close action, and check keyboard focus after opening and closing it.
+- Open a [Dialog](https://ui5.github.io/webcomponents-react/v2/?path=/docs/modals-popovers-dialog--docs) from a button. Use React state to track whether it is open, provide a close action, and check where keyboard focus goes after opening and closing it.
 
 Find other controls in the [UI5 React v2 component documentation](https://ui5.github.io/webcomponents-react/v2/).
 

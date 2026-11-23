@@ -4,7 +4,9 @@ sidebar_position: 50
 
 # 5. ShippingBoard Lite
 
-Add a ramp dashboard to the original ShippingBoard Lite application while keeping its loading table, details dialog and styling. Start with four small React examples, then carry one pinned MobX application checkout through the full original assignment.
+The loading table tells you about one shipment at a time. If you’re standing at a ramp, you might have a different question: which loadings are assigned here, and how far along are they?
+
+You’ll try out that view with three records in the browser. Then you’ll add it to ShippingBoard Lite, where the table and the new dashboard will open the same details dialog.
 
 ## Final result
 

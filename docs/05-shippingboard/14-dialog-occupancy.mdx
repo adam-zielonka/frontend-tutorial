@@ -13,7 +13,7 @@ course_illustration_alt: "The dialog highlights C with count 2. Selecting A move
 course_illustration_description: "The superscript counts assigned loadings. Cyan marks the active choice, coral marks other occupied ramps, and neutral ramps show no count. Occupied ramps remain selectable."
 ---
 
-The dashboard shows progress; the assignment dialog needs different information: which ramps are occupied, and by how many loadings. Derive those counts from the same relationship instead of maintaining another counter.
+When you choose a new ramp in the details dialog, it helps to see how busy each one is. A small number beside a ramp will tell you how many loadings are assigned there. The model already knows which loadings belong to each ramp, so it can count them whenever an assignment changes.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
@@ -48,10 +48,17 @@ In `src/components/Details.tsx`, find the existing `<section className="ramps">`
 </section>
 ```
 
-The empty/current/occupied order means an empty ramp is neutral; a nonempty current ramp is primary; another occupied ramp is danger. `active` still identifies the current assignment. The superscript renders only positive counts; the explicit ternary prevents a stray `0` from appearing. `Intent` and `active` are Blueprint button props, not status fields on the `Loading` model. These colours describe occupancy when choosing a ramp, whereas the dashboard body colour describes loading progress.
+Read the buttons as a choice of destination. An empty ramp gets a neutral button. The loading’s current ramp gets an active button in the primary colour. Any other occupied ramp gets the danger colour. These are Blueprint button props. The colours here tell you where loadings are assigned, while the dashboard colours show their progress.
+
+The little number above the label is the count. The expression inside `<sup>` returns `null` when the ramp is empty, so only ramps with loadings show a number.
 
 ## Check your work
 
 Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
-After reload, open `0007703`. C is active/primary with count 2; B, D and E are danger with counts 1, 3 and 2; A, F and G are neutral without counts. Click A: its count becomes 1 and it becomes active/primary, while C's count becomes 1 and it becomes danger. Click ∅: A becomes neutral again, the loading disappears from the ramp board and it remains in the table with no ramp. Other occupied ramps are still selectable; danger intent is information, not a capacity constraint.
+Reload the app and open `0007703`. Look at **C** first. It is the current ramp, so its button is active and uses the primary colour. The count is 2. B, D and E use the danger colour and show counts of 1, 3 and 2 respectively. A, F and G are empty, so their buttons are neutral and show no count.
+
+1. Choose **A**. It becomes the active, primary button and its count becomes 1. C still has one other loading, so its count drops to 1 and its button takes the danger colour.
+2. Choose **∅** to clear the assignment. A becomes neutral again. The loading disappears from the dashboard, but its table row is still there with no ramp.
+
+You can still select an occupied ramp. The danger colour tells you someone is using it.

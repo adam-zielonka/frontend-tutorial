@@ -6,9 +6,9 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-Node runs development tools, TypeScript checks the shape of data, and React displays it. Vite serves the exported app. Start with three records in `/shipments.ts`; no installation is needed in the browser. An [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) describes the fields each record must have; a union limits the allowed values.
+Look at the three shipments in the preview. Which one needs express delivery? At the moment, the person reading the list has no way to tell. You’ll add that information to each record and show it next to the shipment.
 
-We want the operator to distinguish urgent shipments. Adding text only in the interface would leave that information disconnected from the record. Start with the data model, fill in the records, and then read that data in the component.
+Start in `/shipments.ts`. The TypeScript [interface](https://www.typescriptlang.org/docs/handbook/2/objects.html) named `Shipment` describes what every shipment record must contain. Give it a field called `priority`, with two possible values. Then you can fill in the records and let React display what you entered. The browser exercise is ready to edit. In a local copy, Node runs the tools and Vite serves the app.
 
 1. In `/shipments.ts`, replace the TODO inside `Shipment` with this field:
 
@@ -33,7 +33,7 @@ If a value is rejected, check its spelling and quotes against the union; `Standa
 
 ## Observe
 
-Confirm S-101 shows express and the other two rows show standard.
+Find S-101 in the preview. You should see **express** on that row and **standard** on each of the other two. You can now spot the urgent shipment by reading the list.
 
 ## Sources
 

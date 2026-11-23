@@ -4,9 +4,11 @@ sidebar_position: 60
 
 # 6. Tests
 
-Write repeatable assertions for a complete single-value `CounterStore`. `change(delta)` adds a positive or negative amount and clamps between 0 and 10; `reset()` sets the value to zero. This smaller test fixture is separate from chapter 4's multi-counter collection.
+Your counter reads 9. Someone adds two more, but the limit is 10. What should the new value be? A test lets you write down the answer and check it again whenever the code changes.
 
-Use **Run tests** to execute the edited `/Store.test.ts` with Vitest and see passing, failing, and pending cases. These store-only tests need no DOM emulator. For a terminal fallback, use [Work locally](./course-help.mdx) to import your edits, install dependencies, and run `pnpm exec vitest run`.
+For these exercises, you get a small `CounterStore` with a single value. Call `change(delta)` to add or subtract an amount. The result stays between 0 and 10. Call `reset()` to return to zero. Later, you can apply the same techniques to the collection from chapter 4.
+
+Edit `/Store.test.ts`, then choose **Run tests**. Vitest shows which checks passed, which failed, and which are still waiting to be written. The tests work directly with the store, so they can run without a browser document. To run them in your terminal, follow [Work locally](./course-help.mdx), import your edits, install the dependencies and run `pnpm exec vitest run`.
 
 ## Lessons
 

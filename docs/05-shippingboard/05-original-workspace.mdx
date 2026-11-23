@@ -13,7 +13,7 @@ course_illustration_alt: "The mini board’s three React records give way to the
 course_illustration_description: "Start at commit 3634bcb9a1ee, create lesson/ramp-dashboard, and carry that checkout from the baseline build through lesson 5.15."
 ---
 
-Lessons 5.5–5.15 form the chapter’s required project. Build a ramp dashboard in the original ShippingBoard Lite application, keeping its table, details dialog and Sass. The mini board used three records and React state; this checkout starts with eleven loadings and MobX models.
+In the mini board, three records were enough to try filtering and grouping. Now open the original ShippingBoard Lite app. It already has a table of eleven loadings, a details dialog and Sass styles. Across lessons 5.5–5.15, you’ll use its MobX models to build a ramp dashboard alongside that table. Keep this copy of the project for the rest of the chapter.
 
 ## Prepare and inspect
 
@@ -21,9 +21,9 @@ The original starting table is:
 
 ![Original loading table](../img/img-05-02-what-we-have.jpeg)
 
-The [public demo](https://adam-zielonka.github.io/shippingboard-lite/) illustrates the project; it can change independently of this lesson. Our reproducible starting point is the `create-ramp-view` branch at commit [`3634bcb9a1ee0ecf8bd9e956550970ff159a6c99`](https://github.com/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99). This checkpoint retains the old component API and styling even though its tooling dependencies have been updated since the original lesson.
+You can explore the [public demo](https://adam-zielonka.github.io/shippingboard-lite/) first. For the exercises, use [this version of the project](https://github.com/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99). It has the component API and styles the examples use. Both the demo and the repository’s main branch can change independently.
 
-Use Node.js 24 and an installed `pnpm` command. The checkpoint has a version 6 pnpm lockfile; invoking pnpm 8 explicitly keeps that dependency resolution. In your development directory, create a new checkout:
+Start in your development directory with Node.js 24 and pnpm installed. The commands below clone the `create-ramp-view` branch, select the exact commit for the lesson and create a branch for your work. This project has a version 6 lockfile, so the install command uses pnpm 8 to get the expected dependency versions.
 
 ```shell
 node --version
@@ -36,9 +36,9 @@ pnpm dlx pnpm@8.15.9 install --frozen-lockfile
 pnpm dlx pnpm@8.15.9 run dev
 ```
 
-Open the local address printed by Vite, normally `http://localhost:5173`. The command is `run dev`; the old tutorial's `npm dev` was incorrect. An alternative online starting point is [StackBlitz at the same commit](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99); use the local workflow above for the verified build path. Do not start from today's `main`: its components and dependencies differ.
+Open the address Vite prints, usually `http://localhost:5173`. You can also open [the same commit in StackBlitz](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99). If you work online, keep that project open between lessons.
 
-In a second terminal in the same checkout, establish the baseline:
+Leave the dev server running. In a second terminal, open the same project folder and check that the app builds before you edit it.
 
 ```shell
 pnpm dlx pnpm@8.15.9 run build

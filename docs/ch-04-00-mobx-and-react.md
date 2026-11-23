@@ -1,6 +1,8 @@
 # 4. MobX in React
 
-Build the original [counter app](https://github.com/adam-zielonka/mobx-example): start with one visible value, give it state, then manage a collection and keep it between visits. The diagram connects the same ideas: a button calls an action, the model changes, and an observing React component updates its display. Computed values derive the total and remaining capacity.
+Click **+1** on one counter. Its value changes, and the total for the whole page should change with it. You’ll build up to that interaction in the [counter app](https://github.com/adam-zielonka/mobx-example), starting with one number on screen.
+
+The button calls an *action* to change a value in the model. A React component that observes that value can then show the new count. Once you have several counters, the model can *compute* their total and the number of slots left. Finally, you’ll make it possible to close the page and come back to the same collection.
 
 ## Lessons
 
@@ -19,6 +21,6 @@ Build the original [counter app](https://github.com/adam-zielonka/mobx-example):
 13. [Edit a value directly](./04-mobx/13-edit-value.mdx) — local guided continuation.
 14. [Inspect the model](./04-mobx/14-inspect-model.mdx) — debugger and original-project comparison.
 
-Steps 4.1–4.12 use separate browser drafts. Continue locally in 4.13–4.14. See [course help](./course-help) for editor, preview and local setup.
+Steps 4.1–4.12 each have a separate browser draft, so edits in one step do not carry into the next. Continue locally in 4.13–4.14. See [course help](./course-help) for editor, preview and local setup.
 
 [Observable state](https://mobx.js.org/observable-state.html) · [Actions](https://mobx.js.org/actions.html) · [React integration](https://mobx.js.org/react-integration.html) · [Computed values](https://mobx.js.org/computeds.html) · [Reactions](https://mobx.js.org/reactions.html)

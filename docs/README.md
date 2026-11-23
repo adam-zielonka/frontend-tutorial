@@ -2,7 +2,7 @@
 
 import ResumeLesson from '@site/src/components/LessonStudio/ResumeLesson';
 
-Build a React interface, manage its state with MobX, and test how it handles user actions and data loading.
+Imagine a truck arriving at a loading bay. Someone clicks **Add pallet** as each pallet goes on board. How does the number on screen keep up? You’ll start by describing a shipment, build a pallet counter like this, then use React and MobX to track work across several ramps.
 
 **[Start with chapter 1: Understand the tool set](./ch-01-00-explain-the-tool-set.md).** You can begin in your browser without installing anything.
 
@@ -10,22 +10,26 @@ Build a React interface, manage its state with MobX, and test how it handles use
 
 ## What this course builds
 
-Start with shipments and pallet counters, then extend ShippingBoard. Each chapter introduces its project, the code already supplied and any local setup.
+The first examples are small enough to change in your browser. Later you’ll open ShippingBoard Lite, an existing application with a table of loadings. Your job will be to add a dashboard so someone at the warehouse can see what’s happening at each ramp.
 
-1. [Understand the tool set](./ch-01-00-explain-the-tool-set.md): distinguish Node.js, the package manager, Vite, TypeScript, React, and MobX. Describe a shipment and derive a summary from it.
-2. [Prepare your development tools](./ch-02-00-tools-around-development.md): choose a local environment if you want one, use editor feedback, understand project scripts, and save changes with Git.
-3. [Create a React application](./ch-03-00-create-base-for-your-app.md): follow the path from the HTML entry point to a component, then give a pallet counter state and button handlers.
-4. [Build counters with MobX](./ch-04-00-mobx-and-react.md): start with a visible counter, move its state into a model, subscribe React, manage a collection, and add persistence.
-5. [Extend ShippingBoard Lite](./ch-05-00-shippingboard-lite.md): switch views, filter shipments, group them by ramp, and explain empty states and status.
-6. [Test the behavior](./ch-06-00-tests.md): turn expectations into assertions, cover boundaries, and keep tests independent.
-7. [Load data with Fetch](./ch-07-00-fetch.md): request data, distinguish network/HTTP/data errors, cancel obsolete requests, and retry deliberately.
-8. [Use UI5 components](./ch-08-00-ui5-web-components.md): integrate a component library, handle events and icons, and display capacity with a progress indicator.
+1. [Understand the tool set](./ch-01-00-explain-the-tool-set.md) — What happens between editing a TypeScript file and seeing a shipment on screen? Follow one example through Node.js, pnpm, Vite and React, and see where MobX fits.
+2. [Prepare your development tools](./ch-02-00-tools-around-development.md) — Set up an editor and terminal, run a project script and save a working change with Git.
+3. [Create a React application](./ch-03-00-create-base-for-your-app.md) — Trace how the page loads a React component. Then give a pallet counter buttons that change the number on screen.
+4. [Build counters with MobX](./ch-04-00-mobx-and-react.md) — Move the count into a model. Let React follow its changes, add more counters, and restore their values on your next visit.
+5. [Extend ShippingBoard Lite](./ch-05-00-shippingboard-lite.md) — Switch between a table and a ramp dashboard. Filter the cards and work out why a ramp can look empty while a truck is loading.
+6. [Test the behavior](./ch-06-00-tests.md) — Write tests for questions such as “What happens if I add five pallets when there’s room for only two?” Run each check with a fresh store.
+7. [Load data with Fetch](./ch-07-00-fetch.md) — Load ramp records from a file. Check the HTTP response and its contents, cancel an outdated request, and let the user try again after a failure.
+8. [Use UI5 components](./ch-08-00-ui5-web-components.md) — Connect a UI5 button to the pallet count and show how full the shipment is with a progress indicator.
 
 ## How to work through a lesson
 
-Read the explanation, make the changes in the named editor file, and check the result. Hints and a read-only solution are available when you need them. On a phone, switch between **Lesson**, **Code**, and **Preview**. Chapter 6 uses **Tests** in place of **Preview**; choose **Run tests** after editing.
+In a browser exercise, read the walkthrough, edit the named file, then look for the result described at the end. If you get stuck, open a hint or compare your file with the read-only **Solution**. Return to **Your code** to keep editing.
 
-Each embedded exercise has its own starter and draft. Each original ShippingBoard sequence uses a separate checkout. Keep your edits between steps in that sequence. For saving, importing, refresh behavior, and local work, see [course help](./course-help.mdx). The [course examples](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v5) contain the tagged starters and solutions.
+On a phone, **Lesson**, **Code** and **Preview** let you switch between the instructions, your file and the running app. In chapter 6, **Tests** takes the place of **Preview**. Choose **Run tests** to check your latest edit.
+
+Each browser exercise opens with the files you need for that step. Your draft stays with the lesson where you wrote it. The longer ShippingBoard projects work differently: you open a separate copy of the project at the start of each sequence, then carry your changes from one step to the next.
+
+See [course help](./course-help.mdx) to download your work or import it locally. The [course examples](https://github.com/adam-zielonka/frontend-tutorial/tree/course-examples-v5) also include the starter and solution for each embedded exercise.
 
 ## Why we teach this stack
 

@@ -4,7 +4,9 @@ sidebar_position: 70
 
 # 7. Fetch
 
-Load ramp data and make waiting, success and failure visible. Follow the diagram's request → response → validation → UI path: receiving a response, parsing JSON and checking its shape are separate boundaries. Then cancel obsolete work and retry deliberately.
+Open the ramp list on a slow connection. Before the data arrives, an empty screen could mean the warehouse has no ramps or the app is still waiting. You’ll give the user a way to tell the difference.
+
+Start by requesting a file. Did the server find it? Can the browser read its contents as JSON? Does each record describe a ramp? Work through those questions one at a time, then let the user try again after a failure. You’ll also cancel a request when the app no longer needs its result.
 
 ## Lessons
 

@@ -13,7 +13,7 @@ course_illustration_alt: "Clicking Loadings writes ui.view, and the observing he
 course_illustration_description: "Dashboard is selected on a fresh reload. At this stage, the table stays visible under either header selection."
 ---
 
-The original header and content must agree on one selected view. Put that choice in the existing MobX UI store so both observing components can read it, just as the mini board read one React state value.
+When someone chooses **Dashboard**, two things need to agree: the header should highlight Dashboard and the page should show it. Start by storing that choice in the existing MobX UI store. In this step the buttons will read it; in the next step the content will read it too.
 
 Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 

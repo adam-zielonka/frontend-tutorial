@@ -13,7 +13,7 @@ course_illustration_alt: "After reload, the dashboard shows eight assigned cards
 course_illustration_description: "Open 0007703 from either view and move or clear it in Details. The dashboard and table update together. Reloading restores the fixture assignments, and a deep link can reopen the table and dialog."
 ---
 
-Verify the dashboard, table, details dialog and deep links together. Use the checkout from [5.5](./05-original-workspace.mdx) with your edits through [5.14](./14-dialog-occupancy.mdx). Reloading restores the fixture assignments.
+You can now check the whole journey. Open a loading from the dashboard, assign it to another ramp, then find it in the table. Both views should show the same change. Use the project from [5.5](./05-original-workspace.mdx) with your edits through [5.14](./14-dialog-occupancy.mdx). When you reload, the original assignments return.
 
 ## Run the build
 
@@ -25,13 +25,11 @@ pnpm dlx pnpm@8.15.9 run build
 
 ## Check the complete application
 
-Use this single acceptance walkthrough in the running local app (reload before starting):
-
-1. Reload with no query. Dashboard is active; seven ramps show eight assigned cards with the original styling and the [status table in lesson 5.13](./13-ramp-status.mdx#expected-fixture-status).
-2. Select Loadings. All eleven rows appear, including the three unassigned loadings; selecting Dashboard returns to the same models.
-3. Open `0007703` from either view. Check its date/time, customer Kang Tao, `11 of 22` and half-filled progress. In the dialog, move it between ramps, observe counts and assignments, then clear its ramp with ∅.
-4. Reload `/?view=loadings&loading=0007703&keep=yes#dock`. The table and correct dialog open together. Closing the dialog and changing views retain `keep=yes` and the hash. Reload `/?view=unknown&loading=missing`: the default dashboard opens with no dialog.
-5. Reload the fixture before testing mixed states. B is loaded, E is not-started, C/D are in progress, and A/F/G are empty. A ramp containing a waiting and a started loading remains not-started.
-6. Open **Add loading**. The existing new-loading dialog still opens. It is not a new persistence workflow: this lesson does not add saving, a backend or a dashboard bucket for unassigned loadings.
+1. **Start on the dashboard.** Open the app with no query parameters. You should see seven styled ramps and eight assigned cards. Compare their colours with the [status table in lesson 5.13](./13-ramp-status.mdx#expected-fixture-status).
+2. **Find an unassigned loading.** Switch to **Loadings**. The table includes all eleven records, including the three with no ramp. Switch back to Dashboard and those three have no card.
+3. **Move a loading.** Open `0007703` from either view. Check its date and time, the customer Kang Tao and the half-filled progress bar (`11 of 22` pallets). Move it to another ramp, check the counts, then choose **∅** to clear its assignment.
+4. **Follow a shared link.** Open `/?view=loadings&loading=0007703&keep=yes#dock`. Close the dialog and change views. The address should still contain `keep=yes` and `#dock`. Now open `/?view=unknown&loading=missing`. You should get Dashboard with the dialog closed.
+5. **Compare ramp colours.** After a fresh reload, B is loaded, C and D are in progress, and A, F and G are empty. E is red because one loading is waiting, even though another has started.
+6. **Open Add loading.** The original new-loading dialog should still open. All the changes you tried in this walkthrough took place in memory. A backend, saving new records and a dashboard group for unassigned loadings are outside this exercise.
 
 You have changed `UI.ts`, `Ramp.ts`, `Header.tsx`, `Content.tsx` and the ramp-choice section in `Details.tsx`, and created `RampBox.tsx` and `LoadingBox.tsx`. `Loading.ts`, the API mapping, fixture data, `App.tsx` and all Sass files stay as supplied. The dashboard, table and dialog now share the same observable models, so changing an assignment updates each presentation without copying or manually synchronizing their data.
