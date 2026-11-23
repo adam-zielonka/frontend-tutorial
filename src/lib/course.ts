@@ -20,6 +20,7 @@ export const course = lessons as Lesson[];
 export const coursePages = pages;
 export const lastLessonKey = 'frontend-tutorial:last-lesson';
 export const repository = 'https://github.com/adam-zielonka/frontend-tutorial';
+// Work locally and Online editor link to published checkpoints.
 export const release = 'v5';
 export function lessonTag(id: string, solution = false) {
   return `lesson-${id}-${solution ? 'solution' : 'start'}-${release}`;

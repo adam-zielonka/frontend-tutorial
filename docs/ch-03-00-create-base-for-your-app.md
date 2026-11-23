@@ -8,7 +8,7 @@ A pallet arrives. You click **Add pallet** and expect the number on screen to go
 
 If you work locally, follow the page from the outside in. The browser opens `index.html`, which has an empty root element. Then `src/main.tsx` puts the React component from `src/App.tsx` into that element. The browser exercises already connect those files for you.
 
-In an exported project, run `pnpm install` to get the dependencies and `pnpm dev` to see your edits as you work. Run `pnpm build` to check the types and build the app. These examples use React 18.3.1 with their own dependencies.
+In an exported project, run `pnpm install` to get the dependencies and `pnpm dev` to see your edits as you work. Run `pnpm build` to check the types and build the app. The embedded examples use React 19.3.1. The local checkpoint uses the versions recorded in its lockfile.
 
 ## Lessons
 

@@ -31,7 +31,7 @@ export default function RunActions({lesson, solution}: {lesson: Lesson; solution
         <button type="button" className={styles.toolButton} autoFocus onClick={() => dialog.current?.close()}>Close</button>
       </header>
       <div className={styles.localBody}>
-        <p>Use Node.js 24, pnpm 12.14 and Git; <Link onClick={() => dialog.current?.close()}
+        <p>Use Node.js 24, pnpm and Git. <Link onClick={() => dialog.current?.close()}
           to={`${base}ch-01-00-explain-the-tool-set#a-first-local-installation-check`}>chapter 1 explains their installation</Link>.
           Clone this step’s {variant} checkpoint:</p>
         <CodeBlock language="bash">{command}</CodeBlock>

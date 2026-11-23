@@ -1,9 +1,10 @@
 import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
+import project from '../course/project-dependencies.json' with {type: 'json'};
 
-export const release = 'v5';
-export const branch = 'course-examples-v5';
+export const release = 'v6';
+export const branch = `course-examples-${release}`;
 export const repo = 'https://github.com/adam-zielonka/frontend-tutorial';
 export const lessons = JSON.parse(readFileSync(new URL('../course/lessons.json', import.meta.url), 'utf8'));
 export const tagFor = (id, variant) => `lesson-${id}-${variant}-${release}`;
@@ -39,15 +40,16 @@ export function validateLessons(items = lessons) {
 export function projectFiles(lesson, variant) {
   const source = variant === 'start' ? lesson.files : lesson.solution;
   const files = Object.fromEntries(Object.entries(source).map(([name, content]) => [name.startsWith('/public/') ? name.slice(1) : `src${name}`, content]));
-  const dependencies = {react: '18.3.1', 'react-dom': '18.3.1', ...lesson.dependencies};
-  const devDependencies = {vite: '8.3.7', '@vitejs/plugin-react': '6.3.0', typescript: '5.6.3', '@types/react': '18.3.31', '@types/react-dom': '18.3.7', vitest: '5.1.0'};
+  const reactProfile = lesson.chapter === '08' ? project.ui5 : project;
+  const dependencies = {...reactProfile.dependencies, ...lesson.dependencies};
+  const devDependencies = {...project.devDependencies, ...reactProfile.devDependencies};
   // Some exercises use a pinned test runner; keep one version in the project.
   if (dependencies.vitest) {devDependencies.vitest = dependencies.vitest; delete dependencies.vitest;}
-  files['package.json'] = JSON.stringify({name: `frontend-${lesson.id}`, version: '1.0.0', private: true, type: 'module', engines: {node: '>=24'}, packageManager: 'pnpm@12.14.0', scripts: {dev: 'vite --host 0.0.0.0', build: 'tsc --noEmit && vite build', preview: 'vite preview', test: 'vitest', 'test:run': 'vitest run', 'import-draft': 'node import-draft.mjs'}, dependencies, devDependencies}, null, 2) + '\n';
+  files['package.json'] = JSON.stringify({name: `frontend-${lesson.id}`, version: '1.0.0', private: true, type: 'module', engines: {node: '^24.0.0 || >=26.0.0'}, packageManager: project.packageManager, scripts: {dev: 'vite --host 0.0.0.0', build: 'tsc --noEmit && vite build', preview: 'vite preview', test: 'vitest', 'test:run': 'vitest run', 'import-draft': 'node import-draft.mjs'}, dependencies, devDependencies}, null, 2) + '\n';
   files['index.html'] = '<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Frontend practice</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n';
   files['src/main.tsx'] = "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nimport App from './App';\ncreateRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);\n";
   files['vite.config.ts'] = "import {defineConfig} from 'vite';\nimport react from '@vitejs/plugin-react';\nexport default defineConfig({plugins: [react()]});\n";
-  files['tsconfig.json'] = JSON.stringify({compilerOptions: {target: 'ES2022', lib: ['ES2022', 'DOM', 'DOM.Iterable'], module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', strict: true, skipLibCheck: true, esModuleInterop: true, resolveJsonModule: true, noEmit: true}, include: ['src']}, null, 2);
+  files['tsconfig.json'] = JSON.stringify({compilerOptions: {target: 'ES2022', lib: ['ES2022', 'DOM', 'DOM.Iterable'], module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', types: ['vite/client'], strict: true, skipLibCheck: true, esModuleInterop: true, resolveJsonModule: true, noEmit: true}, include: ['src']}, null, 2);
   files['.gitignore'] = 'node_modules/\ndist/\ncoverage/\n*.local\n';
   files['.node-version'] = '24\n';
   files['pnpm-workspace.yaml'] = "packages:\n  - '.'\nallowBuilds:\n  esbuild: true\n";

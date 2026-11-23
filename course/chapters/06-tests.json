@@ -27,9 +27,9 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "mobx": "6.13.7",
-      "mobx-react-lite": "4.1.0",
-      "vitest": "5.1.0"
+      "mobx": "7.1.7",
+      "mobx-react-lite": "5.1.4",
+      "vitest": "5.1.1"
     },
     "chapter": "06",
     "chapterTitle": "Tests",
@@ -65,9 +65,9 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "mobx": "6.13.7",
-      "mobx-react-lite": "4.1.0",
-      "vitest": "5.1.0"
+      "mobx": "7.1.7",
+      "mobx-react-lite": "5.1.4",
+      "vitest": "5.1.1"
     },
     "chapter": "06",
     "chapterTitle": "Tests",
@@ -103,9 +103,9 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "mobx": "6.13.7",
-      "mobx-react-lite": "4.1.0",
-      "vitest": "5.1.0"
+      "mobx": "7.1.7",
+      "mobx-react-lite": "5.1.4",
+      "vitest": "5.1.1"
     },
     "chapter": "06",
     "chapterTitle": "Tests",

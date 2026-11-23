@@ -1,4 +1,5 @@
 import type {Lesson} from './course';
+import project from '../../course/project-dependencies.json' with {type: 'json'};
 import {testServer, resultsPage} from './testRunner.mjs';
 
 // StackBlitz currently supports embedded WebContainers only in Chromium.
@@ -23,7 +24,7 @@ export function testProject(lesson: Lesson, files: Record<string, string>, run =
       'package.json': JSON.stringify({
         name: `tests-${lesson.id}`, private: true, type: 'module',
         scripts: {start: 'node test-server.mjs', test: 'vitest run'},
-        dependencies: {react: '18.3.1', 'react-dom': '18.3.1', ...lesson.dependencies},
+        dependencies: {...project.dependencies, ...lesson.dependencies, vite: project.devDependencies.vite},
         stackblitz: {installDependencies: true, startCommand: 'npm start'},
       }, null, 2),
       // Keep test workers in the CLI process: killing a timed-out run must also

@@ -14,7 +14,7 @@ Each step has the following fields:
 - `activeFile`: selected file when the editor opens.
 - `focusFiles`: editable files for this specific step, including `activeFile`.
 - `files`, `solution`: complete runnable source maps with the same keys.
-- `dependencies`: pinned extra runtime packages; React 18.3.1 is supplied centrally.
+- `dependencies`: pinned extra runtime packages. React and React DOM come from `project-dependencies.json`.
 
 The solution can only change `focusFiles`; supporting files are read-only and
 hidden by default. Each step has its own prepared checkpoint and browser draft.
@@ -42,9 +42,9 @@ and compact table; see [sources and adaptations](./styles-shippingboard.md).
 ## Runtime and verification
 
 The editor and preview start automatically on each lesson page, using Sandpack
-`react-ts`, React/React DOM 18.3.1 and the step's dependency map. The site itself
-uses a separate React version. The preview transpiles TypeScript; exported
-`npm run build` performs type checking too.
+`react-ts` and the step's dependency map. Most chapters use React/React DOM 19.3.1.
+The UI5 exercises use React/React DOM 18.3.1 to match their UI5 dependencies.
+The preview transpiles TypeScript. Exported `npm run build` also checks types.
 
 Fetch fixtures use Sandpack's static-file service worker and a local URL adapter
 (`/ramps.json` for Vite, `/public/ramps.json` for Sandpack). Test lessons replace the app preview with a Vitest results workspace built from the current editor files. Run tests submits a snapshot to StackBlitz; the real pinned Vitest executes there. Chromium supports embedding; Safari/Firefox open the same project in a new tab. No test result is inferred from matching the reference source. Local exports retain a manual app for inspecting the store and run tests via `pnpm test:run`.
@@ -59,8 +59,9 @@ pnpm build
 
 `course:check` builds both variants of every step in temporary directories and
 runs test files from solutions. Dependency profiles share lockfiles under
-`locks/v5/`; earlier lockfiles are retained with their earlier editions. To change
+`locks/v6/`. Published checkpoints retain the lockfiles from their editions. To change
 project dependencies intentionally, run `node scripts/check-course.mjs --update-locks`.
+The website's checkpoint links use the published v5 tags until v6 is released.
 See [the development guide](../DEVELOPMENT.md) for release instructions.
 
 References: [Sandpack configuration](https://sandpack.codesandbox.io/docs/getting-started/usage),

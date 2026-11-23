@@ -7,7 +7,7 @@ sidebar_position: 1
 import LessonExercise from '@site/src/components/LessonExercise';
 
 
-The exercise pins UI5 Web Components for React and its matching packages to 2.15.0. They are already installed for the preview, independently from the documentation site's dependencies.
+The preview uses UI5 Web Components for React 2.20.1, its matching UI5 packages at 2.20.5 and React 18.3.1.
 
 The provider supplies UI5 React context. The button has no event handler yet; first check its rendering and keyboard focus. Keep a single provider in `App.tsx`, not another in the entry point.
 
@@ -30,7 +30,7 @@ Keep `import './styles.css';`. Put `<ThemeProvider>` immediately before the exis
 
 The capital `B` matters: it selects the imported React component, while lowercase `<button>` creates a native HTML element. Everything between the provider's tags is its child content. Do not delete the heading, shipment section or pallet label when adding the wrapper.
 
-The button renders and receives keyboard focus but has no action yet. If the import fails, use the pinned lesson project and its installed dependencies; keep only one provider in `App`.
+The button renders and receives keyboard focus but has no action yet. If a local import fails, check that the UI5 packages match the versions above. Keep one provider in `App`.
 
 <LessonExercise id="08-01-provider-and-button" />
 

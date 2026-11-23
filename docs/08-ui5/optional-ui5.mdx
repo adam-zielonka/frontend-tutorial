@@ -23,13 +23,13 @@ Find other controls in the [UI5 React v2 component documentation](https://ui5.gi
 
 ### Install the same library in a separate course project
 
-For a fresh scaffold, use the [Vite React TypeScript template](https://vite.dev/guide/) and the [creation commands in lesson 3.4](../03-react-basics/optional-vite-project.mdx). To reproduce the course versions, start with the chapter 3 React 18.3.1 export instead:
+For a fresh scaffold, use the [Vite React TypeScript template](https://vite.dev/guide/) and the [creation commands in lesson 3.4](../03-react-basics/optional-vite-project.mdx). To reuse the chapter 3 solution, clone its published React 18 checkpoint and install the UI5 versions used in the editor:
 
 ```sh
 git clone --depth 1 --branch lesson-03-03-bounded-events-solution-v5 https://github.com/adam-zielonka/frontend-tutorial.git app-with-ui5
 cd app-with-ui5
 pnpm install --frozen-lockfile
-pnpm add @ui5/webcomponents-react@2.15.0 @ui5/webcomponents@2.15.0 @ui5/webcomponents-base@2.15.0 @ui5/webcomponents-fiori@2.15.0 @ui5/webcomponents-icons@2.15.0
+pnpm add @ui5/webcomponents-react@2.20.1 @ui5/webcomponents@2.20.5 @ui5/webcomponents-base@2.20.5 @ui5/webcomponents-fiori@2.20.5 @ui5/webcomponents-icons@2.20.5
 ```
 
 Run `pnpm dev` and open the printed address. In your counter, apply the provider and button from [step 1](./01-provider-and-button.mdx) and register the icons from [step 2](./02-events-and-icons.mdx). Run `pnpm build` to catch TypeScript errors such as a misspelled component property.

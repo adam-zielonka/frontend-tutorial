@@ -118,7 +118,13 @@ pnpm build
 ```
 
 Fixtures and teaching-project dependencies are separate from the documentation site.
-Dependency profiles share pnpm lockfiles in `course/locks/v5`. After deliberately changing
+The generated v6 exercises use the shared pins in `course/project-dependencies.json`.
+TypeScript 6 provides a JavaScript compiler that can run in StackBlitz WebContainers.
+The UI5 React wrapper 2.20.1 brings in `react-table` 7, which declares React 18
+peer support. UI5 2.21 and later use `import.meta` in the runtime that the Sandpack
+`react-ts` bundler evaluates. Keep the UI5 profile on React 18 and UI5 2.20 until
+the preview supports newer releases.
+Dependency profiles share pnpm lockfiles in `course/locks/v6`. After deliberately changing
 project dependencies, run `node scripts/check-course.mjs --update-locks`, then review
 and commit the updated lockfiles. Students may also use npm; pnpm with the supplied
 lockfile provides the reproducible install.
@@ -138,8 +144,8 @@ terminal to continue without losing edits. Do not force-move released tags.
 
 ### Publishing course checkpoints
 
-`pnpm course:release` creates the independent branch `course-examples-v5` and two annotated
-tags per step named `lesson-<id>-start-v5` and `lesson-<id>-solution-v5`. It uses Git objects and
+`pnpm course:release` creates the independent branch `course-examples-v6` and two annotated
+tags per step named `lesson-<id>-start-v6` and `lesson-<id>-solution-v6`. It uses Git objects and
 an isolated index, without switching the website checkout. Each tag contains a complete
 Vite app at its root. The branch history follows all ordered step start/solution pairs; its tip
 is the final solution, and its README links every checkpoint.
@@ -147,8 +153,9 @@ is the final solution, and its README links every checkpoint.
 Run the validation commands first. Push the explicit branch and the generated step tag
 refs before publishing the website, so student links resolve. Do not use `git push --tags`
 (it could publish unrelated local tags). The release command refuses to overwrite any
-existing checkpoint. For later editions, update the version in `scripts/course-project.mjs`
-and `src/lib/course.ts` together; preserve previous tags for enrolled students.
+existing checkpoint. For later editions, set the generator version in `scripts/course-project.mjs`
+and create that edition's lockfiles. Once the new checkpoint refs are published, switch the
+website's published version in `src/lib/course.ts` and update the example links in the docs.
 
 Editor downloads contain JSON file maps. The generated projects include
 `npm run import-draft -- ./download.json` to apply the matching lesson's files locally.

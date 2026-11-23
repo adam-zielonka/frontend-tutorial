@@ -6,7 +6,7 @@ sidebar_position: 80
 
 A shipment has room for ten pallets. Give someone a button to load one, then show how full the shipment is after each click. At ten, the button should stop accepting more. You’ll build this screen with buttons, icons and a progress indicator from UI5. Each exercise opens `App.tsx` beside the preview.
 
-In the first exercise, wrap the controls in one `ThemeProvider` inside `App`. The starter leaves this to you. If you follow the examples locally, use the versions pinned in the exercise. The React wrapper (`@ui5/webcomponents-react`) and its four UI5 packages (`@ui5/webcomponents`, `@ui5/webcomponents-base`, `@ui5/webcomponents-fiori`, `@ui5/webcomponents-icons`) all use 2.15.0. The course website manages its own dependencies.
+In the first exercise, wrap the controls in one `ThemeProvider` inside `App`. The starter leaves this to you. The exercises use React 18.3.1, the UI5 React wrapper 2.20.1 and the four matching UI5 packages 2.20.5. The published checkpoint records its own package versions in its lockfile.
 
 ## Lessons
 

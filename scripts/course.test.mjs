@@ -84,7 +84,12 @@ test('Vitest receives the current files and a run signal, not the reference solu
   assert.equal(project.template, 'node');
   assert.equal(project.files['src/Store.test.ts'], 'expect(1).toBe(2);');
   assert.equal(project.files['src/outside'], undefined);
-  assert.equal(pkg.dependencies.vitest, l.dependencies.vitest);
+  const exported = JSON.parse(projectFiles(l, 'start')['package.json']);
+  assert.deepEqual(pkg.dependencies, {
+    ...exported.dependencies,
+    vitest: exported.devDependencies.vitest,
+    vite: exported.devDependencies.vite,
+  });
   assert.equal(pkg.scripts.start, 'node test-server.mjs');
   assert.match(project.files['test-server.mjs'], /vitest\/vitest\.mjs/);
   assert.notEqual(project.files['.test-request'], testProject(l, files, 2).files['.test-request']);

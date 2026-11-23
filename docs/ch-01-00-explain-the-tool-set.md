@@ -14,7 +14,7 @@ Follow one change from the data to the screen. [TypeScript](https://www.typescri
 
 On your computer, [Node.js](https://nodejs.org/en/) runs development tools. The package manager downloads the libraries those tools and your app need. This course uses pnpm. It can [share downloaded packages](https://pnpm.io/motivation) between projects, and the project’s lockfile records which versions to install. npm and Yarn are other package managers.
 
-Once the packages are installed, [Vite](https://vite.dev/guide/) serves the app locally and updates the page as you edit. It can also build files for publication. In both cases the browser runs JavaScript. The exercises use React 18.3.1 and pin their dependencies separately from this course website.
+Once the packages are installed, [Vite](https://vite.dev/guide/) serves the app locally and updates the page as you edit. It can also build files for publication. In both cases the browser runs JavaScript. Most exercises use React 19.3.1. The UI5 exercises use React 18.3.1.
 
 For local exercises, use Node 24. Node’s [release schedule](https://nodejs.org/en/about/previous-releases) shows which releases receive long-term support. If another project needs a different version, a manager such as [nodenv](https://github.com/nodenv/nodenv) can select it from a `.node-version` file. pnpm also offers [`pnpm runtime`](https://pnpm.io/cli/runtime), the successor to its deprecated `pnpm env` command. For a wider view of the tools developers use, see [State of JavaScript](https://stateofjs.com/).
 
@@ -38,12 +38,14 @@ node --version
 git --version
 ```
 
-The first command should report `v24.x.x`. If a command is not found, finish its installation and reopen the terminal; editing React code cannot fix a missing tool. The lesson's clone instructions use pnpm and the supplied lockfile. Install the pinned pnpm version through the npm installation supplied with a standard Node installer:
+The first command should report `v24.x.x`. If a command is not found, finish its installation and reopen the terminal; editing React code cannot fix a missing tool. The lesson's clone instructions use pnpm and the supplied lockfile. Install pnpm through the npm installation supplied with a standard Node installer:
 
 ```sh
 npm install -g pnpm@12.23.0
 pnpm --version
 ```
+
+Inside a checkpoint, pnpm uses the version pinned in that project's `package.json`.
 
 If you installed pnpm standalone, [its runtime manager](https://pnpm.io/cli/runtime) can supply Node. For a separate project, `pnpm runtime set node 24` records a project runtime; follow its printed shim instructions if you want the bare `node` command to select it. pnpm-managed Node does not include npm; the course's pnpm commands work without it. Avoid mixing version managers without checking which `node` your terminal actually selects. The exported README also offers npm commands for learners who choose that package manager. See [pnpm installation](https://pnpm.io/installation).
 

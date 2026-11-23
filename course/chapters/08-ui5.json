@@ -23,11 +23,11 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "@ui5/webcomponents-react": "2.15.0",
-      "@ui5/webcomponents": "2.15.0",
-      "@ui5/webcomponents-base": "2.15.0",
-      "@ui5/webcomponents-fiori": "2.15.0",
-      "@ui5/webcomponents-icons": "2.15.0"
+      "@ui5/webcomponents-react": "2.20.1",
+      "@ui5/webcomponents": "2.20.5",
+      "@ui5/webcomponents-base": "2.20.5",
+      "@ui5/webcomponents-fiori": "2.20.5",
+      "@ui5/webcomponents-icons": "2.20.5"
     },
     "chapter": "08",
     "chapterTitle": "UI5 Web Components for React",
@@ -60,11 +60,11 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "@ui5/webcomponents-react": "2.15.0",
-      "@ui5/webcomponents": "2.15.0",
-      "@ui5/webcomponents-base": "2.15.0",
-      "@ui5/webcomponents-fiori": "2.15.0",
-      "@ui5/webcomponents-icons": "2.15.0"
+      "@ui5/webcomponents-react": "2.20.1",
+      "@ui5/webcomponents": "2.20.5",
+      "@ui5/webcomponents-base": "2.20.5",
+      "@ui5/webcomponents-fiori": "2.20.5",
+      "@ui5/webcomponents-icons": "2.20.5"
     },
     "chapter": "08",
     "chapterTitle": "UI5 Web Components for React",
@@ -97,11 +97,11 @@
       "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
     },
     "dependencies": {
-      "@ui5/webcomponents-react": "2.15.0",
-      "@ui5/webcomponents": "2.15.0",
-      "@ui5/webcomponents-base": "2.15.0",
-      "@ui5/webcomponents-fiori": "2.15.0",
-      "@ui5/webcomponents-icons": "2.15.0"
+      "@ui5/webcomponents-react": "2.20.1",
+      "@ui5/webcomponents": "2.20.5",
+      "@ui5/webcomponents-base": "2.20.5",
+      "@ui5/webcomponents-fiori": "2.20.5",
+      "@ui5/webcomponents-icons": "2.20.5"
     },
     "chapter": "08",
     "chapterTitle": "UI5 Web Components for React",

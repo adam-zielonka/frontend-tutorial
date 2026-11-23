@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import {SandpackProvider, SandpackCodeEditor, SandpackPreview, SandpackConsole, useSandpack} from '@codesandbox/sandpack-react';
 import {useColorMode} from '@docusaurus/theme-common';
 import type {Lesson} from '../../lib/course';
+import project from '../../../course/project-dependencies.json' with {type: 'json'};
 import {readDraft, writeDraft, previousDraft} from './drafts';
 import {editorDark, editorLight} from './editorThemes';
 import styles from './Playground.module.css';
@@ -253,7 +254,14 @@ function Editor({lesson, solution, reset, view, initialDraft, keepDraft, resetSa
     ...Object.fromEntries(Object.entries(initial).map(([path, code]) => [path, {code, readOnly: solution || !lesson.focusFiles.includes(path)}])),
     '/index.tsx': {code: `import React from 'react';\nimport {createRoot} from 'react-dom/client';\nimport App from './App';\ncreateRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);`, hidden: true},
   }));
-  const [customSetup] = useState(() => ({dependencies: {...lesson.dependencies, react: '18.3.1', 'react-dom': '18.3.1'}}));
+  const [customSetup] = useState(() => {
+    const reactProfile = lesson.chapter === '08' ? project.ui5 : project;
+    const {'@types/react': reactTypes, '@types/react-dom': reactDomTypes} = reactProfile.devDependencies;
+    return {
+      dependencies: {...reactProfile.dependencies, ...lesson.dependencies},
+      devDependencies: {'@types/react': reactTypes, '@types/react-dom': reactDomTypes},
+    };
+  });
   const [options] = useState(() => ({activeFile: lesson.activeFile, visibleFiles: lesson.focusFiles, autorun: true,
     initMode: 'immediate' as const, recompileMode: 'delayed' as const, recompileDelay: 800, experimental_enableServiceWorker: true}));
   return <SandpackProvider className={styles.playground} template="react-ts" theme={colorMode === 'dark' ? editorDark : editorLight}
