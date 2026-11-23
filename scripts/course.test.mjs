@@ -179,3 +179,19 @@ test('every exercise follows a visible worked example and has a result check', (
       `${l.id}: add visible result checks after the exercise`);
   }
 });
+
+test('the original ShippingBoard and Fetch projects retain their worked steps and result checks', () => {
+  const pages = JSON.parse(readFileSync(new URL('../course/navigation.json', import.meta.url), 'utf8'));
+  for (const [chapter, first, last] of [['05', 5, 15], ['07', 6, 11]]) {
+    for (let step = first; step <= last; step++) {
+      const page = pages.find(item => item.chapter === chapter && item.step === step);
+      assert.ok(page && !page.exerciseId, `Missing original-project lesson ${chapter}.${step}`);
+      const source = readFileSync(new URL(`../docs/${page.id}.mdx`, import.meta.url), 'utf8');
+      const body = source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+      const check = /^## (?:Check|Verify|Observe)\b[^\n]*$/m.exec(body);
+      assert.ok(check, `${page.id}: missing result check`);
+      assert.match(body.slice(0, check.index), /^```(?:tsx?|sh|shell)\b/m, `${page.id}: missing worked example`);
+      assert.ok(body.slice(check.index + check[0].length).trim(), `${page.id}: empty result check`);
+    }
+  }
+});

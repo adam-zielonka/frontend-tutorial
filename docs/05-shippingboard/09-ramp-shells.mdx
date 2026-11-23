@@ -15,9 +15,7 @@ course_illustration_description: "Content maps store.ramps using ramp.id as the 
 
 The dashboard placeholder can now become a board of real ramp models. Reuse the original Card markup and Sass before adding loading data, so layout changes remain separate from relationship logic.
 
-Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-Dashboard: A–G shells. Loadings: the unchanged table branch.
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
@@ -64,5 +62,7 @@ export const Content = observer(() => {
 The stable model ID is the React key; the visible label is `description`. Do not replace `store.ramps` with copies of the mini fixture. Each component receives the same model instance used by the loading assignments.
 
 ## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
 Dashboard shows seven styled ramp shells labelled A through G, with the existing striped background. Loadings still shows all eleven rows. If the cards are unstyled, check the `Ramp.scss` import and confirm Blueprint 4 is installed before changing CSS.

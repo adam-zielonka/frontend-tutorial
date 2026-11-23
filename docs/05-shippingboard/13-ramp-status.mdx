@@ -15,9 +15,7 @@ course_illustration_description: "Ramp.status becomes the class on the ramp body
 
 An assigned card list does not yet describe whether the ramp is ready, finished or waiting. Derive that business status from all assignments and connect it to the existing body colour rules.
 
-Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-Zero-picked overlaps with isInProgress. E stays red until its waiting loading moves.
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
@@ -91,5 +89,7 @@ After a fresh reload, expect:
 | E | `0/42` and `3/29` | `not-started`, red. |
 
 ## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
 E must be red even though `0007708` has started. This original rule is **Not started before In progress**; the four mini-lessons intentionally use a different **Loading before Waiting** rule. Do not copy that priority here. Open `0007707`, move it to A and close: A becomes red and E becomes amber. Move it back to restore the initial distribution, or reload.

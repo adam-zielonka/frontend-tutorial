@@ -21,7 +21,7 @@ A package manager downloads project dependencies from a registry and records ver
 1. [Describe a shipment with types](./01-tool-set/01-shipment-shape.mdx) — Add a required priority to the shipment model and display it.
 2. [Derive the manifest summary](./01-tool-set/02-derived-summary.mdx) — Calculate summary values from the typed records.
 
-Work in order; each lesson opens a prepared checkpoint. See [course help](./course-help.mdx) for drafts and local work.
+For drafts and local setup, see [course help](./course-help.mdx).
 
 ## Official references
 
@@ -47,7 +47,7 @@ If you installed pnpm standalone, [its runtime manager](https://pnpm.io/cli/runt
 
 ## Optional: why pnpm supports dependency patches
 
-Sometimes an installed library needs a small correction before its author publishes a release. Editing its installed files directly is temporary: a fresh install can lose the change. pnpm can record the difference and apply it on later installs. No course dependency needs a patch; this recovers the original tutorial's explanation of the tool's purpose.
+Sometimes an installed library needs a small correction before its author publishes a release. Editing its installed files directly is temporary: a fresh install can lose the change. pnpm can record the difference and apply it on later installs. The course dependencies need no patches.
 
 For a separate project with an installed dependency, the workflow is:
 

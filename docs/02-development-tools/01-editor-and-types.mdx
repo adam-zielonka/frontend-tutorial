@@ -6,9 +6,7 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-The starter is a checklist model, not the configuration of your editor or compiler. `/App.tsx` reads its values; `/project.ts` holds them. Formatting and type checking solve different problems: formatting makes layout consistent, while [strict](https://www.typescriptlang.org/tsconfig/strict.html) enables stricter compiler checks.
-
-A formatter can arrange whitespace without knowing whether your data makes sense. The TypeScript checker can reject a wrong type even when the code is neatly formatted. We want both kinds of feedback during development. The checklist below helps distinguish them; the local instructions show where the real settings live.
+Edit the checklist in `/project.ts`; `/App.tsx` displays your choices. A formatter fixes whitespace. TypeScript’s [strict checks](https://www.typescriptlang.org/tsconfig/strict.html) can catch a wrong type even in neatly formatted code. The checklist models these settings; step 3 shows where to change them in a real project.
 
 1. In `/project.ts`, find `project` below the interface and change these two properties in that object:
 
@@ -19,9 +17,7 @@ A formatter can arrange whitespace without knowing whether your data makes sense
 2. These are boolean values, not strings: omit quotation marks. Leave the existing `scripts` object in place. Script settings are for the next step.
 3. For a real local project, export it and open its folder in VS Code. Open Settings, search for `editor.formatOnSave`, enable it and select a formatter if needed. Inspect `compilerOptions.strict` in the exported `tsconfig.json` (already enabled). See [VS Code settings](https://code.visualstudio.com/docs/configure/settings).
 
-If the checklist does not change, edit the values in the object, not the `boolean` declarations in the interface. The editor model does not actually change VS Code.
-
-
+If the checklist does not change, edit the values in the object, not the `boolean` declarations in the interface.
 <LessonExercise id="02-01-editor-and-types" />
 
 ## Observe

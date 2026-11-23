@@ -4,7 +4,7 @@ sidebar_position: 80
 
 # 8. UI5 Web Components for React
 
-Compose UI5 components, add stateful actions with registered icons, then derive progress and enforce capacity. Each step opens `App.tsx` and preserves the previous solution.
+Compose UI5 components, add stateful actions with registered icons, then derive progress and enforce capacity. Each embedded exercise opens its prepared `App.tsx` beside the preview.
 
 The exercises pin `@ui5/webcomponents-react`, `@ui5/webcomponents`, `@ui5/webcomponents-base`, `@ui5/webcomponents-fiori`, and `@ui5/webcomponents-icons` to 2.15.0. These dependencies belong to the lesson project, separately from the website. A single `ThemeProvider` lives inside `App`; the generated entry does not add another one.
 
@@ -14,11 +14,10 @@ The exercises pin `@ui5/webcomponents-react`, `@ui5/webcomponents`, `@ui5/webcom
 2. [Wire actions and register icons](./08-ui5/02-events-and-icons.mdx) — Update React state from UI5 buttons with registered icons.
 3. [Show progress and enforce capacity](./08-ui5/03-progress-and-capacity.mdx) — Derive a percentage and keep loading bounded at ten pallets.
 
-Work in order; each lesson opens a prepared checkpoint. See [course help](./course-help.mdx) for drafts and local work.
+For drafts and local setup, see [course help](./course-help.mdx).
 
 ## Official references
 
 [UI5 Web Components for React](https://ui5.github.io/webcomponents-react/), [UI5 first steps](https://ui5.github.io/webcomponents/docs/getting-started/first-steps/), [using icons](https://ui5.github.io/webcomponents/docs/advanced/using-icons/).
-
 
 [Optional continuation: explore more UI5 controls](./08-ui5/optional-ui5.mdx).

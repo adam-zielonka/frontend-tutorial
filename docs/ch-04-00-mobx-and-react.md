@@ -19,6 +19,6 @@ Build the original [counter app](https://github.com/adam-zielonka/mobx-example):
 13. [Edit a value directly](./04-mobx/13-edit-value.mdx) — local guided continuation.
 14. [Inspect the model](./04-mobx/14-inspect-model.mdx) — debugger and original-project comparison.
 
-Start with 4.1 and work in order. Each embedded step opens a prepared checkpoint; any added scaffolding is explained on its page. Your edits stay with their lesson. See [course help](./course-help) for editor, preview and local setup.
+Steps 4.1–4.12 use separate browser drafts. Continue locally in 4.13–4.14. See [course help](./course-help) for editor, preview and local setup.
 
 [Observable state](https://mobx.js.org/observable-state.html) · [Actions](https://mobx.js.org/actions.html) · [React integration](https://mobx.js.org/react-integration.html) · [Computed values](https://mobx.js.org/computeds.html) · [Reactions](https://mobx.js.org/reactions.html)

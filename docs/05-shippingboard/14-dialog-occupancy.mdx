@@ -15,9 +15,7 @@ course_illustration_description: "The superscript counts assigned loadings. Cyan
 
 The dashboard shows progress; the assignment dialog needs different information: which ramps are occupied, and by how many loadings. Derive those counts from the same relationship instead of maintaining another counter.
 
-Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-Active marks the current assignment. ∅ clears it; occupied choices remain selectable.
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
@@ -54,4 +52,6 @@ The empty/current/occupied order means an empty ramp is neutral; a nonempty curr
 
 ## Check your work
 
-after reload, open `0007703`. C is active/primary with count 2; B, D and E are danger with counts 1, 3 and 2; A, F and G are neutral without counts. Click A: its count becomes 1 and it becomes active/primary, while C's count becomes 1 and it becomes danger. Click ∅: A becomes neutral again, the loading disappears from the ramp board and it remains in the table with no ramp. Other occupied ramps are still selectable; danger intent is information, not a capacity constraint.
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+After reload, open `0007703`. C is active/primary with count 2; B, D and E are danger with counts 1, 3 and 2; A, F and G are neutral without counts. Click A: its count becomes 1 and it becomes active/primary, while C's count becomes 1 and it becomes danger. Click ∅: A becomes neutral again, the loading disappears from the ramp board and it remains in the table with no ramp. Other occupied ramps are still selectable; danger intent is information, not a capacity constraint.

@@ -15,9 +15,7 @@ course_illustration_description: "UI.init restores the view and looks up 0007703
 
 A selected view alone is not enough for a shareable link: the existing loading selection must survive too. Restore both choices at startup, then reflect later changes in the address.
 
-Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-Loading links, unrelated query parameters and the hash survive. No popstate router.
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
@@ -111,4 +109,6 @@ This is startup restoration plus state-to-URL synchronization, not a router: the
 
 ## Check your work
 
-load `/?view=loadings&loading=0007703&keep=yes#dock` directly. You should see the table and dialog for `0007703`. Close it: `loading` disappears while `view`, `keep` and `#dock` remain. Select Dashboard: `view` disappears and the placeholder returns. Reload `/?view=unknown`: the dashboard is selected, without accepting `unknown` as store state. The unused invalid parameter may remain until a later view change because initialization deliberately does not write the URL.
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Load `/?view=loadings&loading=0007703&keep=yes#dock` directly. You should see the table and dialog for `0007703`. Close it: `loading` disappears while `view`, `keep` and `#dock` remain. Select Dashboard: `view` disappears and the placeholder returns. Reload `/?view=unknown`: the dashboard is selected, without accepting `unknown` as store state. The unused invalid parameter may remain until a later view change because initialization deliberately does not write the URL.

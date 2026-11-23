@@ -15,9 +15,7 @@ course_illustration_description: "Ramp.loadings selects by object identity with 
 
 The temporary card proves the presentation works, but repeats one loading everywhere. Derive membership from the existing object relationship so each ramp shows only its own assignments.
 
-Work in the **same `shippingboard-lite-ramp-lesson` checkout** prepared in [5.5](./05-original-workspace.mdx), carrying forward the preceding lesson’s edits. Edit the `src/` files named below in your local editor (or the same online project session), not the mini board. After editing, run `pnpm dlx pnpm@8.15.9 run build` in that checkout; the observable check uses its running app.
-
-setRamp / clearRamp change the source relationship; no second assignment array.
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
 
 ## Make the change
 
@@ -42,7 +40,7 @@ export class Ramp {
 }
 ```
 
-`FromResponse.ramp` in `src/api/parse.ts` resolves each fixture's ramp ID to a `store.ramps` instance. The dialog's existing `setRamp` action assigns one of those same objects. That is why reference equality works here. Unassigned loadings have `ramp === undefined` and stay in the table; they do not belong to an invented extra ramp. The fallback for an unknown API ramp ID is outside this fixture and this dashboard exercise.
+`FromResponse.ramp` in `src/api/parse.ts` resolves each fixture's ramp ID to a `store.ramps` instance. The dialog’s `setRamp` action assigns one of those objects; `clearRamp` removes that reference. That is why reference equality works here. Unassigned loadings have `ramp === undefined` and stay in the table; they do not belong to an invented extra ramp. The fallback for an unknown API ramp ID is outside this fixture and this dashboard exercise.
 
 Do not store another mutable array of assignments on each ramp. The getter derives it from the single source, `store.loadings`. `makeAutoObservable` makes it computed, and an observing component updates when a loading's assignment changes. See [MobX computed values](https://mobx.js.org/computeds.html).
 
@@ -68,5 +66,7 @@ export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
 ```
 
 ## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
 
 A, F and G are empty; B has `0007701`; C has `0007702` and `0007703`; D has `0007704`–`0007706`; E has `0007707` and `0007708`. The three unassigned loadings `0007709`–`0007711` remain accessible through Loadings. Empty ramps retain their header and striped body, rather than disappearing.

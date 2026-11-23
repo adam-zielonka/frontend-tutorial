@@ -13,7 +13,7 @@ Keep your project and tools in the same operating-system environment. Check `nod
 1. [Configure editor and type checks](./02-development-tools/01-editor-and-types.mdx) — Distinguish a typed practice model from real editor and compiler settings.
 2. [Use scripts and a Git checkpoint](./02-development-tools/02-scripts-and-git.mdx) — Finish the script model, then practice a real local tool workflow.
 
-Work in order; each lesson opens a prepared checkpoint. See [course help](./course-help.mdx) for drafts and local work.
+For drafts and local setup, see [course help](./course-help.mdx).
 
 ## Official references
 

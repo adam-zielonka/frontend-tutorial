@@ -20,5 +20,4 @@ Each lesson starts from a prepared checkpoint; your own edits remain in that les
 
 [Vitest guide](https://vitest.dev/guide/), [assertions](https://vitest.dev/api/expect.html), [coverage](https://vitest.dev/guide/coverage.html), [Testing Library principles](https://testing-library.com/docs/guiding-principles/).
 
-
 [Optional continuation: more testing techniques](./06-tests/optional-testing.mdx).
