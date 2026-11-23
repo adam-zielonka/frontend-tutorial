@@ -20,7 +20,7 @@ const overviewPaths = [
 
 type IllustrationTopic = React.ComponentProps<typeof CourseIllustration>['topic'];
 
-export default function LessonStudio({lesson, children}: {lesson?: Lesson; children: ReactNode}) {
+export default function LessonStudio({lesson, children}: {lesson: Lesson | undefined; children: ReactNode}) {
   const {metadata, toc, frontMatter} = useDoc();
   const location = useLocation();
   const base = useBaseUrl('/');
@@ -29,7 +29,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const [menuOpen, setMenuOpen] = useState(false);
   const [narrow, setNarrow] = useState(false);
   const [solution, setSolution] = useState(false);
-  const [fileRequest, setFileRequest] = useState<{file: string; snippet?: string; sequence: number} | null>(null);
+  const [fileRequest, setFileRequest] = useState<{file: string; snippet: string | undefined; sequence: number} | null>(null);
   const [readingWidth, setReadingWidth] = useState(38);
   const [dragging, setDragging] = useState(false);
   const [desktopView, setDesktopView] = useState<'split' | 'code' | 'preview'>('split');

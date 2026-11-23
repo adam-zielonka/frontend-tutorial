@@ -41,7 +41,7 @@ git --version
 The first command should report `v24.x.x`. If a command is not found, finish its installation and reopen the terminal; editing React code cannot fix a missing tool. The lesson's clone instructions use pnpm and the supplied lockfile. Install the pinned pnpm version through the npm installation supplied with a standard Node installer:
 
 ```sh
-npm install -g pnpm@12.14.0
+npm install -g pnpm@12.23.0
 pnpm --version
 ```
 

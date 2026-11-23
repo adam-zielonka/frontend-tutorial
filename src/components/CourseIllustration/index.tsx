@@ -4,7 +4,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 export type CourseIllustrationTopic = 'intro' | '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08';
 
-type Props = {topic: CourseIllustrationTopic; illustration?: {src: string; title: string; alt: string; description: string}};
+type Props = {topic: CourseIllustrationTopic; illustration: undefined | {src: string; title: string; alt: string; description: string}};
 type DrawingProps = {id: string};
 
 const chapters: Record<CourseIllustrationTopic, {

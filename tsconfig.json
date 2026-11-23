@@ -4,7 +4,10 @@
   "include": ["src", "docusaurus.config.ts", "sidebars.ts"],
   "exclude": ["build", ".docusaurus", "node_modules"],
   "compilerOptions": {
-    "baseUrl": ".",
+    // The Docusaurus preset still sets baseUrl, which TypeScript 7 removed.
+    "baseUrl": null,
+    "paths": {"@site/*": ["./*"]},
+    "exactOptionalPropertyTypes": true,
     "noEmit": true
   }
 }
