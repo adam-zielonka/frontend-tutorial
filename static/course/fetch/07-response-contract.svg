@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="446" viewBox="0 0 640 446" role="img" aria-labelledby="title desc">
+  <title id="title">Check the server’s field names and types</title>
+  <desc id="desc">Treat JSON as unknown. isCustomerResponse requires an object with string fields kunnr, name1, ort01 and land1. isRampResponse requires an object with string fields ramp_id and description. A failed guard returns false.</desc>
+  <rect width="640" height="446" rx="22" fill="#142235"/>
+  <g fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M320 113v30m-153 25v-25h306v25m-313-7 7 7 7-7m292 0 7 7 7-7"/>
+  </g>
+  <g font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="24" fill="#fbf4e8">
+    <rect x="184" y="23" width="272" height="90" rx="12" fill="#20354b" stroke="#69dcf5" stroke-width="2"/>
+    <text x="320" y="60" text-anchor="middle">JSON <tspan fill="#69dcf5" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">unknown</tspan></text>
+    <text x="320" y="93" text-anchor="middle" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="23">isRecord(value)</text>
+    <rect x="24" y="178" width="286" height="195" rx="12" fill="#20354b" stroke="#456078" stroke-width="2"/>
+    <rect x="330" y="178" width="286" height="195" rx="12" fill="#20354b" stroke="#456078" stroke-width="2"/>
+    <path d="M24 228h286m20 0h286" stroke="#456078" stroke-width="2"/>
+    <g font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="23">
+      <text x="167" y="211" text-anchor="middle" fill="#69dcf5">isCustomerResponse</text>
+      <text x="473" y="211" text-anchor="middle" fill="#69dcf5">isRampResponse</text>
+      <text x="38" y="259">kunnr: string</text>
+      <text x="38" y="290">name1: string</text>
+      <text x="38" y="321">ort01: string</text>
+      <text x="38" y="352">land1: string</text>
+      <text x="344" y="259">ramp_id: string</text>
+      <text x="344" y="290">description: string</text>
+    </g>
+    <path d="M24 399h592" stroke="#456078" stroke-width="2"/>
+    <text x="320" y="425" text-anchor="middle" fill="#ffbe65">Missing or non-string field → false</text>
+  </g>
+</svg>

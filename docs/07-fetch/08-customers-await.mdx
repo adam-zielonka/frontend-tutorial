@@ -1,6 +1,9 @@
 ---
 title: "7.8. Load customers with await"
 sidebar_position: 8
+course_illustration: "/course/fetch/08-customers-await.svg"
+course_illustration_alt: "Await and validate before constructing customers"
+course_illustration_description: "getCustomers returns a Promise of Customer instances. Await fetch for CUSTOMERS.json, check response.ok, await the parsed body, and require an array whose entries pass isCustomerResponse. Map the validated rows into Customer instances. Any failure rejects the promise."
 ---
 
 Continue from [7.7](./07-response-contract.mdx). Customers arrive asynchronously, so the API must return a promise rather than an immediate array.

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="528" viewBox="0 0 640 528" role="img" aria-labelledby="title desc">
+  <title id="title">Assign both collections before building loadings</title>
+  <desc id="desc">Store.init awaits getCustomers and then getRamps. In runInAction it assigns both arrays, calls getLoadings to resolve references, calls ui.init, and sets status to ready. On failure, a separate action sets loadError and status to error.</desc>
+  <rect width="640" height="528" rx="22" fill="#142235"/>
+  <g font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="25" fill="#fbf4e8">
+    <text x="28" y="46" font-weight="700">Store.init()</text>
+    <path d="M28 63h584" stroke="#456078" stroke-width="2"/>
+    <g fill="#20354b" stroke="#456078" stroke-width="2">
+      <rect x="28" y="84" width="266" height="86" rx="12"/>
+      <rect x="346" y="84" width="266" height="86" rx="12"/>
+    </g>
+    <text x="48" y="116" fill="#69dcf5">await</text>
+    <text x="48" y="151">getCustomers()</text>
+    <text x="366" y="116" fill="#69dcf5">await</text>
+    <text x="366" y="151">getRamps()</text>
+    <g fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M303 127h33m-7-7 7 7-7 7M478 170v19H320v20m-7-7 7 7 7-7"/>
+    </g>
+    <rect x="28" y="220" width="584" height="235" rx="12" fill="#20354b" stroke="#69dcf5" stroke-width="2"/>
+    <path d="M28 267h584" stroke="#456078" stroke-width="2"/>
+    <text x="48" y="252" fill="#69dcf5" font-weight="700">runInAction</text>
+    <path d="M52 296v132m-7-7 7 7 7-7" fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#69dcf5">
+      <circle cx="52" cy="299" r="5"/>
+      <circle cx="52" cy="342" r="5"/>
+      <circle cx="52" cy="385" r="5"/>
+    </g>
+    <text x="75" y="308" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif">Assign <tspan font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">customers</tspan> and <tspan font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">ramps</tspan></text>
+    <text x="75" y="351">api.getLoadings()</text>
+    <text x="590" y="351" text-anchor="end" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="23">Resolve references</text>
+    <text x="75" y="394">ui.init()</text>
+    <text x="75" y="437">status = 'ready'</text>
+    <text x="28" y="496" fill="#ffbe65">catch</text>
+    <text x="119" y="496" fill="#ffbe65" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="24">Set <tspan font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">loadError</tspan> and <tspan font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">status = 'error'</tspan></text>
+  </g>
+</svg>

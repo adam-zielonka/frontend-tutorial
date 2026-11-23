@@ -9,8 +9,8 @@ course_workspace: original-project
 course_chapter: "05"
 course_step: 7
 course_illustration: "/course/shippingboard/07-content-switch.svg"
-course_illustration_alt: "Keep the table as one branch of Content"
-course_illustration_description: "UI.view: Selected view \u2192 Content.tsx: isLoadingsOpen? \u2192 One branch: Table / placeholder. App still renders Header + Content + Details. The shared dialog stays mounted."
+course_illustration_alt: "Inside App, Content branches to the original loadings table or the dashboard placeholder. Header and Details sit outside the branch."
+course_illustration_description: "The observing Content reads ui.isLoadingsOpen. Details stays mounted so a table row can still open the shared dialog."
 ---
 
 The header now changes the view choice, but the content still always shows the table. Make the existing Content component read that same choice before adding any ramp UI.

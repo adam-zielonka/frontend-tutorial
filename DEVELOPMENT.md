@@ -48,8 +48,10 @@ All course pages use `LessonStudio`, a viewport-height React shell inspired
 by the [Svelte tutorial](https://svelte.dev/tutorial/svelte/multiple-select-bindings).
 Docusaurus still owns MDX, routing and search. The home page and eight chapter
 introductions show a topic-specific `CourseIllustration` in the right pane; the
-numbered exercises show the editor and live preview there. Introductions do
-not mount Sandpack. Theme wrappers preserve the same navigation and reading pane
+embedded exercises show the editor and live preview there. Numbered reading and project
+pages use a lesson-specific diagram from `static/course/`, linked through the
+`course_illustration`, `course_illustration_alt` and `course_illustration_description`
+frontmatter fields. Illustrated pages do not mount Sandpack. Theme wrappers preserve the same navigation and reading pane
 throughout the course. Lesson text stays in its MDX file, including checks and
 references after `LessonExercise`.
 

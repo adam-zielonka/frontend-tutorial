@@ -1,18 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
-<title id="title">One starting checkpoint, one continuing checkout</title>
-<desc id="desc">3634bcb9a1ee: Pinned source → Local checkout: lesson/ramp-dashboard → 5.6 → 5.15: Keep your edits. Mini fixture: 3 records / React state. Original app: 11 loadings / MobX models.</desc>
-<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
-<g font-family="system-ui, sans-serif" fill="#182026">
-<text x="24" y="36" font-size="21" font-weight="700">One starting checkpoint, one continuing checkout</text>
-<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="40" y="103" font-size="18" font-weight="600">3634bcb9a1ee</text>
-<text x="40" y="136" font-size="15">Pinned source</text>
-<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="326" y="103" font-size="18" font-weight="600">Local checkout</text>
-<text x="326" y="136" font-size="15">lesson/ramp-dashboard</text>
-<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="612" y="103" font-size="18" font-weight="600">5.6 → 5.15</text>
-<text x="612" y="136" font-size="15">Keep your edits</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="438" viewBox="0 0 480 438" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">Start from the original app</title>
+  <desc id="desc">The mini board’s three React records give way to the original app’s eleven MobX loadings. Start at commit 3634bcb9a1ee, create lesson/ramp-dashboard, and carry that checkout from the baseline build through lesson 5.15.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect width="480" height="438" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">Start from the original app</text>
+  <rect x="28" y="69" width="192" height="116" rx="10" class="surface"/>
+  <rect x="235" y="69" width="217" height="116" rx="10" fill="#20354c" stroke="#69dcf5"/>
+  <g fill="#ffbe65">
+    <rect x="44" y="85" width="23" height="19" rx="3"/>
+    <rect x="72" y="85" width="23" height="19" rx="3"/>
+    <rect x="100" y="85" width="23" height="19" rx="3"/>
+  </g>
+  <path d="M251 83h34v23h-34zM251 91h34m-34 7h34m-22-15v23" fill="none" stroke="#69dcf5" stroke-width="2"/>
+  <text x="44" y="134" class="label">Mini board</text>
+  <text x="44" y="161" class="muted">3 React records</text>
+  <text x="251" y="134" class="label">Original app</text>
+  <text x="251" y="161" class="muted">11 MobX loadings</text>
+  <path d="M47 220v186" class="route"/>
+  <circle cx="47" cy="228" r="8" fill="#ffbe65"/>
+  <circle cx="47" cy="306" r="7" fill="#69dcf5"/>
+  <circle cx="47" cy="397" r="7" fill="#69dcf5"/>
+  <text x="72" y="234" class="label">Pin original source</text>
+  <text x="72" y="263" class="code amber">3634bcb9a1ee</text>
+  <text x="72" y="312" class="label">Branch and build</text>
+  <text x="72" y="341" class="code cyan">lesson/ramp-dashboard</text>
+  <text x="72" y="403" class="label">Same checkout through 5.15</text>
+</svg>

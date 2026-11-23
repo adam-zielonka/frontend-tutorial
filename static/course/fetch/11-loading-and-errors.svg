@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="466" viewBox="0 0 640 466" role="img" aria-labelledby="title desc">
+  <title id="title">Store status selects what App renders</title>
+  <desc id="desc">observer(App) reads store.status. The initial loading state renders a status message. Ready renders the normal board. Error renders an alert with store.loadError.</desc>
+  <rect width="640" height="466" rx="22" fill="#142235"/>
+  <g font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="25" fill="#fbf4e8">
+    <text x="320" y="47" text-anchor="middle" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace">observer(App) reads store.status</text>
+    <path d="M28 63h584" stroke="#456078" stroke-width="2"/>
+    <rect x="141" y="84" width="358" height="112" rx="12" fill="#20354b" stroke="#69dcf5" stroke-width="2"/>
+    <text x="162" y="120" font-weight="650">loading</text>
+    <text x="478" y="120" text-anchor="end" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="23" fill="#69dcf5">role="status"</text>
+    <path d="M142 136h356" stroke="#456078" stroke-width="2"/>
+    <path d="M179 153a12 12 0 1 0 12 12" fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round"/>
+    <text x="205" y="174">Loading the board…</text>
+    <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M320 196v17H167v63m-7-7 7 7 7-7" stroke="#69dcf5"/>
+      <path d="M320 213h153v63m-7-7 7 7 7-7" stroke="#ffbe65"/>
+    </g>
+    <text x="149" y="252" text-anchor="end" font-size="23" fill="#69dcf5">Success</text>
+    <text x="491" y="252" font-size="23" fill="#ffbe65">Failure</text>
+    <rect x="24" y="287" width="286" height="154" rx="12" fill="#20354b" stroke="#69dcf5" stroke-width="2"/>
+    <rect x="330" y="287" width="286" height="154" rx="12" fill="#20354b" stroke="#ffbe65" stroke-width="2"/>
+    <path d="M25 338h284m22 0h284" stroke="#456078" stroke-width="2"/>
+    <text x="43" y="322" font-weight="650">ready</text>
+    <text x="349" y="322" font-weight="650">error</text>
+    <text x="602" y="322" text-anchor="end" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="21" fill="#ffbe65">role="alert"</text>
+    <text x="43" y="371">ShippingBoard</text>
+    <g fill="none" stroke="#69dcf5" stroke-width="2">
+      <rect x="43" y="385" width="72" height="37" rx="5"/>
+      <rect x="131" y="385" width="72" height="37" rx="5"/>
+      <rect x="219" y="385" width="72" height="37" rx="5"/>
+      <path d="M54 397h23m65 0h23m65 0h23m-111 14h46m42 0h31"/>
+    </g>
+    <text x="349" y="370" font-size="23">Could not load</text>
+    <text x="349" y="398" font-size="23">the board:</text>
+    <text x="349" y="426" font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="23" fill="#ffbe65">store.loadError</text>
+  </g>
+</svg>

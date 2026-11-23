@@ -9,8 +9,8 @@ course_workspace: original-project
 course_chapter: "05"
 course_step: 8
 course_illustration: "/course/shippingboard/08-view-url.svg"
-course_illustration_alt: "Restore first, react to later changes"
-course_illustration_description: "URL at startup: view + loading ID \u2192 UI.init: Resolve models first \u2192 reaction: State \u2192 URL. Loading links, unrelated query parameters and the hash survive. No popstate router."
+course_illustration_alt: "A URL timeline starts with the table and dialog open. Closing the dialog removes loading, then selecting Dashboard removes view."
+course_illustration_description: "UI.init restores the view and looks up 0007703 before registering the reactions. Later pushState calls retain keep=yes and #dock."
 ---
 
 A selected view alone is not enough for a shareable link: the existing loading selection must survive too. Restore both choices at startup, then reflect later changes in the address.

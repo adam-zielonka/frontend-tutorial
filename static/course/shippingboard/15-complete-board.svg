@@ -1,18 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
-<title id="title">One model shared across the finished application</title>
-<desc id="desc">Dashboard: Cards + progress → MobX models: Assignments + UI → Table + Details: Rows + ramp choices. Build and inspect the same checkout. Reload restores fixtures; assignments are in memory.</desc>
-<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
-<g font-family="system-ui, sans-serif" fill="#182026">
-<text x="24" y="36" font-size="21" font-weight="700">One model shared across the finished application</text>
-<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="40" y="103" font-size="18" font-weight="600">Dashboard</text>
-<text x="40" y="136" font-size="15">Cards + progress</text>
-<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="326" y="103" font-size="18" font-weight="600">MobX models</text>
-<text x="326" y="136" font-size="15">Assignments + UI</text>
-<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="612" y="103" font-size="18" font-weight="600">Table + Details</text>
-<text x="612" y="136" font-size="15">Rows + ramp choices</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="492" viewBox="0 0 480 492" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">7 ramps, 11 loadings</title>
+  <desc id="desc">After reload, the dashboard shows eight assigned cards across seven ramps. The Loadings table also includes the three unassigned records. Open 0007703 from either view and move or clear it in Details. The dashboard and table update together. Reloading restores the fixture assignments, and a deep link can reopen the table and dialog.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .ramp { stroke: #52718f; }
+  </style>
+  <defs>
+    <pattern id="stripes" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="12" height="12" fill="#1b2d42"/>
+      <path d="M0 0v12" stroke="#2a415a" stroke-width="8"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="492" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">7 ramps, 11 loadings</text>
+  <text x="28" y="86" class="label cyan">Dashboard</text>
+  <text x="452" y="86" text-anchor="end" class="muted">8 assigned cards</text>
+  <g class="ramp">
+    <rect x="28" y="100" width="97" height="92" rx="7" fill="url(#stripes)"/>
+    <rect x="137" y="100" width="97" height="92" rx="7" fill="#233d38"/>
+    <rect x="246" y="100" width="97" height="92" rx="7" fill="#4c3927"/>
+    <rect x="355" y="100" width="97" height="92" rx="7" fill="#4c3927"/>
+    <rect x="28" y="203" width="97" height="92" rx="7" fill="#513341"/>
+    <rect x="137" y="203" width="97" height="92" rx="7" fill="url(#stripes)"/>
+    <rect x="246" y="203" width="97" height="92" rx="7" fill="url(#stripes)"/>
+  </g>
+  <path d="M28 131h97m12 0h97m12 0h97m12 0h97M28 234h97m12 0h97m12 0h97" class="line"/>
+  <g class="label" text-anchor="middle">
+    <text x="76" y="124">A</text>
+    <text x="185" y="124">B</text>
+    <text x="294" y="124">C</text>
+    <text x="403" y="124">D</text>
+    <text x="76" y="227">E</text>
+    <text x="185" y="227">F</text>
+    <text x="294" y="227">G</text>
+  </g>
+  <g fill="#142235" stroke="#8397ad">
+    <rect x="150" y="139" width="71" height="12" rx="3"/>
+    <rect x="259" y="139" width="71" height="12" rx="3"/>
+    <rect x="259" y="156" width="71" height="12" rx="3" stroke="#69dcf5" stroke-width="2"/>
+    <rect x="368" y="139" width="71" height="12" rx="3"/>
+    <rect x="368" y="156" width="71" height="12" rx="3"/>
+    <rect x="368" y="173" width="71" height="12" rx="3"/>
+    <rect x="41" y="242" width="71" height="12" rx="3"/>
+    <rect x="41" y="259" width="71" height="12" rx="3"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-width="3">
+    <path d="M156 145h59m50 0h59" stroke="#82dfaa"/>
+    <path d="M265 162h29m80-17h23m-23 17h29m-29 17h42M47 265h6" stroke="#ffbe65"/>
+  </g>
+  <path d="M330 162h15v85h22" class="route"/>
+  <text x="448" y="252" text-anchor="end" class="code cyan">0007703</text>
+  <text x="448" y="281" text-anchor="end" class="muted">11 of 22</text>
+  <rect x="28" y="316" width="424" height="56" rx="8" class="surface"/>
+  <path d="M45 333h30v22H45zm0 7h30m-30 7h30m-19-14v22" class="line"/>
+  <text x="90" y="352" class="label">Loadings</text>
+  <text x="432" y="352" text-anchor="end" class="muted">11 rows</text>
+  <path d="M28 344H16v78h12M453 246h13v176h-14" class="route"/>
+  <rect x="28" y="391" width="424" height="74" rx="8" fill="#20354c" stroke="#69dcf5"/>
+  <text x="45" y="420" class="label cyan">Shared Details</text>
+  <text x="45" y="446">Reassign or clear 0007703</text>
+</svg>

@@ -9,8 +9,8 @@ course_workspace: original-project
 course_chapter: "05"
 course_step: 12
 course_illustration: "/course/shippingboard/12-card-details.svg"
-course_illustration_alt: "One selection, one existing dialog"
-course_illustration_description: "LoadingBox click: Pass loading model \u2192 UI.selectedLoading: Existing shared state \u2192 Details.tsx: Change assignment. Table rows call the same action. Reassigning moves the same card between ramps."
+course_illustration_alt: "The dashboard card and table row for 0007703 open the same Details dialog. Moving it from C to A changes both presentations."
+course_illustration_description: "Both click handlers pass the same Loading instance to openLoadingDialog. The selection also writes loading=0007703 to the URL."
 ---
 
 The table already opens a working details dialog. Let loading cards call that same store action so an assignment change updates both presentations of the same model.

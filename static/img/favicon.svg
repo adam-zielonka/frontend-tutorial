@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Frontend tutorial</title>
+  <rect width="32" height="32" rx="7" fill="#142235"/>
+  <g fill="none" stroke="#69dcf5" stroke-width="1.85">
+    <ellipse cx="16" cy="16" rx="3.5" ry="10.4" transform="rotate(-38 16 16)"/>
+    <ellipse cx="16" cy="16" rx="3.5" ry="10.4" transform="rotate(38 16 16)"/>
+  </g>
+  <g fill="none" stroke="#ffa458" stroke-width="2.4" stroke-linecap="square">
+    <path d="M7 11H4.5v10H7m18-10h2.5v10H25"/>
+  </g>
+</svg>

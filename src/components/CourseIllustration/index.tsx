@@ -1,4 +1,4 @@
-import React, {useEffect, useId, useState, type ReactNode} from 'react';
+import React, {useEffect, useId, useRef, useState, type ReactNode} from 'react';
 import styles from './styles.module.css';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -10,70 +10,60 @@ type DrawingProps = {id: string};
 const chapters: Record<CourseIllustrationTopic, {
   label: string;
   title: string;
-  summary: string;
   description: string;
   caption: string;
 }> = {
   intro: {
     label: 'Your learning route',
-    title: 'From a first component to a useful interface.',
-    summary: 'Small examples. Connected ideas. Room to experiment.',
+    title: 'The eight chapters of the course',
     description: 'Eight connected stops: tools, development workflow, React, MobX, ShippingBoard, tests, Fetch and UI5. The course uses related teaching projects, including pallet counters and a shipping interface.',
-    caption: 'Follow the ideas across several teaching projects. Each lesson opens its own prepared checkpoint.',
+    caption: 'Follow the ideas across several teaching projects. Embedded exercises have prepared checkpoints. The later ShippingBoard lessons share a checkout.',
   },
   '01': {
     label: '01 / Understand the tool set',
-    title: 'A model becomes an interface.',
-    summary: 'Give each tool a clear job.',
+    title: 'From shipment records to a pallet total',
     description: 'TypeScript describes a shipment with a pallet count and priority. React renders a shipment summary. Node.js runs pnpm and Vite; Vite transforms and serves browser assets. MobX manages application state.',
     caption: 'Node runs the tools. TypeScript checks the code. React renders the UI. MobX manages state.',
   },
   '02': {
     label: '02 / Your development workflow',
-    title: 'Edit. Check. Save a checkpoint.',
-    summary: 'A few dependable tools, working together.',
+    title: 'From an editor change to a Git commit',
     description: 'An editor shows a typed pallet value. A terminal runs pnpm build and git diff. Browser developer tools inspect the interface. A Git timeline records a local checkpoint, with a separate branch for an experiment.',
     caption: 'Use editor feedback, run project scripts, inspect the browser, then record a local Git commit.',
   },
   '03': {
     label: '03 / React basics',
-    title: 'One click, one new render.',
-    summary: 'Events change state. Components describe the result.',
+    title: 'How one click updates the pallet count',
     description: 'A plus-one click calls an event handler, which updates remembered state from four to five. React renders a pallet counter displaying five. The next click repeats the loop, and subtraction is bounded at zero.',
     caption: 'The handler updates state; React renders the next count. Keep every subtraction at or above zero.',
   },
   '04': {
     label: '04 / MobX in React',
-    title: 'Change the model. Follow the values.',
-    summary: 'Observable state, computed values, observing components.',
-    description: 'An add action changes an observable collection of counters containing two, three and five. A computed getter derives the total of ten. A React observer reads the values during render and subscribes to their changes.',
+    title: 'How counter values become a total',
+    description: 'An add action changes one counter. After the change the collection holds counters with values two, three and five. A computed getter derives the total of ten. A React observer reads the values during render and subscribes to their changes.',
     caption: 'makeAutoObservable prepares the model. observer subscribes the React component that reads it.',
   },
   '05': {
     label: '05 / ShippingBoard Lite',
-    title: 'See the work at every ramp.',
-    summary: 'One set of records, more than one useful view.',
+    title: 'Three ramps on the loading dashboard',
     description: 'A ShippingBoard-inspired dashboard has a striped available ramp A, a green completed ramp B with Militech loading 0007701 at two of two pallets, and an amber ramp C with loadings at one of one and eleven of twenty-two. Dashboard and loading-table views share the same records.',
     caption: 'Derive visible loadings and ramp groups from the records. An empty ramp and an empty filter tell different stories.',
   },
   '06': {
     label: '06 / Test the behavior',
-    title: 'Make the expectation executable.',
-    summary: 'Arrange a value. Act on it. Assert the result.',
+    title: 'Why the counter stops at ten',
     description: 'Arrange a counter at eight, act by changing it by five, and assert that the value is ten. A boundary rail shows the attempted value of thirteen being clamped to the upper limit of ten; the lower limit is zero.',
     caption: 'Edit a test, run it with Vitest, and compare the actual result with your expectation.',
   },
   '07': {
     label: '07 / Load data with Fetch',
-    title: 'Only trusted, current data reaches the UI.',
-    summary: 'Request, validate, update — and clean up.',
+    title: 'From a ramps request to the ready view',
     description: 'A request for ramps.json passes through response.ok and runtime data-shape checks before reaching the ready interface. Errors can be retried. An obsolete effect request is aborted; only the current request is allowed to commit its result.',
     caption: 'Check HTTP status and data shape. Cancel obsolete work, guard stale results, and retry deliberately.',
   },
   '08': {
     label: '08 / UI5 components',
-    title: 'Compose the parts. Own the behavior.',
-    summary: 'Library components meet your application state.',
+    title: 'How the pallet count drives UI5 controls',
     description: 'A UI5 Button, a registered add icon and a ProgressIndicator are assembled into a pallet-loading interface inside one ThemeProvider. Six of ten pallets gives sixty percent progress, and state remains bounded between zero and ten.',
     caption: 'Wrap the app once, register the icons, connect events, and derive progress from the pallet count.',
   },
@@ -146,7 +136,7 @@ function RouteIcon({index}: {index: number}) {
   }
 }
 
-function Intro({id}: DrawingProps) {
+function Intro() {
   const stops = [
     {x: 65, y: 100, label: 'Tools'}, {x: 222, y: 100, label: 'Workflow'},
     {x: 378, y: 100, label: 'React'}, {x: 535, y: 100, label: 'MobX'},
@@ -160,11 +150,10 @@ function Intro({id}: DrawingProps) {
       <circle className={index === 4 || index === 7 ? styles.goldDisc : styles.disc} r="43" />
       <RouteIcon index={index} />
       <text className={styles.stepNumber} textAnchor="middle" y="-63">0{index + 1}</text>
-      <text className={styles.nodeLabel} textAnchor="middle" x={index === 4 ? -30 : 0} y="74">{stop.label}</text>
+      <text className={styles.nodeLabel} textAnchor="middle" y="74">
+        {stop.label === 'ShippingBoard' ? <><tspan>Shipping</tspan><tspan x="0" dy="24">Board</tspan></> : stop.label}
+      </text>
     </g>)}
-    <text className={styles.handNote} x="290" y="219" textAnchor="middle">Build understanding, one step at a time.</text>
-    <Arrow id={id} d="M310 404H205" secondary />
-    <text className={styles.smallLabel} x="320" y="411">keep experimenting</text>
   </>;
 }
 
@@ -183,7 +172,7 @@ function ToolSet({id}: DrawingProps) {
       <text className={styles.metric} x="92" y="112">16</text>
       <text className={styles.smallLabel} x="92" y="139">pallets</text>
       <path className={styles.rule} d="M18 159H218" />
-      <text className={styles.smallLabel} x="22" y="180">3 shipments · 1 express</text>
+      <text className={styles.smallLabel} x="22" y="180">3 shipments · 2 ready</text>
     </Window>
     <rect className={styles.wash} x="24" y="285" width="376" height="123" rx="24" />
     <text className={styles.nodeLabel} x="46" y="315">Node.js runs the tools</text>
@@ -239,7 +228,7 @@ function ReactLoop({id}: DrawingProps) {
     <Arrow id={id} d="M196 109H397" />
     <Arrow id={id} d="M497 176C497 254 452 301 409 311" />
     <Arrow id={id} d="M191 317C105 307 99 231 99 176" secondary />
-    <text className={styles.smallLabel} x="300" y="93" textAnchor="middle">setCount(5)</text>
+    <text className={styles.smallLabel} x="300" y="93" textAnchor="middle">current + 1</text>
     <text className={styles.smallLabel} x="507" y="240">render</text>
     <text className={styles.smallLabel} x="25" y="263">next click</text>
     <rect className={styles.paper} x="20" y="45" width="172" height="121" rx="22" />
@@ -284,7 +273,7 @@ function Mobx({id}: DrawingProps) {
     <text className={styles.smallLabel} x="303" y="243" textAnchor="middle">stable model IDs</text>
     <rect className={styles.paper} x="213" y="312" width="183" height="92" rx="18" />
     <text className={styles.nodeLabel} x="304" y="344" textAnchor="middle">Computed</text>
-    <text className={styles.code} x="304" y="380" textAnchor="middle">total = 10</text>
+    <text className={styles.code} x="304" y="380" textAnchor="middle">sum = 10</text>
     <Window x={440} y={144} width={142} height={132} label="observer">
       <text className={styles.metric} x="71" y="94" textAnchor="middle">10</text>
       <text className={styles.smallLabel} x="71" y="119" textAnchor="middle">React total</text>
@@ -320,13 +309,13 @@ function ShippingBoard({id}: DrawingProps) {
           <path className={styles.rule} d="M23 91H141" />
           <text className={styles.smallLabel} x="23" y="116">06:00–09:00</text>
           <text className={styles.nodeLabel} x="23" y="147">Militech</text>
-          <text className={styles.smallLabel} x="23" y="172">2 of 2 pallets</text>
+          <text className={styles.smallLabel} x="23" y="172">2/2 pallets</text>
           <rect className={styles.track} x="23" y="192" width="118" height="12" rx="5" />
           <rect className={styles.loadedFill} x="23" y="192" width="118" height="12" rx="5" />
           <text className={styles.statusLabel} x="82" y="252" textAnchor="middle">Loaded</text>
         </> : <>
           <rect className={styles.progressWash} x="5" y="43" width="154" height="220" rx="4" />
-          {[{y: 54, code: '0007702', picked: '1 of 1', progress: 118}, {y: 145, code: '0007703', picked: '11 of 22', progress: 59}].map(loading => <g key={loading.code} transform={`translate(13 ${loading.y})`}>
+          {[{y: 54, code: '0007702', picked: '1/1', progress: 118}, {y: 145, code: '0007703', picked: '11/22', progress: 59}].map(loading => <g key={loading.code} transform={`translate(13 ${loading.y})`}>
             <rect className={styles.paper} width="138" height="82" rx="5" />
             <text className={styles.shipmentId} x="10" y="24">{loading.code}</text>
             <text className={styles.smallLabel} x="10" y="48">{loading.picked} pallets</text>
@@ -357,7 +346,7 @@ function Tests({id}: DrawingProps) {
       <text className={styles.nodeLabel} x="20" y="73">{phase.name}</text>
       <text className={styles.code} x="20" y="122">{phase.value}</text>
     </g>)}
-    <text className={styles.smallLabel} x="300" y="252" textAnchor="middle">An overshoot is a test case, too.</text>
+    <text className={styles.smallLabel} x="300" y="252" textAnchor="middle">8 + 5 = 13 · upper limit 10</text>
     <rect className={styles.wash} x="59" y="290" width="421" height="26" rx="13" />
     <path className={styles.inkLine} d="M60 303H480" />
     {Array.from({length: 11}, (_, index) => <path key={index} className={styles.tick} d={`M${60 + index * 42} 295V311`} />)}
@@ -421,8 +410,8 @@ function Ui5({id}: DrawingProps) {
     <g transform="translate(20 56)">
       <rect className={styles.paper} width="158" height="97" rx="16" />
       <text className={styles.code} x="17" y="32">Button</text>
-      <rect className={styles.solidPurple} x="17" y="49" width="124" height="31" rx="6" />
-      <path className={styles.onPurpleLine} d="M34 58V71M28 65H40M52 65H122" />
+      <rect className={styles.solidAccent} x="17" y="49" width="124" height="31" rx="6" />
+      <path className={styles.onAccentLine} d="M34 58V71M28 65H40M52 65H122" />
     </g>
     <g transform="translate(32 183)">
       <circle className={styles.goldDisc} cx="36" cy="35" r="33" />
@@ -439,9 +428,9 @@ function Ui5({id}: DrawingProps) {
       <Pallet x={24} y={58} scale={.85} />
       <text className={styles.counterValue} x="92" y="86">6 / 10</text>
       <text className={styles.smallLabel} x="93" y="113">pallets loaded</text>
-      <rect className={styles.solidPurple} x="23" y="140" width="245" height="43" rx="9" />
-      <path className={styles.onPurpleLine} d="M44 153V171M35 162H53" />
-      <text className={styles.onPurpleText} x="72" y="169">Load a pallet</text>
+      <rect className={styles.solidAccent} x="23" y="140" width="245" height="43" rx="9" />
+      <path className={styles.onAccentLine} d="M44 153V171M35 162H53" />
+      <text className={styles.onAccentText} x="72" y="169">Load a pallet</text>
       <rect className={styles.track} x="23" y="204" width="245" height="17" rx="8" />
       <rect className={styles.progressFill} x="23" y="204" width="147" height="17" rx="8" />
       <text className={styles.smallLabel} x="268" y="243" textAnchor="end">60% of capacity</text>
@@ -458,28 +447,29 @@ const drawings: Record<CourseIllustrationTopic, React.ComponentType<DrawingProps
 /** A chapter's visual companion; the outer region scrolls inside a flex pane. */
 export default function CourseIllustration({topic, illustration}: Props) {
   const [enlarged, setEnlarged] = useState(false);
+  const pane = useRef<HTMLElement>(null);
   const id = `course-illustration-${useId().replace(/:/g, '')}`;
   const chapter = chapters[topic];
   const Drawing = drawings[topic];
   const illustrationUrl = useBaseUrl(illustration?.src ?? '/');
 
   useEffect(() => {
-    const mobile = window.matchMedia('(max-width: 999px)');
-    const fitOnDesktop = () => {
-      if (!mobile.matches) setEnlarged(false);
-    };
-    fitOnDesktop();
-    mobile.addEventListener('change', fitOnDesktop);
-    return () => mobile.removeEventListener('change', fitOnDesktop);
+    if (!pane.current || typeof ResizeObserver === 'undefined') return;
+    // Resizing the reading pane also changes the space available to a diagram.
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry.contentRect.width > 640) setEnlarged(false);
+    });
+    observer.observe(pane.current);
+    return () => observer.disconnect();
   }, []);
 
-  return <section className={styles.illustration} data-course-illustration={topic}
-    aria-label={`${chapter.label} illustration`} tabIndex={0}>
+  const heading = illustration?.title ?? chapter.title;
+  return <section ref={pane} className={styles.illustration} data-course-illustration={topic}
+    aria-label={`${heading} illustration`} tabIndex={0}>
     <figure className={styles.sheet}>
       <header className={styles.heading}>
-        <p className={styles.eyebrow}><span className={styles.chapterMark} aria-hidden="true" />{chapter.label}</p>
-        <h2>{illustration?.title ?? chapter.title}</h2>
-        <p className={styles.summary}>{illustration ? 'Follow the change in the original application.' : chapter.summary}</p>
+        {(topic !== 'intro' || !illustration) && <p className={styles.eyebrow}>{chapter.label}</p>}
+        <h2>{heading}</h2>
       </header>
       <div className={styles.diagramTools}>
         <button type="button" aria-pressed={enlarged} aria-controls={`${id}-drawing`}

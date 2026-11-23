@@ -1,6 +1,9 @@
 ---
 title: "4.14. Inspect the model"
 sidebar_position: 14
+course_illustration: "/course/mobx/action-breakpoint.svg"
+course_illustration_alt: "Example starting at 42. Execution pauses inside add before the assignment; this.value is still 42. Resuming the action changes the clicked counter to 43."
+course_illustration_description: "Place the breakpoint before the update. Inspect this.value there, then resume and compare it with the displayed count."
 ---
 
 Continue in the local project from [4.13](./13-edit-value.mdx). The original chapter exposes a singleton store in the browser console. Our app owns its store inside `App`; a debugger can inspect that instance without changing ownership.

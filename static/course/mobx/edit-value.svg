@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-labelledby="title desc">
+  <title id="title">Assign, then increment</title>
+  <desc id="desc">With one counter, typing 42 sets its value and total to 42. Clicking +1 then adds to the stored value so both become 43.</desc>
+  <style>
+    text {font: 18px system-ui, sans-serif; fill: #eef6ff}
+    .label {font-size: 15px; font-weight: 650; fill: #adbfce}
+    .name {font-size: 23px; font-weight: 650}
+    .code {font: 18px ui-monospace, monospace; fill: #89e6f7}
+    .key {font-size: 23px; font-weight: 700; fill: #ffbe65}
+  </style>
+  <rect x="0" y="0" width="420" height="320" rx="16" fill="#142235"/>
+  <text x="24" y="42" class="name">One counter</text>
+  <rect x="24" y="65" width="372" height="97" rx="10" fill="#20364b"/>
+  <text x="42" y="94" class="label">Type a value</text>
+  <rect x="42" y="104" width="75" height="43" rx="5" fill="#142235" stroke="#69dcf5" stroke-width="2"/>
+  <text x="52" y="134" class="name">42</text>
+  <path d="M90 114v20" fill="none" stroke="#ffbe65" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="153" y="132" class="code">setValue(42)</text>
+  <text x="42" y="198" class="label">Click +1</text>
+  <rect x="24" y="211" width="76" height="50" rx="8" fill="#ffbe65"/>
+<text x="62" y="245" text-anchor="middle" style="fill:#142235;font-size:26px;font-weight:700">+1</text>
+  <path d="M112 237h30m-6-6 6 6-6 6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="157" y="244" class="code">add(1)</text>
+  <path d="M24 277h372" fill="none" stroke="#40576a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="305" class="key">Counter  43</text>
+  <text x="240" y="305" class="key">Total  43</text>
+</svg>

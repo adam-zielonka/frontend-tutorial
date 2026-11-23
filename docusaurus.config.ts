@@ -8,7 +8,7 @@ const config: Config = {
   baseUrl: "/frontend-tutorial",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/logo.png",
+  favicon: "img/favicon.svg",
 
   organizationName: "adam-zielonka",
   projectName: "frontend-tutorial",
@@ -50,7 +50,7 @@ const config: Config = {
       title: "Frontend tutorial",
       logo: {
         alt: "Frontend tutorial logo",
-        src: "img/logo.png",
+        src: "img/logo.svg",
       },
       items: [
         {

@@ -1,18 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-labelledby="title desc">
-<title id="title">Translate model getters into one card</title>
-<desc id="desc">Loading model: Dates / customer → LoadingBox.tsx: picked of pallets → ProgressBar: Ratio from 0 to 1. Temporary preview: the same 0007701 card in every ramp; assignments come next.</desc>
-<rect width="880" height="260" rx="12" fill="#f4f6f8"/>
-<g font-family="system-ui, sans-serif" fill="#182026">
-<text x="24" y="36" font-size="21" font-weight="700">Translate model getters into one card</text>
-<rect x="24" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="40" y="103" font-size="18" font-weight="600">Loading model</text>
-<text x="40" y="136" font-size="15">Dates / customer</text>
-<path d="M287 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="310" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="326" y="103" font-size="18" font-weight="600">LoadingBox.tsx</text>
-<text x="326" y="136" font-size="15">picked of pallets</text>
-<path d="M573 116h18m-6-6 6 6-6 6" fill="none" stroke="#315b7a" stroke-width="2"/>
-<rect x="596" y="64" width="258" height="105" rx="8" fill="#fff" stroke="#526779"/>
-<text x="612" y="103" font-size="18" font-weight="600">ProgressBar</text>
-<text x="612" y="136" font-size="15">Ratio from 0 to 1</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="406" viewBox="0 0 480 406" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">Inside the first loading card</title>
+  <desc id="desc">The temporary card for 0007701 shows Militech, today’s 06:00–09:00 window, and a full bar for 2 of 2 pallets. LoadingBox reads the model’s date, customer and pallet values. loadedRatio supplies 1 to the progress bar. This first fixture is temporarily rendered in every ramp.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+  </style>
+  <rect width="480" height="406" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">Inside the first loading card</text>
+  <rect x="28" y="73" width="254" height="266" rx="11" class="surface"/>
+  <rect x="28" y="73" width="254" height="50" rx="11" fill="#254359"/>
+  <text x="49" y="106" class="code label cyan">0007701</text>
+  <text x="49" y="153" class="muted">Today (local)</text>
+  <text x="49" y="180" class="code">06:00–09:00</text>
+  <text x="49" y="220" class="label">Militech</text>
+  <text x="49" y="247" class="muted">US, Washington, D.C.</text>
+  <text x="49" y="273" class="code muted">771996</text>
+  <path d="M45 285h220" class="line"/>
+  <text x="49" y="312" class="label">2 of 2</text>
+  <rect x="49" y="321" width="212" height="7" rx="3.5" fill="#82dfaa"/>
+  <path d="M266 166h31m-31 64h31m-31 94h31" class="line"/>
+  <g fill="#69dcf5">
+    <circle cx="297" cy="166" r="3.5"/>
+    <circle cx="297" cy="230" r="3.5"/>
+    <circle cx="297" cy="324" r="3.5"/>
+  </g>
+  <text x="309" y="160" class="code cyan">start</text>
+  <text x="309" y="185" class="code cyan">end</text>
+  <text x="309" y="236" class="code cyan">customer</text>
+  <text x="309" y="294" class="code amber">picked</text>
+  <text x="309" y="317" class="code amber">÷ pallets</text>
+  <text x="309" y="340" class="code amber">= 1</text>
+  <text x="28" y="379" class="muted">Preview the same card in A–G</text>
+</svg>

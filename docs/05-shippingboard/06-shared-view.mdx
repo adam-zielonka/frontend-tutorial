@@ -9,8 +9,8 @@ course_workspace: original-project
 course_chapter: "05"
 course_step: 6
 course_illustration: "/course/shippingboard/06-shared-view.svg"
-course_illustration_alt: "One observable choice drives both view buttons"
-course_illustration_description: "Header.tsx: Dashboard / Loadings \u2192 UI.view: dashboard | loadings \u2192 observer: Active button. makeAutoObservable: field \u2192 observable; getters \u2192 computed; functions \u2192 actions."
+course_illustration_alt: "Clicking Loadings writes ui.view, and the observing header derives the active appearance of both buttons from it."
+course_illustration_description: "Dashboard is selected on a fresh reload. At this stage, the table stays visible under either header selection."
 ---
 
 The original header and content must agree on one selected view. Put that choice in the existing MobX UI store so both observing components can read it, just as the mini board read one React state value.

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 328" role="img" aria-labelledby="title desc">
+  <title id="title">Testing the four-counter limit</title>
+  <desc id="desc">After repeated additions all four slots are full. Removing one counter leaves three occupied slots, so canAddMoreCounters changes from false to true.</desc>
+  <style>
+    text {font: 18px system-ui, sans-serif; fill: #eef6ff}
+    .flag {font: 16px ui-monospace, monospace; fill: #adbfce}
+    .count {font-weight: 650; font-size: 22px}
+    .slot {fill: #69dcf5}
+  </style>
+  <rect width="420" height="328" rx="16" fill="#142235"/>
+  <text x="24" y="40" class="count">At capacity</text>
+  <g class="slot">
+    <rect x="24" y="58" width="72" height="36" rx="7"/><rect x="113" y="58" width="72" height="36" rx="7"/>
+    <rect x="202" y="58" width="72" height="36" rx="7"/><rect x="291" y="58" width="72" height="36" rx="7"/>
+  </g>
+  <text x="24" y="125" class="flag">canAddMoreCounters = false</text>
+  <path d="M49 145v44m-7-7 7 7 7-7" fill="none" stroke="#ffbe65" stroke-width="3"/>
+  <text x="73" y="176">Remove one counter by ID</text>
+  <text x="24" y="224" class="count">Room for one more</text>
+  <g class="slot">
+    <rect x="24" y="241" width="72" height="36" rx="7"/><rect x="113" y="241" width="72" height="36" rx="7"/>
+    <rect x="202" y="241" width="72" height="36" rx="7"/>
+    <rect x="291" y="241" width="72" height="36" rx="7" fill="none" stroke="#ffbe65" stroke-width="2" stroke-dasharray="6 4"/>
+  </g>
+  <text x="24" y="310" class="flag">canAddMoreCounters = true</text>
+</svg>

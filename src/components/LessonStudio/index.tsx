@@ -1,9 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState, type ReactNode} from 'react';
 import Link from '@docusaurus/Link';
+import SearchBar from '@theme/SearchBar';
+import ColorModeToggle from '@theme/Navbar/ColorModeToggle';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
-import {course, coursePages, type Lesson} from '../../lib/course';
+import {course, coursePages, lastLessonKey, repository, type Lesson} from '../../lib/course';
 import {CodeWorkspace} from '../LessonExercise';
 import CourseIllustration from '../CourseIllustration';
 import {LessonStudioContext, type StudioPanel} from './context';
@@ -22,6 +24,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const {metadata, toc, frontMatter} = useDoc();
   const location = useLocation();
   const base = useBaseUrl('/');
+  const logo = useBaseUrl('/img/logo.svg');
   const [panel, setPanel] = useState<StudioPanel>('lesson');
   const [menuOpen, setMenuOpen] = useState(false);
   const [narrow, setNarrow] = useState(false);
@@ -30,7 +33,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
   const [readingWidth, setReadingWidth] = useState(38);
   const [dragging, setDragging] = useState(false);
   const [desktopView, setDesktopView] = useState<'split' | 'code' | 'preview'>('split');
-  const body = useRef<HTMLDivElement>(null);
+  const body = useRef<HTMLElement>(null);
   const resizePointer = useRef<{element: HTMLDivElement; id: number} | null>(null);
   const menu = useRef<HTMLDivElement>(null);
   const menuAnchor = useRef<HTMLDivElement>(null);
@@ -60,6 +63,11 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     if (pointer?.element.hasPointerCapture(pointer.id)) pointer.element.releasePointerCapture(pointer.id);
     setDragging(false);
   }, []);
+
+  useEffect(() => {
+    if (!currentPage) return;
+    try {window.localStorage.setItem(lastLessonKey, currentPage.id);} catch { /* Browsing can continue without history. */ }
+  }, [currentPage]);
 
   useEffect(() => {
     window.addEventListener('blur', endResize);
@@ -166,6 +174,10 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
     }}}>
     <div className={styles.studio} data-lesson-studio data-panel={panel} data-page-kind={lesson ? 'exercise' : 'introduction'}>
       <header className={styles.header}>
+        <Link to={base} className={styles.brand} aria-label="Frontend tutorial home">
+          <img src={logo} alt="" width="32" height="32" />
+          <span>Frontend tutorial</span>
+        </Link>
         <div ref={menuAnchor} className={styles.menuAnchor} onKeyDown={event => {
           if (menuOpen && event.key === 'Escape') {
             event.preventDefault();
@@ -179,7 +191,11 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
               event.currentTarget.focus({preventScroll: true});
               setMenuOpen(open => !open);
             }}>
-            <span aria-hidden="true">☰</span> Lessons
+            <span className={styles.menuText}>
+              <span className={styles.menuLabel}>Lessons{chapterTitle && ` · Chapter ${chapterIndex + 1}`}</span>
+              <strong>{currentPage?.title ?? chapterTitle ?? metadata.title}</strong>
+            </span>
+            <span className={styles.chevron} aria-hidden="true" />
           </button>
           <div ref={menu} id="course-menu" className={styles.courseMenu} hidden={!menuOpen}>
             <nav aria-label="Course lessons">
@@ -202,19 +218,11 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
             </nav>
           </div>
         </div>
-        <div className={styles.location}>
-          <Link to={currentPage ? `${base}${overviewPaths[chapterIndex]}` : base}>
-            {currentPage ? chapterTitle : 'Frontend tutorial'}
-          </Link>
-          <span className={styles.lessonName}>{currentPage?.title ?? chapterTitle ?? metadata.title}</span>
+        <div className={styles.utilities}>
+          <a className={styles.repo} href={repository}>GitHub</a>
+          <ColorModeToggle />
+          <SearchBar />
         </div>
-        <span className={styles.step}>{currentPage ? `Step ${step} / ${chapterPages.length}` : 'Introduction'}</span>
-        <nav className={styles.arrows} aria-label="Adjacent lessons">
-          {metadata.previous && <Link to={metadata.previous.permalink} title={metadata.previous.title}
-            aria-label={`Previous: ${metadata.previous.title}`}>←</Link>}
-          {metadata.next && <Link to={metadata.next.permalink} title={metadata.next.title}
-            aria-label={`Next: ${metadata.next.title}`}>→</Link>}
-        </nav>
       </header>
 
       <div className={styles.mobileTabs} role="tablist" aria-label="Lesson panels">
@@ -237,12 +245,14 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
         </button>)}
       </div>
 
-      <div ref={body} className={styles.body} style={{'--reading-width': `${readingWidth}%`} as React.CSSProperties}>
+      <main ref={body} className={styles.body} style={{'--reading-width': `${readingWidth}%`} as React.CSSProperties}>
         <section id="lesson-reading" className={styles.readingPane}
           role={narrow ? 'tabpanel' : 'region'} aria-label={narrow ? undefined : 'Lesson instructions'}
           aria-labelledby={narrow ? 'tab-lesson' : undefined}>
           <div className={styles.readingTools}>
-            <span>{lesson ? 'Read, then try it' : 'Explore the topic'}</span>
+            {currentPage ? <Link className={styles.position} to={`${base}${overviewPaths[chapterIndex]}`}
+              title={chapterTitle} aria-label={`Step ${step} of ${chapterPages.length}. Open chapter overview: ${chapterTitle}`}>Step {step} of {chapterPages.length}</Link>
+              : chapterIndex >= 0 && <span>Chapter {chapterIndex + 1} overview</span>}
             {toc.length > 0 && <label className={styles.contents}>
               <select aria-label="Jump to lesson section" value="" onChange={event => jumpToHeading(event.target.value)}>
                 <option value="" disabled>On this page</option>
@@ -250,6 +260,12 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
                   <option key={heading.id} value={heading.id}>{heading.value.replace(/<[^>]+>/g, '')}</option>)}
               </select>
             </label>}
+            <nav className={styles.arrows} aria-label="Adjacent lessons">
+              {metadata.previous && <Link to={metadata.previous.permalink} title={metadata.previous.title}
+                aria-label={`Previous: ${metadata.previous.title}`}>←</Link>}
+              {metadata.next && <Link to={metadata.next.permalink} title={metadata.next.title}
+                aria-label={`Next: ${metadata.next.title}`}>→</Link>}
+            </nav>
           </div>
           <div className={styles.reading} tabIndex={0} aria-label="Read the lesson">
             {children}
@@ -295,7 +311,7 @@ export default function LessonStudio({lesson, children}: {lesson?: Lesson; child
             </div>} /> : <CourseIllustration topic={topic} illustration={illustration} />}
         </section>
         {dragging && <div className={styles.dragShield} />}
-      </div>
+      </main>
     </div>
   </LessonStudioContext.Provider>;
 }

@@ -1,8 +1,12 @@
 # Frontend tutorial
 
+import ResumeLesson from '@site/src/components/LessonStudio/ResumeLesson';
+
 Learn how to build a React interface, give it state with MobX, and develop it with tests and data loading. We will explain each change, show a small example, and then give you a place to try it. The editor is part of the lesson: read the walkthrough before starting the exercise.
 
 **[Start with chapter 1: Understand the tool set](./ch-01-00-explain-the-tool-set.md).** You can begin in your browser without installing anything.
+
+<ResumeLesson />
 
 ## What this course builds
 

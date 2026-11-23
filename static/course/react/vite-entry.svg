@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 356" role="img" aria-labelledby="title desc">
+  <title id="title">How the Vite starter mounts App</title>
+  <desc id="desc">index.html supplies a root element and loads src/main.tsx. The entry module renders App into that root. Editing src/App.tsx changes the visible component.</desc>
+  <style>
+    text {font: 18px system-ui, sans-serif; fill: #eef6ff}
+    .label {font-size: 15px; font-weight: 650; fill: #adbfce}
+    .name {font-size: 23px; font-weight: 650}
+    .code {font: 18px ui-monospace, monospace; fill: #89e6f7}
+    .key {font-size: 23px; font-weight: 700; fill: #ffbe65}
+  </style>
+  <rect x="0" y="0" width="420" height="356" rx="16" fill="#142235"/>
+  <text x="24" y="40" class="name">index.html</text>
+  <text x="24" y="76" class="code">&lt;div id=&quot;root&quot;&gt;</text>
+  <text x="24" y="106" class="code">&lt;script src=&quot;/src/main.tsx&quot; …&gt;</text>
+  <path d="M41 121v28m-6-6 6 6 6-6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="24" y="161" width="372" height="79" rx="10" fill="#20364b"/>
+  <text x="42" y="188" class="label">src/main.tsx</text>
+  <text x="42" y="219" class="code">createRoot(…).render(&lt;App /&gt;)</text>
+  <path d="M41 247v27m-6-6 6 6 6-6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="306" class="name">src/App.tsx</text>
+  <text x="24" y="335" class="body">Save an edit to see it in the browser.</text>
+</svg>

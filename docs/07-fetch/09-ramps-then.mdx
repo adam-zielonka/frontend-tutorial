@@ -1,6 +1,9 @@
 ---
 title: "7.9. Load ramps with a promise chain"
 sidebar_position: 9
+course_illustration: "/course/fetch/09-ramps-then.svg"
+course_illustration_alt: "Two returns keep the ramp request chained"
+course_illustration_description: "getRamps returns the whole fetch chain for RAMPS.json. The first then callback checks response.ok and returns response.json(), so the second callback waits for parsed JSON. It checks the array and every ramp record, then maps ramp_id and description into Ramp instances. Failures reject the returned promise."
 ---
 
 Continue from [7.8](./08-customers-await.mdx). A promise chain can express the same request, status check, validation and model conversion as `async`/`await`.

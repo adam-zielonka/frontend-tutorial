@@ -8,7 +8,7 @@ Add a ramp dashboard to the original ShippingBoard Lite application while keepin
 
 ## Final result
 
-![Original ramp dashboard](./img/img-05-01-final-result.jpeg)
+![Original dashboard with loading cards grouped under ramps A, B and C. Each card shows a customer, a time window and pallet progress.](./img/img-05-01-final-result.jpeg)
 
 The finished dashboard shows assigned loadings, pallet progress and ramp status; table rows and dashboard cards open the same details dialog. The [public demo](https://adam-zielonka.github.io/shippingboard-lite/) illustrates the result but can change independently of the pinned lesson source.
 

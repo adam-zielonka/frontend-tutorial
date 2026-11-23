@@ -9,8 +9,8 @@ course_workspace: original-project
 course_chapter: "05"
 course_step: 9
 course_illustration: "/course/shippingboard/09-ramp-shells.svg"
-course_illustration_alt: "Pass the original ramp instances to styled cards"
-course_illustration_description: "store.ramps: 7 model instances \u2192 Content.tsx: map + stable ID key \u2192 RampBox.tsx: Existing Ramp.scss. Dashboard: A\u2013G shells. Loadings: the unchanged table branch."
+course_illustration_alt: "The dashboard draws seven striped shells A through G from the original ramp models. Ramp A is shown in detail with its placeholder body."
+course_illustration_description: "Content maps store.ramps using ramp.id as the React key. Each RampBox receives the model itself and uses the existing Ramp.scss."
 ---
 
 The dashboard placeholder can now become a board of real ramp models. Reuse the original Card markup and Sass before adding loading data, so layout changes remain separate from relationship logic.
