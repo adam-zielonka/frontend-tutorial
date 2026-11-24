@@ -36,7 +36,3 @@ See [course help](./course-help.mdx) to download your work or import it locally.
 This tutorial began as a way to share how our team at ZF builds applications with colleagues and students. Our applications support factory work on computers, tablets, and scanner devices. On the backend, we use SAP ERP and ABAP services; different frontend projects use Angular, React, or UI5.
 
 The examples let you practice our [React](https://react.dev/) and [MobX](https://mobx.js.org/README.html) workflow without access to a company system.
-
-## Development
-
-See [DEVELOPMENT.md](https://github.com/adam-zielonka/frontend-tutorial/blob/main/DEVELOPMENT.md) for the website's runtime, builds, checks, and checkpoint publishing.
