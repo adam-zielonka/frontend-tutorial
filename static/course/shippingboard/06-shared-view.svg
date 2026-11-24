@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="380" viewBox="0 0 480 380" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">One shared view</title>
+  <desc id="desc">Clicking Loadings writes ui.view, and the observing header derives the active appearance of both buttons from it. Dashboard is selected on a fresh reload. At this stage, the table stays visible under either header selection.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .button { font-size: 20px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0l8 4-8 4z" fill="#69dcf5"/>
+    </marker>
+  </defs>
+  <rect width="480" height="380" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">One shared view</text>
+  <rect x="28" y="74" width="424" height="162" rx="12" class="surface"/>
+  <rect x="28" y="74" width="424" height="85" rx="12" fill="#263e57"/>
+  <path d="M28 158h424" class="line"/>
+  <rect x="48" y="93" width="166" height="46" rx="7" fill="none" stroke="#69dcf5"/>
+  <rect x="227" y="93" width="143" height="46" rx="7" fill="#69dcf5"/>
+  <path d="M64 108h14v15H64zm0 7h14m-7-7v15" fill="none" stroke="#69dcf5" stroke-width="2"/>
+  <path d="m242 116 4 4 8-9" fill="none" stroke="#142235" stroke-width="2.5"/>
+  <text x="84" y="123" class="button">Dashboard</text>
+  <text x="262" y="123" class="button" fill="#142235">Loadings</text>
+  <path d="M48 185h70m-70 20h94m206-20h77m-63 20h63" class="line"/>
+  <text x="240" y="203" text-anchor="middle" class="muted">Table visible</text>
+  <path d="M300 140v14h128v132h-74" class="route" marker-end="url(#tip)"/>
+  <path d="M126 286H48v-36" class="route"/>
+  <path d="M48 250v-112" class="route" stroke-dasharray="3 6" marker-end="url(#tip)"/>
+  <rect x="126" y="261" width="226" height="51" rx="8" fill="#254359" stroke="#69dcf5"/>
+  <text x="239" y="294" text-anchor="middle" class="code">view = "loadings"</text>
+  <text x="86" y="346" text-anchor="middle" class="cyan">observer</text>
+  <text x="389" y="346" text-anchor="middle" class="amber">click action</text>
+</svg>

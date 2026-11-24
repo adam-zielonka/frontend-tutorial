@@ -1,0 +1,96 @@
+---
+title: "5.10. Build a loading card"
+slug: /05-shippingboard/10-loading-card
+sidebar_position: 10
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/09-ramp-shells
+pagination_next: 05-shippingboard/11-ramp-assignments
+course_workspace: original-project
+course_chapter: "05"
+course_step: 10
+course_illustration: "/course/shippingboard/10-loading-card.svg"
+course_illustration_alt: "The temporary card for 0007701 shows Militech, today’s 06:00–09:00 window, and a full bar for 2 of 2 pallets."
+course_illustration_description: "LoadingBox reads the model’s date, customer and pallet values. loadedRatio supplies 1 to the progress bar. This first fixture is temporarily rendered in every ramp."
+---
+
+Pick one loading and imagine what the person at the ramp needs to know: who the delivery is for, when it is due, and how many pallets are ready. Build a card from those values on the Loading model. For now you’ll use the same loading in every ramp so you can check the card on its own.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+Create `src/components/LoadingBox.tsx`:
+
+```tsx title="src/components/LoadingBox.tsx"
+import { Card, Elevation, ProgressBar } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { Loading } from "../store/Loading";
+
+export const LoadingBox = observer(({ loading }: { loading: Loading }) => {
+  const { customer } = loading;
+
+  return <Card className="Loading" elevation={Elevation.TWO} interactive>
+    <header>
+      <div>{loading.id}</div>
+    </header>
+    <main>
+      <div className="details">
+        {loading.start.date}
+        <div>
+          <span>{loading.start.time}</span>–{loading.end.time}
+        </div>
+      </div>
+      <div className="customer">
+        {customer && <>
+          <div className="name">{customer.name}</div>
+          <div className="city">{customer.country}, {customer.city}</div>
+          <div className="id">{customer.id.replace(/^0+/, "")}</div>
+        </>}
+      </div>
+    </main>
+    <footer>
+      <div><b>{loading.picked}</b> of <b>{loading.pallets}</b></div>
+      <ProgressBar animate={false} value={loading.loadedRatio}
+        intent={loading.isLoaded ? "success" : "primary"} />
+    </footer>
+  </Card>;
+});
+```
+
+Use the model's existing presentation getters rather than interpreting raw API fields in the component:
+
+| Card value | Existing model mapping |
+| --- | --- |
+| Loading ID | `loading.id`, originally `loading_id` in `fakeApi.ts`. |
+| Date and time window | `loading.start.date`, `start.time` and `end.time`, formatted by `DateTime`. |
+| Customer | `loading.customer`, resolved through the first delivery's `ship_to` relationship. Guard it because a loading can have no deliveries. |
+| Customer name, location and ID | `customer.name`, `country`, `city`, `id`; remove leading zeroes only in the displayed customer ID. |
+| Pallet counts | `picked` from `picked_hus`, and `pallets` from the API's total. The card reads picked **of** total. |
+| Progress | `loadedRatio`: `picked / pallets`, with `0` when the total is zero; `isLoaded` requires a positive total and exact equality. |
+
+Suppose 11 of 22 pallets are ready. The model’s `loadedRatio` returns `0.5`, which fills half of Blueprint’s [progress bar](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/progress-bar/progressBar.tsx). It expects a number from 0 to 1. Keep the bar still by turning off animation, and give it the success colour when the loading is complete. In the earlier mini board, a stripe showed a status category. Here the bar tells you how much work is done.
+
+For a short visual check before connecting the relationship, add these imports to `RampBox.tsx`:
+
+```tsx title="src/components/RampBox.tsx — temporary imports"
+import { store } from "../store/Store";
+import { LoadingBox } from "./LoadingBox";
+```
+
+Then replace its entire `<main>Loadings will appear here.</main>` with:
+
+```tsx title="src/components/RampBox.tsx — temporary single loading"
+<main>
+  <LoadingBox loading={store.loadings[0]} />
+</main>
+```
+
+The pinned data guarantees a first loading; this is a temporary component check, not the final assignment logic.
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Pick any ramp and look for **0007701**. The customer is Militech in Washington, D.C., US, with ID `771996`. The time window is 06:00–09:00 on the current local date. With `2 of 2` pallets picked, the bar should be full and show the success colour.
+
+Now look at a second ramp. It should show the very same card, styled by the `.Loading` rules inside `.Ramp`. The next step replaces that temporary copy with each ramp’s own loadings. You’ll connect the click handler after that.

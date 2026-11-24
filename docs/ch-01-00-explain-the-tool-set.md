@@ -1,57 +1,62 @@
-# 1. Explain the Tool Set
+---
+sidebar_position: 10
+---
 
-You should know some things about tools that are used during this training, but you should also be aware that this Tool Set can be valid in 2023, and probably will be working in future, there are some big possibilities that new tools arrive and change how we work. You should keep eye on [State of JavaScript](https://stateofjs.com/en-us/), to see which tools are on a top.
+# 1. Explain the tool set
 
-## [Node.js](https://nodejs.org/en/) - Engine for tools
+Open the first exercise and you’ll see three shipments. Someone looking at the list wants to know which one is urgent. You’ll give each shipment a priority, display it in the list, then work out how many pallets there are and how many shipments are ready.
 
-Let's start with node.js. From the project [website](https://nodejs.org/en/):
+You can do both exercises in your browser. Each one opens the file you need beside a live preview. If you prefer to work on your computer, the installation steps are further down this page.
 
-> Node.js® is an open-source, cross-platform JavaScript runtime environment.
+## How the tools fit together
 
-Most tools (that we will be use) to build web apps are created in JS, and Node.js is a runtime to run this tools. It isn't the best runtime, but it is the most popular. We have some alternatives like [deno](https://deno.land/) or [bun](https://bun.sh/), but the tools that we use, didn't migrate to them.
+Follow one change from the data to the screen. [TypeScript](https://www.typescriptlang.org/docs/handbook/intro.html) lets you declare the allowed priorities. Your editor can then suggest a value or flag a misspelling. [React](https://react.dev/learn) reads that value and displays it in a row. Later, you’ll use [MobX](https://mobx.js.org/README.html) to update the display when data changes. When data comes from an external service, you’ll also need to check it at runtime.
 
-How to start with node.js? You can just go to main page of project [nodejs.org](https://nodejs.org/en/) and download one of the version: LTS or Current. Current is the latest release with all new features and you should choose this version if you planning use them. LTS provide longer time for support and good for project that need to survive more than year.
+On your computer, [Node.js](https://nodejs.org/en/) runs development tools. The package manager downloads the libraries those tools and your app need. This course uses pnpm. It can [share downloaded packages](https://pnpm.io/motivation) between projects, and the project’s lockfile records which versions to install. npm and Yarn are other package managers.
 
-But you shouldn't install node form this website. When you start working of one project it is not a problem, but if you working new ones and support old ones, you will have trouble, because older projects won't be able to work on newer version of node.
+Once the packages are installed, [Vite](https://vite.dev/guide/) serves the app locally and updates the page as you edit. It can also build files for publication. In both cases the browser runs JavaScript. Most exercises use React 19.3.1. The UI5 exercises use React 18.3.1.
 
-There is solution: Node version management tool. I used [nodenv](https://github.com/nodenv/nodenv), it is light, work pretty fast, and what I need to do with all my project it is to add file `.node-version` with version number as a value. `nodenv install` and version for this project will be downloaded. But for newest project I use `pnpm` as package manager (I explain this later) that also provider functionality for node version management, in very simpler way, only needing to be added property [`use-node-version`](https://pnpm.io/npmrc#use-node-version) to `.npmrc` we don't need to do anything else. `pnpm` take care to download proper version in the background.
+For local exercises, use Node 24. Node’s [release schedule](https://nodejs.org/en/about/previous-releases) shows which releases receive long-term support. If another project needs a different version, a manager such as [nodenv](https://github.com/nodenv/nodenv) can select it from a `.node-version` file. pnpm also offers [`pnpm runtime`](https://pnpm.io/cli/runtime), the successor to its deprecated `pnpm env` command. For a wider view of the tools developers use, see [State of JavaScript](https://stateofjs.com/).
 
-Of course if you starting from scratch and you want generate some project, you can setup global version of node using `nodenv global 18.12.1` or [`pnpm env use --global 18.12.1`](https://pnpm.io/cli/env) that will be used in that cases.
+## Lessons
 
-## [PNPM](https://pnpm.io/) - Package manager
+1. [Describe a shipment with types](./01-tool-set/01-shipment-shape.mdx) — Add a required priority to the shipment model and display it.
+2. [Derive the manifest summary](./01-tool-set/02-derived-summary.mdx) — Calculate summary values from the typed records.
 
-The big advantage of JS development is [`npm`](https://www.npmjs.com/) registry, that contain very large amount of code packages, that you can easily use in your project. That's what package managers are for. The default one is [`npm`](https://www.npmjs.com/package/npm), it's stable and working, but have some problems with `node_modules` like for each project can exist the same set of libraries (and some of this problem are under development). But second amazing thing around JS world are alternatives like: [`yarn`](https://yarnpkg.com/) and [`pnpm`](https://pnpm.io/).
+For drafts and local setup, see [course help](./course-help.mdx).
 
-For newest project I use [`pnpm`](https://pnpm.io/), because solve problems of `node_modules` (you can read more in [pnpm motivation](https://pnpm.io/motivation)), but also add some features that help during development, like: [managing Node.js versions](https://pnpm.io/npmrc#use-node-version), [patching dependencies](https://pnpm.io/cli/patch).
+## Official references
 
+[Node.js](https://nodejs.org/en/download), [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/intro.html), [React learning](https://react.dev/learn), [Vite guide](https://vite.dev/guide/).
 
-:::note
+## A first local installation check
 
-If you decided to stay on Windows with environment, you should remember to enable in `Settings` => `Privacy & security` => `For developers` => `Developer mode`. `pnpm` relay on symlinks, that are disable in normal mode for not admin terminal. 
+You can skip installation while using the embedded lessons. When you want a local copy, install Node.js 24 using the [Node download instructions](https://nodejs.org/en/download) or your chosen version manager, and Git using the [Git installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). Open a new terminal and run:
 
-:::
+```sh
+node --version
+git --version
+```
 
-## [Vite](https://vitejs.dev/) - Frontend Tool
+The first command should report `v24.x.x`. If a command is not found, finish its installation and reopen the terminal; editing React code cannot fix a missing tool. The lesson's clone instructions use pnpm and the supplied lockfile. Install pnpm through the npm installation supplied with a standard Node installer:
 
-And the last kind of tools that you need to know is frontend tool such as [Vite](https://vitejs.dev/). This tool allow you to serve your code during development, and bundle js, css and other assets together for production. You can learn more from video [Vite in 100 Seconds](https://www.youtube.com/watch?v=KCrXgy8qtjM)
+```sh
+npm install -g pnpm@12.23.0
+pnpm --version
+```
 
-## [TypeScript](https://www.typescriptlang.org/) - Language
+Inside a checkpoint, pnpm uses the version pinned in that project's `package.json`.
 
-> `TypeScript` is `JavaScript` with syntax for types.
+If you installed pnpm standalone, [its runtime manager](https://pnpm.io/cli/runtime) can supply Node. For a separate project, `pnpm runtime set node 24` records a project runtime; follow its printed shim instructions if you want the bare `node` command to select it. pnpm-managed Node does not include npm; the course's pnpm commands work without it. Avoid mixing version managers without checking which `node` your terminal actually selects. The exported README also offers npm commands for learners who choose that package manager. See [pnpm installation](https://pnpm.io/installation).
 
-When I started working at my team we the first fronted projects was done in `JavaScript` and at first we didn't see problems that show up in next years, that `TypeScript` show you this errors during development. 
+## Optional: why pnpm supports dependency patches
 
-- Fancy code - Strange coding that isn't self explaining. Using `TS` you can describe all fancy code that you can write in `JS`, but when is difficult to type something, the red flag in your mind should appear and code should be rewritten.
-- What I have in that place - something you need display new information, and we don't know if that info already is in that place and debugging is needed to add small info.
-- Typos - There were some missing info because the field in an class have different name.
-- Auto complete in `JS` more like guessing - in `TS` is real.
+Sometimes an installed library needs a small correction before its author publishes a release. Editing its installed files directly is temporary: a fresh install can lose the change. pnpm can record the difference and apply it on later installs. The course dependencies need no patches.
 
-But all this features have a cost: you need to learn how to type, for beginning development in `TS` will be much slower (in my case I typed to much).
+For a separate project with an installed dependency, the workflow is:
 
-## [React](https://react.dev/) - for building user interfaces
+1. Run `pnpm patch package-name@installed-version`, replacing those placeholders with the actual package and version.
+2. Edit the copy in the directory printed by the command.
+3. Run `pnpm patch-commit` with that directory path. Review the resulting patch, manifest and lockfile changes, and commit them together after testing.
 
-> The library for web and native user interfaces
-
-## [MobX](https://mobx.js.org/) - for state management
-
-> Simple, scalable state management.
+The patch is a maintained exception, not a substitute for upgrading to an upstream fix. Read [pnpm patch](https://pnpm.io/cli/patch) and [patch-commit](https://pnpm.io/cli/patch-commit) before using this optional workflow.

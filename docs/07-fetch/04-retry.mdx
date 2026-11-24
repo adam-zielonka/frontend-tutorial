@@ -1,0 +1,33 @@
+---
+title: "7.5. Retry the same request"
+slug: /07-fetch/04-retry
+sidebar_position: 5
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Retry should start a fresh request for the same URL. Clearing the error alone would not do that, and setting a URL to its current value would not change an effect dependency. Use a separate request counter as a trigger.
+
+## Edit the retry trigger
+
+In `/App.tsx`, add this state declaration beside `broken`:
+
+```ts title="/App.tsx"
+const [request, setRequest] = useState(0);
+```
+
+Change the effect's final dependency array from `[url]` to `[url, request]`. Replace the disabled button and its TODO with:
+
+```tsx title="/App.tsx"
+<button onClick={() => setRequest(current => current + 1)}>Retry request</button>
+```
+
+Incrementing the trigger reruns the same effect: cleanup cancels the preceding request, then setup clears the old error, shows loading and finishes with data or a new error. The functional updater handles queued clicks. Successful results replace the ramps rather than append duplicates.
+
+A retry of a missing path still fails; it does not repair the resource. Network tools can reveal repeated requests and the brief loading state. These lessons use local fixtures; production API routing, authentication and cross-origin policy require their own configuration. See [effect dependencies](https://react.dev/reference/react/useEffect#specifying-reactive-dependencies) and [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+<LessonExercise id="07-05-retry" />
+
+## Check your work
+
+With the working fixture selected, click Retry twice: Network tools show fresh requests while the results remain exactly three ramps. Continue with the [original ShippingBoard API project](./06-original-project.mdx) to apply the same boundaries to model construction.

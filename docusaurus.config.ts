@@ -8,7 +8,7 @@ const config: Config = {
   baseUrl: "/frontend-tutorial",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/logo.png",
+  favicon: "img/favicon.svg",
 
   organizationName: "adam-zielonka",
   projectName: "frontend-tutorial",
@@ -18,12 +18,16 @@ const config: Config = {
     locales: ["en"],
   },
 
+  plugins: [require.resolve("./scripts/browser-test-assets.cjs")],
+
   presets: [
     [
       'classic',
       {
         docs: {
           path: "./docs",
+          sidebarPath: require.resolve("./sidebars.ts"),
+          numberPrefixParser: false,
           routeBasePath: "/",
           editUrl:
             "https://github.com/adam-zielonka/frontend-tutorial/blob/main/",
@@ -48,7 +52,7 @@ const config: Config = {
       title: "Frontend tutorial",
       logo: {
         alt: "Frontend tutorial logo",
-        src: "img/logo.png",
+        src: "img/logo.svg",
       },
       items: [
         {
@@ -67,8 +71,17 @@ const config: Config = {
     //   isCloseable: false,
     // },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: {...prismThemes.github, styles: [...prismThemes.github.styles,
+        {types: ['comment', 'prolog', 'doctype', 'cdata'], style: {color: '#596575'}},
+        {types: ['boolean', 'number', 'constant', 'property', 'symbol', 'variable', 'regex', 'inserted'], style: {color: '#086b68'}},
+        {types: ['atrule', 'attr-name'], style: {color: '#005f87'}},
+        {types: ['function', 'deleted', 'tag'], style: {color: '#b42346'}},
+        {types: ['string', 'attr-value'], style: {color: '#b31159'}},
+        {types: ['namespace'], style: {opacity: 1}},
+      ]},
+      darkTheme: {...prismThemes.dracula, styles: [...prismThemes.dracula.styles,
+        {types: ['comment'], style: {color: '#a7b4d2'}},
+      ]},
     },
   } satisfies Preset.ThemeConfig,
 };

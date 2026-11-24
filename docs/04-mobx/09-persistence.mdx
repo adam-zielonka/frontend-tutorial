@@ -1,0 +1,48 @@
+---
+title: "4.11. Restore a storage snapshot as fallback"
+slug: /04-mobx/09-persistence
+sidebar_position: 11
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A URL expresses the state someone chose to open. Storage is a fallback for returning to the app without that link. A valid URL wins, including `?value=` for zero counters; an absent or invalid URL permits a storage read.
+
+This starter changes the app's effect to `useEffect(() => connectPersistence(store), [store])`. The new helper already restores and synchronizes the URL. Add only storage restoration here; writing comes next so it cannot erase a saved snapshot before it is read.
+
+## Edit the storage fallback
+
+In `/Store.ts`, inside `connectPersistence`, replace the restoration TODOs and `void restoredFromUrl` with this block, **before** `const stopUrl = syncUrl(store)`:
+
+```ts title="/Store.ts"
+if (!restoredFromUrl) {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw !== null && raw.length <= 1024) {
+      const values: unknown = JSON.parse(raw);
+      if (Array.isArray(values) && values.length <= store.limit &&
+          values.every(value => typeof value === 'number' && Number.isFinite(value))) {
+        store.hydrate(values.join(';'));
+      }
+    }
+  } catch {
+    // Invalid JSON or blocked storage must not prevent using the app.
+  }
+}
+```
+
+`STORAGE_KEY` is already `mobx-counter-values-v1`. Parse into `unknown`: JSON may contain strings, objects or non-finite numeric results such as `[1e309]`. Accept only at most four finite numbers; `[]` is valid. Validated hydration recreates models without storing their IDs. Missing, oversized, malformed or inaccessible storage leaves the initial model usable.
+
+<LessonExercise id="04-11-persistence" />
+
+## Check your work
+
+In a local export, set this value in the browser console, remove only the URL's `value` parameter, then reload:
+
+```js title="Browser console"
+localStorage.setItem('mobx-counter-values-v1', '[5,-2]');
+```
+
+Expect counters 5 and −2 from storage. Reloading with `value` still present tests URL priority instead. The embedded frame may isolate storage; app snapshots are separate from your saved editor draft. Next, save future changes.
+
+[localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) · [Course help](../course-help)

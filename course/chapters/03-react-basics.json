@@ -1,0 +1,92 @@
+[
+  {
+    "id": "03-01-component",
+    "title": "Render the counter component",
+    "doc": "03-react-basics/01-component",
+    "objective": "Build a small semantic component before adding behavior.",
+    "tasks": [
+      "Replace the placeholder paragraph with a short instruction about counting pallets.",
+      "Add a section labelled Pallet counter and render count inside an output element.",
+      "Give the output aria-live=\"polite\"; confirm the preview shows Pallets: 0."
+    ],
+    "hints": [
+      "Use className for CSS classes and braces to render a JavaScript value.",
+      "Keep the existing default App export and stylesheet import."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import './styles.css';\n\nexport default function App() {\n  const count = 0;\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Build the pallet counter here. Starting count: {count}.</p>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import './styles.css';\n\nexport default function App() {\n  const count = 0;\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Count pallets as they arrive. The count must never be negative.</p>\n    <section aria-label=\"Pallet counter\">\n      <p>Pallets: <output aria-live=\"polite\">{count}</output></p>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {},
+    "chapter": "03",
+    "chapterTitle": "React basics",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  },
+  {
+    "id": "03-02-state",
+    "title": "Remember the pallet count",
+    "doc": "03-react-basics/02-state",
+    "objective": "Use local React state to update the rendered count.",
+    "tasks": [
+      "Import useState and replace the fixed count with useState(0).",
+      "Add an Add pallet button whose click handler increments with a functional state updater.",
+      "Click three times and confirm the displayed count becomes 3 without reloading."
+    ],
+    "hints": [
+      "useState returns the current value and its setter.",
+      "Pass a function to onClick; call the setter inside it rather than during render."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import './styles.css';\n\nexport default function App() {\n  const count = 0;\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Count pallets as they arrive. The count must never be negative.</p>\n    <section aria-label=\"Pallet counter\">\n      <p>Pallets: <output aria-live=\"polite\">{count}</output></p>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { useState } from 'react';\nimport './styles.css';\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Count pallets as they arrive. The count must never be negative.</p>\n    <section aria-label=\"Pallet counter\">\n      <p>Pallets: <output aria-live=\"polite\">{count}</output></p>\n      <div className=\"controls\">\n        <button onClick={() => setCount(current => current + 1)}>Add pallet</button>\n      </div>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {},
+    "chapter": "03",
+    "chapterTitle": "React basics",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  },
+  {
+    "id": "03-03-bounded-events",
+    "title": "Bound subtraction and reset",
+    "doc": "03-react-basics/03-bounded-events",
+    "objective": "Keep a nonnegative counter through every available action.",
+    "tasks": [
+      "Add Remove pallet with a functional updater clamped to zero.",
+      "Disable Remove pallet at zero and add Reset that sets count to zero.",
+      "Check Add three times → Remove → Reset; repeat Remove at zero and verify the count stays zero."
+    ],
+    "hints": [
+      "Math.max(0, current - 1) protects the update itself.",
+      "Reset sets the one source of truth; the output and disabled state derive from it."
+    ],
+    "activeFile": "/App.tsx",
+    "files": {
+      "/App.tsx": "import { useState } from 'react';\nimport './styles.css';\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Count pallets as they arrive. The count must never be negative.</p>\n    <section aria-label=\"Pallet counter\">\n      <p>Pallets: <output aria-live=\"polite\">{count}</output></p>\n      <div className=\"controls\">\n        <button onClick={() => setCount(current => current + 1)}>Add pallet</button>\n      </div>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "solution": {
+      "/App.tsx": "import { useState } from 'react';\nimport './styles.css';\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return <main>\n    <h1>React pallet counter</h1>\n    <p>Count pallets as they arrive. The count must never be negative.</p>\n    <section aria-label=\"Pallet counter\">\n      <p>Pallets: <output aria-live=\"polite\">{count}</output></p>\n      <div className=\"controls\">\n        <button onClick={() => setCount(current => current + 1)}>Add pallet</button>\n        <button disabled={count === 0} onClick={() => setCount(current => Math.max(0, current - 1))}>Remove pallet</button>\n        <button onClick={() => setCount(0)}>Reset</button>\n      </div>\n    </section>\n  </main>;\n}\n",
+      "/styles.css": ":root { font-family: system-ui, sans-serif; color: #172c45; background: #f3f6fa; }\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }\nh1 { font-size: 1.65rem; }\nh2 { font-size: 1.15rem; }\nsection, article { background: white; border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1rem; margin-block: 1rem; }\nbutton, input, select { font: inherit; padding: .5rem .75rem; }\nbutton { cursor: pointer; border: 1px solid #54708c; border-radius: .3rem; background: #edf4ff; color: #172c45; }\nbutton:disabled { cursor: default; opacity: .55; }\n:focus-visible { outline: 3px solid #0064d9; outline-offset: 3px; }\n.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }\noutput { font-size: 1.4rem; font-weight: 700; }\nli { margin-block: .5rem; }\nlabel { display: inline-flex; align-items: center; gap: .5rem; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { text-align: left; border-bottom: 1px solid #cbd5e1; padding: .6rem .3rem; }\ncode { overflow-wrap: anywhere; }\n[role=\"alert\"] { color: #a31515; }\n"
+    },
+    "dependencies": {},
+    "chapter": "03",
+    "chapterTitle": "React basics",
+    "focusFiles": [
+      "/App.tsx"
+    ]
+  }
+]

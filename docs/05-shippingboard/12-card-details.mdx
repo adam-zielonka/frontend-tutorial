@@ -1,0 +1,49 @@
+---
+title: "5.12. Open shared loading details"
+slug: /05-shippingboard/12-card-details
+sidebar_position: 12
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/11-ramp-assignments
+pagination_next: 05-shippingboard/13-ramp-status
+course_workspace: original-project
+course_chapter: "05"
+course_step: 12
+course_illustration: "/course/shippingboard/12-card-details.svg"
+course_illustration_alt: "The dashboard card and table row for 0007703 open the same Details dialog. Moving it from C to A changes both presentations."
+course_illustration_description: "Both click handlers pass the same Loading instance to openLoadingDialog. The selection also writes loading=0007703 to the URL."
+---
+
+import {AssignedBays} from '@site/src/components/LoadingBays';
+
+Click a row in the loading table and its details dialog opens. Someone looking at the dashboard should be able to open that same dialog by clicking a card. You’ll connect the card to the action the table already uses, so changing the ramp in one view also updates the other.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+In this example the truck tracks only `0007703`. Assign it to A and compare the dashboard cards with its table row.
+
+<AssignedBays />
+
+## Make the change
+
+In `src/components/LoadingBox.tsx`, add this import:
+
+```tsx title="src/components/LoadingBox.tsx — store import"
+import { store } from "../store/Store";
+```
+
+Replace only its opening `return <Card ...>` line with these lines; keep the header, main, footer and closing tags from lesson 5.10:
+
+```tsx title="src/components/LoadingBox.tsx — click handler"
+return <Card className="Loading" elevation={Elevation.TWO} interactive
+  onClick={() => store.ui.openLoadingDialog(loading)}>
+```
+
+The two props do different jobs. `interactive` gives the card Blueprint’s hover and pressed styles. `onClick` passes the loading itself to the action that table rows already use. Both entry points now share one selected loading and one dialog.
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+1. On ramp C, open card **0007703**. Its details should appear, and the address should include `loading=0007703`.
+2. In the dialog, choose **A** and close it. Look for the card under A, then switch to **Loadings**. The row for `0007703` should show A too.
+3. Reload and find the same loading. It is back on C because this app keeps assignment changes in memory.

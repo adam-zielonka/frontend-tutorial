@@ -1,0 +1,68 @@
+---
+title: "5.9. Render the original ramp shells"
+slug: /05-shippingboard/09-ramp-shells
+sidebar_position: 9
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/08-view-url
+pagination_next: 05-shippingboard/10-loading-card
+course_workspace: original-project
+course_chapter: "05"
+course_step: 9
+course_illustration: "/course/shippingboard/09-ramp-shells.svg"
+course_illustration_alt: "The dashboard draws seven striped shells A through G from the original ramp models. Ramp A is shown in detail with its placeholder body."
+course_illustration_description: "Content maps store.ramps using ramp.id as the React key. Each RampBox receives the model itself and uses the existing Ramp.scss."
+---
+
+The Dashboard button now opens a page with a placeholder. Replace it with one card for each ramp in the store. Leave the cards empty for this step so you can check the seven ramp labels and their styling before you add any loadings.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+Create `src/components/RampBox.tsx` with this complete intermediate component:
+
+```tsx title="src/components/RampBox.tsx — ramp shell"
+import { Card, Elevation } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { Ramp } from "../store/Ramp";
+import "./Ramp.scss";
+
+export const RampBox = observer(({ ramp }: { ramp: Ramp }) => {
+  return <Card className="Ramp" elevation={Elevation.ONE}>
+    <header>{ramp.description}</header>
+    <main>Loadings will appear here.</main>
+  </Card>;
+});
+```
+
+Import the **existing** `Ramp.scss`, not a new stylesheet. It styles both `.Ramp` and its nested `.Loading` cards. The Blueprint Card supplies its own `.bp4-card` class; our `className="Ramp"` activates the original rules alongside it. The checkpoint also already imports Blueprint's base stylesheet in `src/main.scss`. Keep all those styles unchanged. The [Blueprint 4 Card source](https://github.com/palantir/blueprint/blob/%40blueprintjs%2Fcore%404.20.2/packages/core/src/components/card/card.tsx) documents the `elevation` and `interactive` props used here and below.
+
+Replace `src/components/Content.tsx` with the complete version that passes actual ramp models:
+
+```tsx title="src/components/Content.tsx — ramp mapping"
+import { observer } from "mobx-react-lite";
+import { store } from "../store/Store";
+import { LoadingsTable } from "./LoadingsTable";
+import { RampBox } from "./RampBox";
+import "./Content.scss";
+
+export const Content = observer(() => {
+  const { ui, ramps } = store;
+
+  if (ui.isLoadingsOpen) {
+    return <LoadingsTable />;
+  }
+
+  return <div className="Content">
+    {ramps.map(ramp => <RampBox key={ramp.id} ramp={ramp} />)}
+  </div>;
+});
+```
+
+The stable model ID is the React key; the visible label is `description`. Do not replace `store.ramps` with copies of the mini fixture. Each component receives the same model instance used by the loading assignments.
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Dashboard shows seven styled ramp shells labelled A through G, with the existing striped background. Loadings still shows all eleven rows. If the cards are unstyled, check the `Ramp.scss` import and confirm Blueprint 4 is installed before changing CSS.

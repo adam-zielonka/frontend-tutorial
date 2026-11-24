@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="446" viewBox="0 0 480 446" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">From link to dashboard</title>
+  <desc id="desc">A URL timeline starts with the table and dialog open. Closing the dialog removes loading, then selecting Dashboard removes view. UI.init restores the view and looks up 0007703 before registering the reactions. Later pushState calls retain keep=yes and #dock.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .code { font-size: 19px; }
+  </style>
+  <rect width="480" height="446" rx="16" fill="#142235"/>
+  <text x="28" y="46" class="title">From link to dashboard</text>
+  <path d="M43 94v259" class="route"/>
+  <circle cx="43" cy="94" r="8" fill="#ffbe65"/>
+  <circle cx="43" cy="237" r="7" fill="#69dcf5"/>
+  <circle cx="43" cy="353" r="7" fill="#69dcf5"/>
+  <text x="67" y="101" class="label">Load the link</text>
+  <rect x="67" y="113" width="385" height="69" rx="8" class="surface"/>
+  <text x="81" y="141" class="code cyan">/?view=loadings&amp;loading=0007703</text>
+  <text x="81" y="167" class="code amber">&amp;keep=yes#dock</text>
+  <text x="67" y="208" class="muted">Table + dialog for 0007703</text>
+  <text x="67" y="244" class="label">Close details</text>
+  <rect x="67" y="256" width="385" height="40" rx="8" class="surface"/>
+  <text x="81" y="283" class="code"><tspan class="cyan">/?view=loadings</tspan><tspan class="amber">&amp;keep=yes#dock</tspan></text>
+  <text x="67" y="322" class="muted">Table only</text>
+  <text x="67" y="360" class="label">Select Dashboard</text>
+  <rect x="67" y="372" width="385" height="40" rx="8" class="surface"/>
+  <text x="81" y="399" class="code">/?<tspan class="amber">keep=yes#dock</tspan></text>
+</svg>

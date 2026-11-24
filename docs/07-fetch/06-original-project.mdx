@@ -1,0 +1,28 @@
+---
+title: "7.6. Open the original ShippingBoard project"
+sidebar_position: 6
+course_illustration: "/course/fetch/06-original-project.svg"
+course_illustration_alt: "Start from the pinned ShippingBoard checkpoint"
+course_illustration_description: "Clone create-fetch into shippingboard-fetch, detach at bdd5494f80b7, and create my-fetch-work there. Install from the historical lockfile with pnpm 7, then run pnpm dev and verify the original board opens."
+---
+
+The mini lessons use local data so you can focus on how requests work. This supplemental guided project applies Fetch to the original **ShippingBoard**, where customers and ramps must exist before loading records can refer to their models. Work in a separate copy; these files and constructors differ from the mini editor.
+
+[Archived source](https://github.com/adam-zielonka/shippingboard-lite/tree/bdd5494f80b7b78080e5d5dc479405a614458579) · [Open that checkpoint in StackBlitz](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/bdd5494f80b7b78080e5d5dc479405a614458579).
+
+## Open the archived project
+
+```sh title="Terminal"
+git clone --branch create-fetch https://github.com/adam-zielonka/shippingboard-lite.git shippingboard-fetch
+cd shippingboard-fetch
+git switch --detach bdd5494f80b7b78080e5d5dc479405a614458579
+git switch -c my-fetch-work
+pnpm dlx pnpm@7.33.7 install --frozen-lockfile
+pnpm dev
+```
+
+This checkpoint uses older React, Blueprint and Vite versions. The one-off pnpm 7 command reads its historical lockfile and leaves your regular pnpm installation in place. Current lesson exports use pnpm 12. Start the archived app with `pnpm dev` or `npm run dev`.
+
+## Check your work
+
+Before editing, confirm that the unchanged board loads in your browser. Next, [describe the response contract](./07-response-contract.mdx).

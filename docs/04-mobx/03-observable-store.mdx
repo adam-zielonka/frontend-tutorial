@@ -1,0 +1,44 @@
+---
+title: "4.3. Create an observable counter store"
+slug: /04-mobx/03-observable-store
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A model gives the value and its operations one home that other components and tests can use. A class is a blueprint: `new CounterStore()` creates an instance, its constructor prepares it, and `this.value` belongs to that instance.
+
+This starter adds `/Store.ts`. `App` retains one model with `useState(() => new CounterStore())`. For this step, `Counter` copies the model's value into React state after each action. This temporary bridge keeps the buttons usable while you implement the model; the next step replaces it with a subscription.
+
+## Edit the model
+
+In `/Store.ts`, complete the constructor:
+
+```ts title="/Store.ts"
+constructor() {
+  makeAutoObservable(this, {}, { autoBind: true });
+}
+```
+
+MobX infers observable fields and actions from the class. Observable state can be tracked; actions change it. The empty second argument supplies no overrides. `autoBind` preserves the instance's `this` when a method such as `counter.reset` is passed directly as a callback.
+
+Replace `add` and `reset` with:
+
+```ts title="/Store.ts"
+add(delta: number) {
+  const next = this.value + delta;
+  if (Number.isFinite(delta) && Number.isFinite(next)) this.value = next;
+}
+
+reset() {
+  this.value = 0;
+}
+```
+
+`delta` is a change, so add it to the previous value. Check both the input and result: even finite operands can overflow. Invalid arithmetic leaves the old value intact. These operations work independently of React; [makeAutoObservable](https://mobx.js.org/observable-state.html) does not draw the interface. See also [actions and binding](https://mobx.js.org/actions.html).
+
+<LessonExercise id="04-03-observable-store" />
+
+## Check your work
+
+Click −100 → +1 → Reset: expect −100 → −99 → 0 through the supplied bridge. If an older model instance survives a hot update, use **Refresh preview** to recreate it; your editor draft remains saved. Next, let React observe the model directly.

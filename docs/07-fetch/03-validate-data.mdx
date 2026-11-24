@@ -1,0 +1,34 @@
+---
+title: "7.3. Validate the JSON structure"
+slug: /07-fetch/03-validate-data
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A successful HTTP response can contain malformed JSON; parsing already rejects that. Valid JSON can also describe the wrong thing. A TypeScript assertion cannot check what a server actually sent, so inspect the parsed value before returning ramps.
+
+## Edit the data guard
+
+In `/api.ts`, retain the request and HTTP status guard. Replace `return await response.json() as Ramp[]` with:
+
+```ts title="/api.ts"
+const data: unknown = await response.json();
+if (!Array.isArray(data) || !data.every(item =>
+  typeof item === 'object' && item !== null &&
+  typeof item.id === 'string' && typeof item.name === 'string'
+)) throw new Error('Invalid ramp data');
+return data as Ramp[];
+```
+
+`unknown` requires evidence before using the value. First require an array; then check every entry is a non-null object with string `id` and `name` fields. The null guard matters because `typeof null` is `'object'`. An empty array is valid and uses the existing empty-state UI. Only the checked array is asserted to `Ramp[]`.
+
+The existing catch handler displays a shape failure just as it displays HTTP or parse failures, but each originates at a different boundary. See [TypeScript narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+
+<LessonExercise id="07-03-validate-data" />
+
+## Check your work
+
+Temporarily replace the JSON-read line in `/api.ts` with `const data: unknown = [{ id: 'R1', name: 42 }];`. Expect “Invalid ramp data”, then restore the original read. This checks the guard without editing the read-only fixture. Next, cancel obsolete requests.
+
+[Fetch and JSON](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)

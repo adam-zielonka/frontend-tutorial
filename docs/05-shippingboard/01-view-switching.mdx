@@ -1,0 +1,34 @@
+---
+title: "5.1. Switch between board views"
+slug: /05-shippingboard/01-view-switching
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The same loading records can be shown as a table or grouped by ramp. A single `view` value chooses the presentation without replacing the data. This mini board uses three fixed records in `/data.ts` and React `useState`; the original MobX application begins in [5.5](./05-original-workspace.mdx).
+
+## Connect the buttons
+
+In `/App.tsx`, the two navigation buttons have empty handlers. Replace them with the matching `setView` calls, keeping the supplied icons and `aria-pressed` attributes:
+
+```tsx title="/App.tsx"
+<button aria-pressed={view === 'loadings'} onClick={() => setView('loadings')}>
+  <span className="view-icon" aria-hidden="true">▦</span>Loadings
+</button>
+<button aria-pressed={view === 'ramps'} onClick={() => setView('ramps')}>
+  <span className="view-icon" aria-hidden="true">◉</span>Ramps
+</button>
+```
+
+`setView` changes React state. The existing `view === 'loadings' ? ... : ...` expression renders the chosen section, while `aria-pressed` reads the same choice. Pass a function as the handler so the change happens on a click. The supplied CSS styles the header, table and ramp shells; assignments are still a scaffold.
+
+<LessonExercise id="05-01-view-switching" />
+
+## Check your work
+
+Select Ramps, then Loadings: the pressed button follows your selection and the table returns with its three original rows. If it does not, compare the handler strings with the `View` type in `/data.ts`. Next, make the status selector affect those rows.
+
+## Sources
+
+[React conditional rendering](https://react.dev/learn/conditional-rendering), [React state](https://react.dev/reference/react/useState).

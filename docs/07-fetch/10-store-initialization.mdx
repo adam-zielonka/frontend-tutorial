@@ -1,0 +1,47 @@
+---
+title: "7.10. Initialize dependent models in order"
+sidebar_position: 10
+course_illustration: "/course/fetch/10-store-initialization.svg"
+course_illustration_alt: "Assign both collections before building loadings"
+course_illustration_description: "Store.init awaits getCustomers and then getRamps. In runInAction it assigns both arrays, calls getLoadings to resolve references, calls ui.init, and sets status to ready. On failure, a separate action sets loadError and status to error."
+---
+
+Continue from [7.9](./09-ramps-then.mdx). Loading records refer to customers and ramps. Wait for those collections and assign them before constructing the dependent models.
+
+## Edit store initialization
+
+In `src/store/Store.ts`, add `runInAction` to the existing MobX import. Inside `Store`, add these fields alongside `customers`, `ramps`, and `loadings`:
+
+```ts title="src/store/Store.ts"
+status: 'loading' | 'ready' | 'error' = 'loading';
+loadError = '';
+```
+
+Replace the existing `init` field with:
+
+```ts title="src/store/Store.ts"
+init = async () => {
+  try {
+    const customers = await api.getCustomers();
+    const ramps = await api.getRamps();
+    runInAction(() => {
+      this.customers = customers;
+      this.ramps = ramps;
+      this.loadings = api.getLoadings();
+      this.ui.init();
+      this.status = 'ready';
+    });
+  } catch (error) {
+    runInAction(() => {
+      this.loadError = error instanceof Error ? error.message : 'Loading failed';
+      this.status = 'error';
+    });
+  }
+};
+```
+
+Keep the existing `export const store = new Store();` and `store.init()` below the class. `getLoadings()` uses the populated model collections to resolve references, so it must run after assigning both arrays. A missing `await` would assign promises where arrays are expected. Code after an `await` is outside the original synchronous MobX action; [`runInAction`](https://mobx.js.org/actions.html#asynchronous-actions) groups those observable assignments correctly.
+
+## Check your work
+
+Run `pnpm build` to check awaited arrays and the MobX import. Next, [make waiting and errors visible](./11-loading-and-errors.mdx) before exercising the full board.

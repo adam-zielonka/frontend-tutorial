@@ -1,0 +1,40 @@
+---
+title: "4.12. Save snapshots and clean up both effects"
+slug: /04-mobx/12-storage-autorun
+sidebar_position: 12
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Restoration is complete. Now save plain numeric snapshots when values change. `autorun` combines tracked reads and a side effect in one function, whereas `reaction` separates them. It runs immediately, which is why all restoration must remain above both writers.
+
+## Edit the writer and cleanup
+
+In `/Store.ts`, keep `const stopUrl = syncUrl(store)` after restoration. Replace `return stopUrl` with:
+
+```ts title="/Store.ts"
+const stopStorage = autorun(() => {
+  const snapshot = JSON.stringify(store.counters.map(counter => counter.value));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, snapshot);
+  } catch {
+    // Storage may be blocked or full; counters continue to work in memory.
+  }
+});
+return () => {
+  stopUrl();
+  stopStorage();
+};
+```
+
+`autorun` is already imported. Reading each `counter.value` inside it tracks both collection and value changes. JSON stores a string such as `[5,-2]`, not live models. Catch write failures so an unavailable or full store cannot break in-memory behavior.
+
+The app's effect owns both subscriptions. Its returned cleanup stops both, on unmount and before another effect setup. See [autorun and disposal](https://mobx.js.org/reactions.html) and [React effect cleanup](https://react.dev/reference/react/useEffect).
+
+<LessonExercise id="04-12-storage-autorun" />
+
+## Check your work
+
+In a local export, change a counter, remove only `value` from the address and reload: the saved values return. This tests the writer and storage fallback together. Continue with [editing a value directly](./13-edit-value.mdx), then [inspecting the model](./14-inspect-model.mdx).
+
+[localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)

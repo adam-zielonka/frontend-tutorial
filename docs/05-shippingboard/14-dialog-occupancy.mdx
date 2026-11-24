@@ -1,0 +1,64 @@
+---
+title: "5.14. Show occupancy in the dialog"
+slug: /05-shippingboard/14-dialog-occupancy
+sidebar_position: 14
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/13-ramp-status
+pagination_next: 05-shippingboard/15-complete-board
+course_workspace: original-project
+course_chapter: "05"
+course_step: 14
+course_illustration: "/course/shippingboard/14-dialog-occupancy.svg"
+course_illustration_alt: "The dialog highlights C with count 2. Selecting A moves the loading and changes both counts. Selecting ∅ clears the assignment and makes A empty again."
+course_illustration_description: "The superscript counts assigned loadings. Cyan marks the active choice, coral marks other occupied ramps, and neutral ramps show no count. Occupied ramps remain selectable."
+---
+
+When you choose a new ramp in the details dialog, it helps to see how busy each one is. A small number beside a ramp will tell you how many loadings are assigned there. The model already knows which loadings belong to each ramp, so it can count them whenever an assignment changes.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+Add this getter **inside** `Ramp` in `src/store/Ramp.ts`, alongside the other getters from lesson 5.13:
+
+```ts title="src/store/Ramp.ts — quantity"
+get quantity(): number {
+  return this.loadings.length;
+}
+```
+
+This is a count of loadings, not pallets. It changes automatically when `setRamp` or `clearRamp` changes the relationship.
+
+In `src/components/Details.tsx`, find the existing `<section className="ramps">` and replace **that entire section only** with the following. Keep the rest of the file, including its existing `Intent` import, local dialog animation state, dates, duration slider, other fields and close handlers:
+
+```tsx title="src/components/Details.tsx — ramp choices"
+<section className="ramps">
+  <FormGroup label="Ramp:" className="ramps-list">
+    {ramps.map(r => <Button key={r.id} className="ramp-button" outlined
+      active={r === loading.ramp}
+      onClick={() => loading.setRamp(r)}
+      intent={r.isEmpty ? Intent.NONE
+        : r === loading.ramp ? Intent.PRIMARY : Intent.DANGER}>
+      {r.description}
+      <sup>{r.quantity > 0 ? r.quantity : null}</sup>
+    </Button>)}
+    <Button onClick={loading.clearRamp} active={!loading.ramp}
+      outlined className="ramp-button">∅</Button>
+  </FormGroup>
+</section>
+```
+
+Read the buttons as a choice of destination. An empty ramp gets a neutral button. The loading’s current ramp gets an active button in the primary colour. Any other occupied ramp gets the danger colour. These are Blueprint button props. The colours here tell you where loadings are assigned, while the dashboard colours show their progress.
+
+The little number above the label is the count. The expression inside `<sup>` returns `null` when the ramp is empty, so only ramps with loadings show a number.
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Reload the app and open `0007703`. Look at **C** first. It is the current ramp, so its button is active and uses the primary colour. The count is 2. B, D and E use the danger colour and show counts of 1, 3 and 2 respectively. A, F and G are empty, so their buttons are neutral and show no count.
+
+1. Choose **A**. It becomes the active, primary button and its count becomes 1. C still has one other loading, so its count drops to 1 and its button takes the danger colour.
+2. Choose **∅** to clear the assignment. A becomes neutral again. The loading disappears from the dashboard, but its table row is still there with no ramp.
+
+You can still select an occupied ramp. The danger colour tells you someone is using it.

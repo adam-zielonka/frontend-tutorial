@@ -1,0 +1,39 @@
+---
+title: "4.10. Synchronize the URL and dispose the reaction"
+slug: /04-mobx/10-url-reaction
+sidebar_position: 10
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Restoration reads once; a reaction keeps the URL current as the counters change. Its data function says what to watch, and its effect says what to do. Subscribe inside React's effect so every setup has a matching cleanup, including development Strict Mode's extra setup/cleanup cycle.
+
+## Edit the URL reaction
+
+In `/Store.ts`, replace `syncUrl` outside the class with:
+
+```ts title="/Store.ts"
+export function syncUrl(store: Store): () => void {
+  return reaction(() => store.serializedValues, value => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('value', value);
+      window.history.replaceState(window.history.state, '', url);
+    } catch {
+      // A restricted preview must still allow counters to work.
+    }
+  }, { fireImmediately: true });
+}
+```
+
+`reaction` is already imported. Reading `serializedValues` tracks its underlying counter values too. Start from the **current** URL to retain unrelated parameters and the hash. `replaceState` preserves the history state and updates the current entry without adding a Back-button entry for every click. `fireImmediately` writes the restored initial state as well.
+
+The existing `/App.tsx` effect restores first and **returns** `syncUrl(store)`. That call starts the reaction and returns its disposer for React to call later. Calling the disposer immediately would stop synchronization. Keep browser effects outside constructors and module initialization. See [reaction disposal](https://mobx.js.org/reactions.html) and [effect cleanup](https://react.dev/reference/react/useEffect).
+
+<LessonExercise id="04-10-url-reaction" />
+
+## Check your work
+
+In a local export at `?value=5%3B-2&mode=demo#counters`, click +1 on the first card: the URL's values become `6;-2` while `mode=demo` and `#counters` survive. Next, restore a fallback when the URL has no usable values.
+
+[History.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState)

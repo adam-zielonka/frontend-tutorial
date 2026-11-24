@@ -1,0 +1,34 @@
+---
+title: "8.2. Wire actions and register icons"
+slug: /08-ui5/02-events-and-icons
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+
+Continue with the provider and button. UI5 button click handlers can request React state updates just like the native buttons in chapter 3. Add one `loaded` value and derive the displayed count from it.
+
+Keep the text labels so icons supplement accessible names. The capacity rule arrives next, so use a few loads below ten for now.
+
+
+1. In `/App.tsx`, import `useState` from React and register the icons with side-effect imports:
+
+```tsx title="/App.tsx"
+import '@ui5/webcomponents-icons/dist/add.js';
+import '@ui5/webcomponents-icons/dist/refresh.js';
+```
+
+2. Inside `App`, before `return`, add `const [loaded, setLoaded] = useState(0);`. Replace the static zero with `{loaded}`. Add `icon="add"` and `onClick={() => setLoaded(current => current + 1)}` to Load; add a Reset button with `icon="refresh"` and `onClick={() => setLoaded(0)}`. The updater uses the previous value; the icon imports register names before use.
+
+If an icon is missing, check its `.js` import and name.
+
+<LessonExercise id="08-02-events-and-icons" />
+
+## Observe
+
+Use the keyboard to load a few pallets and reset; the count should return to zero.
+
+## Sources
+
+[UI5 using icons](https://ui5.github.io/webcomponents/docs/advanced/using-icons/), [UI5 React documentation](https://ui5.github.io/webcomponents-react/), [React useState](https://react.dev/reference/react/useState).

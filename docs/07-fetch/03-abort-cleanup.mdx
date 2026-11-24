@@ -1,0 +1,37 @@
+---
+title: "7.4. Cancel obsolete requests"
+slug: /07-fetch/03-abort-cleanup
+sidebar_position: 4
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Changing the fixture URL starts another effect. An older request may finish later, so it must not overwrite the newest selection. The supplied `active` flag already guards state updates; now cancel obsolete network work too.
+
+## Edit effect setup and cleanup
+
+In `/App.tsx`, replace the request line with:
+
+```ts title="/App.tsx"
+const controller = new AbortController();
+loadLocalRamps(url, controller.signal).then(data => {
+```
+
+The second line opens the existing callback: retain its body and the `.catch(...)` below it, including their `if (active)` checks. At the end of the effect, replace the old cleanup with:
+
+```ts title="/App.tsx"
+return () => {
+  active = false;
+  controller.abort();
+};
+```
+
+React cleans up before replacing an effect and on unmount. Mark it inactive **before** aborting so intentional cancellation cannot display an error. The adapter also avoids its path fallback when the signal is aborted.
+
+The controller requests cancellation; the flag protects state if completion was already queued. Create a fresh controller inside each setup: an already-aborted signal cannot serve the next request. This also tolerates development Strict Mode's extra setup/cleanup cycle. See [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) and [React effect cleanup](https://react.dev/reference/react/useEffect#fetching-data-with-effects).
+
+<LessonExercise id="07-04-abort-cleanup" />
+
+## Check your work
+
+Toggle the fixture option rapidly, ending on the working fixture: only that final selection should determine the three displayed ramps, without a cancellation error. Use browser Network throttling if the tiny fixture resolves too quickly to observe the sequence. Next, request the same URL again.

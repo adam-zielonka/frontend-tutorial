@@ -1,0 +1,27 @@
+---
+title: "4.7. Remove a counter safely"
+slug: /04-mobx/07-counter-removal
+sidebar_position: 7
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Removal should change the collection while preserving surviving models. This starter supplies an `X` button with an accessible “Remove counter” name, a `removeCounter(id)` stub and an empty-list message. The other actions and computed getters are complete.
+
+## Edit the removal action
+
+In `/Store.ts`, replace the TODO inside `removeCounter` with:
+
+```ts title="/Store.ts"
+this.counters = this.counters.filter(counter => counter.id !== id);
+```
+
+`filter` makes a new array but keeps each surviving `CounterStore` instance. A missing ID leaves all models in place. Keep IDs and `nextId` unchanged: identity is independent of position. The [stable keys](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) preserve that relationship in React.
+
+The computed total and capacity follow the new collection automatically; no action needs to repair them. See [actions](https://mobx.js.org/actions.html) and [computed values](https://mobx.js.org/computeds.html).
+
+<LessonExercise id="04-07-counter-removal" />
+
+## Check your work
+
+Fill four slots, give the second counter 100, then remove it: the other IDs and values survive, the total loses 100 and Add becomes available. Removing all cards is also supported; the supplied empty message lets you add one again. Next, represent the collection as text.

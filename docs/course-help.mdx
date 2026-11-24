@@ -1,0 +1,22 @@
+---
+title: "Course help"
+course_illustration: "/course/lesson-draft.svg"
+course_illustration_alt: "Your code is saved in this browser for this lesson. Download my files exports a JSON draft. Work locally opens instructions to import it into the matching checkpoint."
+course_illustration_description: "Choose the local checkpoint for the same lesson before importing. A new lesson opens with its own prepared files."
+---
+
+# Course help
+
+When you return to a browser exercise on the same device, **Your code** shows the draft saved for that lesson if browser storage is available. The next exercise opens with its own starting files. You can look at the hints or the read-only **Solution** at any time, then switch back to your draft.
+
+**To keep a copy**, choose **Download my files**. It saves your edited files together in a JSON download. Keep that download if you plan to clear browser storage or switch devices. It also gives you a backup if a course update changes the lesson’s starting files.
+
+**To continue on your computer**, choose **Work locally** in the same lesson. In chapter 6, extract the linked project ZIP. In the other chapters, follow the commands to clone the published checkpoint. Then install the locked dependencies and import your download. The checkpoint may use earlier dependency versions than the embedded editor. Use a separate clone because importing replaces its exercise files. A file called `/App.tsx` in the browser lives at `src/App.tsx` in the clone. Public assets live under `public/`.
+
+**If the preview seems out of date**, refresh it. This restarts the app with your edited source files and creates fresh models in memory. If the preview cannot connect, you can work locally or open the online editor. The online editor opens the lesson’s starting point or solution, so download your draft if you want to take it with you. Use sample data in the exercises and keep private data out of them.
+
+## Running tests
+
+Choose **Run tests** to run the current test file and MobX model directly in the lesson. The browser simulator supports `describe`, `it`, `it.todo`, `expect(...).toBe(...)` and `expect(...).toHaveLength(...)`. Each run starts fresh. Read the named results, edit a failing assertion and run again. A run in **Solution** uses the solution files.
+
+For the full Vitest API, watch mode or coverage, choose **Work locally**, extract the project and import your downloaded edits. Run `pnpm test:run` in the project folder.

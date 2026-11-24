@@ -1,0 +1,58 @@
+---
+title: "5.4. Explain empty ramps and ramp status"
+slug: /05-shippingboard/04-empty-and-status
+sidebar_position: 4
+pagination_next: 05-shippingboard/05-original-workspace
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+import {FilteredBays} from '@site/src/components/LoadingBays';
+
+This starter includes the ramp groups from 5.3. A ramp can look empty because it has no assignments or because a filter hides them. Explain the difference, and derive business status from **all** assignments so selecting Done cannot make a busy ramp appear complete.
+
+Switch the filter to **Done** and compare R2 with R3. Which ramp still has an assignment?
+
+<FilteredBays />
+
+## Separate business status from visible cards
+
+In `/App.tsx`, inside `ramps.map` immediately after `assigned`, add:
+
+```tsx title="/App.tsx"
+const allAssigned = loadings.filter(item => item.rampId === ramp.id);
+const rampStatus = allAssigned.length === 0 ? 'Available'
+  : allAssigned.every(item => item.status === 'done') ? 'Complete'
+  : allAssigned.some(item => item.status === 'loading') ? 'Loading' : 'Waiting';
+```
+
+Check length before `every`: an empty array also satisfies `every`. Complete requires all assignments to be done; otherwise any active loading takes priority over waiting. These are the mini board's rules. The original application in [5.13](./13-ramp-status.mdx) gives a not-started assignment priority over partial progress, using numeric model getters instead of category strings.
+
+Add `<p className="RampStatus">Ramp status: {rampStatus}</p>` inside the ramp header. Replace the entire ramp body with the conditional below, preserving its card markup:
+
+```tsx title="/App.tsx"
+<div className="ramp-loadings" data-status={rampStatus}>
+  {assigned.length === 0 ? <p className="empty-message">
+    {allAssigned.length === 0
+      ? 'No loadings assigned.'
+      : 'No matching loadings at this ramp.'}
+  </p> : <ul>
+    {assigned.map(item => <li className="Loading" key={item.id}>
+      <header>{item.id}</header>
+      <div className="customer"><span className="name">{item.customer}</span></div>
+      <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
+    </li>)}
+  </ul>}
+</div>
+```
+
+The supplied CSS uses the unfiltered status for the header label and red, yellow or green body tint; Available keeps the neutral hatch. Retain each loading card's own category text and stripe. The fixed fixture has no Complete ramp; its support `/data.ts` is read-only in the embedded editor. To change fixture values for experiments, work in a local export using [Course help](/course-help).
+
+<LessonExercise id="05-04-empty-and-status" />
+
+## Check your work
+
+Open Ramps and select Done: R1 stays Waiting while showing L-103, R2 stays Loading with “No matching loadings at this ramp.”, and R3 stays Available with “No loadings assigned.” If filtering changes a ramp's business status, derive it from `allAssigned`. Continue in [5.5](./05-original-workspace.mdx) with the original application, its full table and shared details dialog.
+
+## Sources
+
+[React conditional rendering](https://react.dev/learn/conditional-rendering), [React avoiding redundant state](https://react.dev/learn/choosing-the-state-structure#avoid-redundant-state).

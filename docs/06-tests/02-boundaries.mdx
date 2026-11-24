@@ -1,0 +1,43 @@
+---
+title: "6.2. Test invalid values and collection capacity"
+slug: /06-tests/02-boundaries
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The counter accepts negative values and decimals. An empty number input, however, can produce `NaN`. Start from a known value and check it after each invalid operation to catch an accidental assignment.
+
+The collection has a different boundary. It starts with one counter and has room for four. Four calls to `addCounter()` therefore include one attempt to add a fifth. Remove a counter by ID, then try adding again. In `/Store.test.ts`, keep the first two finished cases and replace the next two placeholders.
+
+```ts title="/Store.test.ts"
+it('ignores non-finite edits and deltas', () => {
+  const counter = new CounterStore();
+  counter.setValue(7);
+  counter.add(Number.NaN);
+  expect(counter.value).toBe(7);
+  counter.setValue(Infinity);
+  expect(counter.value).toBe(7);
+});
+
+it('frees a slot after reaching capacity', () => {
+  const store = new Store();
+  for (let i = 0; i < 4; i++) store.addCounter();
+  expect(store.counters).toHaveLength(4);
+  expect(store.canAddMoreCounters).toBe(false);
+  const removed = store.counters[1].id;
+  store.removeCounter(removed);
+  expect(store.counters.some(counter => counter.id === removed)).toBe(false);
+  expect(store.canAddMoreCounters).toBe(true);
+  store.addCounter();
+  expect(store.counters).toHaveLength(4);
+});
+```
+
+<LessonExercise id="06-02-boundaries" />
+
+## Observe
+
+Choose **Run tests**. Four cases should pass and one remain pending. Which assertion would fail first if the collection allowed a fifth counter?
+
+[Vitest assertions](https://vitest.dev/api/expect.html).

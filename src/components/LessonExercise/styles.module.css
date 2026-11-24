@@ -1,0 +1,103 @@
+.exercise {margin: 1rem 0; min-width: 0;}
+.focus {font-size: .85rem;}
+.exercise ol {padding-left: 1.4rem;}
+.exercise li {padding-left: .2rem; margin-bottom: .6rem;}
+.hints {margin: 1rem 0; padding: .65rem .85rem; background: var(--ifm-color-emphasis-100); border-radius: 6px;}
+.exercise summary {cursor: pointer; font-weight: 600; font-size: .85rem;}
+.hints ul {margin: .75rem 0 0 !important; padding-left: 1.2rem;}
+.note {font-size: .75rem; line-height: 1.6; color: var(--ifm-color-emphasis-700);}
+.workspace {display: flex; flex-direction: column; flex: 1; min-height: 0; min-width: 0;}
+.toolbar {display: flex; align-items: center; flex-wrap: wrap; gap: .35rem .65rem; padding: .5rem .75rem; border-bottom: 1px solid var(--ifm-color-emphasis-200); flex-shrink: 0;}
+.modeSwitch {display: flex; gap: .2rem;}
+.modeSwitch button {border: 1px solid transparent; padding: .3rem .65rem; border-radius: 5px; background: none; color: var(--ifm-color-emphasis-700); font: inherit; font-size: .75rem; cursor: pointer;}
+.modeSwitch button[aria-pressed='true'] {background: var(--ifm-color-primary); color: var(--studio-active-text, #fff);}
+.modeNote {font-size: .7rem; color: var(--ifm-color-emphasis-700); margin-left: auto;}
+.playground {display: flex; flex-direction: column; flex: 1; min-height: 0; min-width: 0;}
+.loading {flex: 1; display: grid; grid-template-rows: 1fr 1fr; min-height: 0; color: var(--ifm-color-emphasis-700); font-size: .85rem;}
+.loading > div {padding: 1rem; background: var(--ifm-color-emphasis-100); border-bottom: 1px solid var(--ifm-color-emphasis-200);}
+.error {padding: 1rem;}
+.standalone {height: 700px; display: flex; border: 1px solid var(--ifm-color-emphasis-300);}
+.exercise button:focus-visible, .exercise summary:focus-visible, .workspace button:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
+@media (max-width: 500px) {
+  .toolbar {padding: .35rem .5rem;}
+  .modeNote {font-size: .75rem;}
+  .modeSwitch button {min-height: 36px; padding: .3rem .6rem; font-size: .8125rem;}
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .375rem;
+  position: relative;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  padding: .3rem .625rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.help > summary {
+  padding: .3rem;
+  color: var(--ifm-font-color-base);
+  font-size: .75rem;
+  cursor: pointer;
+}
+
+.helpBody {
+  position: absolute;
+  right: .375rem;
+  bottom: 100%;
+  left: .375rem;
+  z-index: 5;
+  max-height: min(18rem, 50vh);
+  padding: .75rem;
+  overflow: auto;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  background: var(--ifm-background-surface-color);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 15%);
+}
+
+.helpBody p {
+  margin: 0 0 .5rem;
+}
+
+.helpBody p:last-child {
+  margin-bottom: 0;
+}
+
+
+.toolButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: .3rem .5rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: .75rem;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+.toolButton:hover {background: var(--ifm-color-emphasis-200); color: var(--ifm-font-color-base); text-decoration: none;}
+.toolButton:focus-visible, .help > summary:focus-visible, .localDialog a:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
+.helpLinks {display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; margin-left: auto;}
+.localDialog {width: min(720px, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 8px; background: var(--studio-surface, var(--ifm-background-surface-color)); color: var(--ifm-font-color-base); font-size: .9rem; line-height: 1.6;}
+.localDialog::backdrop {background: #10121a80;}
+.localHeader {display: flex; align-items: center; justify-content: space-between; gap: .5rem; position: sticky; top: 0; z-index: 1; padding: .65rem 1rem; background: var(--studio-surface, var(--ifm-background-surface-color)); border-bottom: 1px solid var(--ifm-color-emphasis-200);}
+.localHeader h2 {margin: 0; font-size: 1rem;}
+.localBody {padding: 1rem;}
+.localBody h3 {font-size: 1rem;}
+.localBody pre {font-size: .8125rem;}
+.localBody a {text-decoration: underline;}
+@media (max-width: 999px) {
+  .toolButton, .help > summary {min-height: 36px; font-size: .8125rem;}
+  .help > summary {display: flex; align-items: center;}
+}
+@media (max-width: 999px) and (max-height: 520px) {
+  .footer {padding-block: .15rem;}
+}

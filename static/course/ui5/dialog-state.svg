@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 324" role="img" aria-labelledby="title desc">
+  <title id="title">A dialog with an explicit way back</title>
+  <desc id="desc">An Open action sets React state to true and shows a UI5 dialog. Its Close action sets the same state to false and returns to the closed view.</desc>
+  <style>
+    text {font: 18px system-ui, sans-serif; fill: #eef6ff}
+    .label {font-size: 15px; font-weight: 650; fill: #adbfce}
+    .name {font-size: 23px; font-weight: 650}
+    .code {font: 18px ui-monospace, monospace; fill: #89e6f7}
+    .key {font-size: 23px; font-weight: 700; fill: #ffbe65}
+  </style>
+  <rect x="0" y="0" width="420" height="324" rx="16" fill="#142235"/>
+  <text x="24" y="38" class="label">Closed</text>
+  <rect x="24" y="52" width="142" height="50" rx="8" fill="#20364b" stroke="#69dcf5" stroke-width="2"/>
+  <text x="95" y="84" class="body" text-anchor="middle">Open dialog</text>
+  <path d="M96 110v38m-6-6 6 6 6-6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="113" y="136" class="code">setOpen(true)</text>
+  <rect x="24" y="160" width="372" height="136" rx="12" fill="#20364b" stroke="#567084" stroke-width="2"/>
+  <text x="45" y="192" class="name">Dialog</text>
+  <path d="M45 208h329" fill="none" stroke="#567084" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="44" y="244" class="code">setOpen(false)</text>
+  <rect x="280" y="220" width="94" height="45" rx="7" fill="#ffbe65"/>
+<text x="327" y="249" text-anchor="middle" style="fill:#142235;font-weight:650">Close</text>
+  <path d="M374 220v-143H178m7-6-7 6 7 6" fill="none" stroke="#ffbe65" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

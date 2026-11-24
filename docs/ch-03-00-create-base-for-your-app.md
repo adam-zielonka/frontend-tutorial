@@ -1,206 +1,25 @@
-# 3. Create base for your app
+---
+sidebar_position: 30
+---
 
-Let's start build React app using Vite and pnpm.
+# 3. React basics
 
-## Create
+A pallet arrives. You click **Add pallet** and expect the number on screen to go from 0 to 1. You’ll build that interaction in three steps: draw the counter, teach it to remember the count, then handle subtraction and reset so the count stays at or above zero. Each exercise opens `App.tsx` beside the preview with the previous step already in place.
 
-Firstly, open your terminal and create app using template ([vitejs guide](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)).
+If you work locally, follow the page from the outside in. The browser opens `index.html`, which has an empty root element. Then `src/main.tsx` puts the React component from `src/App.tsx` into that element. The browser exercises already connect those files for you.
 
-```shell
-pnpm create vite my-react-app --template react-swc-ts
-```
+In an exported project, run `pnpm install` to get the dependencies and `pnpm dev` to see your edits as you work. Run `pnpm build` to check the types and build the app. The embedded examples use React 19.3.1. The local checkpoint uses the versions recorded in its lockfile.
 
-Next, install deps:
+## Lessons
 
-```shell
-cd my-react-app
-pnpm install
-```
+1. [Render the counter component](./03-react-basics/01-component.mdx) — Build a small semantic component before adding behavior.
+2. [Remember the pallet count](./03-react-basics/02-state.mdx) — Use local React state to update the rendered count.
+3. [Bound subtraction and reset](./03-react-basics/03-bounded-events.mdx) — Keep a nonnegative counter through every available action.
 
-And start developing app
+For drafts and local setup, see [course help](./course-help.mdx).
 
-```shell
-pnpm run dev
-```
+## Official references
 
-## Understand
+[React components](https://react.dev/learn/your-first-component), [React state](https://react.dev/reference/react/useState), [Vite guide](https://vite.dev/guide/).
 
-### Project structure
-
-What we have in project:
-
-```shell
-my-react-app
-├── public "Place for global assets like favicon, fonts"
-│   └── vite.svg
-├── src "Place for your code"
-│   ├── App.css
-│   ├── App.tsx "4. First component that we render"
-│   ├── assets
-│   │   └── react.svg
-│   ├── index.css
-│   ├── main.tsx "3. Main tsx file with Creation of react app in root div"
-│   └── vite-env.d.ts
-├── index.html "2. Main html file with root div and main script attached"
-├── package.json
-├── pnpm-lock.yaml
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts "1. Conf for frontend tool"
-```
-
-Of course the structure of folders can be different like this:
-
-```shell
-└── src
-    ├── components
-    ├── hooks
-    ├── store
-    ├── styles
-    ├── tests
-    ├── types
-    └── utils
-```
-
-It always depends what you will use in your project.
-
-### `vite.config.ts`
-
-This the file that we define how frontend tool should work, by default only react plugin is enable:
-
-```ts showLineNumbers
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
-```
-
-but we can adjust in this file much more:
-
-```ts showLineNumbers
-import { defineConfig, PluginOption } from "vite";
-import react from "@vitejs/plugin-react";
-
-const plugins: PluginOption[] = [react()];
-
-export default defineConfig(({ command }) => {
-  if (command === "build") {
-    return {
-      plugins,
-      build: {
-        // Generate source map for production build is grate for debugging, 
-        // but also expose all code for everyone
-        sourcemap: true, 
-      },
-    };
-  }
-
-  // We can define different behavior depends of envs
-  if (process.env.VITE_FAKE_API) {
-    return  {
-      plugins,
-    };
-  }
-
-  return {
-    plugins,
-    // And we can connect app with real server
-    server: {
-      proxy: {
-        [`/my_service`]: {
-          target: `http//example.com/`,
-          secure: false,
-          auth: "test:test",
-        },
-        "/sap/bc/apc": {
-          target: `ws://example.com/`,
-          ws: true,
-          secure: false,
-        },
-      },
-    },
-  };
-});
-```
-
-### `index.html`
-
-
-```html showLineNumbers
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <!-- Place that react app will be rendered -->
-    <div id="root"></div> 
-    <!-- Script that is responsible to render react app -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
-
-```
-
-
-### `main.tsx`
-
-```tsx showLineNumbers
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css' // importing global styles
-
-// Render react in root div tag
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-```
-
-### `App.tsx`
-
-```tsx showLineNumbers
-import { useState } from 'react'
-import reactLogo from './assets/react.svg' // Way how you can import assets
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0) // Hook for keeping state of app
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
-
-export default App
-```
+[Optional continuation: explore a separate Vite project](./03-react-basics/optional-vite-project.mdx).

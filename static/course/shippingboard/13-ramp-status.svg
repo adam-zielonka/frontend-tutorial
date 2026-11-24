@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="482" viewBox="0 0 480 482" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">First matching status wins</title>
+  <desc id="desc">A decision ladder tests empty, all loaded, any not started, then any in progress. Ramp E with 0 of 42 and 3 of 29 is not-started. Ramp.status becomes the class on the ramp body. Empty keeps its stripes. Move 0007707 to A and E changes from red to amber.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .green { fill: #82dfaa; }
+    .red { fill: #ffa29a; }
+  </style>
+  <defs>
+    <pattern id="stripes" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="12" height="12" fill="#1b2d42"/>
+      <path d="M0 0v12" stroke="#2a415a" stroke-width="8"/>
+    </pattern>
+    <marker id="tip" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0l8 4-8 4z" fill="#69dcf5"/>
+    </marker>
+  </defs>
+  <rect width="480" height="482" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">First matching status wins</text>
+  <path d="M45 80v242" class="line"/>
+  <g class="line">
+    <path d="M45 96h22m-22 55h22m-22 55h22m-22 55h22m-22 55h22"/>
+    <path d="M68 123h384m-384 55h384m-384 55h384m-384 55h384"/>
+  </g>
+  <g fill="#142235" stroke="#69dcf5" stroke-width="2">
+    <circle cx="45" cy="96" r="5"/>
+    <circle cx="45" cy="151" r="5"/>
+    <circle cx="45" cy="206" r="5"/>
+    <circle cx="45" cy="261" r="5"/>
+    <circle cx="45" cy="316" r="5"/>
+  </g>
+  <text x="72" y="103">No assignments</text>
+  <text x="72" y="158">All loaded</text>
+  <text x="72" y="213">Any not started</text>
+  <text x="72" y="268">Any in progress</text>
+  <text x="72" y="323" class="muted">Otherwise</text>
+  <rect x="286" y="76" width="166" height="40" rx="6" fill="url(#stripes)" stroke="#52718f"/>
+  <rect x="286" y="131" width="166" height="40" rx="6" fill="#233d38" stroke="#82dfaa"/>
+  <rect x="286" y="186" width="166" height="40" rx="6" fill="#513341" stroke="#ffa29a"/>
+  <rect x="286" y="241" width="166" height="40" rx="6" fill="#4c3927" stroke="#ffbe65"/>
+  <g class="code" text-anchor="middle">
+    <text x="369" y="103">empty</text>
+    <text x="369" y="158" class="green">loaded</text>
+    <text x="369" y="213" class="red">not-started</text>
+    <text x="369" y="268" class="amber">progress</text>
+    <text x="369" y="323" class="muted">""</text>
+  </g>
+  <rect x="28" y="351" width="424" height="103" rx="10" class="surface"/>
+  <text x="46" y="381" class="label">Ramp E</text>
+  <text x="46" y="423" class="code"><tspan class="red">0/42</tspan> + <tspan class="amber">3/29</tspan></text>
+  <path d="M218 416h45" class="route" marker-end="url(#tip)"/>
+  <text x="277" y="423" class="code red">not-started</text>
+</svg>

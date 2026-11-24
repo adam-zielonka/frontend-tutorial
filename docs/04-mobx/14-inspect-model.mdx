@@ -1,0 +1,35 @@
+---
+title: "4.14. Inspect the model"
+sidebar_position: 14
+course_illustration: "/course/mobx/action-breakpoint.svg"
+course_illustration_alt: "Example starting at 42. Execution pauses inside add before the assignment; this.value is still 42. Resuming the action changes the clicked counter to 43."
+course_illustration_description: "Place the breakpoint before the update. Inspect this.value there, then resume and compare it with the displayed count."
+---
+
+Continue in the local project from [4.13](./13-edit-value.mdx). The original chapter exposes a singleton store in the browser console. Our app owns its store inside `App`; a debugger can inspect that instance without changing ownership.
+
+## Inspect an action
+
+In browser developer tools, open `src/Store.ts` and put a breakpoint inside `add` or `setValue`. While paused, `this` is the counter instance; inspect `this.value` and the call stack to connect the UI event to the model action.
+
+For an optional comparison with the original **singleton** pattern, export one shared instance at the bottom of `src/Store.ts` and explicitly type its temporary browser exposure:
+
+```ts title="/Store.ts"
+export const store = new Store();
+declare global {
+  interface Window { store: Store }
+}
+window.store = store;
+```
+
+In `src/App.tsx`, replace the `Store` import with `store` in the existing named import, and remove `const [store] = useState(() => new Store());`. Keep `CounterStore`, `connectPersistence`, the other React state and the persistence effect. Now the app and `window.store` refer to the **same** instance. Copying only the assignment would expose an unrelated model.
+
+Subscriptions still belong to the app effect, not the singleton's constructor. Remove the global exposure after experimenting because other page scripts can access it; restore the app-owned instance to return to the lesson design.
+
+## Check your work
+
+Pause one +1 click inside `add` and confirm `this.value` is the clicked counter's pre-update value. Resume to see the increment.
+
+The original [global-store source](https://github.com/adam-zielonka/mobx-example/tree/global-store) and [StackBlitz](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/global-store) show collection ownership; the [action-for-delete source](https://github.com/adam-zielonka/mobx-example/tree/action-for-delete) and [StackBlitz](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/action-for-delete) show removal. Its [original styles](https://github.com/adam-zielonka/mobx-example/blob/main/src/index.css) complete the comparison.
+
+For a separate project, continue from chapter 3, use [Vite's React TypeScript starter](https://vite.new/react-ts), or run `pnpm create vite my-react-app --template react-swc-ts`, then install its dependencies and `pnpm add mobx@7.1.7 mobx-react-lite@5.1.4`. The exercises supply React 19.3.1 with those MobX versions. See [course help](../course-help) for running exports and mapping editor paths to `src/`.

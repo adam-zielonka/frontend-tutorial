@@ -1,0 +1,41 @@
+---
+title: "4.8. Serialize and validate counter values"
+slug: /04-mobx/08-url-state
+sidebar_position: 8
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+A shareable value must be plain text rather than live model objects. Use the original `value` parameter's semicolon format: two counters holding 5 and −2 become `5;-2`.
+
+This starter adds an import field and a share-query display. Its browser helpers are intentionally inert until the next two steps; the supplied effect will eventually restore first and return the URL reaction's cleanup. For now, work only on the model.
+
+## Edit serialization and validation
+
+In `/Store.ts`, replace the return in `serializedValues` with:
+
+```ts title="/Store.ts"
+return this.counters.map(counter => counter.value).join(';');
+```
+
+Replace the body of `hydrate` with:
+
+```ts title="/Store.ts"
+if (raw.length > 512) return false;
+const parts = raw === '' ? [] : raw.split(';');
+if (parts.length > this.limit || parts.some(part => part.trim() === '')) return false;
+const values = parts.map(Number);
+if (!values.every(Number.isFinite)) return false;
+this.counters = values.map(value => new CounterStore(this.nextId++, value));
+return true;
+```
+
+The completely empty string means zero counters. A blank token *inside* a nonempty payload is invalid: `Number('')` would otherwise become zero. Limit input size and counter count, reject `NaN` and infinities, and validate **every** value before assigning anything. New instances receive session-local IDs; IDs are not part of the shared data.
+
+<LessonExercise id="04-08-url-state" />
+
+## Check your work
+
+Load `5;-2`, then `1;;2`: the second import must report invalid values and preserve both counters. The same guard rejects `Infinity`, more than four values and oversized input; an empty field intentionally removes all counters. Next, read this format from a URL.
+
+[Observable state](https://mobx.js.org/observable-state.html) · [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)

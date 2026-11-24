@@ -1,0 +1,9 @@
+.panel {display: flex; flex: 1 1 0%; flex-direction: column; min-height: 0; min-width: 0; overflow: auto; overflow-wrap: anywhere; font-size: .8125rem; background: var(--ifm-background-surface-color);}
+.controls {display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; padding: .5rem .625rem;}
+.run {border: 1px solid transparent; border-radius: 4px; background: var(--ifm-color-primary); color: var(--studio-active-text, #fff); padding: .4rem .65rem; font: inherit; font-weight: 600; cursor: pointer; flex: 0 0 auto;}
+.run:disabled {cursor: progress; opacity: .75;}
+.run:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
+.status {flex: 1 1 12rem; color: var(--ifm-font-color-base);}
+.intro {margin: 0; padding: .5rem .75rem; line-height: 1.6;}
+@media (max-width: 999px) {.run {min-height: 36px;}}
+.results {margin: 0; padding: .25rem 1rem .75rem 2rem;}

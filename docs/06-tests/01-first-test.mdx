@@ -1,0 +1,38 @@
+---
+title: "6.1. Write the first store tests"
+slug: /06-tests/01-first-test
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+Continue with the app from [chapter 4](../04-mobx/13-edit-value.mdx). The support files include its editable counter, collection and persistence. The new file, `/Store.test.ts`, contains five named placeholders. A model test can construct the same store that the app uses without rendering React or starting the persistence effect.
+
+In the test file, keep the imports and the `describe` group. Replace the first two `it.todo` entries. The first test describes the initial collection. In the second, use the same sequence as typing 42 and pressing **+1**, then subtract enough to cross zero.
+
+```ts title="/Store.test.ts"
+it('starts a collection with one zero-valued counter', () => {
+  const store = new Store();
+  expect(store.counters).toHaveLength(1);
+  expect(store.counters[0].value).toBe(0);
+});
+
+it('adds a delta to an edited value', () => {
+  const counter = new CounterStore();
+  counter.setValue(42);
+  counter.add(1);
+  expect(counter.value).toBe(43);
+  counter.add(-45);
+  expect(counter.value).toBe(-2);
+});
+```
+
+Read the second case as three steps. **Arrange** a fresh counter, **act** by calling its methods, then **assert** what the app should display. In `expect(counter.value).toBe(43)`, the value inside `expect` is the actual result and 43 is the expected result. Each `it` names one case in the report. Leave the other three cases as `it.todo` for now.
+
+<LessonExercise id="06-01-first-test" />
+
+## Observe
+
+Choose **Run tests**. Two cases should pass and three remain pending. Change the expected 43 to 42 and run again. The failure should report the expected 42 and the received 43. Restore 43 and rerun.
+
+[Vitest assertions](https://vitest.dev/api/expect.html).

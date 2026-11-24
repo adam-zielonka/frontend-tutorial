@@ -1,0 +1,43 @@
+---
+title: "8.1. Add a UI5 provider and button"
+slug: /08-ui5/01-provider-and-button
+sidebar_position: 1
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+
+The preview uses UI5 Web Components for React 2.20.1, its matching UI5 packages at 2.20.5 and React 18.3.1.
+
+The provider supplies UI5 React context. The button has no event handler yet; first check its rendering and keyboard focus. Keep a single provider in `App.tsx`, not another in the entry point.
+
+
+1. At the top of `/App.tsx`, import `ThemeProvider` from `@ui5/webcomponents-react/ThemeProvider` and `Button` from `@ui5/webcomponents-react/Button`.
+2. Wrap the returned `<main>...</main>` in `<ThemeProvider>...</ThemeProvider>` and replace the native button with `<Button>Load pallet</Button>`. The provider supplies UI5 React context; composition keeps the rest of the page intact.
+
+These are named imports from the installed package, not local files:
+
+```tsx title="/App.tsx"
+import { ThemeProvider } from '@ui5/webcomponents-react/ThemeProvider';
+import { Button } from '@ui5/webcomponents-react/Button';
+```
+
+Keep `import './styles.css';`. Put `<ThemeProvider>` immediately before the existing opening `<main>`, and `</ThemeProvider>` immediately after `</main>`. Inside the existing shipment section, the replacement is:
+
+```tsx title="/App.tsx"
+<Button>Load pallet</Button>
+```
+
+The capital `B` matters: it selects the imported React component, while lowercase `<button>` creates a native HTML element. Everything between the provider's tags is its child content. Do not delete the heading, shipment section or pallet label when adding the wrapper.
+
+The button renders and receives keyboard focus but has no action yet. If a local import fails, check that the UI5 packages match the versions above. Keep one provider in `App`.
+
+<LessonExercise id="08-01-provider-and-button" />
+
+## Observe
+
+Tab to the rendered button and confirm its label.
+
+## Sources
+
+[UI5 Web Components for React](https://ui5.github.io/webcomponents-react/), [UI5 first steps](https://ui5.github.io/webcomponents/docs/getting-started/first-steps/).

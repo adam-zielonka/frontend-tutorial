@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="410" viewBox="0 0 480 410" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">Ramp choices for 0007703</title>
+  <desc id="desc">The dialog highlights C with count 2. Selecting A moves the loading and changes both counts. Selecting ∅ clears the assignment and makes A empty again. The superscript counts assigned loadings. Cyan marks the active choice, coral marks other occupied ramps, and neutral ramps show no count. Occupied ramps remain selectable.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+    .choice rect { fill: #20354c; stroke: #7892ac; }
+    .choice text { fill: #f5f4ef; }
+    .choice .count { font-size: 17px; font-weight: 750; }
+    .occupied rect { fill: #513341; stroke: #ffa29a; }
+    .occupied text { fill: #ffa29a; }
+    .current rect { fill: #69dcf5; stroke: #69dcf5; }
+    .current text { fill: #142235; }
+  </style>
+  <rect width="480" height="410" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">Ramp choices for 0007703</text>
+  <path d="M28 65h424" class="line"/>
+  <text x="28" y="101" class="label">After reload</text>
+  <g class="choice neutral">
+    <rect x="28" y="113" width="46" height="44" rx="7"/>
+    <text x="51" y="142" class="label" text-anchor="middle">A</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="82" y="113" width="46" height="44" rx="7"/>
+    <text x="99" y="142" class="label" text-anchor="middle">B</text>
+    <text x="113" y="135" class="count">1</text>
+  </g>
+  <g class="choice current">
+    <rect x="136" y="113" width="46" height="44" rx="7"/>
+    <text x="153" y="142" class="label" text-anchor="middle">C</text>
+    <text x="167" y="135" class="count">2</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="190" y="113" width="46" height="44" rx="7"/>
+    <text x="207" y="142" class="label" text-anchor="middle">D</text>
+    <text x="221" y="135" class="count">3</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="244" y="113" width="46" height="44" rx="7"/>
+    <text x="261" y="142" class="label" text-anchor="middle">E</text>
+    <text x="275" y="135" class="count">2</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="298" y="113" width="46" height="44" rx="7"/>
+    <text x="321" y="142" class="label" text-anchor="middle">F</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="352" y="113" width="46" height="44" rx="7"/>
+    <text x="375" y="142" class="label" text-anchor="middle">G</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="406" y="113" width="46" height="44" rx="7"/>
+    <text x="429" y="142" class="label" text-anchor="middle">∅</text>
+  </g>
+  <text x="28" y="196" class="label">Choose A</text>
+  <g class="choice current">
+    <rect x="28" y="208" width="46" height="44" rx="7"/>
+    <text x="45" y="237" class="label" text-anchor="middle">A</text>
+    <text x="59" y="230" class="count">1</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="82" y="208" width="46" height="44" rx="7"/>
+    <text x="99" y="237" class="label" text-anchor="middle">B</text>
+    <text x="113" y="230" class="count">1</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="136" y="208" width="46" height="44" rx="7"/>
+    <text x="153" y="237" class="label" text-anchor="middle">C</text>
+    <text x="167" y="230" class="count">1</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="190" y="208" width="46" height="44" rx="7"/>
+    <text x="207" y="237" class="label" text-anchor="middle">D</text>
+    <text x="221" y="230" class="count">3</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="244" y="208" width="46" height="44" rx="7"/>
+    <text x="261" y="237" class="label" text-anchor="middle">E</text>
+    <text x="275" y="230" class="count">2</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="298" y="208" width="46" height="44" rx="7"/>
+    <text x="321" y="237" class="label" text-anchor="middle">F</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="352" y="208" width="46" height="44" rx="7"/>
+    <text x="375" y="237" class="label" text-anchor="middle">G</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="406" y="208" width="46" height="44" rx="7"/>
+    <text x="429" y="237" class="label" text-anchor="middle">∅</text>
+  </g>
+  <text x="28" y="291" class="label">Choose ∅ to clear the ramp</text>
+  <g class="choice neutral">
+    <rect x="28" y="303" width="46" height="44" rx="7"/>
+    <text x="51" y="332" class="label" text-anchor="middle">A</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="82" y="303" width="46" height="44" rx="7"/>
+    <text x="99" y="332" class="label" text-anchor="middle">B</text>
+    <text x="113" y="325" class="count">1</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="136" y="303" width="46" height="44" rx="7"/>
+    <text x="153" y="332" class="label" text-anchor="middle">C</text>
+    <text x="167" y="325" class="count">1</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="190" y="303" width="46" height="44" rx="7"/>
+    <text x="207" y="332" class="label" text-anchor="middle">D</text>
+    <text x="221" y="325" class="count">3</text>
+  </g>
+  <g class="choice occupied">
+    <rect x="244" y="303" width="46" height="44" rx="7"/>
+    <text x="261" y="332" class="label" text-anchor="middle">E</text>
+    <text x="275" y="325" class="count">2</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="298" y="303" width="46" height="44" rx="7"/>
+    <text x="321" y="332" class="label" text-anchor="middle">F</text>
+  </g>
+  <g class="choice neutral">
+    <rect x="352" y="303" width="46" height="44" rx="7"/>
+    <text x="375" y="332" class="label" text-anchor="middle">G</text>
+  </g>
+  <g class="choice current">
+    <rect x="406" y="303" width="46" height="44" rx="7"/>
+    <text x="429" y="332" class="label" text-anchor="middle">∅</text>
+  </g>
+  <g font-size="18">
+    <text x="28" y="381" fill="#69dcf5">Active</text>
+    <text x="127" y="381" fill="#ffa29a">Other occupied</text>
+    <text x="318" y="381" fill="#bbcbdc">Empty ramp</text>
+  </g>
+</svg>

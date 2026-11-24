@@ -1,0 +1,34 @@
+---
+title: "1.2. Derive the manifest summary"
+slug: /01-tool-set/02-derived-summary
+sidebar_position: 2
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+You can tell which shipments are ready by reading the rows. What if someone only needs the total? Give them a summary above the list. Calculate the numbers from `shipments` each time React renders the component, so changing a row also changes the summary. See [React on pure rendering](https://react.dev/learn/keeping-components-pure).
+
+This exercise opens with the three records and the completed list from the previous step. Your own draft is still saved with lesson 1.1.
+
+1. In `/App.tsx`, inside `App` before `return`, add:
+
+   ```ts title="/App.tsx"
+   const totalPallets = shipments.reduce((total, shipment) => total + shipment.pallets, 0);
+   const readyCount = shipments.filter(shipment => shipment.status === 'ready').length;
+   ```
+
+   Read the first line as a running pallet count. Start at zero and add the pallets from each shipment. The second line keeps the shipments marked `ready`, then counts how many are left.
+2. Above the `<ul>` in the returned JSX, add a summary section containing `shipments.length`, `totalPallets`, and `readyCount` in braces. For example, `<p>{shipments.length} shipments · {totalPallets} pallets · {readyCount} ready</p>` belongs inside `<section aria-label="Summary">`.
+
+If the pallet total looks wrong, look at the first line again. Is the starting value `0`? Does each shipment contribute its `pallets` value?
+
+
+<LessonExercise id="01-02-derived-summary" />
+
+## Observe
+
+Confirm the summary shows 3 shipments, 16 pallets, and 2 ready.
+
+## Sources
+
+[React keeping components pure](https://react.dev/learn/keeping-components-pure), [TypeScript everyday types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).

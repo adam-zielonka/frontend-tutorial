@@ -1,0 +1,26 @@
+---
+title: "7.11. Show loading and failure states"
+sidebar_position: 11
+course_illustration: "/course/fetch/11-loading-and-errors.svg"
+course_illustration_alt: "Store status selects what App renders"
+course_illustration_description: "observer(App) reads store.status. The initial loading state renders a status message. Ready renders the normal board. Error renders an alert with store.loadError."
+---
+
+Continue from [7.10](./10-store-initialization.mdx). The board needs visible waiting and failure states while its required models are unavailable.
+
+## Edit the render boundary
+
+In `src/App.tsx`, import `store` from `./store/Store`. At the beginning of the existing `App` function, before its current return, add:
+
+```tsx title="src/App.tsx"
+if (store.status === 'loading') return <p role="status">Loading the board…</p>;
+if (store.status === 'error') return <p role="alert">Could not load the board: {store.loadError}</p>;
+```
+
+Keep the normal header/content/details JSX and `export default observer(App)`. The observer subscribes to the status read during render. Until the data is ready, the board cannot offer actions that depend on incomplete collections.
+
+A successful run shows a loading message followed by the board. This continuation initializes once; the mini lessons separately teach cancellation and explicit retry for repeated requests. For local verification, `pnpm build` checks imports and types.
+
+## Check your work
+
+Temporarily change one requested filename to a missing file and reload: expect a visible error instead of an apparently empty successful board. Restore the filename after the experiment.

@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; worker-src blob:">
+<title>Lesson test sandbox</title>
+<script>
+  // This document is embedded with an opaque origin. Only its parent supplies
+  // a worker, and the private port belongs to exactly one run.
+  window.addEventListener('message', event => {
+    if (event.source !== parent || !event.ports[0]) return;
+    const port = event.ports[0];
+    let worker;
+    try {
+      const url = URL.createObjectURL(new Blob([event.data.source], {type: 'text/javascript'}));
+      worker = new Worker(url);
+      URL.revokeObjectURL(url);
+      const results = new MessageChannel();
+      results.port1.onmessage = ({data}) => { worker.terminate(); port.postMessage(data); };
+      window.addEventListener('pagehide', () => worker.terminate(), {once: true});
+      worker.onerror = event => { worker.terminate(); port.postMessage({error: event.message || 'Test worker failed.'}); };
+      worker.postMessage(event.data.files, [results.port2]);
+    } catch (error) {
+      port.postMessage({error: String(error.message || error)});
+    }
+  }, {once: true});
+</script>

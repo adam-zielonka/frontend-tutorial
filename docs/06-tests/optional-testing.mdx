@@ -1,0 +1,48 @@
+---
+title: "6.4. More testing techniques"
+sidebar_position: 4
+course_illustration: "/course/tests/collection-capacity.svg"
+course_illustration_alt: "Four occupied counter slots become three after removal. The dashed fourth slot shows that another counter can now be added."
+course_illustration_description: "In the collection test, check the length, confirm the removed ID is gone, and assert that canAddMoreCounters becomes true."
+---
+
+# 6.4. More testing techniques
+
+## Where test configuration belongs
+
+
+In the exported project, `pnpm test` or `pnpm exec vitest` runs tests and watches for edits so it can run them again. `pnpm test:run` and `pnpm exec vitest run` run the suite once. Store tests work without a config file. To explicitly select Node, create `vitest.config.ts` at the project root:
+
+```ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    environment: 'node',
+  },
+});
+```
+
+Use `defineConfig` from `vitest/config` here so TypeScript knows about the `test` options. This file configures tests, not the development server. You can keep `vite.config.ts` unchanged. With these pure model tests, the same five checks should pass before and after adding the file. Browser emulation only becomes relevant when the tested code needs a DOM.
+
+## Optional continuation: UI and end-to-end tests
+
+The original [mobx-example checkpoint](https://github.com/adam-zielonka/mobx-example/tree/create-tests) tests a different store. For a component that reads the DOM, install a compatible emulator in your UI test project and set the [Vitest environment](https://vitest.dev/guide/environment.html), for example `test: { environment: 'happy-dom' }` with `happy-dom` installed. Another option is `jsdom`. Both provide a simulated browser document, or DOM, while the tests run in Node.
+
+For coverage in a local chapter 6 copy, run `pnpm exec vitest --version`, then install the matching coverage package. Use `pnpm add -D @vitest/coverage-v8@5.1.1` with the supplied Vitest 5.1.1. Run `pnpm exec vitest run --coverage`. Inspect missed branches as well as percentages. A high percentage alone cannot establish that assertions are meaningful. For user journeys across the browser and application, [Playwright](https://playwright.dev/docs/intro) provides end-to-end tests; use it separately from the unit tests, for example to open the page, click a control and assert the visible result.
+
+### Test restoration in the same collection
+
+Return to [lesson 6.3](./03-reset-and-independence.mdx) and open **Your code**. After completing its five tests, add a case for the `hydrate` method from chapter 4. A valid string replaces the collection. Invalid input should leave that collection intact. Paste this case inside the existing `describe` block and run it on the page or locally.
+
+```ts title="/Store.test.ts"
+it('preserves the restored values after an invalid URL payload', () => {
+  const store = new Store();
+  expect(store.hydrate('5;-2')).toBe(true);
+  expect(store.sum).toBe(3);
+  expect(store.hydrate('5;')).toBe(false);
+  expect(store.serializedValues).toBe('5;-2');
+});
+```
+
+The empty token after the final semicolon makes the second payload invalid. Checking the serialized values also catches an implementation that changes part of the collection before rejecting it.

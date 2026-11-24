@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 330" role="img" aria-labelledby="title desc">
+  <title id="title">Take a lesson draft to your local project</title>
+  <desc id="desc">Your code is saved in this browser for this lesson. Download my files exports a JSON draft. Work locally opens instructions to import it into the matching checkpoint.</desc>
+  <style>
+    text {font: 18px system-ui, sans-serif; fill: #eef6ff}
+    .label {font-size: 15px; font-weight: 650; fill: #adbfce}
+    .name {font-size: 23px; font-weight: 650}
+    .code {font: 18px ui-monospace, monospace; fill: #89e6f7}
+    .key {font-size: 23px; font-weight: 700; fill: #ffbe65}
+  </style>
+  <rect x="0" y="0" width="420" height="330" rx="16" fill="#142235"/>
+  <text x="24" y="42" class="name">Current lesson</text>
+  <rect x="24" y="61" width="372" height="72" rx="10" fill="#20364b"/>
+  <text x="42" y="91" class="name">Your code</text>
+  <text x="42" y="116" class="label">Saved in this browser</text>
+  <path d="M48 141v28m-6-6 6 6 6-6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="68" y="161" class="body">Download my files</text>
+  <rect x="24" y="181" width="178" height="43" rx="6" fill="#142235" stroke="#69dcf5" stroke-width="2"/>
+  <text x="42" y="209" class="code">JSON draft</text>
+  <path d="M48 232v28m-6-6 6 6 6-6" fill="none" stroke="#69dcf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="67" y="252" class="body">Work locally · import</text>
+  <path d="M24 281h372" fill="none" stroke="#40576a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="312" class="key">Matching local checkpoint</text>
+</svg>

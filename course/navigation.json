@@ -1,0 +1,428 @@
+[
+  {
+    "id": "01-tool-set/01-shipment-shape",
+    "path": "01-tool-set/01-shipment-shape",
+    "title": "Describe a shipment with types",
+    "chapter": "01",
+    "step": 1,
+    "exerciseId": "01-01-shipment-shape"
+  },
+  {
+    "id": "01-tool-set/02-derived-summary",
+    "path": "01-tool-set/02-derived-summary",
+    "title": "Derive the manifest summary",
+    "chapter": "01",
+    "step": 2,
+    "exerciseId": "01-02-derived-summary"
+  },
+  {
+    "id": "02-development-tools/01-editor-and-types",
+    "path": "02-development-tools/01-editor-and-types",
+    "title": "Configure editor and type checks",
+    "chapter": "02",
+    "step": 1,
+    "exerciseId": "02-01-editor-and-types"
+  },
+  {
+    "id": "02-development-tools/02-scripts-and-git",
+    "path": "02-development-tools/02-scripts-and-git",
+    "title": "Use scripts and a Git checkpoint",
+    "chapter": "02",
+    "step": 2,
+    "exerciseId": "02-02-scripts-and-git"
+  },
+  {
+    "id": "03-react-basics/01-component",
+    "path": "03-react-basics/01-component",
+    "title": "Render the counter component",
+    "chapter": "03",
+    "step": 1,
+    "exerciseId": "03-01-component"
+  },
+  {
+    "id": "03-react-basics/02-state",
+    "path": "03-react-basics/02-state",
+    "title": "Remember the pallet count",
+    "chapter": "03",
+    "step": 2,
+    "exerciseId": "03-02-state"
+  },
+  {
+    "id": "03-react-basics/03-bounded-events",
+    "path": "03-react-basics/03-bounded-events",
+    "title": "Bound subtraction and reset",
+    "chapter": "03",
+    "step": 3,
+    "exerciseId": "03-03-bounded-events"
+  },
+  {
+    "id": "03-react-basics/optional-vite-project",
+    "path": "03-react-basics/optional-vite-project",
+    "title": "Explore a separate Vite project",
+    "chapter": "03",
+    "step": 4
+  },
+  {
+    "id": "04-mobx/01-counter-layout",
+    "path": "04-mobx/01-counter-layout",
+    "title": "Build the counter layout",
+    "chapter": "04",
+    "step": 1,
+    "exerciseId": "04-01-counter-layout"
+  },
+  {
+    "id": "04-mobx/02-local-state",
+    "path": "04-mobx/02-local-state",
+    "title": "Make the counter interactive",
+    "chapter": "04",
+    "step": 2,
+    "exerciseId": "04-02-local-state"
+  },
+  {
+    "id": "04-mobx/03-observable-store",
+    "path": "04-mobx/03-observable-store",
+    "title": "Create an observable counter store",
+    "chapter": "04",
+    "step": 3,
+    "exerciseId": "04-03-observable-store"
+  },
+  {
+    "id": "04-mobx/04-react-observer",
+    "path": "04-mobx/04-react-observer",
+    "title": "Subscribe React with observer",
+    "chapter": "04",
+    "step": 4,
+    "exerciseId": "04-04-react-observer"
+  },
+  {
+    "id": "04-mobx/05-counter-collection",
+    "path": "04-mobx/05-counter-collection",
+    "title": "Manage multiple counters",
+    "chapter": "04",
+    "step": 5,
+    "exerciseId": "04-05-counter-collection"
+  },
+  {
+    "id": "04-mobx/06-computed-capacity",
+    "path": "04-mobx/06-computed-capacity",
+    "title": "Derive capacity and the total",
+    "chapter": "04",
+    "step": 6,
+    "exerciseId": "04-06-computed-capacity"
+  },
+  {
+    "id": "04-mobx/07-counter-removal",
+    "path": "04-mobx/07-counter-removal",
+    "title": "Remove a counter safely",
+    "chapter": "04",
+    "step": 7,
+    "exerciseId": "04-07-counter-removal"
+  },
+  {
+    "id": "04-mobx/08-url-state",
+    "path": "04-mobx/08-url-state",
+    "title": "Serialize and validate counter values",
+    "chapter": "04",
+    "step": 8,
+    "exerciseId": "04-08-url-state"
+  },
+  {
+    "id": "04-mobx/09-restore-url",
+    "path": "04-mobx/09-restore-url",
+    "title": "Restore counters from a URL",
+    "chapter": "04",
+    "step": 9,
+    "exerciseId": "04-09-restore-url"
+  },
+  {
+    "id": "04-mobx/10-url-reaction",
+    "path": "04-mobx/10-url-reaction",
+    "title": "Synchronize the URL and dispose the reaction",
+    "chapter": "04",
+    "step": 10,
+    "exerciseId": "04-10-url-reaction"
+  },
+  {
+    "id": "04-mobx/09-persistence",
+    "path": "04-mobx/09-persistence",
+    "title": "Restore a storage snapshot as fallback",
+    "chapter": "04",
+    "step": 11,
+    "exerciseId": "04-11-persistence"
+  },
+  {
+    "id": "04-mobx/12-storage-autorun",
+    "path": "04-mobx/12-storage-autorun",
+    "title": "Save snapshots and clean up both effects",
+    "chapter": "04",
+    "step": 12,
+    "exerciseId": "04-12-storage-autorun"
+  },
+  {
+    "id": "04-mobx/13-edit-value",
+    "path": "04-mobx/13-edit-value",
+    "title": "Edit a value directly",
+    "chapter": "04",
+    "step": 13
+  },
+  {
+    "id": "04-mobx/14-inspect-model",
+    "path": "04-mobx/14-inspect-model",
+    "title": "Inspect the model",
+    "chapter": "04",
+    "step": 14
+  },
+  {
+    "id": "05-shippingboard/01-view-switching",
+    "path": "05-shippingboard/01-view-switching",
+    "title": "Switch between board views",
+    "chapter": "05",
+    "step": 1,
+    "exerciseId": "05-01-view-switching"
+  },
+  {
+    "id": "05-shippingboard/02-status-filter",
+    "path": "05-shippingboard/02-status-filter",
+    "title": "Filter loading status",
+    "chapter": "05",
+    "step": 2,
+    "exerciseId": "05-02-status-filter"
+  },
+  {
+    "id": "05-shippingboard/03-ramp-groups",
+    "path": "05-shippingboard/03-ramp-groups",
+    "title": "Group loadings by ramp",
+    "chapter": "05",
+    "step": 3,
+    "exerciseId": "05-03-ramp-groups"
+  },
+  {
+    "id": "05-shippingboard/04-empty-and-status",
+    "path": "05-shippingboard/04-empty-and-status",
+    "title": "Explain empty ramps and ramp status",
+    "chapter": "05",
+    "step": 4,
+    "exerciseId": "05-04-empty-and-status"
+  },
+  {
+    "id": "05-shippingboard/05-original-workspace",
+    "path": "05-shippingboard/05-original-workspace",
+    "title": "Prepare the original application",
+    "chapter": "05",
+    "step": 5
+  },
+  {
+    "id": "05-shippingboard/06-shared-view",
+    "path": "05-shippingboard/06-shared-view",
+    "title": "Share view state with the header",
+    "chapter": "05",
+    "step": 6
+  },
+  {
+    "id": "05-shippingboard/07-content-switch",
+    "path": "05-shippingboard/07-content-switch",
+    "title": "Switch the original content",
+    "chapter": "05",
+    "step": 7
+  },
+  {
+    "id": "05-shippingboard/08-view-url",
+    "path": "05-shippingboard/08-view-url",
+    "title": "Restore view and loading links",
+    "chapter": "05",
+    "step": 8
+  },
+  {
+    "id": "05-shippingboard/09-ramp-shells",
+    "path": "05-shippingboard/09-ramp-shells",
+    "title": "Render the original ramp shells",
+    "chapter": "05",
+    "step": 9
+  },
+  {
+    "id": "05-shippingboard/10-loading-card",
+    "path": "05-shippingboard/10-loading-card",
+    "title": "Build a loading card",
+    "chapter": "05",
+    "step": 10
+  },
+  {
+    "id": "05-shippingboard/11-ramp-assignments",
+    "path": "05-shippingboard/11-ramp-assignments",
+    "title": "Derive ramp assignments",
+    "chapter": "05",
+    "step": 11
+  },
+  {
+    "id": "05-shippingboard/12-card-details",
+    "path": "05-shippingboard/12-card-details",
+    "title": "Open shared loading details",
+    "chapter": "05",
+    "step": 12
+  },
+  {
+    "id": "05-shippingboard/13-ramp-status",
+    "path": "05-shippingboard/13-ramp-status",
+    "title": "Derive ramp status",
+    "chapter": "05",
+    "step": 13
+  },
+  {
+    "id": "05-shippingboard/14-dialog-occupancy",
+    "path": "05-shippingboard/14-dialog-occupancy",
+    "title": "Show occupancy in the dialog",
+    "chapter": "05",
+    "step": 14
+  },
+  {
+    "id": "05-shippingboard/15-complete-board",
+    "path": "05-shippingboard/15-complete-board",
+    "title": "Verify the complete board",
+    "chapter": "05",
+    "step": 15
+  },
+  {
+    "id": "06-tests/01-first-test",
+    "path": "06-tests/01-first-test",
+    "title": "Write the first store tests",
+    "chapter": "06",
+    "step": 1,
+    "exerciseId": "06-01-first-test"
+  },
+  {
+    "id": "06-tests/02-boundaries",
+    "path": "06-tests/02-boundaries",
+    "title": "Test invalid values and collection capacity",
+    "chapter": "06",
+    "step": 2,
+    "exerciseId": "06-02-boundaries"
+  },
+  {
+    "id": "06-tests/03-reset-and-independence",
+    "path": "06-tests/03-reset-and-independence",
+    "title": "Test reset and the computed total",
+    "chapter": "06",
+    "step": 3,
+    "exerciseId": "06-03-reset-and-independence"
+  },
+  {
+    "id": "06-tests/optional-testing",
+    "path": "06-tests/optional-testing",
+    "title": "More testing techniques",
+    "chapter": "06",
+    "step": 4
+  },
+  {
+    "id": "07-fetch/01-request",
+    "path": "07-fetch/01-request",
+    "title": "Fetch the local ramp fixture",
+    "chapter": "07",
+    "step": 1,
+    "exerciseId": "07-01-request"
+  },
+  {
+    "id": "07-fetch/02-http-and-data-errors",
+    "path": "07-fetch/02-http-and-data-errors",
+    "title": "Reject unsuccessful HTTP responses",
+    "chapter": "07",
+    "step": 2,
+    "exerciseId": "07-02-http-and-data-errors"
+  },
+  {
+    "id": "07-fetch/03-validate-data",
+    "path": "07-fetch/03-validate-data",
+    "title": "Validate the JSON structure",
+    "chapter": "07",
+    "step": 3,
+    "exerciseId": "07-03-validate-data"
+  },
+  {
+    "id": "07-fetch/03-abort-cleanup",
+    "path": "07-fetch/03-abort-cleanup",
+    "title": "Cancel obsolete requests",
+    "chapter": "07",
+    "step": 4,
+    "exerciseId": "07-04-abort-cleanup"
+  },
+  {
+    "id": "07-fetch/04-retry",
+    "path": "07-fetch/04-retry",
+    "title": "Retry the same request",
+    "chapter": "07",
+    "step": 5,
+    "exerciseId": "07-05-retry"
+  },
+  {
+    "id": "07-fetch/06-original-project",
+    "path": "07-fetch/06-original-project",
+    "title": "Open the original ShippingBoard project",
+    "chapter": "07",
+    "step": 6
+  },
+  {
+    "id": "07-fetch/07-response-contract",
+    "path": "07-fetch/07-response-contract",
+    "title": "Describe the response contract",
+    "chapter": "07",
+    "step": 7
+  },
+  {
+    "id": "07-fetch/08-customers-await",
+    "path": "07-fetch/08-customers-await",
+    "title": "Load customers with await",
+    "chapter": "07",
+    "step": 8
+  },
+  {
+    "id": "07-fetch/09-ramps-then",
+    "path": "07-fetch/09-ramps-then",
+    "title": "Load ramps with a promise chain",
+    "chapter": "07",
+    "step": 9
+  },
+  {
+    "id": "07-fetch/10-store-initialization",
+    "path": "07-fetch/10-store-initialization",
+    "title": "Initialize dependent models in order",
+    "chapter": "07",
+    "step": 10
+  },
+  {
+    "id": "07-fetch/11-loading-and-errors",
+    "path": "07-fetch/11-loading-and-errors",
+    "title": "Show loading and failure states",
+    "chapter": "07",
+    "step": 11
+  },
+  {
+    "id": "08-ui5/01-provider-and-button",
+    "path": "08-ui5/01-provider-and-button",
+    "title": "Add a UI5 provider and button",
+    "chapter": "08",
+    "step": 1,
+    "exerciseId": "08-01-provider-and-button"
+  },
+  {
+    "id": "08-ui5/02-events-and-icons",
+    "path": "08-ui5/02-events-and-icons",
+    "title": "Wire actions and register icons",
+    "chapter": "08",
+    "step": 2,
+    "exerciseId": "08-02-events-and-icons"
+  },
+  {
+    "id": "08-ui5/03-progress-and-capacity",
+    "path": "08-ui5/03-progress-and-capacity",
+    "title": "Show progress and enforce capacity",
+    "chapter": "08",
+    "step": 3,
+    "exerciseId": "08-03-progress-and-capacity"
+  },
+  {
+    "id": "08-ui5/optional-ui5",
+    "path": "08-ui5/optional-ui5",
+    "title": "Explore more UI5 controls",
+    "chapter": "08",
+    "step": 4
+  }
+]

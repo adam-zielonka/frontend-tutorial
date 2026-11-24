@@ -1,0 +1,100 @@
+---
+title: "5.13. Derive ramp status"
+slug: /05-shippingboard/13-ramp-status
+sidebar_position: 13
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/12-card-details
+pagination_next: 05-shippingboard/14-dialog-occupancy
+course_workspace: original-project
+course_chapter: "05"
+course_step: 13
+course_illustration: "/course/shippingboard/13-ramp-status.svg"
+course_illustration_alt: "A decision ladder tests empty, all loaded, any not started, then any in progress. Ramp E with 0 of 42 and 3 of 29 is not-started."
+course_illustration_description: "Ramp.status becomes the class on the ramp body. Empty keeps its stripes. Move 0007707 to A and E changes from red to amber."
+---
+
+A ramp can have two loadings at different stages. If one has started and the other is still waiting, which status should the dashboard show? The original app gives waiting work priority. You’ll express that rule in the ramp model and use its result to colour the ramp body.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+A ramp's status describes **all its assigned loadings**, independently of which view is open. Replace `src/store/Ramp.ts` with this complete version, retaining the relationship getter:
+
+```ts title="src/store/Ramp.ts — status"
+import { makeAutoObservable } from "mobx";
+import { Loading } from "./Loading";
+import { store } from "./Store";
+
+export type Status = "empty" | "loaded" | "progress" | "not-started" | "";
+
+export class Ramp {
+  constructor(
+    public id: string,
+    public description: string,
+  ) {
+    makeAutoObservable(this);
+  }
+
+  get loadings(): Loading[] {
+    return store.loadings.filter(loading => loading.ramp === this);
+  }
+
+  get isEmpty(): boolean {
+    return this.loadings.length === 0;
+  }
+
+  get isLoaded(): boolean {
+    return this.loadings.every(loading => loading.isLoaded);
+  }
+
+  get isInProgress(): boolean {
+    return this.loadings.some(loading => loading.isInProgress);
+  }
+
+  get isSomeNotStarted(): boolean {
+    return this.loadings.some(loading => !loading.isStarted);
+  }
+
+  get status(): Status {
+    if (this.isEmpty) return "empty";
+    if (this.isLoaded) return "loaded";
+    if (this.isSomeNotStarted) return "not-started";
+    if (this.isInProgress) return "progress";
+    return "";
+  }
+}
+```
+
+In `src/components/RampBox.tsx`, change its opening `<main>` tag to:
+
+```tsx title="src/components/RampBox.tsx — status class"
+<main className={ramp.status}>
+```
+
+Use the class on the ramp’s `<main>` element. The existing rules in `Ramp.scss` colour that part of the card green for `loaded`, amber for `progress` and red for `not-started`. An empty ramp keeps its stripes.
+
+Two details explain the order of the checks:
+
+1. **An empty ramp.** JavaScript’s `every` returns true for an empty array. Checking `isEmpty` first gives a ramp with no cards the striped background. Otherwise it would appear fully loaded.
+2. **A ramp with waiting work.** Look at E. One loading has 0 of 42 pallets picked, the other has 3 of 29. The first already satisfies the model’s `isInProgress` test (`picked !== pallets`), even though work hasn’t started. Checking `isSomeNotStarted` first gives E the intended red background.
+
+## Expected fixture status
+
+After a fresh reload, expect:
+
+| Ramp | Assigned progress | Status and appearance |
+| --- | --- | --- |
+| A, F, G | No loadings | `empty`, striped. |
+| B | `2/2` | `loaded`, green. |
+| C | `1/1` and `11/22` | `progress`, amber. |
+| D | `14/36`, `3/6`, `5/7` | `progress`, amber. |
+| E | `0/42` and `3/29` | `not-started`, red. |
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Find ramp E. In the mini board **Loading** takes priority over **Waiting**. Here the rule is different: the waiting loading makes E red even though work on `0007708` has begun.
+
+Open the waiting loading (`0007707`), move it to A and close the dialog. A should turn red. E now has only the loading that has started, so it should turn amber. Move `0007707` back, or reload to restore the original assignments.

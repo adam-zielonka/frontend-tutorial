@@ -1,0 +1,38 @@
+---
+title: "4.5. Manage multiple counters"
+slug: /04-mobx/05-counter-collection
+sidebar_position: 5
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+One model gives one counter. This starter adds an observable parent `Store`, gives each `CounterStore` a stable ID and initial value, and makes `App` own the collection. The parent already uses `observer` for list changes; each child observes its own value.
+
+## Edit the collection
+
+In `/Store.ts`, complete `addCounter`:
+
+```ts title="/Store.ts"
+addCounter() {
+  if (this.counters.length >= this.safetyLimit) return;
+  this.counters.push(new CounterStore(this.nextId++));
+}
+```
+
+Each new instance owns its value. `nextId++` assigns a distinct identity; IDs are excluded from observation. The temporary safety limit of 20 bounds this preview; the next step introduces the four-counter business rule.
+
+In `/App.tsx`, replace the single `Counter` and its TODO with:
+
+```tsx title="/App.tsx"
+{store.counters.map(counter => <Counter key={counter.id} counter={counter} />)}
+```
+
+[Stable keys](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) let React match each component to its model when the list changes. An array index describes position, which will change when we introduce deletion.
+
+<LessonExercise id="04-05-counter-collection" />
+
+## Check your work
+
+Add two cards, then give the three cards values 1, 100 and −1: each retains its own value. Next, derive shared capacity and a total.
+
+[Observable state](https://mobx.js.org/observable-state.html) · [React integration](https://mobx.js.org/react-integration.html)

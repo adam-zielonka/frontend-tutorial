@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="491" viewBox="0 0 640 491" role="img" aria-labelledby="title desc">
+  <title id="title">Await and validate before constructing customers</title>
+  <desc id="desc">getCustomers returns a Promise of Customer instances. Await fetch for CUSTOMERS.json, check response.ok, await the parsed body, and require an array whose entries pass isCustomerResponse. Map the validated rows into Customer instances. Any failure rejects the promise.</desc>
+  <rect width="640" height="491" rx="22" fill="#142235"/>
+  <g font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="25" fill="#fbf4e8">
+    <text x="27" y="47" font-weight="700">getCustomers()</text>
+    <text x="613" y="47" text-anchor="end" fill="#69dcf5">Promise&lt;Customer[]&gt;</text>
+    <path d="M27 64h586" stroke="#456078" stroke-width="2"/>
+    <path d="M39 125v307h15m-6-6 6 6-6 6" fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#20354b" stroke="#456078" stroke-width="2">
+      <rect x="62" y="89" width="365" height="72" rx="10"/>
+      <rect x="62" y="170" width="365" height="56" rx="10"/>
+      <rect x="62" y="235" width="365" height="56" rx="10"/>
+      <rect x="62" y="300" width="365" height="81" rx="10"/>
+      <rect x="62" y="402" width="365" height="61" rx="10" stroke="#69dcf5"/>
+    </g>
+    <g fill="none" stroke="#69dcf5" stroke-width="3">
+      <path d="M39 125h23m-23 73h23m-23 65h23m-23 77h23"/>
+    </g>
+    <g fill="#69dcf5">
+      <circle cx="39" cy="125" r="5"/>
+      <circle cx="39" cy="198" r="5"/>
+      <circle cx="39" cy="263" r="5"/>
+      <circle cx="39" cy="340" r="5"/>
+    </g>
+    <text x="79" y="118"><tspan fill="#69dcf5">await</tspan> fetch(…)</text>
+    <text x="79" y="147" font-size="23">CUSTOMERS.json</text>
+    <text x="79" y="207">response.ok</text>
+    <text x="79" y="272"><tspan fill="#69dcf5">await</tspan> response.json()</text>
+    <text x="79" y="333" font-size="23">Array.isArray(json)</text>
+    <text x="79" y="363" font-size="19">json.every(isCustomerResponse)</text>
+    <text x="79" y="442">map → new Customer(…)</text>
+    <g fill="none" stroke="#ffbe65" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M434 125h17m-6-6 6 6-6 6m-11 67h17m-6-6 6 6-6 6m-11 59h17m-6-6 6 6-6 6m-11 71h17m-6-6 6 6-6 6"/>
+    </g>
+    <g font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="23" fill="#ffbe65">
+      <text x="459" y="133">Network error</text>
+      <text x="459" y="206">HTTP error</text>
+      <text x="459" y="271">Parse error</text>
+      <text x="459" y="348">Invalid data</text>
+      <path d="M459 368h153" stroke="#ffbe65" stroke-width="2"/>
+      <text x="459" y="399" font-weight="650">All reject</text>
+    </g>
+  </g>
+</svg>

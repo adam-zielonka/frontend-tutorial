@@ -1,0 +1,120 @@
+---
+title: "5.8. Restore view and loading links"
+slug: /05-shippingboard/08-view-url
+sidebar_position: 8
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/07-content-switch
+pagination_next: 05-shippingboard/09-ramp-shells
+course_workspace: original-project
+course_chapter: "05"
+course_step: 8
+course_illustration: "/course/shippingboard/08-view-url.svg"
+course_illustration_alt: "A URL timeline starts with the table and dialog open. Closing the dialog removes loading, then selecting Dashboard removes view."
+course_illustration_description: "UI.init restores the view and looks up 0007703 before registering the reactions. Later pushState calls retain keep=yes and #dock."
+---
+
+Suppose a colleague sends you a link to a loading they want you to check. Opening the link should take you straight to its details, with the right view behind the dialog. That means reading two things from the address when the app starts: the selected view and the loading ID.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+Try reading `/?view=loadings&loading=0007703` as two instructions. The first opens the table. The second finds loading `0007703` and opens its dialog. The existing `init` method already handles the loading ID. Extend it to restore the view too, then watch for changes to either choice.
+
+Replace `src/store/UI.ts` with this complete version, including the view members from lesson 5.6:
+
+```ts title="src/store/UI.ts — complete URL integration"
+import { makeAutoObservable, reaction } from "mobx";
+import { Loading } from "./Loading";
+import { store } from "./Store";
+
+type View = "dashboard" | "loadings";
+
+function addQueryParam(name: string, value: string, defaultValue: string) {
+  const url = new URL(window.location.href);
+  if (value !== defaultValue) {
+    url.searchParams.set(name, value);
+  } else {
+    url.searchParams.delete(name);
+  }
+  window.history.pushState(null, "", url.pathname + url.search + url.hash);
+}
+
+export class UI {
+  view: View = "dashboard";
+  selectedLoading?: Loading;
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  init = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const view = urlSearchParams.get("view");
+    this.view = view === "loadings" ? "loadings" : "dashboard";
+
+    const loadingId = urlSearchParams.get("loading");
+    if (loadingId) {
+      const loading = store.loadings.find(l => l.id === loadingId);
+      if (loading) {
+        this.selectedLoading = loading;
+      }
+    }
+
+    reaction(
+      () => this.view,
+      view => addQueryParam("view", view, "dashboard"),
+    );
+    reaction(
+      () => this.selectedLoading,
+      loading => addQueryParam("loading", loading?.id ?? "", ""),
+    );
+  };
+
+  get isDashboardOpen(): boolean {
+    return this.view === "dashboard";
+  }
+
+  get isLoadingsOpen(): boolean {
+    return this.view === "loadings";
+  }
+
+  get isLoadingDialogOpen(): boolean {
+    return !!this.selectedLoading;
+  }
+
+  openDashboard = () => {
+    this.view = "dashboard";
+  };
+
+  openLoadings = () => {
+    this.view = "loadings";
+  };
+
+  openLoadingDialog = (loading: Loading) => {
+    this.selectedLoading = loading;
+  };
+
+  closeLoadingDialog = () => {
+    this.selectedLoading = undefined;
+  };
+}
+```
+
+**When the app opens.** `Store.init` creates the loadings before it calls `ui.init`. By then the app can look up the ID in the address and open the dialog for that loading. An unknown ID opens no dialog. For the view, only the string `loadings` selects the table. A missing value, `dashboard` or a typo all select Dashboard. Checking the string before assigning it keeps an unexpected value out of the store.
+
+**When someone clicks.** A MobX [reaction](https://mobx.js.org/reactions.html#reaction) watches the value returned by its first function. When that value changes, the second function updates the address. By default it waits for a change, so opening the page preserves the link you came in on. Choosing Loadings adds `view=loadings`. Choosing Dashboard removes `view` because Dashboard is the default. Closing the dialog removes `loading`.
+
+The helper starts from the current URL so other query parameters and the hash survive each edit. It leaves off the question mark when the query becomes empty. See [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and [History.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState).
+
+**What happens with Back and Forward?** The browser can change the address, but this app only reads it at startup. Following history changes would also require a `popstate` listener.
+
+`Store.ts` calls `ui.init()` once for the lifetime of the app. Calling it again inside a React render or effect would register another pair of reactions. For a shorter-lived store, save the function each reaction returns and call it when you dispose of the store. See [MobX reaction disposal](https://mobx.js.org/reactions.html#always-dispose-of-reactions).
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+1. Open `/?view=loadings&loading=0007703&keep=yes#dock`. The table should be visible behind the dialog for `0007703`.
+2. Close the dialog. Only `loading` should disappear from the address. Select Dashboard. The placeholder returns and `view` disappears too. You should still see `keep=yes#dock`.
+3. Open `/?view=unknown`. Dashboard should be selected. You may still see `unknown` in the address until you change views, because the app waits for a change before writing to the URL.

@@ -1,0 +1,35 @@
+---
+title: "8.4. Explore more UI5 controls"
+sidebar_position: 4
+course_illustration: "/course/ui5/dialog-state.svg"
+course_illustration_alt: "An Open action sets React state to true and shows a UI5 dialog. Its Close action sets the same state to false and returns to the closed view."
+course_illustration_description: "Use one React state value for visibility. When you try the dialog, check where keyboard focus goes after opening and closing it."
+---
+
+# 8.4. Explore more UI5 controls
+
+## Optional continuation: a new project and other controls
+
+
+In the course editor, `/App.tsx` corresponds to local `src/App.tsx`. The exercises already include the UI5 packages and wrap the app in one `ThemeProvider`, which supplies the theme to its components.
+
+Try `design="Emphasized"` on a labelled UI5 button with a registered icon, then compare it with the default. Choose a control for the behavior you want:
+
+- Show progress for one shipment with a labelled [ProgressIndicator](https://ui5.github.io/webcomponents-react/v2/?path=/docs/data-display-progressindicator--docs). Explore a [BulletChart](https://ui5.github.io/webcomponents-react/v2/?path=/docs/charts-bulletchart--docs) to compare a measure with a target.
+- Guide the user through ordered steps with a [Wizard](https://ui5.github.io/webcomponents-react/v2/?path=/docs/layouts-floorplans-wizard--docs).
+- Open a [Dialog](https://ui5.github.io/webcomponents-react/v2/?path=/docs/modals-popovers-dialog--docs) from a button. Use React state to track whether it is open, provide a close action, and check where keyboard focus goes after opening and closing it.
+
+Find other controls in the [UI5 React v2 component documentation](https://ui5.github.io/webcomponents-react/v2/).
+
+### Install the same library in a separate course project
+
+For a fresh scaffold, use the [Vite React TypeScript template](https://vite.dev/guide/) and the [creation commands in lesson 3.4](../03-react-basics/optional-vite-project.mdx). To reuse the chapter 3 solution, clone its published React 18 checkpoint and install the UI5 versions used in the editor:
+
+```sh
+git clone --depth 1 --branch lesson-03-03-bounded-events-solution-v5 https://github.com/adam-zielonka/frontend-tutorial.git app-with-ui5
+cd app-with-ui5
+pnpm install --frozen-lockfile
+pnpm add @ui5/webcomponents-react@2.20.1 @ui5/webcomponents@2.20.5 @ui5/webcomponents-base@2.20.5 @ui5/webcomponents-fiori@2.20.5 @ui5/webcomponents-icons@2.20.5
+```
+
+Run `pnpm dev` and open the printed address. In your counter, apply the provider and button from [step 1](./01-provider-and-button.mdx) and register the icons from [step 2](./02-events-and-icons.mdx). Run `pnpm build` to catch TypeScript errors such as a misspelled component property.

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="430" viewBox="0 0 480 430" role="img" aria-labelledby="title" aria-describedby="desc" focusable="false">
+  <title id="title">Cards follow assignments</title>
+  <desc id="desc">Four fixture rows show the lookup: 0007701 belongs to B, 0007702 and 0007703 belong to C, and 0007709 stays in the table. Ramp.loadings selects by object identity with loading.ramp === this. RampBox renders those matches. An undefined ramp leaves the loading accessible only in Loadings.</desc>
+  <style>
+    svg { font: 20px system-ui, "DejaVu Sans", sans-serif; fill: #f5f4ef; }
+    .title { font-size: 28px; font-weight: 750; letter-spacing: -.5px; }
+    .label { font-size: 22px; font-weight: 700; }
+    .muted { fill: #bbcbdc; }
+    .cyan { fill: #69dcf5; }
+    .amber { fill: #ffbe65; }
+    .code { font-family: ui-monospace, Consolas, "DejaVu Sans Mono", monospace; }
+    .surface { fill: #20354c; stroke: #52718f; }
+    .line { fill: none; stroke: #52718f; stroke-width: 2; }
+    .route { fill: none; stroke: #69dcf5; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0l8 4-8 4z" fill="#69dcf5"/>
+    </marker>
+  </defs>
+  <rect width="480" height="430" rx="16" fill="#142235"/>
+  <text x="28" y="47" class="title">Cards follow assignments</text>
+  <rect x="28" y="72" width="424" height="47" rx="8" fill="#254359" stroke="#69dcf5"/>
+  <text x="240" y="103" text-anchor="middle" class="code cyan">loading.ramp === this</text>
+  <text x="28" y="153" class="label">Fixture excerpt</text>
+  <text x="448" y="153" text-anchor="end" class="label">Matches</text>
+  <g class="surface">
+    <rect x="28" y="170" width="148" height="40" rx="6"/>
+    <rect x="28" y="231" width="148" height="40" rx="6"/>
+    <rect x="28" y="279" width="148" height="40" rx="6"/>
+    <rect x="28" y="355" width="148" height="40" rx="6"/>
+  </g>
+  <g class="code" text-anchor="middle">
+    <text x="102" y="197">0007701</text>
+    <text x="102" y="258">0007702</text>
+    <text x="102" y="306">0007703</text>
+    <text x="102" y="382">0007709</text>
+  </g>
+  <path d="M176 190h90" class="route" marker-end="url(#tip)"/>
+  <path d="M176 251h54l36 13" class="route" marker-end="url(#tip)"/>
+  <path d="M176 299h54l36-12" class="route" marker-end="url(#tip)"/>
+  <rect x="270" y="170" width="182" height="40" rx="6" fill="#254359" stroke="#69dcf5"/>
+  <rect x="270" y="231" width="182" height="88" rx="6" fill="#254359" stroke="#69dcf5"/>
+  <text x="289" y="197" class="label cyan">B</text>
+  <text x="426" y="197" text-anchor="end">1 card</text>
+  <text x="289" y="282" class="label cyan">C</text>
+  <text x="426" y="282" text-anchor="end">2 cards</text>
+  <path d="M28 337h424" class="line" stroke-dasharray="4 5"/>
+  <path d="M176 375h82" class="line" stroke-dasharray="4 5"/>
+  <text x="270" y="372" class="code amber">undefined</text>
+  <text x="270" y="398" class="muted">Table only</text>
+</svg>

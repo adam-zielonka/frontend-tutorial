@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="477" viewBox="0 0 640 477" role="img" aria-labelledby="title desc">
+  <title id="title">Two returns keep the ramp request chained</title>
+  <desc id="desc">getRamps returns the whole fetch chain for RAMPS.json. The first then callback checks response.ok and returns response.json(), so the second callback waits for parsed JSON. It checks the array and every ramp record, then maps ramp_id and description into Ramp instances. Failures reject the returned promise.</desc>
+  <rect width="640" height="477" rx="22" fill="#142235"/>
+  <g font-family="SFMono-Regular, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="25" fill="#fbf4e8">
+    <text x="32" y="49" font-weight="700">getRamps()</text>
+    <text x="608" y="49" text-anchor="end" fill="#69dcf5">Promise&lt;Ramp[]&gt;</text>
+    <path d="M32 66h576" stroke="#456078" stroke-width="2"/>
+    <path d="M55 105H35v334h20" fill="none" stroke="#ffbe65" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="68" y="113" font-size="23"><tspan fill="#ffbe65" font-weight="700">return</tspan> fetch(BASE_URL + 'RAMPS.json')</text>
+    <g fill="none" stroke="#69dcf5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M100 124v26m-7-7 7 7 7-7m-7 126v43m-7-7 7 7 7-7"/>
+    </g>
+    <g fill="#20354b" stroke="#456078" stroke-width="2">
+      <rect x="68" y="157" width="540" height="112" rx="12"/>
+      <rect x="68" y="319" width="540" height="120" rx="12"/>
+    </g>
+    <text x="91" y="188" fill="#69dcf5">.then(response =&gt; …)</text>
+    <text x="91" y="222" font-size="23">Check response.ok</text>
+    <text x="91" y="253" font-size="24"><tspan fill="#ffbe65" font-weight="700">return</tspan> response.json()</text>
+    <text x="125" y="301" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="23" fill="#69dcf5">Waits for parsed JSON</text>
+    <text x="91" y="351" fill="#69dcf5">.then(json =&gt; …)</text>
+    <text x="91" y="386" font-size="23">Array + every(isRampResponse)</text>
+    <text x="91" y="421" font-size="23">map → new Ramp(ramp_id, description)</text>
+  </g>
+</svg>

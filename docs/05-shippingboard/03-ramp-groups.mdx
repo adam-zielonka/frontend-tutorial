@@ -1,0 +1,40 @@
+---
+title: "5.3. Group loadings by ramp"
+slug: /05-shippingboard/03-ramp-groups
+sidebar_position: 3
+---
+
+import LessonExercise from '@site/src/components/LessonExercise';
+
+The starter includes the working navigation and filter. A ramp dashboard groups the same visible records rather than creating another collection to synchronize. Match each loading's `rampId` string to the ramp's stable `id`.
+
+## Replace the ramp scaffold
+
+In `/App.tsx`, replace the ramp section's TODO comment and entire `<ul className="Content">...</ul>` scaffold with:
+
+```tsx title="/App.tsx"
+<div className="Content">{ramps.map(ramp => {
+  const assigned = visible.filter(item => item.rampId === ramp.id);
+  return <article className="Ramp" key={ramp.id}>
+    <header><h3>{ramp.name} ({ramp.id})</h3></header>
+    <div className="ramp-loadings"><ul>{assigned.map(item =>
+      <li className="Loading" key={item.id}>
+        <header>{item.id}</header>
+        <div className="customer"><span className="name">{item.customer}</span></div>
+        <footer><span className="LoadingStatus" data-status={item.status}>{item.status}</span></footer>
+      </li>)}</ul></div>
+  </article>;
+})}</div>
+```
+
+Map the ramps first, then derive each ramp's assignments inside its callback. Using `visible` keeps the status filter effective in this view too. Stable ramp and loading IDs serve as React keys. The supplied `Ramp`, `Loading`, `customer` and `LoadingStatus` classes preserve the card layout; the stripe indicates a category, not a pallet percentage. An empty list still leaves its ramp visible.
+
+<LessonExercise id="05-03-ramp-groups" />
+
+## Check your work
+
+Open Ramps with All selected: R1 contains L-101 and L-103, R2 contains L-102, and R3 contains no cards. If every ramp shows every loading, inspect the ID comparison. Next, explain empty bodies and derive a status that filtering cannot change.
+
+## Sources
+
+[React rendering lists](https://react.dev/learn/rendering-lists), [keeping components pure](https://react.dev/learn/keeping-components-pure).

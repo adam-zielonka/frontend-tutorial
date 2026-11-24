@@ -1,0 +1,67 @@
+---
+title: "5.5. Prepare the original application"
+slug: /05-shippingboard/05-original-workspace
+sidebar_position: 5
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/04-empty-and-status
+pagination_next: 05-shippingboard/06-shared-view
+course_workspace: original-project
+course_chapter: "05"
+course_step: 5
+course_illustration: "/course/shippingboard/05-original-workspace.svg"
+course_illustration_alt: "The mini board’s three React records give way to the original app’s eleven MobX loadings."
+course_illustration_description: "Start at commit 3634bcb9a1ee, create lesson/ramp-dashboard, and carry that checkout from the baseline build through lesson 5.15."
+---
+
+In the mini board, three records were enough to try filtering and grouping. Now open the original ShippingBoard Lite app. It already has a table of eleven loadings, a details dialog and Sass styles. Across lessons 5.5–5.15, you’ll use its MobX models to build a ramp dashboard alongside that table. Keep this copy of the project for the rest of the chapter.
+
+## Prepare and inspect
+
+The original starting table is:
+
+![Original loading table](../img/img-05-02-what-we-have.jpeg)
+
+You can explore the [public demo](https://adam-zielonka.github.io/shippingboard-lite/) first. For the exercises, use [this version of the project](https://github.com/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99). It has the component API and styles the examples use. Both the demo and the repository’s main branch can change independently.
+
+Start in your development directory with Node.js 24 and pnpm installed. The commands below clone the `create-ramp-view` branch, select the exact commit for the lesson and create a branch for your work. This project has a version 6 lockfile, so the install command uses pnpm 8 to get the expected dependency versions.
+
+```shell
+node --version
+pnpm --version
+git clone --branch create-ramp-view https://github.com/adam-zielonka/shippingboard-lite.git shippingboard-lite-ramp-lesson
+cd shippingboard-lite-ramp-lesson
+git switch --detach 3634bcb9a1ee0ecf8bd9e956550970ff159a6c99
+git switch -c lesson/ramp-dashboard
+pnpm dlx pnpm@8.15.9 install --frozen-lockfile
+pnpm dlx pnpm@8.15.9 run dev
+```
+
+Open the address Vite prints, usually `http://localhost:5173`. You can also open [the same commit in StackBlitz](https://stackblitz.com/github/adam-zielonka/shippingboard-lite/tree/3634bcb9a1ee0ecf8bd9e956550970ff159a6c99). If you work online, keep that project open between lessons.
+
+Leave the dev server running. In a second terminal, open the same project folder and check that the app builds before you edit it.
+
+```shell
+pnpm dlx pnpm@8.15.9 run build
+```
+
+This script runs TypeScript and then Vite. Repeat it after each following lesson; these are edits to the original app, not exports from a mini-lesson.
+
+Read these existing files before changing them:
+
+| File | What is already there |
+| --- | --- |
+| `src/store/Store.ts` | One `store` singleton; initializes customers, ramps, loadings, then `ui.init()`; exposes `window.store` for inspection. |
+| `src/store/UI.ts` | `makeAutoObservable`, a `View` type, loading-dialog actions, URL restoration of the selected loading and an `addQueryParam` helper. The `view` field and view actions are missing. |
+| `src/store/Loading.ts` | A `Loading` class with dates, customer lookup, pallet counters, progress getters and ramp actions. |
+| `src/store/Ramp.ts` | A `Ramp` class with ID, description and `makeAutoObservable`. Its extension is **`.ts`**, not `.tsx`. |
+| `src/api/api.ts`, `src/api/parse.ts`, `src/api/fakeApi.ts` | Synchronous local data mapped into class instances; loading ramp IDs resolve to objects in `store.ramps`. No backend setup is needed. |
+| `src/components/Header.tsx`, `Content.tsx`, `Details.tsx` | Existing navbar, table selection point and assignment dialog. |
+| `src/components/Content.scss`, `Ramp.scss`, `Details.scss` | Original layout, ramp/card styles and dialog styles. `Ramp.scss` exists but is not yet imported. |
+
+Unlike the mini app's plain records and local `useState`, this application uses observable class instances and shared UI state. `loading.ramp` is a `Ramp` object or `undefined`, not a ramp ID string. It uses React 18, MobX 6 and **Blueprint `@blueprintjs/core` 4.20.2** from the lockfile. Keep Blueprint 4 for this exercise: the existing Sass selectors include `.bp4-card` and `.bp4-dialog`. Upgrading Blueprint or copying components from current `main` would be a separate migration.
+
+## Check your workspace
+
+In the running app, open one of the eleven table rows: its details dialog opens, with **Add loading** still available in the header after you close it. The baseline build above must finish successfully before you edit the project.
+
+Keep this checkout open through lesson 5.15. The online alternative must likewise keep the same project session and files; it does not have separate start/solution checkpoints for these stages. Browser mini-lesson drafts do not transfer into this repository.

@@ -1,133 +1,25 @@
+---
+sidebar_position: 60
+---
+
 # 6. Tests
 
-Let's start with `mobx-example` project.
+In chapter 4 you could type 42, click **+1** and see 43 in both the counter and the total. How would you know if that still worked after changing the store? Here you’ll turn those manual checks into repeatable tests.
 
-## Preparing workspace
+Start with the completed [editable counter](./04-mobx/13-edit-value.mdx). The app, styles, MobX models and persistence helpers are supplied. You’ll add tests in `/Store.test.ts`. Each test creates its own model, so it runs independently of the values saved by the app.
 
-To start working on this project you have two option: development using local or online editor:
+Choose **Run tests** to execute the current editor files in this page’s Vitest simulator. It supports the test APIs used in these lessons and reports passed, failed and pending cases. To run the same files with full Vitest, use **Work locally** and run `pnpm test:run`.
 
-1. Online Editor
-    - Just go to [**stackblitz**](https://stackblitz.com/github/adam-zielonka/mobx-example/tree/create-tests)
-2. Local development
-    - Clone repo from [**mobx-example**](https://github.com/adam-zielonka/mobx-example/tree/create-tests) and set branch to `create-tests`. You can use this command: 
-    ```shell
-    git clone --branch create-tests https://github.com/adam-zielonka/mobx-example.git
-    ```
-    - Open vs code for this project, if you still in terminal you can use this command:
-    ```shell
-    code mobx-example
-    ```
-    - Install dependencies:
-    ```
-    npm install
-    ```
-    - Run dev server:
-    ```
-    npm dev
-    ```
+## Lessons
 
+1. [Write the first store tests](./06-tests/01-first-test.mdx) — Turn behavior into assertions for the chapter 4 model.
+2. [Test invalid values and collection capacity](./06-tests/02-boundaries.mdx) — Reject non-finite inputs and exercise the four-counter limit.
+3. [Test reset and the computed total](./06-tests/03-reset-and-independence.mdx) — Check that resetting one counter updates the total and preserves its neighbor.
 
-## Install tools for testing
+Each lesson starts from a prepared checkpoint; your own edits remain in that lesson. See [course help](./course-help.mdx) for drafts and local work.
 
-```shell
-pnpm add vitest happy-dom
-```
+## Official references
 
-- [vitest](https://vitest.dev/) - tools that allow write and run out test
-- [happy-dom](https://github.com/capricorn86/happy-dom) - emulates browser environment by providing Browser API
+[Vitest guide](https://vitest.dev/guide/), [assertions](https://vitest.dev/api/expect.html), [coverage](https://vitest.dev/guide/coverage.html), [Testing Library principles](https://testing-library.com/docs/guiding-principles/).
 
-## Configure
-
-We can add config to `vite.config.ts` or create dedicate file for test environment config. In this case we use shared config:
-
-```ts title="vite.config.ts"
-// highlight-next-line
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    sourcemap: true,
-  },
-  // highlight-start
-  test: {
-    environment: "happy-dom",
-  }
-  // highlight-end
-});
-```
-
-
-## Write tests
-
-```ts title="src/Store.test.ts"
-import { describe, test, expect } from "vitest";
-import { CounterStore } from "./Store";
-
-describe("CounterStore", () => {
-  test("new counter", () => {
-    const counter = new CounterStore();
-    expect(counter.value).toBe(1);
-  });
-});
-```
-
-## Run test
-
-
-```
-pnpm vitest
-```
-
-or if you using npm you need to add to `package.json`
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test": "vitest"
-  },
-  //...
-}
-
-```
-
-```
-npm run test
-```
-
-## Exercises
-
-Please test this scenario for `CounterStore`:
-
-- test adding valid/invalid input 
-- test reset
-
-And also for `Store`:
-
-- test creation of Store
-- test adding/deleting counters (check limitation)
-
-## Coverage
-
-```shell
-pnpm add @vitest/coverage-c8
-```
-
-```json title="package.json"
-{
-  //...
-  "scripts": {
-    //...
-    "test-coverage": "pnpm vitest run --coverage",
-  },
-  //...
-}
-```
-
-## End-to-end testing
-
-If we wanna test in the way user use application we can use [playwright](https://playwright.dev/)
+[Optional continuation: more testing techniques](./06-tests/optional-testing.mdx).

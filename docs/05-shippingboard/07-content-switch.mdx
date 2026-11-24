@@ -1,0 +1,47 @@
+---
+title: "5.7. Switch the original content"
+slug: /05-shippingboard/07-content-switch
+sidebar_position: 7
+displayed_sidebar: tutorial
+pagination_prev: 05-shippingboard/06-shared-view
+pagination_next: 05-shippingboard/08-view-url
+course_workspace: original-project
+course_chapter: "05"
+course_step: 7
+course_illustration: "/course/shippingboard/07-content-switch.svg"
+course_illustration_alt: "Inside App, Content branches to the original loadings table or the dashboard placeholder. Header and Details sit outside the branch."
+course_illustration_description: "The observing Content reads ui.isLoadingsOpen. Details stays mounted so a table row can still open the shared dialog."
+---
+
+Click **Dashboard** in the version you just built. The button lights up, but the loading table stays on screen. The header already reads the selected view from the store. Now you’ll connect the content to the same choice, using a short placeholder until the ramp cards are ready.
+
+Continue in your local checkout or online session from [5.5](./05-original-workspace.mdx), with the previous step’s edits.
+
+## Make the change
+
+Replace `src/components/Content.tsx` with this complete, deliberately small intermediate version:
+
+```tsx title="src/components/Content.tsx — view switch"
+import { observer } from "mobx-react-lite";
+import { store } from "../store/Store";
+import { LoadingsTable } from "./LoadingsTable";
+import "./Content.scss";
+
+export const Content = observer(() => {
+  const { ui } = store;
+
+  if (ui.isLoadingsOpen) {
+    return <LoadingsTable />;
+  }
+
+  return <div className="Content">Ramps will appear here.</div>;
+});
+```
+
+The early return keeps the working table as one branch. The other branch will become the ramp board. `App.tsx` already renders `Header`, `Content` and `Details`; leave it unchanged so the same dialog can serve both views.
+
+## Check your work
+
+Run `pnpm dlx pnpm@8.15.9 run build`, then check the running app.
+
+Loadings shows the original table, Dashboard shows the temporary sentence, and opening a table row still shows its details. View selection now changes both the header and content.
