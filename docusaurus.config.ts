@@ -18,6 +18,8 @@ const config: Config = {
     locales: ["en"],
   },
 
+  plugins: [require.resolve("./scripts/browser-test-assets.cjs")],
+
   presets: [
     [
       'classic',

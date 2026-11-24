@@ -47,7 +47,7 @@ The UI5 exercises use React/React DOM 18.3.1 to match their UI5 dependencies.
 The preview transpiles TypeScript. Exported `npm run build` also checks types.
 
 Fetch fixtures use Sandpack's static-file service worker and a local URL adapter
-(`/ramps.json` for Vite, `/public/ramps.json` for Sandpack). Test lessons replace the app preview with a Vitest results workspace built from the current editor files. Run tests submits a snapshot to StackBlitz; the real pinned Vitest executes there. Chromium supports embedding; Safari/Firefox open the same project in a new tab. No test result is inferred from matching the reference source. Local exports retain a manual app for inspecting the store and run tests via `pnpm test:run`.
+(`/ramps.json` for Vite, `/public/ramps.json` for Sandpack). Test lessons execute the current test and chapter 4 model with a small Vitest-compatible browser runner. Work locally supplies the matching Vite app and the real Vitest runner.
 
 ```sh
 pnpm course:assemble
@@ -76,7 +76,3 @@ References: [Sandpack configuration](https://sandpack.codesandbox.io/docs/gettin
 Use a short context, explain the new idea beside the change, and give one observable result. Put filenames in code fence titles (for example `title="/Store.ts"`); matching editor files become keyboard-accessible links. Use `{2-4}` for changed-line emphasis where helpful. Keep prerequisites, cleanup and validation explained at the step where they matter. Move common environment instructions to course help and longer extensions to numbered pages. Do not delete the original teaching when reducing repetition.
 
 The v5 source revision keeps v3/v4 drafts in their original keys. Compatible work is read into the new edition; incompatible work under the same lesson ID is offered through Previous draft.
-
-The submitted test project uses Vitest's `threads` pool, keeping workers inside the CLI process. The report server stops that process after 30 seconds or on shutdown, so a synchronous loop cannot leave a forked test worker running across retries. Local checkpoint exports keep their standard Vitest command.
-
-Runtime references: [StackBlitz SDK](https://developer.stackblitz.com/platform/api/javascript-sdk), [browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support), [Vitest reporters](https://vitest.dev/guide/reporters), [Vitest worker pools](https://vitest.dev/guide/parallelism).

@@ -29,46 +29,20 @@ Use `defineConfig` from `vitest/config` here so TypeScript knows about the `test
 
 The original [mobx-example checkpoint](https://github.com/adam-zielonka/mobx-example/tree/create-tests) tests a different store. For a component that reads the DOM, install a compatible emulator in your UI test project and set the [Vitest environment](https://vitest.dev/guide/environment.html), for example `test: { environment: 'happy-dom' }` with `happy-dom` installed. Another option is `jsdom`. Both provide a simulated browser document, or DOM, while the tests run in Node.
 
-For coverage in a local chapter 6 copy, run `pnpm exec vitest --version`, then install the matching coverage package. Use `pnpm add -D @vitest/coverage-v8@5.1.1` with Vitest 5.1.1 or `pnpm add -D @vitest/coverage-v8@5.1.0` with the published v5 checkpoint. Run `pnpm exec vitest run --coverage`. Inspect missed branches as well as percentages. A high percentage alone cannot establish that assertions are meaningful. For user journeys across the browser and application, [Playwright](https://playwright.dev/docs/intro) provides end-to-end tests; use it separately from the unit tests, for example to open the page, click a control and assert the visible result.
+For coverage in a local chapter 6 copy, run `pnpm exec vitest --version`, then install the matching coverage package. Use `pnpm add -D @vitest/coverage-v8@5.1.1` with the supplied Vitest 5.1.1. Run `pnpm exec vitest run --coverage`. Inspect missed branches as well as percentages. A high percentage alone cannot establish that assertions are meaningful. For user journeys across the browser and application, [Playwright](https://playwright.dev/docs/intro) provides end-to-end tests; use it separately from the unit tests, for example to open the page, click a control and assert the visible result.
 
-### Apply the tests to the counter collection
+### Test restoration in the same collection
 
-The original exercise also asked you to test invalid inputs and adding/removing counters. Use a **separate local clone of the completed MobX chapter**, rather than putting these tests into the smaller chapter 6 fixture:
+Return to [lesson 6.3](./03-reset-and-independence.mdx) and open **Your code**. After completing its five tests, add a case for the `hydrate` method from chapter 4. A valid string replaces the collection. Invalid input should leave that collection intact. Paste this case inside the existing `describe` block and run it on the page or locally.
 
-```sh
-git clone --branch lesson-04-09-persistence-solution-v3 --depth 1 https://github.com/adam-zielonka/frontend-tutorial.git counter-collection-tests
-cd counter-collection-tests
-pnpm install --frozen-lockfile
-```
-
-That export already includes its own Vitest version. Create `src/Store.test.ts` with the following two cases and run `pnpm exec vitest run`:
-
-```ts
-import { expect, it } from 'vitest';
-import { CounterStore, Store } from './Store';
-
-it('keeps a valid value when an invalid delta arrives, then resets', () => {
-  const counter = new CounterStore(1);
-  counter.add(7);
-  counter.add(Number.NaN);
-  counter.add(Infinity);
-  expect(counter.value).toBe(7);
-  counter.reset();
-  expect(counter.value).toBe(0);
-});
-
-it('enforces capacity and frees a slot when a counter is removed', () => {
+```ts title="/Store.test.ts"
+it('preserves the restored values after an invalid URL payload', () => {
   const store = new Store();
-  expect(store.counters).toHaveLength(1);
-  for (let i = 0; i < 6; i++) store.addCounter();
-  expect(store.counters).toHaveLength(4);
-  expect(store.canAddMoreCounters).toBe(false);
-  const removedId = store.counters[1].id;
-  store.removeCounter(removedId);
-  expect(store.counters).toHaveLength(3);
-  expect(store.counters.some(counter => counter.id === removedId)).toBe(false);
-  expect(store.canAddMoreCounters).toBe(true);
+  expect(store.hydrate('5;-2')).toBe(true);
+  expect(store.sum).toBe(3);
+  expect(store.hydrate('5;')).toBe(false);
+  expect(store.serializedValues).toBe('5;-2');
 });
 ```
 
-The model starts at zero and a collection starts with one model. These tests assert those actual contracts, instead of retaining the original sample's incorrect expectation that a new counter has value 1. Persistence helpers are not started by constructing these classes, so these tests do not need a browser. Add a case that gives two counters different values and verifies the computed sum before and after deleting one.
+The empty token after the final semicolon makes the second payload invalid. Checking the serialized values also catches an implementation that changes part of the collection before rejecting it.

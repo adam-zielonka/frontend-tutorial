@@ -1,26 +1,36 @@
 ---
-title: "6.2. Test both clamping boundaries"
+title: "6.2. Test invalid values and collection capacity"
 slug: /06-tests/02-boundaries
 sidebar_position: 2
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-Small changes alone cannot prove that the store stays within its limits. Test both an overshoot and another attempt at each boundary; an assertion after each operation identifies where a failure occurs.
+The counter accepts negative values and decimals. An empty number input, however, can produce `NaN`. Start from a known value and check it after each invalid operation to catch an accidental assignment.
 
-In `/Store.test.ts`, replace the clamping `it.todo` with:
+The collection has a different boundary. It starts with one counter and has room for four. Four calls to `addCounter()` therefore include one attempt to add a fifth. Remove a counter by ID, then try adding again. In `/Store.test.ts`, keep the first two finished cases and replace the next two placeholders.
 
 ```ts title="/Store.test.ts"
-it('clamps large positive and negative changes to 10 and 0', () => {
-  const store = new CounterStore();
-  store.change(100);
-  expect(store.value).toBe(10);
-  store.change(1);
-  expect(store.value).toBe(10);
-  store.change(-100);
-  expect(store.value).toBe(0);
-  store.change(-1);
-  expect(store.value).toBe(0);
+it('ignores non-finite edits and deltas', () => {
+  const counter = new CounterStore();
+  counter.setValue(7);
+  counter.add(Number.NaN);
+  expect(counter.value).toBe(7);
+  counter.setValue(Infinity);
+  expect(counter.value).toBe(7);
+});
+
+it('frees a slot after reaching capacity', () => {
+  const store = new Store();
+  for (let i = 0; i < 4; i++) store.addCounter();
+  expect(store.counters).toHaveLength(4);
+  expect(store.canAddMoreCounters).toBe(false);
+  const removed = store.counters[1].id;
+  store.removeCounter(removed);
+  expect(store.counters.some(counter => counter.id === removed)).toBe(false);
+  expect(store.canAddMoreCounters).toBe(true);
+  store.addCounter();
+  expect(store.counters).toHaveLength(4);
 });
 ```
 
@@ -28,6 +38,6 @@ it('clamps large positive and negative changes to 10 and 0', () => {
 
 ## Observe
 
-Choose **Run tests**: three cases should pass and two remain pending.
+Choose **Run tests**. Four cases should pass and one remain pending. Which assertion would fail first if the collection allowed a fifth counter?
 
-[Vitest test API](https://vitest.dev/api/).
+[Vitest assertions](https://vitest.dev/api/expect.html).

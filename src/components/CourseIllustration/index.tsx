@@ -51,9 +51,9 @@ const chapters: Record<CourseIllustrationTopic, {
   },
   '06': {
     label: '06 / Test the behavior',
-    title: 'Why the counter stops at ten',
-    description: 'Arrange a counter at eight, act by changing it by five, and assert that the value is ten. A boundary rail shows the attempted value of thirteen being clamped to the upper limit of ten; the lower limit is zero.',
-    caption: 'Edit a test, run it with Vitest, and compare the actual result with your expectation.',
+    title: 'From a button click to an assertion',
+    description: 'Set a counter to 42, add one, and assert that its new value is 43.',
+    caption: 'Edit a test, run it in the lesson, and compare the actual result with your expectation.',
   },
   '07': {
     label: '07 / Load data with Fetch',
@@ -333,9 +333,9 @@ function ShippingBoard({id}: DrawingProps) {
 
 function Tests({id}: DrawingProps) {
   const phases = [
-    {x: 18, name: 'Arrange', value: 'value = 8', number: '01'},
-    {x: 220, name: 'Act', value: 'change(5)', number: '02'},
-    {x: 422, name: 'Assert', value: 'toBe(10)', number: '03'},
+    {x: 18, name: 'Arrange', value: 'setValue(42)', number: '01'},
+    {x: 220, name: 'Act', value: 'add(1)', number: '02'},
+    {x: 422, name: 'Assert', value: 'toBe(43)', number: '03'},
   ];
   return <>
     <Arrow id={id} d="M183 128H208" />
@@ -346,21 +346,12 @@ function Tests({id}: DrawingProps) {
       <text className={styles.nodeLabel} x="20" y="73">{phase.name}</text>
       <text className={styles.code} x="20" y="122">{phase.value}</text>
     </g>)}
-    <text className={styles.smallLabel} x="300" y="252" textAnchor="middle">8 + 5 = 13 · upper limit 10</text>
-    <rect className={styles.wash} x="59" y="290" width="421" height="26" rx="13" />
-    <path className={styles.inkLine} d="M60 303H480" />
-    {Array.from({length: 11}, (_, index) => <path key={index} className={styles.tick} d={`M${60 + index * 42} 295V311`} />)}
-    <circle className={styles.disc} cx="396" cy="303" r="11" />
-    <circle className={styles.goldDisc} cx="480" cy="303" r="15" />
-    <path className={styles.dashedLine} d="M498 303H571" />
-    <path className={styles.cross} d="m558 293 20 20m0-20-20 20" />
-    <Arrow id={id} d="M399 279Q438 227 477 275" secondary />
-    <text className={styles.counterValue} x="60" y="349" textAnchor="middle">0</text>
-    <text className={styles.counterValue} x="396" y="349" textAnchor="middle">8</text>
-    <text className={styles.counterValue} x="480" y="349" textAnchor="middle">10</text>
-    <text className={styles.oldValue} x="568" y="351" textAnchor="middle">13</text>
-    <Check x={480} y={378} size={19} />
-    <text className={styles.handNote} x="300" y="431" textAnchor="middle">Boundaries · reset · independent instances</text>
+    <text className={styles.smallLabel} x="300" y="252" textAnchor="middle">One click on +1</text>
+    <text className={styles.counterValue} x="165" y="335" textAnchor="middle">42</text>
+    <Arrow id={id} d="M205 321H385" />
+    <text className={styles.counterValue} x="430" y="335" textAnchor="middle">43</text>
+    <Check x={430} y={370} size={19} />
+    <text className={styles.handNote} x="300" y="431" textAnchor="middle">Counter actions · capacity · total</text>
   </>;
 }
 

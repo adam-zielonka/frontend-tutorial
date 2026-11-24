@@ -4,17 +4,17 @@ sidebar_position: 60
 
 # 6. Tests
 
-Your counter reads 9. Someone adds two more, but the limit is 10. What should the new value be? A test lets you write down the answer and check it again whenever the code changes.
+In chapter 4 you could type 42, click **+1** and see 43 in both the counter and the total. How would you know if that still worked after changing the store? Here you’ll turn those manual checks into repeatable tests.
 
-For these exercises, you get a small `CounterStore` with a single value. Call `change(delta)` to add or subtract an amount. The result stays between 0 and 10. Call `reset()` to return to zero. Later, you can apply the same techniques to the collection from chapter 4.
+Start with the completed [editable counter](./04-mobx/13-edit-value.mdx). The app, styles, MobX models and persistence helpers are supplied. You’ll add tests in `/Store.test.ts`. Each test creates its own model, so it runs independently of the values saved by the app.
 
-Edit `/Store.test.ts`, then choose **Run tests**. Vitest shows which checks passed, which failed, and which are still waiting to be written. The tests work directly with the store, so they can run without a browser document. To run them in your terminal, follow [Work locally](./course-help.mdx), import your edits, install the dependencies and run `pnpm exec vitest run`.
+Choose **Run tests** to execute the current editor files in this page’s Vitest simulator. It supports the test APIs used in these lessons and reports passed, failed and pending cases. To run the same files with full Vitest, use **Work locally** and run `pnpm test:run`.
 
 ## Lessons
 
-1. [Write the first store tests](./06-tests/01-first-test.mdx) — Turn behavior into assertions executed by Vitest.
-2. [Test both clamping boundaries](./06-tests/02-boundaries.mdx) — Verify overshoots and repeated attempts at the limits.
-3. [Test reset and independent stores](./06-tests/03-reset-and-independence.mdx) — Prove reset changes a nonzero value and instances do not share state.
+1. [Write the first store tests](./06-tests/01-first-test.mdx) — Turn behavior into assertions for the chapter 4 model.
+2. [Test invalid values and collection capacity](./06-tests/02-boundaries.mdx) — Reject non-finite inputs and exercise the four-counter limit.
+3. [Test reset and the computed total](./06-tests/03-reset-and-independence.mdx) — Check that resetting one counter updates the total and preserves its neighbor.
 
 Each lesson starts from a prepared checkpoint; your own edits remain in that lesson. See [course help](./course-help.mdx) for drafts and local work.
 

@@ -1,39 +1,34 @@
 ---
-title: "6.3. Test reset and independent stores"
+title: "6.3. Test reset and the computed total"
 slug: /06-tests/03-reset-and-independence
 sidebar_position: 3
 ---
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-A reset test must start with a changed value: otherwise a reset that does nothing could pass. Separate instances should also retain independent state.
+The total in chapter 4 reads `store.sum`, a MobX computed property. A reset should change that total by exactly the value of the counter being reset. Use two different values so you can tell if the action accidentally resets both counters.
 
-In `/Store.test.ts`, replace the last two `it.todo` entries with:
+The first four cases are supplied. Replace the final `it.todo` in `/Store.test.ts`. Read the sum before and after resetting the first counter.
 
 ```ts title="/Store.test.ts"
-it('resets a changed counter to zero', () => {
-  const store = new CounterStore();
-  store.change(7);
-  expect(store.value).toBe(7);
-  store.reset();
-  expect(store.value).toBe(0);
-});
-
-it('keeps two store instances independent', () => {
-  const first = new CounterStore();
-  const second = new CounterStore();
-  first.change(3);
-  expect(first.value).toBe(3);
-  expect(second.value).toBe(0);
+it('resets one counter and updates the total', () => {
+  const store = new Store();
+  store.addCounter();
+  const [first, second] = store.counters;
+  first.add(7);
+  second.add(-2);
+  expect(store.sum).toBe(5);
+  first.reset();
+  expect(first.value).toBe(0);
+  expect(second.value).toBe(-2);
+  expect(store.sum).toBe(-2);
 });
 ```
-
-These cases test the store, not rendered DOM or keyboard behavior. Explore those and coverage in [more testing techniques](./optional-testing.mdx).
 
 <LessonExercise id="06-03-reset-and-independence" />
 
 ## Observe
 
-Choose **Run tests**: all five cases should pass with none pending.
+Choose **Run tests**. All five cases should pass. In the last test, reset the second counter instead and run again. The first counter still holds 7. Restore the original reset to finish.
 
-[Vitest guide](https://vitest.dev/guide/).
+[Vitest assertions](https://vitest.dev/api/expect.html).

@@ -85,7 +85,7 @@
 }
 .toolButton:hover {background: var(--ifm-color-emphasis-200); color: var(--ifm-font-color-base); text-decoration: none;}
 .toolButton:focus-visible, .help > summary:focus-visible, .localDialog a:focus-visible {outline: 2px solid var(--ifm-color-primary); outline-offset: 2px;}
-.help {margin-left: auto;}
+.helpLinks {display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; margin-left: auto;}
 .localDialog {width: min(720px, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 8px; background: var(--studio-surface, var(--ifm-background-surface-color)); color: var(--ifm-font-color-base); font-size: .9rem; line-height: 1.6;}
 .localDialog::backdrop {background: #10121a80;}
 .localHeader {display: flex; align-items: center; justify-content: space-between; gap: .5rem; position: sticky; top: 0; z-index: 1; padding: .65rem 1rem; background: var(--studio-surface, var(--ifm-background-surface-color)); border-bottom: 1px solid var(--ifm-color-emphasis-200);}

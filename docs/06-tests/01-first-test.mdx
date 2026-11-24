@@ -6,31 +6,33 @@ sidebar_position: 1
 
 import LessonExercise from '@site/src/components/LessonExercise';
 
-The complete `CounterStore` starts at zero, clamps changes between 0 and 10, and resets to zero. A test makes an expectation repeatable: arrange a fresh store, act, then assert the result. Construction itself needs no action.
+Continue with the app from [chapter 4](../04-mobx/13-edit-value.mdx). The support files include its editable counter, collection and persistence. The new file, `/Store.test.ts`, contains five named placeholders. A model test can construct the same store that the app uses without rendering React or starting the persistence effect.
 
-In `/Store.test.ts`, keep the imports and `describe` group. Replace the first two `it.todo` entries with:
+In the test file, keep the imports and the `describe` group. Replace the first two `it.todo` entries. The first test describes the initial collection. In the second, use the same sequence as typing 42 and pressing **+1**, then subtract enough to cross zero.
 
 ```ts title="/Store.test.ts"
-it('starts at zero', () => {
-  const store = new CounterStore();
-  expect(store.value).toBe(0);
+it('starts a collection with one zero-valued counter', () => {
+  const store = new Store();
+  expect(store.counters).toHaveLength(1);
+  expect(store.counters[0].value).toBe(0);
 });
 
-it('adds and subtracts from the current value', () => {
-  const store = new CounterStore();
-  store.change(4);
-  expect(store.value).toBe(4);
-  store.change(-2);
-  expect(store.value).toBe(2);
+it('adds a delta to an edited value', () => {
+  const counter = new CounterStore();
+  counter.setValue(42);
+  counter.add(1);
+  expect(counter.value).toBe(43);
+  counter.add(-45);
+  expect(counter.value).toBe(-2);
 });
 ```
 
-`it` names each case; `expect(...).toBe(...)` compares actual and expected values. The intermediate assertion shows that subtraction starts from the changed value. Leave the other three cases pending.
+Read the second case as three steps. **Arrange** a fresh counter, **act** by calling its methods, then **assert** what the app should display. In `expect(counter.value).toBe(43)`, the value inside `expect` is the actual result and 43 is the expected result. Each `it` names one case in the report. Leave the other three cases as `it.todo` for now.
 
 <LessonExercise id="06-01-first-test" />
 
 ## Observe
 
-Choose **Run tests**: two cases should pass and three remain pending. Try expecting 3 instead of 2 to see a failure, then restore 2.
+Choose **Run tests**. Two cases should pass and three remain pending. Change the expected 43 to 42 and run again. The failure should report the expected 42 and the received 43. Restore 43 and rerun.
 
-[Vitest guide](https://vitest.dev/guide/), [assertions](https://vitest.dev/api/expect.html).
+[Vitest assertions](https://vitest.dev/api/expect.html).

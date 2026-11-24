@@ -292,7 +292,7 @@
   {
     "id": "06-tests/02-boundaries",
     "path": "06-tests/02-boundaries",
-    "title": "Test both clamping boundaries",
+    "title": "Test invalid values and collection capacity",
     "chapter": "06",
     "step": 2,
     "exerciseId": "06-02-boundaries"
@@ -300,7 +300,7 @@
   {
     "id": "06-tests/03-reset-and-independence",
     "path": "06-tests/03-reset-and-independence",
-    "title": "Test reset and independent stores",
+    "title": "Test reset and the computed total",
     "chapter": "06",
     "step": 3,
     "exerciseId": "06-03-reset-and-independence"

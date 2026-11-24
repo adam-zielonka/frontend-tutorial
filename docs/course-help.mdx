@@ -11,14 +11,12 @@ When you return to a browser exercise on the same device, **Your code** shows th
 
 **To keep a copy**, choose **Download my files**. It saves your edited files together in a JSON download. Keep that download if you plan to clear browser storage or switch devices. It also gives you a backup if a course update changes the lesson’s starting files.
 
-**To continue on your computer**, choose **Work locally** in the same lesson. Follow its commands to clone the published checkpoint, install its locked dependencies and import your download. The checkpoint may use earlier dependency versions than the embedded editor. Use a separate clone because importing replaces its exercise files. A file called `/App.tsx` in the browser lives at `src/App.tsx` in the clone. Public assets live under `public/`.
+**To continue on your computer**, choose **Work locally** in the same lesson. In chapter 6, extract the linked project ZIP. In the other chapters, follow the commands to clone the published checkpoint. Then install the locked dependencies and import your download. The checkpoint may use earlier dependency versions than the embedded editor. Use a separate clone because importing replaces its exercise files. A file called `/App.tsx` in the browser lives at `src/App.tsx` in the clone. Public assets live under `public/`.
 
 **If the preview seems out of date**, refresh it. This restarts the app with your edited source files and creates fresh models in memory. If the preview cannot connect, you can work locally or open the online editor. The online editor opens the lesson’s starting point or solution, so download your draft if you want to take it with you. Use sample data in the exercises and keep private data out of them.
 
 ## Running tests
 
-After editing a test in chapter 6, choose **Run tests**. The course sends the files currently shown in the editor to a temporary StackBlitz workspace, where Vitest runs them. The first run installs the lesson’s pinned dependencies, so it can take longer. Later runs update the files and run the tests again.
+Choose **Run tests** to run the current test file and MobX model directly in the lesson. The browser simulator supports `describe`, `it`, `it.todo`, `expect(...).toBe(...)` and `expect(...).toHaveLength(...)`. Each run starts fresh. Read the named results, edit a failing assertion and run again. A run in **Solution** uses the solution files.
 
-Read the report, make your next edit in **Your code**, then run again. The report shows what happened on the last run. If you run the tests while viewing **Solution**, the result is for the solution files. Edits you make directly in StackBlitz stay there. To save that temporary workspace to your StackBlitz account, fork it.
-
-In Chromium browsers the tests can run inside the lesson. Safari (including on iPhone) and Firefox open a separate tab with the same files. If an embedded run cannot connect, choose **Open these tests in a new tab** to keep testing your edits. You can also import the files with **Work locally** and run `pnpm test:run`. See [StackBlitz browser support](https://developer.stackblitz.com/platform/webcontainers/browser-support) and [Vitest reporters](https://vitest.dev/guide/reporters).
+For the full Vitest API, watch mode or coverage, choose **Work locally**, extract the project and import your downloaded edits. Run `pnpm test:run` in the project folder.

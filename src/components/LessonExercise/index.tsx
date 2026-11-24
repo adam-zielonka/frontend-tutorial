@@ -49,20 +49,26 @@ export function CodeWorkspace({lesson, solution, onSolutionChange, view = 'split
       </Suspense></EditorBoundary>}</BrowserOnly>
     </div>
     <div className={styles.footer} role="group" aria-label="Workspace tools">
-      <button ref={consoleToggle} type="button" className={styles.toolButton} aria-expanded={consoleOpen}
-        aria-controls={`${id}-console`} onClick={() => setConsoleOpen(value => !value)}>Console</button>
+      {lesson.chapter !== '06' && <button ref={consoleToggle} type="button" className={styles.toolButton} aria-expanded={consoleOpen}
+        aria-controls={`${id}-console`} onClick={() => setConsoleOpen(value => !value)}>Console</button>}
       <RunActions lesson={lesson} solution={solution} />
-      <details className={styles.help}>
-        <summary>Preview help</summary>
-        <div className={styles.helpBody}>
-          <p>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.</p>
-          <p>After editing a store constructor or method, use Refresh preview if an existing model still has its old behavior. Your source edits are kept.</p>
-          <p>If the preview cannot connect, choose <strong>Work locally</strong> or <strong>Online editor</strong> below.</p>
-          <p>Online editor opens the selected starter or solution in StackBlitz, without your browser edits. Support files are read-only.</p>
-          <p>Downloads contain the lesson’s files as JSON. <strong>Work locally</strong> explains how to import them.</p>
-          <p><Link to="/course-help">Course and workspace help</Link></p>
-        </div>
-      </details>
+      <div className={styles.helpLinks}>
+        <details className={styles.help}>
+          <summary>Preview help</summary>
+          <div className={styles.helpBody}>
+            <p>The preview compiles TypeScript but does not type-check it. Run <code>pnpm build</code> locally for type checks.</p>
+            {lesson.chapter === '06' ? <p>Run tests checks the files currently open in this lesson. For full Vitest, download the project from <strong>Work locally</strong>.</p> : <><p>After editing a store constructor or method, use Refresh preview if an existing model still has its old behavior. Your source edits are kept.</p>
+            <p>If the preview cannot connect, choose <strong>Work locally</strong> or <strong>Online editor</strong> below.</p>
+            <p>Online editor opens the selected starter or solution in StackBlitz, without your browser edits. Support files are read-only.</p></>}
+            <p>Downloads contain the lesson’s files as JSON. <strong>Work locally</strong> explains how to import them.</p>
+            <p><Link to="/course-help" target="_blank" rel="noopener noreferrer">Course and workspace help ↗</Link></p>
+          </div>
+        </details>
+        {lesson.chapter === '06' && <Link className={styles.toolButton} to="/course-help#running-tests"
+          target="_blank" rel="noopener noreferrer" aria-label="Test runner help (opens in a new tab)">
+          Test runner help ↗
+        </Link>}
+      </div>
     </div>
   </section>;
 }

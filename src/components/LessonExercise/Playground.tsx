@@ -223,17 +223,17 @@ function Workspace({lesson, view, solution, consoleOpen, consoleId, closeConsole
         <section id={`${id}-preview`} className={styles.pane} hidden={view === 'code'}
           style={{flexGrow: view === 'split' ? 100 - split : 1}} aria-label={lesson.chapter === '06' ? 'Test results' : 'Live preview'}>
           <div className={styles.paneHeading}>{lesson.chapter === '06' ? 'Test results' : 'Live preview'}</div>
-          {lesson.chapter === '06' ? <TestPanel lesson={lesson} solution={solution}/> : <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>}
+          {lesson.chapter === '06' ? <TestPanel/> : <SandpackPreview showOpenInCodeSandbox={false} showRefreshButton/>}
         </section>
       </div>
-      <section id={consoleId} className={styles.consoleDrawer} hidden={!consoleOpen} aria-label="Console and runtime errors"
+      {lesson.chapter !== '06' && <section id={consoleId} className={styles.consoleDrawer} hidden={!consoleOpen} aria-label="Console and runtime errors"
         onKeyDown={event => {if (event.key === 'Escape') {event.stopPropagation(); closeConsole();}}}>
         <div className={styles.drawerHeading}>
           <span>Console and runtime errors</span>
           <button ref={consoleClose} type="button" className={styles.toolButton} onClick={closeConsole}>Close console</button>
         </div>
         <SandpackConsole className={styles.consoleOutput} showSyntaxError maxMessageCount={200}/>
-      </section>
+      </section>}
       {dragging && <div className={styles.dragShield} aria-hidden="true"/>}
     </div>
   </>;
@@ -262,7 +262,7 @@ function Editor({lesson, solution, reset, view, initialDraft, keepDraft, resetSa
       devDependencies: {'@types/react': reactTypes, '@types/react-dom': reactDomTypes},
     };
   });
-  const [options] = useState(() => ({activeFile: lesson.activeFile, visibleFiles: lesson.focusFiles, autorun: true,
+  const [options] = useState(() => ({activeFile: lesson.activeFile, visibleFiles: lesson.focusFiles, autorun: lesson.chapter !== '06',
     initMode: 'immediate' as const, recompileMode: 'delayed' as const, recompileDelay: 800, experimental_enableServiceWorker: true}));
   return <SandpackProvider className={styles.playground} template="react-ts" theme={colorMode === 'dark' ? editorDark : editorLight}
     files={files} customSetup={customSetup}

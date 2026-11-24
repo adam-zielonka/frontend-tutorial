@@ -58,7 +58,7 @@ references after `LessonExercise`.
 The studio renders optional hints in the reading pane and mounts one separate
 `CodeWorkspace`. Its persistent footer contains Console, Work locally, Online editor
 and Preview help. Local clone/import instructions open from Work locally; Online
-editor opens the selected v5 checkpoint in StackBlitz without transferring drafts.
+editor opens the selected checkpoint in a new StackBlitz tab without transferring drafts. Chapter 6 submits the same files as its downloadable project via the [StackBlitz POST API](https://developer.stackblitz.com/platform/api/post-api). Its Test runner help link opens beside Preview help in a new tab.
 These run controls stay available while the editor loads or if it fails. A shared
 context identifies the studio around the exercise. On narrow screens,
 Lesson/Code/Preview controls change visibility,
@@ -107,7 +107,7 @@ Edit `course/chapters/*.json` and run `pnpm course:assemble`. The website and do
 `LessonExercise` with a stable ID. The editor and preview open automatically, keep drafts per step
 in localStorage, and shows solutions without overwriting drafts. Sandpack runs in a
 CodeSandbox iframe and needs network access. Its TypeScript preview transpiles code;
-Vite's local `build` also type-checks. Lesson 6 uses a real Vitest runner in a temporary StackBlitz workspace, populated from the current editor files. The visible result is a snapshot from Run tests. Chromium embeds this workspace; Safari/Firefox use a new tab. Local exports also support `pnpm test:run`.
+Vite's local `build` also type-checks. Lesson 6 runs a Vitest-compatible subset in a disposable worker inside a sandboxed iframe. The site bundles the TypeScript transform and the lesson’s MobX version. Work locally offers generated project ZIPs with real Vitest.
 
 ```sh
 pnpm test          # manifest, exports, draft recovery and downloaded-file imports

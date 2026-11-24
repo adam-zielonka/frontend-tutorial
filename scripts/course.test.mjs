@@ -4,12 +4,10 @@ import {readFileSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {runInNewContext} from 'node:vm';
 import {lessons, validateLessons, projectFiles, writeProject, tagFor} from './course-project.mjs';
 import {readDraft, writeDraft, draftKey, previousDraft} from '../src/components/LessonExercise/drafts.ts';
 import {lessonFile, snippetSelection} from '../src/lib/lessonCode.ts';
-import {testProject, supportsTestEmbed} from '../src/lib/testProject.ts';
-import {reportCounts, resultsPage} from '../src/lib/testRunner.mjs';
+import {runSuite} from '../src/lib/browser-tests/suite.mjs';
 const lesson = () => structuredClone(lessons[0]);
 const storage = () => {const map = new Map(); return {getItem: k => map.get(k) ?? null, setItem: (k,v) => map.set(k,v)};};
 
@@ -76,59 +74,34 @@ test('code labels resolve only real lesson files and locate context without edit
   assert.equal(snippetSelection(code, 'totally unrelated example'), undefined);
 });
 
-test('Vitest receives the current files and a run signal, not the reference solution', () => {
-  const l = lessons.find(item => item.chapter === '06');
-  const files = {...l.files, '/Store.test.ts': 'expect(1).toBe(2);', '/outside': 'ignore me'};
-  const project = testProject(l, files, 1);
-  const pkg = JSON.parse(project.files['package.json']);
-  assert.equal(project.template, 'node');
-  assert.equal(project.files['src/Store.test.ts'], 'expect(1).toBe(2);');
-  assert.equal(project.files['src/outside'], undefined);
-  const exported = JSON.parse(projectFiles(l, 'start')['package.json']);
-  assert.deepEqual(pkg.dependencies, {
-    ...exported.dependencies,
-    vitest: exported.devDependencies.vitest,
-    vite: exported.devDependencies.vite,
-  });
-  assert.equal(pkg.scripts.start, 'node test-server.mjs');
-  assert.match(project.files['test-server.mjs'], /vitest\/vitest\.mjs/);
-  assert.notEqual(project.files['.test-request'], testProject(l, files, 2).files['.test-request']);
-  assert.equal(supportsTestEmbed('Mozilla/5.0 Chrome/130.0.0.0 Safari/537.36'), true);
-  assert.equal(supportsTestEmbed('Mozilla/5.0 (iPhone) CriOS/130.0 Mobile Safari/604.1'), false);
-  assert.equal(supportsTestEmbed('Mozilla/5.0 Firefox/132.0'), false);
+test('the browser simulator runs each counter checkpoint, including edited assertions and syntax errors', async () => {
+  const steps = lessons.filter(item => item.chapter === '06');
+  const checkpoint = lessons.find(item => item.id === '04-12-storage-autorun').solution;
+  for (const [index, step] of steps.entries()) {
+    assert.ok(step.files['/Store.ts'].includes(checkpoint['/Store.ts'].split('export class Store')[1]));
+    if (index) assert.deepEqual(step.files, steps[index - 1].solution);
+    for (const [files, passed] of [[step.files, [0, 2, 4][index]], [step.solution, [2, 4, 5][index]]]) {
+      const report = await runSuite(files);
+      assert.equal(report.filter(test => test.status === 'passed').length, passed);
+      assert.equal(report.filter(test => test.status === 'pending').length, 5 - passed);
+    }
+  }
+  const edited = {...steps[0].solution};
+  edited['/Store.test.ts'] = edited['/Store.test.ts'].replace('toBe(43)', 'toBe(42)');
+  assert.match((await runSuite(edited)).find(test => test.status === 'failed').message, /Expected 42, received 43/);
+  edited['/Store.test.ts'] = 'describe(';
+  await assert.rejects(runSuite(edited), /Store.test.ts/);
 });
-test('the test report includes Vitest todo cases in pending counts', () => {
-  assert.deepEqual(reportCounts({numPassedTests: 2, numFailedTests: 0, numPendingTests: 0, numTodoTests: 3}),
-    [['passed', 2, 'passed'], ['failed', 0, 'failed'], ['pending', 3, 'pending']]);
+
+test('the counter edition preserves previous chapter 6 drafts after new edits', () => {
+  const step = lessons.find(item => item.chapter === '06');
+  const s = storage();
+  s.setItem(`frontend-tutorial:v5:${step.id}`, JSON.stringify({baseline: 'earlier', files: {'/Store.test.ts': 'old test'}}));
+  writeDraft(s, step, step.files);
+  assert.deepEqual(readDraft(s, step), step.files);
+  assert.equal(JSON.parse(previousDraft(s, step)).files['/Store.test.ts'], 'old test');
 });
-test('a successful poll restores connection status even if the report is unchanged', async () => {
-  const elements = new Map();
-  const element = () => ({textContent: '', replaceChildren() {}, append() {}});
-  let nextPoll;
-  let disconnected = false;
-  const document = {
-    getElementById(id) {if (!elements.has(id)) elements.set(id, element()); return elements.get(id);},
-    createElement: element,
-    createTextNode: text => ({textContent: text}),
-  };
-  const script = resultsPage.match(/<script>([\s\S]*?)<\/script>/)[1];
-  const context = {
-    document,
-    fetch: async () => {
-      if (disconnected) throw Error('offline');
-      return {ok: true, text: async () => JSON.stringify({status: 'complete', report: null, output: ''})};
-    },
-    setTimeout: callback => {nextPoll = callback;},
-  };
-  await runInNewContext(script, context);
-  assert.equal(elements.get('status').textContent, 'Run finished.');
-  disconnected = true;
-  await nextPoll();
-  assert.match(elements.get('status').textContent, /reconnect/);
-  disconnected = false;
-  await nextPoll();
-  assert.equal(elements.get('status').textContent, 'Run finished.');
-});
+
 test('corrupt, incomplete, stale, or inaccessible storage falls back safely', () => {
   const s = storage(); const l = lesson();
   s.setItem(draftKey(l), '{'); assert.equal(readDraft(s,l), null);
